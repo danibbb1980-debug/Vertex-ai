@@ -4,17 +4,26 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { site, brl } from "@/lib/site";
 import "./globals.css";
 
+/*
+  Só os pesos que a página realmente usa.
+  Inter: 400 (corpo), 500 (font-medium), 600 (font-semibold) — o 700 não é
+  usado em lugar nenhum. Space Grotesk é aplicado só em h1–h4, no logo e nos
+  números, todos com font-semibold: um único peso, 600.
+  `preload` garante que as duas famílias entrem no <head> como <link rel=preload>.
+*/
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
 });
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["600"],
   variable: "--font-space-grotesk",
   display: "swap",
+  preload: true,
 });
 
 const title = `${site.name} — Site profissional por assinatura, a partir de ${brl(site.price)}/mês`;
@@ -77,6 +86,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body>
+        {/*
+          Marca que o JS está ativo, antes da primeira pintura.
+          O CSS só esconde os elementos `.reveal` quando este atributo existe,
+          então sem JS (ou antes do bundle chegar) a página inteira é legível —
+          e com JS não há flash, porque este script roda de forma síncrona,
+          antes de o resto do body ser analisado.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.dataset.js="1"`,
+          }}
+        />
         <a
           href="#conteudo"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:rounded-full focus:bg-brand focus:px-5 focus:py-3 focus:text-white"

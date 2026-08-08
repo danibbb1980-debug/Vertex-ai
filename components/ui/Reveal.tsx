@@ -1,48 +1,35 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 type RevealProps = {
   children: ReactNode;
+  /** Atraso do stagger, em segundos (mantém a mesma assinatura de antes). */
   delay?: number;
-  y?: number;
   className?: string;
-  /** Renders as a list item when used inside a <ul>/<ol>. */
+  /** Renderiza como <li> quando usado dentro de <ul>/<ol>. */
   as?: "div" | "li";
 };
 
 /**
- * Scroll-triggered fade + rise.
+ * Revelação no scroll, sem JavaScript no bundle.
  *
- * Duration sits at 500ms with a soft ease — long enough to read as premium,
- * short enough to never gate content. When the visitor prefers reduced motion
- * the content renders immediately with no transform at all.
+ * Este é um Server Component: não envia nenhum JS próprio. Ele só marca o
+ * elemento com a classe `.reveal`; o estado escondido é aplicado por CSS
+ * apenas quando `data-js="1"` está presente no <html>, e o
+ * RevealObserver (um único observer para a página inteira) adiciona `.is-in`
+ * quando o elemento entra no viewport.
+ *
+ * Consequência importante: sem JS, ou antes da hidratação, todo o conteúdo
+ * está visível. Nada na página depende de JavaScript para ser lido.
  */
-export function Reveal({
-  children,
-  delay = 0,
-  y = 24,
-  className,
-  as = "div",
-}: RevealProps) {
-  const reduceMotion = useReducedMotion();
-  const MotionTag = as === "li" ? motion.li : motion.div;
-
-  if (reduceMotion) {
-    const Tag = as;
-    return <Tag className={className}>{children}</Tag>;
-  }
+export function Reveal({ children, delay = 0, className = "", as = "div" }: RevealProps) {
+  const Tag = as;
+  const style = delay
+    ? ({ "--reveal-delay": `${Math.round(delay * 1000)}ms` } as CSSProperties)
+    : undefined;
 
   return (
-    <MotionTag
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <Tag className={`reveal ${className}`.trim()} style={style}>
       {children}
-    </MotionTag>
+    </Tag>
   );
 }

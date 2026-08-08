@@ -36,7 +36,8 @@ export function Portfolio() {
               {/* Mockups */}
               <div className="relative">
                 <div
-                  className={`pointer-events-none absolute -inset-8 -z-10 rounded-full bg-linear-to-br ${project.accent} blur-3xl`}
+                  className="pointer-events-none absolute -inset-8 -z-10 glow-soft"
+                  style={{ "--glow": project.glow } as React.CSSProperties}
                   aria-hidden="true"
                 />
                 <BrowserFrame url={`${site.domain}/conceito/${project.slug}`}>

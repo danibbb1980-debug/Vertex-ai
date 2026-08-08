@@ -241,7 +241,7 @@ export const portfolio = {
         "Procedimentos apresentados com clareza",
         "Percepção de valor que justifica o preço",
       ],
-      accent: "from-violet-500/25 to-fuchsia-500/10",
+      glow: "#a855f7",
     },
     {
       slug: "imobiliaria",
@@ -254,7 +254,7 @@ export const portfolio = {
         "Imóveis apresentados com destaque",
         "Menos tempo perdido com curioso",
       ],
-      accent: "from-indigo-500/25 to-sky-500/10",
+      glow: "#6366f1",
     },
     {
       slug: "restaurante",
@@ -267,7 +267,7 @@ export const portfolio = {
         "Reservas sem depender do telefone",
         "Experiência que combina com a casa",
       ],
-      accent: "from-amber-500/20 to-rose-500/10",
+      glow: "#f59e0b",
     },
   ],
 };

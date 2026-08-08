@@ -28,7 +28,7 @@ export function Industries() {
             <Reveal as="li" key={item.slug} delay={index * 0.07}>
               <div className="group relative h-full overflow-hidden rounded-2xl border border-line bg-surface/50 p-7 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-surface">
                 <div
-                  className="pointer-events-none absolute -top-24 -right-24 size-48 rounded-full bg-brand/10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+                  className="pointer-events-none absolute -top-24 -right-24 size-48 glow-soft opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   aria-hidden="true"
                 />
                 <div className="relative">

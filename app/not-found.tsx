@@ -17,7 +17,7 @@ export default function NotFound() {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -top-40 left-1/2 -z-10 size-[36rem] -translate-x-1/2 rounded-full bg-brand/15 blur-[140px]"
+        className="pointer-events-none absolute -top-40 left-1/2 -z-10 size-[36rem] -translate-x-1/2 glow-brand"
         aria-hidden="true"
       />
 

@@ -1,63 +1,52 @@
-"use client";
-
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
 import { ArrowRight, Check, ShieldCheck } from "lucide-react";
 import { LinkButton } from "../ui/Button";
 import { BrowserFrame, PhoneFrame, SiteSkeleton } from "../ui/Mockups";
 import { hero } from "@/lib/content";
 import { brl, site } from "@/lib/site";
 
+/**
+ * Hero — Server Component.
+ *
+ * Antes era client-only por causa do framer-motion, e o HTML chegava com
+ * opacity:0 inline no <h1>: nada aparecia até o JS hidratar. Agora toda a
+ * entrada é CSS (`anim-fade-up` com delay escalonado), que começa na primeira
+ * pintura. O JS do hero passou a ser zero.
+ */
+
+/**
+ * Define o atraso do stagger como custom property, para o CSS poder escalá-lo
+ * por breakpoint (ver --stagger em globals.css). Passar animationDelay direto
+ * fixaria o valor e impediria o ritmo mais rápido do mobile.
+ */
+const delay = (seconds: number) => ({ "--d": `${seconds}s` }) as React.CSSProperties;
+
 export function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  // Subtle parallax: the mockups drift slower than the copy on scroll.
-  const mockupY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 90]);
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 40]);
-
-  const fadeUp = (delay: number) =>
-    reduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 22 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
-        };
-
   const [beforeAccent, afterAccent] = hero.headline.split(hero.headlineAccent);
 
   return (
     <section
-      ref={ref}
       id="top"
       className="relative overflow-hidden px-5 pt-32 pb-20 sm:px-8 sm:pt-40 md:pb-28"
     >
-      {/* Ambient background: radial brand glow over a faint grid */}
+      {/* Fundo ambiente: grade sutil + brilho da marca */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 grid-noise opacity-70"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -top-40 left-1/2 -z-10 size-[46rem] -translate-x-1/2 rounded-full bg-brand/18 blur-[140px]"
+        className="pointer-events-none absolute -top-40 left-1/2 -z-10 size-[46rem] -translate-x-1/2 glow-brand"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute top-1/3 -right-40 -z-10 size-[30rem] rounded-full bg-brand-deep/15 blur-[130px]"
+        className="pointer-events-none absolute top-1/3 -right-40 -z-10 size-[30rem] glow-brand-deep"
         aria-hidden="true"
       />
 
       <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-        <motion.div style={{ y: copyY }} className="max-w-2xl">
-          {/* Risk reversal above the fold, before the headline. */}
-          <motion.ul
-            {...fadeUp(0)}
-            className="mb-7 flex flex-wrap items-center gap-x-2 gap-y-2"
-          >
+        {/* Parallax mais suave na coluna de texto (desktop, via scroll-timeline) */}
+        <div className="parallax max-w-2xl" style={{ "--parallax-shift": "40px" } as React.CSSProperties}>
+          {/* Reversão de risco antes do H1 */}
+          <ul className="anim-fade-up mb-7 flex flex-wrap items-center gap-x-2 gap-y-2">
             {hero.assurances.map((item) => (
               <li
                 key={item}
@@ -67,32 +56,32 @@ export function Hero() {
                 {item}
               </li>
             ))}
-          </motion.ul>
+          </ul>
 
-          <motion.h1
-            {...fadeUp(0.08)}
-            className="text-4xl font-semibold sm:text-5xl md:text-6xl md:leading-[1.05]"
+          <h1
+            className="anim-fade-up text-4xl font-semibold sm:text-5xl md:text-6xl md:leading-[1.05]"
+            style={delay(0.08)}
           >
             {beforeAccent}
             <span className="text-gradient">{hero.headlineAccent}</span>
             {afterAccent}
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            {...fadeUp(0.16)}
-            className="mt-5 text-lg font-medium text-cloud/85 sm:text-xl"
+          <p
+            className="anim-fade-up mt-5 text-lg font-medium text-cloud/85 sm:text-xl"
+            style={delay(0.16)}
           >
             {hero.sub}
-          </motion.p>
+          </p>
 
-          <motion.p
-            {...fadeUp(0.22)}
-            className="mt-4 max-w-xl text-base leading-relaxed text-mist"
+          <p
+            className="anim-fade-up mt-4 max-w-xl text-base leading-relaxed text-mist"
+            style={delay(0.22)}
           >
             {hero.description}
-          </motion.p>
+          </p>
 
-          <motion.div {...fadeUp(0.3)} className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="anim-fade-up mt-9 flex flex-col gap-3 sm:flex-row" style={delay(0.3)}>
             <LinkButton href="#contato" size="lg" trackAs="hero">
               {hero.ctaPrimary}
               <ArrowRight className="size-4" aria-hidden="true" />
@@ -100,17 +89,16 @@ export function Hero() {
             <LinkButton href="#projetos" variant="secondary" size="lg" trackAs="hero">
               {hero.ctaSecondary}
             </LinkButton>
-          </motion.div>
+          </div>
 
-          <motion.p {...fadeUp(0.36)} className="mt-4 text-sm text-mist-dim">
+          <p className="anim-fade-up mt-4 text-sm text-mist-dim" style={delay(0.36)}>
             {hero.ctaMicrocopy}
-          </motion.p>
+          </p>
 
-          {/* Transparent pricing this early qualifies the visitor and signals
-              confidence — hiding it invites a bounce to the FAQ or an exit. */}
-          <motion.div
-            {...fadeUp(0.42)}
-            className="mt-10 flex flex-col gap-4 border-t border-line pt-7 sm:flex-row sm:items-center sm:gap-8"
+          {/* Preço transparente cedo: qualifica o visitante e sinaliza confiança */}
+          <div
+            className="anim-fade-up mt-10 flex flex-col gap-4 border-t border-line pt-7 sm:flex-row sm:items-center sm:gap-8"
+            style={delay(0.42)}
           >
             <div className="flex items-baseline gap-1.5">
               <span className="font-display text-3xl font-semibold text-cloud">
@@ -126,55 +114,40 @@ export function Hero() {
                 </li>
               ))}
             </ul>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        {/* Visual: floating browser + phone, communicating "we build sites" instantly */}
-        <motion.div
-          style={{ y: mockupY }}
-          className="relative mx-auto w-full max-w-lg lg:max-w-none"
+        {/* Visual: navegador + celular flutuando */}
+        <div
+          className="parallax relative mx-auto w-full max-w-lg lg:max-w-none"
+          style={{ "--parallax-shift": "90px" } as React.CSSProperties}
         >
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 40, rotateX: 8 }}
-            animate={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
-          >
-            {/* Gentle float — 6s cycle, transform-only so it never triggers layout */}
-            <motion.div
-              animate={reduceMotion ? undefined : { y: [0, -12, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            >
+          <div className="anim-rise-in relative" style={delay(0.2)}>
+            <div className="anim-float">
               <BrowserFrame url={`${site.domain}/sua-empresa`}>
                 <SiteSkeleton />
               </BrowserFrame>
-            </motion.div>
+            </div>
 
-            <motion.div
-              animate={reduceMotion ? undefined : { y: [0, 10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-              className="absolute -bottom-14 left-0 w-28 sm:-left-6 sm:w-32 lg:-left-10 lg:w-36"
-            >
+            <div className="anim-float-soft absolute -bottom-14 left-0 w-28 sm:-left-6 sm:w-32 lg:-left-10 lg:w-36">
               <PhoneFrame>
                 <SiteSkeleton compact />
               </PhoneFrame>
-            </motion.div>
+            </div>
 
-            {/* Floating badge that states the model in four words */}
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.9 }}
-              className="absolute -top-5 right-0 rounded-xl border border-line bg-ink/90 px-4 py-3 shadow-2xl backdrop-blur-xl sm:-right-6"
+            {/* Selo que explica o modelo em quatro palavras */}
+            <div
+              className="anim-pop-in absolute -top-5 right-0 rounded-xl border border-line bg-ink/90 px-4 py-3 shadow-2xl backdrop-blur-xl sm:-right-6"
+              style={delay(0.9)}
             >
               <p className="font-display text-lg font-semibold leading-none">
                 {brl(site.price)}
                 <span className="text-xs font-normal text-mist">/mês</span>
               </p>
               <p className="mt-1 text-[0.68rem] text-mist-dim">tudo incluso</p>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

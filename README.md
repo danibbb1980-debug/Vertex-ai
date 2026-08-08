@@ -197,6 +197,60 @@ Todo CTA reporta seção e rótulo via `trackCta`. Sem medição não há otimiz
 
 ---
 
+## Performance
+
+Medido em Chromium com throttling de celular médio (CPU 4x mais lenta,
+1,6 Mbps, 150 ms de latência), mediana de 5 execuções:
+
+| Métrica | Antes | Depois |
+|---|---|---|
+| FCP | 1264 ms | **1028 ms** |
+| LCP | 3128 ms | **1356 ms** |
+| Bloqueio da main thread | 710 ms | **423 ms** |
+| JS transferido | 184 KB | **139 KB** |
+| Fontes | 69 KB | **60 KB** |
+| CLS | 0 | 0 |
+| Conteúdo visível sem JS | **0 (tela em branco)** | **página inteira** |
+
+### O que estava lento
+
+O framer-motion servia o HTML com `opacity:0` inline em **78 elementos**,
+incluindo o `<h1>`. A página ficava em branco até o JS baixar, ser processado e
+hidratar — no celular, cerca de 3 segundos olhando para um fundo escuro vazio.
+Não era peso de imagem (o site não tem nenhuma): era conteúdo escondido
+esperando JavaScript.
+
+### O que foi feito
+
+1. **Animação em CSS no lugar do framer-motion.** Toda a coreografia foi
+   reproduzida com `@keyframes` e transições — mesmas durações, mesmos delays,
+   mesmo easing. A dependência saiu do projeto.
+2. **Revelação como melhoria progressiva.** Sem JS tudo é visível; o estado
+   escondido só é aplicado quando `data-js="1"` existe, definido por um script
+   inline antes da primeira pintura. Um único IntersectionObserver para a
+   página, no lugar de um por elemento.
+3. **Botões viraram Server Components.** O rastreamento passou a ser um
+   listener de clique delegado, então nenhum CTA carrega JS nem cria ilha de
+   hidratação.
+4. **Blurs grandes viraram gradientes radiais.** `blur-[140px]` sobre um
+   elemento de 736px obriga o navegador a rasterizar e desfocar a camada antes
+   de pintar. O gradiente tem aparência equivalente e custo próximo de zero.
+5. **`content-visibility: auto`** nas seções abaixo da dobra: o navegador pula
+   layout e pintura do que está fora da tela. Com `contain-intrinsic-size` para
+   não gerar layout shift.
+6. **Fontes só nos pesos usados.** Space Grotesk é aplicada apenas em títulos e
+   números, sempre em 600 — os pesos 500 e 700 saíram.
+7. **Animação mais rápida no mobile.** `--stagger` e `--anim-dur` reduzem a
+   coreografia em ~2x abaixo de 640px. Mesma entrada, resolvida antes.
+8. **Parallax por `animation-timeline: scroll()`** no desktop: roda no
+   compositor, sem listener de scroll. Desligado no mobile, onde é a maior
+   fonte de jank e quase não aparece.
+
+Nenhuma seção, conteúdo ou funcionalidade foi removida, e o desktop está
+visualmente intacto.
+
+---
+
 ## Acessibilidade e performance
 
 - Contraste ≥ 4.5:1 em todo texto; foco visível preservado em todos os controles

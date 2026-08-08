@@ -1,7 +1,16 @@
-"use client";
-
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { trackCta } from "@/lib/analytics";
+
+/**
+ * Botões como Server Components.
+ *
+ * Antes este arquivo era "use client" só para disparar o evento de analytics
+ * no onClick. Como quase toda seção usa um botão, isso transformava cada CTA
+ * numa ilha de hidratação e arrastava o componente para o bundle do cliente.
+ *
+ * Agora o botão é HTML puro e a origem do clique vai em `data-track-*`. Um
+ * único listener delegado (ver ClientEnhancements) captura todos os cliques da
+ * página. O comportamento de rastreamento é idêntico, com zero JS por botão.
+ */
 
 type Variant = "primary" | "secondary" | "ghost" | "whatsapp";
 type Size = "md" | "lg";
@@ -26,7 +35,7 @@ const variants: Record<Variant, string> = {
     "hover:bg-mint/15 hover:border-mint/50 hover:-translate-y-0.5",
 };
 
-/* min-h-12 keeps every control at or above the 44px touch target minimum. */
+/* min-h-12 mantém todo controle no mínimo de 44px de alvo de toque. */
 const sizes: Record<Size, string> = {
   md: "min-h-12 px-6 text-[0.95rem]",
   lg: "min-h-14 px-8 text-base sm:text-[1.05rem]",
@@ -36,9 +45,19 @@ type ButtonProps = {
   variant?: Variant;
   size?: Size;
   children: ReactNode;
-  /** Section name reported to analytics on click. */
+  /** Seção reportada ao analytics no clique. */
   trackAs?: string;
 };
+
+/** Extrai um rótulo textual do conteúdo, para o evento de analytics. */
+function labelOf(children: ReactNode): string | undefined {
+  if (typeof children === "string") return children;
+  if (Array.isArray(children)) {
+    const text = children.find((child) => typeof child === "string");
+    if (typeof text === "string") return text.trim();
+  }
+  return undefined;
+}
 
 export function Button({
   variant = "primary",
@@ -46,16 +65,13 @@ export function Button({
   className = "",
   children,
   trackAs,
-  onClick,
   ...props
 }: ButtonProps & ComponentPropsWithoutRef<"button">) {
   return (
     <button
       className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
-      onClick={(event) => {
-        if (trackAs) trackCta(trackAs, String(children));
-        onClick?.(event);
-      }}
+      data-track={trackAs}
+      data-track-label={trackAs ? labelOf(children) : undefined}
       {...props}
     >
       {children}
@@ -69,16 +85,13 @@ export function LinkButton({
   className = "",
   children,
   trackAs,
-  onClick,
   ...props
 }: ButtonProps & ComponentPropsWithoutRef<"a">) {
   return (
     <a
       className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
-      onClick={(event) => {
-        if (trackAs) trackCta(trackAs, String(children));
-        onClick?.(event);
-      }}
+      data-track={trackAs}
+      data-track-label={trackAs ? labelOf(children) : undefined}
       {...props}
     >
       {children}

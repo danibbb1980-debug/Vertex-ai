@@ -34,6 +34,21 @@
   --spacing-section-lg: 9rem;
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Escalas de animação (desktop = referência). */
+  --stagger: 1;
+  --anim-dur: 1;
+}
+
+/*
+  Mobile: mesma coreografia, resolvida ~2x mais rápido.
+  O conteúdo da primeira tela fica sólido bem antes, sem perder a entrada.
+*/
+@media (max-width: 640px) {
+  :root {
+    --stagger: 0.45;
+    --anim-dur: 0.62;
+  }
 }
 
 @layer base {
@@ -91,6 +106,210 @@
 }
 
 @layer utilities {
+  /*
+    ── Sistema de animação sem JavaScript ──────────────────────────────────
+    Antes, todo movimento vinha do framer-motion, que servia o HTML com
+    opacity:0 inline em 78 elementos — inclusive o <h1>. A página ficava em
+    branco até o JS baixar, processar e hidratar. Agora o movimento é CSS:
+    começa na primeira pintura e funciona mesmo se o JS falhar.
+  */
+
+  /* Entrada da primeira tela — roda na pintura inicial, sem esperar JS. */
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 22px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes fade-in-scale {
+    from {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 40px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /*
+    O stagger é escalado por --stagger e a duração por --anim-dur, ambos
+    definidos no :root. No mobile os dois encolhem: a coreografia continua a
+    mesma, só que resolvida bem mais rápido. Isso importa porque o elemento de
+    LCP é o <h1>, e enquanto ele está em fade-in o LCP não é registrado —
+    animação longa acima da dobra é, literalmente, LCP mais alto.
+  */
+  .anim-fade-up {
+    animation: fade-up calc(0.6s * var(--anim-dur, 1)) var(--ease-out-soft) both;
+    animation-delay: calc(var(--d, 0s) * var(--stagger, 1));
+  }
+
+  .anim-rise-in {
+    animation: rise-in calc(0.9s * var(--anim-dur, 1)) var(--ease-out-soft) both;
+    animation-delay: calc(var(--d, 0s) * var(--stagger, 1));
+  }
+
+  .anim-pop-in {
+    animation: fade-in-scale calc(0.5s * var(--anim-dur, 1)) var(--ease-out-soft) both;
+    animation-delay: calc(var(--d, 0s) * var(--stagger, 1));
+  }
+
+  /* Flutuação dos mockups: só transform, roda no compositor. */
+  @keyframes float-y {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -12px, 0);
+    }
+  }
+
+  @keyframes float-y-soft {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, 10px, 0);
+    }
+  }
+
+  .anim-float {
+    animation: float-y 6s ease-in-out infinite;
+  }
+
+  .anim-float-soft {
+    animation: float-y-soft 5s ease-in-out 0.6s infinite;
+  }
+
+  /*
+    Revelação no scroll — melhoria progressiva.
+    Sem JS: tudo visível. Com JS (data-js="1", definido antes da primeira
+    pintura), o elemento parte escondido e o IntersectionObserver revela.
+    Nunca existe um estado em que o conteúdo dependa do JS para aparecer.
+  */
+  [data-js="1"] .reveal {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition:
+      opacity 0.5s var(--ease-out-soft),
+      transform 0.5s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-js="1"] .reveal.is-in {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  /*
+    Parallax do hero via scroll-timeline: roda no compositor, sem listener de
+    scroll e sem trabalho na main thread. Restrito ao desktop — parallax
+    atrelado ao scroll é a principal fonte de jank no mobile, e é justamente
+    onde ele menos aparece. Onde não há suporte, o layout fica idêntico,
+    apenas estático.
+  */
+  @keyframes parallax-drift {
+    to {
+      transform: translate3d(0, var(--parallax-shift, 60px), 0);
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+      .parallax {
+        animation: parallax-drift linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0 100vh;
+      }
+    }
+  }
+
+  /*
+    Pula layout e pintura das seções fora da tela.
+
+    A página tem ~1200 nós e a maior parte está abaixo da dobra. Sem isto, o
+    navegador calcula estilo, layout e pintura de tudo antes da primeira
+    pintura — o custo dominante no celular, onde a CPU é o gargalo, não a rede.
+
+    `contain-intrinsic-size` reserva altura estimada para cada seção, então a
+    barra de rolagem não salta e nada disso gera layout shift.
+  */
+  .defer-paint {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
+  }
+
+  /* Barra fixa do mobile: transform + opacity, sem AnimatePresence. */
+  .sticky-bar {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      transform 0.28s var(--ease-out-soft),
+      opacity 0.28s var(--ease-out-soft),
+      visibility 0.28s;
+  }
+
+  .sticky-bar.is-in {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /*
+    Brilhos ambiente da marca.
+
+    Antes eram círculos sólidos com blur-[140px]. Um filtro de desfoque desse
+    raio obriga o navegador a rasterizar a camada inteira (736px) e aplicar um
+    gaussiano antes da primeira pintura — caro em GPU de celular e no caminho
+    crítico do hero. Um gradiente radial produz o mesmo brilho suave com custo
+    de pintura praticamente zero, e não cria camada de composição.
+  */
+  .glow-brand {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--color-brand) 22%, transparent),
+      color-mix(in oklab, var(--color-brand) 9%, transparent) 48%,
+      transparent 76%
+    );
+  }
+
+  .glow-brand-deep {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--color-brand-deep) 20%, transparent),
+      color-mix(in oklab, var(--color-brand-deep) 7%, transparent) 50%,
+      transparent 78%
+    );
+  }
+
+  /* Brilho por projeto; a cor vem de --glow, com o violeta da marca como padrão. */
+  .glow-soft {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--glow, var(--color-brand)) 20%, transparent),
+      transparent 74%
+    );
+  }
+
   .text-gradient {
     background: linear-gradient(
       100deg,

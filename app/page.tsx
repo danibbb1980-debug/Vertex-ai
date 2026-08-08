@@ -1,5 +1,6 @@
 import { Nav } from "@/components/ui/Nav";
 import { StickyCta } from "@/components/ui/StickyCta";
+import { ClientEnhancements } from "@/components/ui/ClientEnhancements";
 import { Hero } from "@/components/sections/Hero";
 import { Problem } from "@/components/sections/Problem";
 import { Offer } from "@/components/sections/Offer";
@@ -85,6 +86,7 @@ export default function Home() {
       </main>
       <Footer />
       <StickyCta />
+      <ClientEnhancements />
     </>
   );
 }

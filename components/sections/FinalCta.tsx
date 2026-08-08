@@ -11,7 +11,7 @@ export function FinalCta() {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -bottom-52 left-1/2 -z-10 size-[44rem] -translate-x-1/2 rounded-full bg-brand/18 blur-[150px]"
+        className="pointer-events-none absolute -bottom-52 left-1/2 -z-10 size-[44rem] -translate-x-1/2 glow-brand"
         aria-hidden="true"
       />
 
