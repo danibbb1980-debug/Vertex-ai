@@ -79,6 +79,8 @@ WhatsApp como alternativa.
    trabalhos reais, atualize `portfolio.disclaimer`.
 3. **Analytics** — `lib/analytics.ts` envia eventos para `dataLayer`/`gtag`.
    Instale GTM ou GA4 para começar a medir.
+   O Speed Insights da Vercel já está no `app/layout.tsx`; é só ativar em
+   Analytics > Speed Insights no painel do projeto.
 4. **Redes sociais** — só o TikTok está publicado, em `lib/site.ts`. Adicione
    Instagram, LinkedIn ou e-mail apenas quando existirem de verdade.
 
@@ -119,7 +121,9 @@ inteira, incluindo FAQ, metadata e imagem de Open Graph.
    `NEXT_PUBLIC_WHATSAPP=5535984487206` em Production, Preview e Development
 4. Deploy
 5. Teste o formulário num celular de verdade, ponta a ponta
-6. Ao conectar domínio próprio: adicione `NEXT_PUBLIC_SITE_URL` e refaça o deploy
+6. Ative **Analytics > Speed Insights** no painel do projeto — o componente já
+   está no código, mas os dados só aparecem depois de ativar
+7. Ao conectar domínio próprio: adicione `NEXT_PUBLIC_SITE_URL` e refaça o deploy
 
 ---
 

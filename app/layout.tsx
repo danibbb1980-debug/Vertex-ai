@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { site, brl } from "@/lib/site";
 import "./globals.css";
 
@@ -83,6 +84,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Pular para o conteúdo
         </a>
         {children}
+        {/*
+          Core Web Vitals reais dos visitantes.
+          O script vem de /_vercel/speed-insights/script.js, uma rota que só
+          existe na infraestrutura da Vercel — fora dela daria 404 e erro de MIME
+          no console a cada carregamento. VERCEL=1 é definido automaticamente no
+          build e no runtime da Vercel, então em produção o comportamento é o
+          padrão e localmente o console fica limpo.
+        */}
+        {process.env.VERCEL === "1" && <SpeedInsights />}
       </body>
     </html>
   );
