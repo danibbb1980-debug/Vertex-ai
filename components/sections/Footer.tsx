@@ -1,15 +1,13 @@
-import { Mail, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { LinkButton } from "../ui/Button";
 import { Logo } from "../ui/Logo";
-import { InstagramIcon, LinkedInIcon, TikTokIcon } from "../ui/SocialIcons";
+import { TikTokIcon } from "../ui/SocialIcons";
 import { footer } from "@/lib/content";
 import { site, whatsappUrl } from "@/lib/site";
 
-const socials = [
-  { label: "Instagram", href: site.social.instagram, Icon: InstagramIcon },
-  { label: "TikTok", href: site.social.tiktok, Icon: TikTokIcon },
-  { label: "LinkedIn", href: site.social.linkedin, Icon: LinkedInIcon },
-];
+/** Only real channels. A dead link to a profile that doesn't exist costs more
+    trust than an absent one. */
+const socials = [{ label: "TikTok", href: site.social.tiktok, Icon: TikTokIcon }];
 
 export function Footer() {
   return (
@@ -74,15 +72,7 @@ export function Footer() {
               {footer.whatsappCta}
             </LinkButton>
 
-            <a
-              href={`mailto:${site.email}`}
-              className="mt-3 flex min-h-11 items-center gap-2 text-sm text-mist transition-colors duration-200 hover:text-cloud"
-            >
-              <Mail className="size-4" aria-hidden="true" />
-              {site.email}
-            </a>
-
-            <h2 className="mt-7 text-sm font-semibold text-cloud">{footer.socialTitle}</h2>
+            <h2 className="mt-8 text-sm font-semibold text-cloud">{footer.socialTitle}</h2>
             <ul className="mt-3 flex gap-2">
               {socials.map(({ label, href, Icon }) => (
                 <li key={label}>

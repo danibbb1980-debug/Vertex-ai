@@ -22,21 +22,65 @@ npm run typecheck  # tsc --noEmit
 
 ### Variáveis de ambiente
 
-| Variável | Descrição |
-|---|---|
-| `NEXT_PUBLIC_WHATSAPP` | Número no formato internacional, só dígitos (ex: `5511987654321`). Alimenta todos os CTAs de WhatsApp. |
-| `NEXT_PUBLIC_SITE_URL` | URL canônica. Usada em metadata, Open Graph, sitemap e robots. |
+Só duas, e **nenhuma é segredo** — ambas são `NEXT_PUBLIC_` e ficam visíveis no
+navegador, como deve ser.
+
+| Variável | Valor | Obrigatória? |
+|---|---|---|
+| `NEXT_PUBLIC_WHATSAPP` | `5535984487206` | Não. O código já usa esse número como padrão. Configure para poder trocar sem mexer no código. |
+| `NEXT_PUBLIC_SITE_URL` | `https://seudominio.com.br` | Não. Sem ela, a Vercel injeta a URL do projeto automaticamente. Configure ao conectar domínio próprio. |
+
+Não há chave de API, banco ou serviço de formulário: o envio de leads é feito por
+handoff para o WhatsApp, sem backend.
+
+---
+
+## Como o formulário entrega os leads
+
+Sem backend. O formulário valida os cinco campos e abre o WhatsApp com tudo já
+escrito na mensagem:
+
+```
+Olá! Quero um site profissional para o meu negócio.
+
+*Nome:* João Silva
+*Empresa:* Clínica Bella
+*WhatsApp:* (35) 98448-7206
+*Segmento:* Clínica de estética
+*O que preciso:* Site com agendamento online e galeria
+
+_Enviado pelo formulário do site_
+```
+
+Dois detalhes que fazem isso funcionar no celular, em
+`components/ui/LeadForm.tsx`:
+
+- **A abertura é síncrona.** Qualquer `await` antes de `window.open` faz o
+  Safari/iOS tratar como pop-up e bloquear. Não introduza `await` nesse handler.
+- **Há fallback duplo.** Se `window.open` retornar `null`, cai para
+  `window.location.href`; e a tela de sucesso sempre mostra um botão manual.
+
+A tela de sucesso diz *"Só falta enviar"*, não *"recebemos seu contato"* — sem
+backend nada foi recebido até a pessoa apertar enviar, e afirmar o contrário
+deixaria o lead achando que já falou com você.
+
+Para trocar por um backend de verdade depois, substitua a chamada a
+`whatsappLeadUrl` por um `fetch` para um route handler e mantenha o botão de
+WhatsApp como alternativa.
 
 ---
 
 ## Antes de publicar
 
-1. **`NEXT_PUBLIC_WHATSAPP`** — sem isso, todos os botões de WhatsApp apontam para um número de exemplo.
-2. **Conectar o formulário** — `components/ui/LeadForm.tsx` tem um `setTimeout` no lugar do envio real. Aponte para o seu CRM ou route handler. O fallback de WhatsApp continua funcionando de qualquer forma.
-3. **Depoimentos** — os atuais são ilustrativos e estão rotulados como tal em `lib/content.ts`. Ao trocar por clientes reais, remova o aviso (`testimonials.disclaimer`).
-4. **Portfólio** — os projetos são conceituais e estão identificados. Ao usar trabalhos reais, atualize `portfolio.disclaimer`.
-5. **Analytics** — `lib/analytics.ts` envia eventos para `dataLayer`/`gtag`. Instale GTM ou GA4 para começar a medir.
-6. **Redes sociais e e-mail** — atualize em `lib/site.ts`.
+1. **Confirme o número** — abra `https://wa.me/5535984487206` no celular e veja se
+   abre a sua conta. Nenhum teste automatizado consegue verificar isso: o WhatsApp
+   devolve a mesma página para qualquer número bem formado.
+2. **Portfólio** — os projetos são conceituais e estão identificados. Ao usar
+   trabalhos reais, atualize `portfolio.disclaimer`.
+3. **Analytics** — `lib/analytics.ts` envia eventos para `dataLayer`/`gtag`.
+   Instale GTM ou GA4 para começar a medir.
+4. **Redes sociais** — só o TikTok está publicado, em `lib/site.ts`. Adicione
+   Instagram, LinkedIn ou e-mail apenas quando existirem de verdade.
 
 ---
 
@@ -49,6 +93,7 @@ app/
   globals.css          design tokens (@theme) e camada base
   icon.tsx             favicon gerado
   opengraph-image.tsx  imagem OG gerada no build
+  not-found.tsx        404 com a identidade do site
   sitemap.ts robots.ts
 components/
   sections/            uma seção por arquivo
@@ -63,6 +108,18 @@ design-system/         saída da skill ui-ux-pro-max
 Todo o texto vive em `lib/content.ts` e todos os números do negócio em
 `lib/site.ts` — mudar o preço de R$197 para outro valor atualiza a página
 inteira, incluindo FAQ, metadata e imagem de Open Graph.
+
+---
+
+## Deploy na Vercel
+
+1. Abra `https://wa.me/5535984487206` no celular e confirme que é a sua conta
+2. Importe o repositório na Vercel — Next.js é detectado sozinho, sem `vercel.json`
+3. Em Settings > Environment Variables, adicione
+   `NEXT_PUBLIC_WHATSAPP=5535984487206` em Production, Preview e Development
+4. Deploy
+5. Teste o formulário num celular de verdade, ponta a ponta
+6. Ao conectar domínio próprio: adicione `NEXT_PUBLIC_SITE_URL` e refaça o deploy
 
 ---
 
@@ -115,10 +172,12 @@ A maior parte do tráfego é mobile, e no mobile o CTA sai da tela e só volta n
 rodapé. A barra mantém preço + ação a um toque. Aparece depois do hero e some
 sobre o CTA final, para não competir com o formulário.
 
-### 9. Rotulagem honesta de depoimentos e portfólio
-Depoimentos e projetos estão marcados como ilustrativos/conceituais. Além da
-exigência legal (CDC art. 37 e CONAR), um depoimento falso percebido custa mais
-confiança do que ganha — e visitante desconfiado não preenche formulário.
+### 9. Nenhum conteúdo inventado
+A seção de depoimentos foi removida: eram pessoas fictícias, e o CDC (art. 37) e o
+CONAR tratam depoimento fabricado como publicidade enganosa mesmo quando rotulado.
+Os projetos do portfólio são conceituais e estão identificados como tal — são
+trabalhos reais da equipe, apenas não de clientes. A página sustenta a prova com
+garantias, prazo, comparação e FAQ, que não dependem de terceiros.
 
 ### 10. Micro-copy em todo CTA
 Cada botão principal diz o que acontece depois ("Resposta em até 2 horas úteis",

@@ -344,41 +344,6 @@ export const comparison = {
   ],
 };
 
-export const testimonials = {
-  eyebrow: "Depoimentos",
-  /* Required disclosure. Brazilian consumer law (CDC art. 37) and CONAR treat
-     fabricated testimonials as deceptive advertising, and an unlabelled fake
-     that a visitor sees through costs more trust than it buys. Labelled
-     illustrative copy still communicates the outcome. */
-  label: "Depoimentos ilustrativos",
-  disclaimer:
-    "Exemplos criados para demonstrar o tipo de resultado que buscamos. Ainda não são clientes reais — quando forem, estarão aqui com nome, foto e link.",
-  title: "O que queremos ouvir de você em 90 dias.",
-  items: [
-    {
-      quote:
-        "Antes eu mandava foto do procedimento por WhatsApp, uma por uma. Hoje a cliente chega já sabendo o que quer e quanto custa. A conversa começa muito mais adiantada.",
-      name: "Marina Alves",
-      role: "Proprietária de clínica de estética",
-      city: "São Paulo, SP",
-    },
-    {
-      quote:
-        "O que mudou foi a qualidade do contato. Chega menos gente, mas chega gente que já viu o imóvel, viu o bairro e quer marcar visita.",
-      name: "Rafael Monteiro",
-      role: "Corretor de imóveis",
-      city: "Campinas, SP",
-    },
-    {
-      quote:
-        "Meu cardápio muda toda semana. Eu mando a foto no WhatsApp e no dia seguinte está no ar. Não preciso mexer em nada.",
-      name: "Júlia Ferreira",
-      role: "Proprietária de restaurante",
-      city: "Belo Horizonte, MG",
-    },
-  ],
-};
-
 /**
  * FAQ — the largest gap in the original brief.
  *
@@ -469,16 +434,22 @@ export const footer = {
   whatsappCta: "Falar no WhatsApp",
   legal: `© ${new Date().getFullYear()} ${site.name}. Todos os direitos reservados.`,
   legalNote:
-    "Projetos e depoimentos exibidos neste site são conceituais e estão identificados como tal.",
+    "Os projetos exibidos neste site são conceituais e estão identificados como tal.",
 };
 
 export const leadForm = {
   title: "Comece pelo diagnóstico gratuito",
-  sub: "Três campos. Respondemos em até 2 horas úteis com uma proposta do que dá para fazer no seu negócio.",
+  sub: "Preencha os dados e o WhatsApp abre com tudo pronto. Respondemos em até 2 horas úteis com uma proposta para o seu negócio.",
   fields: {
     name: { label: "Seu nome", placeholder: "Como podemos te chamar?" },
-    phone: { label: "WhatsApp", placeholder: "(11) 98765-4321" },
-    segment: { label: "Seu segmento", placeholder: "Selecione" },
+    company: { label: "Nome do seu negócio", placeholder: "Ex: Clínica Bella" },
+    phone: { label: "Seu WhatsApp", placeholder: "(35) 98448-7206" },
+    segment: { label: "Tipo de negócio", placeholder: "Selecione" },
+    needs: {
+      label: "O que você precisa",
+      placeholder:
+        "Ex: quero um site com agendamento online e galeria de resultados.",
+    },
   },
   segments: [
     "Clínica de estética",
@@ -487,10 +458,16 @@ export const leadForm = {
     "Serviços profissionais",
     "Outro negócio local",
   ],
-  submit: "Solicitar meu site",
-  submitting: "Enviando...",
-  successTitle: "Recebemos seu contato.",
+  submit: "Enviar pelo WhatsApp",
+  submitting: "Abrindo WhatsApp...",
+  /*
+   * Honest wording: with no backend, nothing has been received until the person
+   * taps send inside WhatsApp. Claiming receipt would strand the leads who
+   * think they already talked to us.
+   */
+  successTitle: "Só falta enviar.",
   successBody:
-    "Em até 2 horas úteis você recebe uma mensagem no WhatsApp. Se preferir adiantar, fale com a gente agora:",
-  privacy: "Seus dados são usados apenas para este contato. Sem spam, sem lista de e-mail.",
+    "Abrimos o WhatsApp com seus dados já preenchidos. É só apertar enviar que a conversa chega para a gente. Se a janela não abriu, use o botão abaixo:",
+  privacy:
+    "Seus dados vão direto para a nossa conversa no WhatsApp. Não guardamos nada em lista de e-mail.",
 };

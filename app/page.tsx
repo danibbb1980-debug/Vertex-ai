@@ -8,7 +8,6 @@ import { Industries } from "@/components/sections/Industries";
 import { Portfolio } from "@/components/sections/Portfolio";
 import { WhyVertex } from "@/components/sections/WhyVertex";
 import { Comparison } from "@/components/sections/Comparison";
-import { Testimonials } from "@/components/sections/Testimonials";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { Footer } from "@/components/sections/Footer";
@@ -31,7 +30,7 @@ const jsonLd = {
       description:
         "Criação de sites profissionais por assinatura mensal para clínicas, imobiliárias, restaurantes e negócios locais.",
       areaServed: { "@type": "Country", name: "Brasil" },
-      sameAs: [site.social.instagram, site.social.linkedin, site.social.tiktok],
+      sameAs: [site.social.tiktok],
     },
     {
       "@type": "Service",
@@ -81,7 +80,6 @@ export default function Home() {
         <Portfolio />
         <WhyVertex />
         <Comparison />
-        <Testimonials />
         <Faq />
         <FinalCta />
       </main>
