@@ -250,7 +250,7 @@ export const portfolio = {
        * prévia passa a usá-lo automaticamente (next/image serve AVIF/WebP).
        * Enquanto não existir, o card mostra a prévia em CSS — ver Portfolio.tsx.
        */
-      image: "/projetos/clinica-lumiere.png",
+      image: "/projetos/clinica-lumiere.webp",
       glow: "#a855f7",
     },
     {
@@ -266,7 +266,7 @@ export const portfolio = {
         "Foco em conversão",
       ],
       url: "https://imobiaria.vercel.app/",
-      image: "/projetos/aurum-imobiliaria.png",
+      image: "/projetos/aurum-imobiliaria.webp",
       glow: "#6366f1",
     },
   ],

@@ -268,20 +268,28 @@ Os dois projetos são **demos da Vertex**, não clientes — cada card traz o r�
 "Projeto demonstrativo", e não há nenhuma métrica, avaliação ou depoimento
 associado a eles. Conteúdo em `lib/content.ts` (`portfolio`).
 
-### Publicar as screenshots reais
+### As capturas
 
-Os cards mostram uma prévia em CSS enquanto não existir a captura. Para usar a
-imagem real do site:
+`public/projetos/` traz as capturas reais das duas demos, tiradas no celular.
+São apresentadas dentro de uma moldura de aparelho — o formato retrato fica
+natural e reforça a experiência mobile, que é uma das características listadas.
+
+Os arquivos foram recortados para (a) remover a barra de status do iOS e a
+pílula de URL do Safari e (b) **parar antes das linhas de prova social dos
+demos**, que trazem avaliação e contagem de clientes inventadas
+("4,9 no Google", "mais de 500 clientes"). Essas afirmações não podem aparecer
+no site da Vertex. Se for reenquadrar, mantenha o corte acima dessas linhas.
+
+Para gerar de novo a partir das URLs (versão desktop):
 
 ```bash
 npx playwright install chromium   # só na primeira vez
 node scripts/capturar-projetos.mjs
-npm run build
 ```
 
-O script salva em `public/projetos/`. **Commite os arquivos** — o build da
-Vercel usa o que está no repositório. O `Portfolio.tsx` detecta as imagens em
-tempo de build e passa a usá-las automaticamente, sem editar código.
+**Commite os arquivos** — o build da Vercel usa o que está no repositório. O
+`Portfolio.tsx` detecta as imagens em tempo de build; sem elas, cai na prévia
+em CSS.
 
 Não converta para WebP/AVIF na mão: o `next/image` faz isso sob demanda
 (`images.formats` em `next.config.ts`), servindo AVIF para quem suporta e WebP

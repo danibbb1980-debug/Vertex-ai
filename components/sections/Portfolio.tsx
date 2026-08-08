@@ -80,19 +80,29 @@ export function Portfolio() {
                       aria-hidden="true"
                     />
 
-                    <div className="project-media relative aspect-16/10 w-full overflow-hidden">
-                      {showImage ? (
-                        <Image
-                          src={project.image}
-                          alt={`Prévia do site ${project.name}`}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 560px"
-                          quality={82}
-                          className="object-cover object-top"
-                          /* Abaixo da primeira tela: carrega sob demanda. */
-                          loading="lazy"
-                        />
-                      ) : (
+                    {showImage ? (
+                      /*
+                       * As capturas são do site no celular, em retrato. A moldura
+                       * de aparelho dá contexto ao formato e reforça a experiência
+                       * mobile — que é justamente uma das características listadas.
+                       */
+                      <div className="project-media relative flex aspect-square w-full items-center justify-center overflow-hidden p-6">
+                        <div className="w-[62%] max-w-[310px] overflow-hidden rounded-[1.6rem] border-[5px] border-surface-2 shadow-[0_30px_70px_-25px_rgba(0,0,0,0.9)] ring-1 ring-line">
+                          <Image
+                            src={project.image}
+                            alt={`Prévia do site ${project.name} no celular`}
+                            width={900}
+                            height={1301}
+                            sizes="(max-width: 640px) 62vw, (max-width: 1024px) 40vw, 310px"
+                            quality={86}
+                            /* Abaixo da primeira tela: carrega sob demanda. */
+                            loading="lazy"
+                            className="h-auto w-full"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="project-media relative aspect-16/10 w-full overflow-hidden">
                         <div className="absolute inset-0">
                           <BrowserFrame
                             url={project.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}
@@ -101,8 +111,8 @@ export function Portfolio() {
                             <SiteSkeleton />
                           </BrowserFrame>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
 
                     {/* Camada de hover — Tailwind v4 já limita hover: a ponteiros finos */}
                     <div
