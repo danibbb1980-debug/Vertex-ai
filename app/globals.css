@@ -243,19 +243,16 @@
   }
 
   /*
-    Pula layout e pintura das seções fora da tela.
+    NÃO usar content-visibility nas seções.
 
-    A página tem ~1200 nós e a maior parte está abaixo da dobra. Sem isto, o
-    navegador calcula estilo, layout e pintura de tudo antes da primeira
-    pintura — o custo dominante no celular, onde a CPU é o gargalo, não a rede.
+    Foi testado e medido: rende ~144ms de FCP, mas quebra a precisão das
+    âncoras. Como o navegador só estima a altura do que está fora da tela
+    (contain-intrinsic-size), o alvo da rolagem se desloca conforme as seções
+    são renderizadas — 4 das 6 âncoras paravam no lugar errado, incluindo
+    #contato, que é o destino do CTA principal.
 
-    `contain-intrinsic-size` reserva altura estimada para cada seção, então a
-    barra de rolagem não salta e nada disso gera layout shift.
+    Todos os CTAs do site são âncoras. Navegação confiável vale mais que 144ms.
   */
-  .defer-paint {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 1200px;
-  }
 
   /* Barra fixa do mobile: transform + opacity, sem AnimatePresence. */
   .sticky-bar {

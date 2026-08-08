@@ -224,52 +224,57 @@ export const industries = {
 };
 
 export const portfolio = {
-  eyebrow: "Projetos",
-  title: "O padrão de site que entregamos.",
-  sub: "Projetos conceituais criados pela nossa equipe para demonstrar nosso padrão de design e estratégia.",
-  /* Explicit, non-negotiable disclosure: these are concepts, not client work. */
-  disclaimer: "Projetos conceituais — criados internamente para demonstração, não são clientes reais.",
+  eyebrow: "Projetos selecionados",
+  title: "Projetos que transformam presença digital em percepção de valor.",
+  sub: "Cada projeto é pensado para unir design, estratégia e conversão — criando uma presença digital que representa o nível da empresa.",
+  support: "Explore alguns dos projetos demonstrativos desenvolvidos pela Vertex Studio.",
+  /* Rótulo obrigatório em cada card: são demos da Vertex, não clientes. */
+  demoLabel: "Projeto demonstrativo",
+  cta: "Ver projeto",
   items: [
     {
-      slug: "clinica",
-      name: "Clínica de Estética de Luxo",
-      category: "Saúde e Estética",
+      slug: "clinica-lumiere",
+      category: "Clínicas & Estética",
+      name: "Clínica Lumière",
       description:
-        "Uma vitrine sofisticada de procedimentos, com agendamento em dois toques e galeria de resultados que sustenta o preço premium.",
-      benefits: [
-        "Agendamento direto sem ligação",
-        "Procedimentos apresentados com clareza",
-        "Percepção de valor que justifica o preço",
+        "Uma experiência digital sofisticada para uma clínica de estética, desenvolvida para apresentar serviços, transmitir confiança e facilitar o contato com novos pacientes.",
+      features: [
+        "Design responsivo",
+        "Experiência mobile",
+        "Foco em conversão",
+        "WhatsApp integrado",
       ],
+      url: "https://clinica-alpha-jade.vercel.app/",
+      /*
+       * Screenshot real da demo. Coloque o arquivo em public/projetos/ e a
+       * prévia passa a usá-lo automaticamente (next/image serve AVIF/WebP).
+       * Enquanto não existir, o card mostra a prévia em CSS — ver Portfolio.tsx.
+       */
+      image: "/projetos/clinica-lumiere.png",
       glow: "#a855f7",
     },
     {
-      slug: "imobiliaria",
-      name: "Imobiliária Moderna",
-      category: "Mercado Imobiliário",
+      slug: "aurum-imobiliaria",
+      category: "Imobiliárias",
+      name: "Aurum Imobiliária",
       description:
-        "Busca de imóveis rápida, fichas completas e captura de contato em cada anúncio — para o corretor falar só com quem tem interesse real.",
-      benefits: [
-        "Leads qualificados por imóvel",
-        "Imóveis apresentados com destaque",
-        "Menos tempo perdido com curioso",
+        "Uma plataforma imobiliária moderna desenvolvida para apresentar imóveis de forma organizada, valorizar os empreendimentos e facilitar o contato entre interessados e a imobiliária.",
+      features: [
+        "Design responsivo",
+        "Catálogo de imóveis",
+        "Busca e navegação intuitiva",
+        "Foco em conversão",
       ],
+      url: "https://imobiaria.vercel.app/",
+      image: "/projetos/aurum-imobiliaria.png",
       glow: "#6366f1",
     },
-    {
-      slug: "restaurante",
-      name: "Experiência Digital para Restaurante",
-      category: "Gastronomia",
-      description:
-        "Cardápio digital que abre instantâneo no celular, reserva online e um caminho curto entre a fome e a mesa reservada.",
-      benefits: [
-        "Cardápio sempre atualizado",
-        "Reservas sem depender do telefone",
-        "Experiência que combina com a casa",
-      ],
-      glow: "#f59e0b",
-    },
   ],
+  closing: {
+    title: "Seu próximo projeto pode estar aqui.",
+    body: "Conte para a Vertex o que sua empresa precisa e descubra como podemos transformar sua presença digital.",
+    cta: "Quero meu site",
+  },
 };
 
 export const whyVertex = {

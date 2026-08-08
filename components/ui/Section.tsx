@@ -18,7 +18,7 @@ export function Section({
      */
     <section
       id={id}
-      className={`defer-paint relative overflow-x-clip px-5 py-24 sm:px-8 md:py-32 ${className}`}
+      className={`relative overflow-x-clip px-5 py-24 sm:px-8 md:py-32 ${className}`}
     >
       <div className="mx-auto w-full max-w-6xl">{children}</div>
     </section>

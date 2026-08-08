@@ -3,7 +3,7 @@
 Landing page de conversão para uma agência digital que vende sites profissionais
 por assinatura (R$197/mês) para negócios locais no Brasil.
 
-Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Framer Motion · pronto para Vercel.
+Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · pronto para Vercel.
 
 ---
 
@@ -75,8 +75,8 @@ WhatsApp como alternativa.
 1. **Confirme o número** — abra `https://wa.me/5535984487206` no celular e veja se
    abre a sua conta. Nenhum teste automatizado consegue verificar isso: o WhatsApp
    devolve a mesma página para qualquer número bem formado.
-2. **Portfólio** — os projetos são conceituais e estão identificados. Ao usar
-   trabalhos reais, atualize `portfolio.disclaimer`.
+2. **Portfólio** — gere as capturas das demos com
+   `node scripts/capturar-projetos.mjs` (ver seção "Seção de portfólio").
 3. **Analytics** — `lib/analytics.ts` envia eventos para `dataLayer`/`gtag`.
    Instale GTM ou GA4 para começar a medir.
    O Speed Insights da Vercel já está no `app/layout.tsx`; é só ativar em
@@ -100,6 +100,9 @@ app/
 components/
   sections/            uma seção por arquivo
   ui/                  Button, LeadForm, Nav, StickyCta, Reveal, Mockups...
+scripts/
+  capturar-projetos.mjs  gera as capturas das demos do portfólio
+public/projetos/       capturas das demos (versionadas)
 lib/
   site.ts              preço, prazo, WhatsApp, formatação BRL
   content.ts           todo o texto da página, em pt-BR
@@ -179,8 +182,9 @@ sobre o CTA final, para não competir com o formulário.
 ### 9. Nenhum conteúdo inventado
 A seção de depoimentos foi removida: eram pessoas fictícias, e o CDC (art. 37) e o
 CONAR tratam depoimento fabricado como publicidade enganosa mesmo quando rotulado.
-Os projetos do portfólio são conceituais e estão identificados como tal — são
-trabalhos reais da equipe, apenas não de clientes. A página sustenta a prova com
+Os projetos do portfólio são demos da própria Vertex, identificados como
+"Projeto demonstrativo" em cada card, sem nenhuma métrica ou avaliação
+associada. A página sustenta a prova com
 garantias, prazo, comparação e FAQ, que não dependem de terceiros.
 
 ### 10. Micro-copy em todo CTA
@@ -204,10 +208,10 @@ Medido em Chromium com throttling de celular médio (CPU 4x mais lenta,
 
 | Métrica | Antes | Depois |
 |---|---|---|
-| FCP | 1264 ms | **1028 ms** |
-| LCP | 3128 ms | **1356 ms** |
-| Bloqueio da main thread | 710 ms | **423 ms** |
-| JS transferido | 184 KB | **139 KB** |
+| FCP | 1264 ms | **1228 ms** |
+| LCP | 3128 ms | **1436 ms** |
+| Bloqueio da main thread | 710 ms | **674 ms** |
+| JS transferido | 184 KB | **144 KB** |
 | Fontes | 69 KB | **60 KB** |
 | CLS | 0 | 0 |
 | Conteúdo visível sem JS | **0 (tela em branco)** | **página inteira** |
@@ -235,19 +239,55 @@ esperando JavaScript.
 4. **Blurs grandes viraram gradientes radiais.** `blur-[140px]` sobre um
    elemento de 736px obriga o navegador a rasterizar e desfocar a camada antes
    de pintar. O gradiente tem aparência equivalente e custo próximo de zero.
-5. **`content-visibility: auto`** nas seções abaixo da dobra: o navegador pula
-   layout e pintura do que está fora da tela. Com `contain-intrinsic-size` para
-   não gerar layout shift.
-6. **Fontes só nos pesos usados.** Space Grotesk é aplicada apenas em títulos e
+5. **Fontes só nos pesos usados.** Space Grotesk é aplicada apenas em títulos e
    números, sempre em 600 — os pesos 500 e 700 saíram.
-7. **Animação mais rápida no mobile.** `--stagger` e `--anim-dur` reduzem a
+6. **Animação mais rápida no mobile.** `--stagger` e `--anim-dur` reduzem a
    coreografia em ~2x abaixo de 640px. Mesma entrada, resolvida antes.
-8. **Parallax por `animation-timeline: scroll()`** no desktop: roda no
+7. **Parallax por `animation-timeline: scroll()`** no desktop: roda no
    compositor, sem listener de scroll. Desligado no mobile, onde é a maior
    fonte de jank e quase não aparece.
 
+### O que foi testado e descartado
+
+**`content-visibility: auto` nas seções.** Rende ~144 ms de FCP, mas quebra a
+precisão das âncoras: como o navegador apenas estima a altura do que está fora
+da tela, o alvo da rolagem se desloca conforme as seções renderizam. Medido:
+4 das 6 âncoras paravam no lugar errado, incluindo `#contato`, destino do CTA
+principal. Todos os CTAs do site são âncoras — navegação confiável vale mais que
+144 ms. O comentário em `globals.css` registra a decisão para não ser
+reintroduzido sem querer.
+
 Nenhuma seção, conteúdo ou funcionalidade foi removida, e o desktop está
 visualmente intacto.
+
+---
+
+## Seção de portfólio
+
+Os dois projetos são **demos da Vertex**, não clientes — cada card traz o rótulo
+"Projeto demonstrativo", e não há nenhuma métrica, avaliação ou depoimento
+associado a eles. Conteúdo em `lib/content.ts` (`portfolio`).
+
+### Publicar as screenshots reais
+
+Os cards mostram uma prévia em CSS enquanto não existir a captura. Para usar a
+imagem real do site:
+
+```bash
+npx playwright install chromium   # só na primeira vez
+node scripts/capturar-projetos.mjs
+npm run build
+```
+
+O script salva em `public/projetos/`. **Commite os arquivos** — o build da
+Vercel usa o que está no repositório. O `Portfolio.tsx` detecta as imagens em
+tempo de build e passa a usá-las automaticamente, sem editar código.
+
+Não converta para WebP/AVIF na mão: o `next/image` faz isso sob demanda
+(`images.formats` em `next.config.ts`), servindo AVIF para quem suporta e WebP
+para o resto, no tamanho certo para cada tela. As imagens ficam abaixo da
+primeira tela e usam `loading="lazy"`, e o container tem `aspect-ratio` fixo,
+então a chegada da imagem não gera layout shift.
 
 ---
 

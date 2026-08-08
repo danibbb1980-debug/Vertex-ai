@@ -62,13 +62,66 @@ export function ClientEnhancements() {
     cleanup.push(() => document.removeEventListener("click", onClick));
 
     /*
+     * ---- 3. Movimento sutil de cursor nos cards do portfólio ----
+     * Só em dispositivos com ponteiro fino: em touch nada é registrado, então
+     * o mobile não paga nada por este efeito. O handler apenas escreve duas
+     * custom properties dentro de um rAF — nenhuma leitura de layout por
+     * evento, e a animação em si é resolvida pelo CSS no compositor.
+     */
+    const pointerCards = () => {
+      if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+      const cards = document.querySelectorAll<HTMLElement>(".project-card");
+      cards.forEach((card) => {
+        let frame = 0;
+
+        const onMove = (event: PointerEvent) => {
+          if (frame) return;
+          frame = requestAnimationFrame(() => {
+            frame = 0;
+            const rect = card.getBoundingClientRect();
+            // -1 → 1 em cada eixo, relativo ao centro do card
+            card.style.setProperty(
+              "--mx",
+              String(((event.clientX - rect.left) / rect.width - 0.5) * 2),
+            );
+            card.style.setProperty(
+              "--my",
+              String(((event.clientY - rect.top) / rect.height - 0.5) * 2),
+            );
+          });
+        };
+
+        const onLeave = () => {
+          if (frame) cancelAnimationFrame(frame);
+          frame = 0;
+          card.style.setProperty("--mx", "0");
+          card.style.setProperty("--my", "0");
+        };
+
+        card.addEventListener("pointermove", onMove, { passive: true });
+        card.addEventListener("pointerleave", onLeave, { passive: true });
+        cleanup.push(() => {
+          card.removeEventListener("pointermove", onMove);
+          card.removeEventListener("pointerleave", onLeave);
+          if (frame) cancelAnimationFrame(frame);
+        });
+      });
+    };
+
+    /*
      * Espera a thread principal ficar livre antes de montar os observers.
      * requestIdleCallback quando disponível; senão, o próximo frame.
      */
+    const enhance = () => {
+      reveal();
+      pointerCards();
+    };
+
     const idle =
       typeof window.requestIdleCallback === "function"
-        ? window.requestIdleCallback(reveal, { timeout: 500 })
-        : window.setTimeout(reveal, 0);
+        ? window.requestIdleCallback(enhance, { timeout: 500 })
+        : window.setTimeout(enhance, 0);
 
     return () => {
       if (typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idle);
