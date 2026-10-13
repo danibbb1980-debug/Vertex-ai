@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Larissa Begalli · Personal trainer em Poços de Caldas</title>
-<meta name="description" content="Personal trainer com atendimento exclusivo para mulheres em Poços de Caldas, MG. Presencial, em casa ou online.">
+<title>Larissa Begalli | Personal Trainer em Poços de Caldas</title>
+<meta name="description" content="Personal trainer em Poços de Caldas, MG, com atendimento exclusivo para mulheres. Presencial, em casa ou online.">
 <meta name="theme-color" content="#C46A5B">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23C46A5B'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' text-anchor='middle' fill='%23FBF3EE'%3ELB%3C/text%3E%3C/svg%3E">
 
@@ -24,10 +24,9 @@ window.CONFIG = {
   // Mensagens que já chegam escritas no WhatsApp
   mensagens: {
     avaliacao:  "Olá! Vim pelo seu site e gostaria de agendar uma avaliação gratuita.",
-    presencial: "Olá! Vim pelo seu site e gostaria de saber mais sobre o personal presencial.",
-    online:     "Olá! Vim pelo seu site e gostaria de saber mais sobre a consultoria online.",
-    casa:       "Olá! Vim pelo seu site e gostaria de saber mais sobre o atendimento em casa.",
-    contato:    "Olá! Vim pelo seu site e gostaria de conversar sobre os treinos."
+    presencial: "Olá! Vim pelo seu site e quero saber mais sobre o treino presencial.",
+    online:     "Olá! Vim pelo seu site e quero saber mais sobre a consultoria online.",
+    casa:       "Olá! Vim pelo seu site e quero saber mais sobre o atendimento em casa."
   }
 };
 </script>
@@ -116,7 +115,7 @@ window.CONFIG = {
     position: relative; isolation: isolate;
     min-height: calc(100svh - var(--faixa));
     display: flex; align-items: flex-end;
-    padding: 0 0 104px; color: #fff;
+    padding: 0 0 164px; color: #fff; /* espaço para o botão flutuante do WhatsApp */
     background: var(--marrom);
     overflow: hidden;
   }
@@ -129,9 +128,10 @@ window.CONFIG = {
   .capa::before {
     /* escurecimento suave para o texto ficar legível */
     content: ""; position: absolute; inset: 0; z-index: -1;
-    background: linear-gradient(to top, rgba(40, 26, 23, .88) 0%, rgba(40, 26, 23, .5) 42%, rgba(40, 26, 23, .12) 75%, rgba(40, 26, 23, .2) 100%);
+    background: linear-gradient(to top, rgba(40,25,20,.85) 0%, rgba(40,25,20,.55) 45%, rgba(40,25,20,.15) 100%);
   }
   .capa .eyebrow { color: #F3CFC6; }
+  .capa h1, .capa p, .capa .eyebrow { text-shadow: 0 2px 16px rgba(40, 25, 20, .45); }
   .capa h1 { font-size: clamp(40px, 10.5vw, 72px); max-width: 13ch; margin-bottom: 18px; }
   .capa h1 em { font-style: italic; color: #F3CFC6; }
   .capa p { font-size: 18px; max-width: 34ch; opacity: .94; margin-bottom: 28px; }
@@ -177,18 +177,32 @@ window.CONFIG = {
   .card .btn { width: 100%; }
 
   /* ---------- Treinos ---------- */
-  .treinos-midia { display: grid; gap: 18px; justify-items: center; margin-top: 10px; }
-  .video-moldura {
-    width: 100%; max-width: 360px; aspect-ratio: 9 / 16;
-    border-radius: var(--raio); overflow: hidden; background: var(--marrom);
-    box-shadow: var(--sombra); position: relative;
+  .galeria {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    max-width: 720px; margin: 10px auto 0;
   }
-  .video-moldura video { width: 100%; height: 100%; object-fit: cover; }
-  .treino-foto {
-    width: 100%; max-width: 360px; aspect-ratio: 4 / 5;
-    border-radius: var(--raio); overflow: hidden; background: var(--creme-2); box-shadow: var(--sombra);
+  .galeria figure {
+    margin: 0; aspect-ratio: 3 / 4; overflow: hidden;
+    border-radius: var(--raio); background: var(--creme-2); box-shadow: var(--sombra);
   }
-  .treino-foto img { width: 100%; height: 100%; object-fit: cover; }
+  .galeria .larga { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+  .galeria img { width: 100%; height: 100%; object-fit: cover; }
+  .galeria .larga img { object-position: 50% 30%; }
+
+  .video-treino { position: relative; max-width: 360px; margin: 36px auto 0; }
+  .video-treino video {
+    display: block; width: 100%; height: auto;
+    border-radius: 20px; background: var(--marrom); box-shadow: var(--sombra);
+  }
+  .video-play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 72px; height: 72px; border-radius: 50%; border: 0; cursor: pointer;
+    display: none; place-items: center;
+    background: rgba(251, 243, 238, .92); color: var(--terracota);
+    box-shadow: 0 10px 24px -8px rgba(0, 0, 0, .4);
+  }
+  .video-play svg { width: 30px; height: 30px; margin-left: 4px; }
+  .video-treino.bloqueado .video-play { display: grid; }
 
   /* ---------- Como funciona ---------- */
   .como { background: var(--branco); }
@@ -232,8 +246,8 @@ window.CONFIG = {
 
   /* ---------- WhatsApp flutuante ---------- */
   .wa-flutuante {
-    position: fixed; z-index: 50;
-    right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom));
+    position: fixed; z-index: 9999;
+    right: 16px; bottom: 84px;
     width: 60px; height: 60px; border-radius: 50%;
     display: grid; place-items: center;
     background: #25D366; color: #fff;
@@ -267,7 +281,6 @@ window.CONFIG = {
     .capa .btn { width: auto; }
     .sobre-grid { grid-template-columns: 0.9fr 1.1fr; gap: 64px; }
     .cards { grid-template-columns: repeat(3, 1fr); gap: 22px; }
-    .treinos-midia { grid-template-columns: repeat(2, minmax(0, 360px)); justify-content: center; align-items: center; gap: 32px; }
     .passos { grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .passos li { grid-template-columns: 1fr; align-items: start; padding: 30px 26px; }
     .final-caixa { padding: 84px 40px; }
@@ -282,12 +295,12 @@ window.CONFIG = {
 <main>
   <!-- 1) Capa -->
   <section class="capa" id="inicio">
-    <img class="capa-foto" src="fotos/capa.jpg" alt="" width="1000" height="1546" fetchpriority="high">
+    <img class="capa-foto" src="fotos/capa.jpg" alt="Larissa Begalli, personal trainer em Poços de Caldas, sorrindo durante o treino" width="1000" height="1546" fetchpriority="high">
     <div class="wrap">
       <span class="eyebrow" data-cfg="cidade">Poços de Caldas, MG</span>
       <h1>Seu corpo tem uma história. <em>Vamos treinar com ela.</em></h1>
       <p>Personal trainer com atendimento exclusivo para mulheres. Presencial, em casa ou online.</p>
-      <a class="btn btn-principal" data-wa="avaliacao" href="https://wa.me/5535998424323" target="_blank" rel="noopener">
+      <a class="btn btn-principal" data-wa="avaliacao" href="https://wa.me/5535998424323?text=Ol%C3%A1!%20Vim%20pelo%20seu%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20gratuita." target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
         Agendar avaliação gratuita
       </a>
@@ -298,7 +311,7 @@ window.CONFIG = {
   <section id="sobre">
     <div class="wrap sobre-grid">
       <div class="sobre-foto revelar">
-        <img src="fotos/sobre.jpg" alt="Larissa Begalli sorrindo na academia" loading="lazy" decoding="async" width="730" height="912">
+        <img src="fotos/sobre.jpg" alt="Larissa Begalli, personal trainer em Poços de Caldas, sorrindo na academia" loading="lazy" decoding="async" width="730" height="912">
       </div>
       <div class="sobre-texto revelar">
         <span class="eyebrow">Sobre mim</span>
@@ -324,21 +337,21 @@ window.CONFIG = {
           <h3>Personal presencial</h3>
           <p>Para quem tem dificuldade de treinar sozinha. Acompanhamento de perto, aula a aula.</p>
           <p class="consulte">Consulte pelo WhatsApp</p>
-          <a class="btn btn-contorno" data-wa="presencial" href="https://wa.me/5535998424323" target="_blank" rel="noopener">Quero saber mais</a>
+          <a class="btn btn-contorno" data-wa="presencial" href="https://wa.me/5535998424323?text=Ol%C3%A1!%20Vim%20pelo%20seu%20site%20e%20quero%20saber%20mais%20sobre%20o%20treino%20presencial." target="_blank" rel="noopener">Quero saber mais</a>
         </article>
         <article class="card revelar">
           <div class="card-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 9.5v5l4-2.5z"/></svg></div>
           <h3>Consultoria online</h3>
           <p>Treinos personalizados, vídeos explicativos gravados por mim e suporte para tirar dúvidas remotamente, a hora que precisar.</p>
           <p class="consulte">Consulte pelo WhatsApp</p>
-          <a class="btn btn-contorno" data-wa="online" href="https://wa.me/5535998424323" target="_blank" rel="noopener">Quero saber mais</a>
+          <a class="btn btn-contorno" data-wa="online" href="https://wa.me/5535998424323?text=Ol%C3%A1!%20Vim%20pelo%20seu%20site%20e%20quero%20saber%20mais%20sobre%20a%20consultoria%20online." target="_blank" rel="noopener">Quero saber mais</a>
         </article>
         <article class="card revelar">
           <div class="card-icone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M12 17.5s-3-1.8-3-3.8a1.6 1.6 0 0 1 3-.8 1.6 1.6 0 0 1 3 .8c0 2-3 3.8-3 3.8z"/></svg></div>
           <h3>Atendimento em casa</h3>
           <p>Consultoria presencial no conforto da sua casa.</p>
           <p class="consulte">Consulte pelo WhatsApp</p>
-          <a class="btn btn-contorno" data-wa="casa" href="https://wa.me/5535998424323" target="_blank" rel="noopener">Quero saber mais</a>
+          <a class="btn btn-contorno" data-wa="casa" href="https://wa.me/5535998424323?text=Ol%C3%A1!%20Vim%20pelo%20seu%20site%20e%20quero%20saber%20mais%20sobre%20o%20atendimento%20em%20casa." target="_blank" rel="noopener">Quero saber mais</a>
         </article>
       </div>
     </div>
@@ -351,16 +364,21 @@ window.CONFIG = {
         <span class="eyebrow">Na prática</span>
         <h2 class="titulo">Veja como são <em>os treinos</em></h2>
       </div>
-      <div class="treinos-midia">
-        <div class="video-moldura revelar">
-          <!-- O vídeo só é carregado quando chega perto da tela (ver script no fim) -->
-          <video id="video-treino" muted loop playsinline autoplay preload="none"
-                 poster="fotos/capa-video.jpg" data-src="videos/treino.mp4"
-                 aria-label="Vídeo de um treino com a Larissa"></video>
-        </div>
-        <div class="treino-foto revelar">
-          <img src="fotos/treino.jpg" alt="Larissa treinando em um aparelho da academia" loading="lazy" decoding="async" width="1170" height="1546">
-        </div>
+      <div class="galeria">
+        <figure class="revelar"><img src="fotos/treino.jpg" alt="Larissa Begalli, personal trainer em Poços de Caldas, treinando em um aparelho da academia" loading="lazy" decoding="async" width="1170" height="1546"></figure>
+        <figure class="revelar"><img src="fotos/treino-2.jpg" alt="Larissa Begalli treinando em um banco da academia" loading="lazy" decoding="async" width="720" height="1374"></figure>
+        <figure class="larga revelar"><img src="fotos/treino-3.jpg" alt="Larissa Begalli sorrindo durante o treino na academia" loading="lazy" decoding="async" width="720" height="1374"></figure>
+      </div>
+
+      <!-- Vídeo: toca sozinho quando aparece na tela e pausa quando sai (ver script no fim) -->
+      <div class="video-treino revelar">
+        <video id="video-treino" playsinline muted loop preload="metadata" poster="fotos/capa-video.jpg" controls
+               aria-label="Vídeo da Larissa Begalli treinando na academia">
+          <source src="videos/treino.mp4" type="video/mp4">
+        </video>
+        <button class="video-play" type="button" aria-label="Reproduzir vídeo">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -385,7 +403,7 @@ window.CONFIG = {
     <div class="wrap">
       <div class="final-caixa revelar">
         <h2>Pronta para começar? <em>Vamos conversar.</em></h2>
-        <a class="btn btn-principal" data-wa="contato" href="https://wa.me/5535998424323" target="_blank" rel="noopener">
+        <a class="btn btn-principal" data-wa="avaliacao" href="https://wa.me/5535998424323?text=Ol%C3%A1!%20Vim%20pelo%20seu%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20gratuita." target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
           Falar no WhatsApp
         </a>
@@ -403,7 +421,7 @@ window.CONFIG = {
   </div>
 </footer>
 
-<a class="wa-flutuante" data-wa="avaliacao" href="https://wa.me/5535998424323" target="_blank" rel="noopener" aria-label="Falar com a Larissa no WhatsApp">
+<a class="wa-flutuante" data-wa="avaliacao" href="https://wa.me/5535998424323?text=Ol%C3%A1!%20Vim%20pelo%20seu%20site%20e%20gostaria%20de%20agendar%20uma%20avalia%C3%A7%C3%A3o%20gratuita." target="_blank" rel="noopener" aria-label="Falar com a Larissa no WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
 </a>
 
@@ -427,7 +445,7 @@ window.CONFIG = {
 
   // Links do WhatsApp com a mensagem certa
   document.querySelectorAll("[data-wa]").forEach(function (el) {
-    var msg = C.mensagens[el.getAttribute("data-wa")] || C.mensagens.contato;
+    var msg = C.mensagens[el.getAttribute("data-wa")] || C.mensagens.avaliacao;
     el.href = "https://wa.me/" + C.whatsapp + "?text=" + encodeURIComponent(msg);
   });
 
@@ -444,32 +462,30 @@ window.CONFIG = {
     revelar.forEach(function (el) { el.classList.add("visivel"); });
   }
 
-  // Vídeo leve: só baixa quando está perto da tela, pausa fora dela.
-  // Em economia de dados ou movimento reduzido, mostra o pôster com controles.
+  // Vídeo: toca quando aparece na tela e pausa quando sai.
+  // Se o navegador bloquear o autoplay (ou em economia de dados), mostra o botão de play.
   var video = document.getElementById("video-treino");
   if (video) {
+    var caixa = video.parentNode;
+    var botao = caixa.querySelector(".video-play");
     var economia = (navigator.connection && navigator.connection.saveData) ||
                    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var carregar = function () {
-      if (video.src) return;
-      video.src = video.getAttribute("data-src");
-      if (economia) { video.removeAttribute("autoplay"); video.controls = true; video.preload = "metadata"; }
-    };
+    var bloqueado = function () { caixa.classList.add("bloqueado"); };
     var tocar = function () {
-      if (economia) return;
       var p = video.play();
-      if (p && p.catch) p.catch(function () { video.controls = true; });
+      if (p && p.catch) p.catch(bloqueado);
     };
-    if (economia) video.removeAttribute("autoplay");
-    if ("IntersectionObserver" in window) {
+    video.addEventListener("play", function () { caixa.classList.remove("bloqueado"); });
+    botao.addEventListener("click", tocar);
+    if (economia || !("IntersectionObserver" in window)) {
+      bloqueado();
+    } else {
       new IntersectionObserver(function (itens) {
         itens.forEach(function (i) {
-          if (i.isIntersecting) { carregar(); tocar(); }
-          else if (video.src && !video.paused) { video.pause(); }
+          if (i.isIntersecting) tocar();
+          else if (!video.paused) video.pause();
         });
-      }, { rootMargin: "200px 0px" }).observe(video);
-    } else {
-      carregar(); tocar();
+      }, { threshold: 0.4 }).observe(video);
     }
   }
 })();

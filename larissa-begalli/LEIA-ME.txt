@@ -5,7 +5,9 @@ Arraste a pasta "larissa-begalli" inteira em https://app.netlify.com/drop
 Mídias (já incluídas e tratadas):
 fotos/capa.jpg        capa (borda direita cortada para tirar a perna; pessoas ao fundo desfocadas)
 fotos/sobre.jpg       seção Sobre (recorte 4:5; pessoas ao fundo, à direita, desfocadas e escurecidas)
-fotos/treino.jpg      ao lado do vídeo (pessoas ao fundo desfocadas)
+fotos/treino.jpg      galeria dos treinos (pessoas ao fundo desfocadas)
+fotos/treino-2.jpg    galeria dos treinos (quadro do vídeo)
+fotos/treino-3.jpg    galeria dos treinos, foto larga (quadro do vídeo)
 fotos/capa-video.jpg  primeiro quadro do vídeo, exibido antes de ele carregar
 videos/treino.mp4     vídeo vertical, 15 s, 1,9 MB
 
