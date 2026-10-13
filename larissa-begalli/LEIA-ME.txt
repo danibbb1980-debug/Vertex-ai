@@ -1,11 +1,13 @@
-Site da Larissa Begalli — coloque os arquivos de mídia nestas pastas antes de subir no Netlify Drop:
+Site da Larissa Begalli — pronto para o Netlify Drop.
 
-fotos/capa.jpg        foto de fundo da capa
-fotos/sobre.jpg       foto da seção Sobre
-fotos/treino.jpg      foto ao lado do vídeo
-fotos/capa-video.jpg  imagem exibida antes do vídeo carregar
-videos/treino.mp4     vídeo vertical (ideal: até ~5 MB, H.264)
+Arraste a pasta "larissa-begalli" inteira em https://app.netlify.com/drop
 
-Depois arraste a pasta "larissa-begalli" inteira em https://app.netlify.com/drop
+Mídias (já incluídas e tratadas):
+fotos/capa.jpg        capa (borda direita cortada para tirar a perna; pessoas ao fundo desfocadas)
+fotos/sobre.jpg       seção Sobre (recorte 4:5; pessoas ao fundo, à direita, desfocadas e escurecidas)
+fotos/treino.jpg      ao lado do vídeo (pessoas ao fundo desfocadas)
+fotos/capa-video.jpg  primeiro quadro do vídeo, exibido antes de ele carregar
+videos/treino.mp4     vídeo vertical, 15 s, 1,9 MB
+
 Para editar nome, WhatsApp, Instagram e mensagens, altere o bloco CONFIG no topo do index.html.
 Para tirar a faixa de rascunho, mude rascunho: true para rascunho: false.

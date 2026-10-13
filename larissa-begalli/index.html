@@ -6,6 +6,7 @@
 <title>Larissa Begalli · Personal trainer em Poços de Caldas</title>
 <meta name="description" content="Personal trainer com atendimento exclusivo para mulheres em Poços de Caldas, MG. Presencial, em casa ou online.">
 <meta name="theme-color" content="#C46A5B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23C46A5B'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' text-anchor='middle' fill='%23FBF3EE'%3ELB%3C/text%3E%3C/svg%3E">
 
 <script>
 /* =====================================================================
@@ -115,23 +116,20 @@ window.CONFIG = {
     position: relative; isolation: isolate;
     min-height: calc(100svh - var(--faixa));
     display: flex; align-items: flex-end;
-    padding: 0 0 64px; color: #fff;
+    padding: 0 0 104px; color: #fff;
     background: var(--marrom);
     overflow: hidden;
   }
   .capa-foto {
     position: absolute; inset: 0; z-index: -2;
     width: 100%; height: 100%; object-fit: cover;
-    /* foca à esquerda para tirar do quadro a perna na borda direita */
-    object-position: 30% 30%;
-    transform: scale(1.06); transform-origin: 30% 50%;
+    /* a foto já vem recortada sem a perna da borda direita; no celular, mantém o rosto à direita */
+    object-position: 100% 25%;
   }
   .capa::before {
-    /* escurecimento suave para leitura + véu extra na borda direita */
+    /* escurecimento suave para o texto ficar legível */
     content: ""; position: absolute; inset: 0; z-index: -1;
-    background:
-      linear-gradient(to left, rgba(40, 26, 23, .55) 0%, rgba(40, 26, 23, 0) 22%),
-      linear-gradient(to top, rgba(40, 26, 23, .86) 0%, rgba(40, 26, 23, .45) 45%, rgba(40, 26, 23, .18) 100%);
+    background: linear-gradient(to top, rgba(40, 26, 23, .88) 0%, rgba(40, 26, 23, .5) 42%, rgba(40, 26, 23, .12) 75%, rgba(40, 26, 23, .2) 100%);
   }
   .capa .eyebrow { color: #F3CFC6; }
   .capa h1 { font-size: clamp(40px, 10.5vw, 72px); max-width: 13ch; margin-bottom: 18px; }
@@ -146,19 +144,8 @@ window.CONFIG = {
     aspect-ratio: 4 / 5; background: var(--creme-2); box-shadow: var(--sombra);
   }
   .sobre-foto img {
-    width: 100%; height: 100%; object-fit: cover;
-    /* recorta para a esquerda, deixando de fora as pessoas ao fundo à direita */
-    object-position: 22% 35%;
-    transform: scale(1.12); transform-origin: 25% 45%;
-  }
-  .sobre-foto::after {
-    /* desfoque + escurecimento leve na faixa direita, por segurança */
-    content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 30%;
-    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-    background: linear-gradient(to left, rgba(58, 42, 38, .22), rgba(58, 42, 38, 0));
-    -webkit-mask-image: linear-gradient(to left, #000 35%, transparent);
-            mask-image: linear-gradient(to left, #000 35%, transparent);
-    pointer-events: none;
+    /* a foto já vem recortada e com o fundo à direita desfocado (pessoas atrás) */
+    width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
   }
   .sobre-texto p { color: var(--marrom-suave); }
   .assinatura {
@@ -272,6 +259,11 @@ window.CONFIG = {
     section { padding: 110px 0; }
     .wrap { padding: 0 36px; }
     .capa { align-items: center; padding: 80px 0; }
+    /* no desktop a foto ocupa a metade direita, sem ampliar demais */
+    .capa-foto { left: auto; width: 54%; object-position: 50% 0%; }
+    .capa::before {
+      background: linear-gradient(to right, var(--marrom) 0%, var(--marrom) 46%, rgba(58, 42, 38, .55) 56%, rgba(58, 42, 38, 0) 72%);
+    }
     .capa .btn { width: auto; }
     .sobre-grid { grid-template-columns: 0.9fr 1.1fr; gap: 64px; }
     .cards { grid-template-columns: repeat(3, 1fr); gap: 22px; }
@@ -290,7 +282,7 @@ window.CONFIG = {
 <main>
   <!-- 1) Capa -->
   <section class="capa" id="inicio">
-    <img class="capa-foto" src="fotos/capa.jpg" alt="" fetchpriority="high">
+    <img class="capa-foto" src="fotos/capa.jpg" alt="" width="1000" height="1546" fetchpriority="high">
     <div class="wrap">
       <span class="eyebrow" data-cfg="cidade">Poços de Caldas, MG</span>
       <h1>Seu corpo tem uma história. <em>Vamos treinar com ela.</em></h1>
@@ -306,7 +298,7 @@ window.CONFIG = {
   <section id="sobre">
     <div class="wrap sobre-grid">
       <div class="sobre-foto revelar">
-        <img src="fotos/sobre.jpg" alt="Larissa Begalli, personal trainer" loading="lazy" decoding="async" width="800" height="1000">
+        <img src="fotos/sobre.jpg" alt="Larissa Begalli sorrindo na academia" loading="lazy" decoding="async" width="730" height="912">
       </div>
       <div class="sobre-texto revelar">
         <span class="eyebrow">Sobre mim</span>
@@ -367,7 +359,7 @@ window.CONFIG = {
                  aria-label="Vídeo de um treino com a Larissa"></video>
         </div>
         <div class="treino-foto revelar">
-          <img src="fotos/treino.jpg" alt="Larissa acompanhando um treino" loading="lazy" decoding="async" width="720" height="900">
+          <img src="fotos/treino.jpg" alt="Larissa treinando em um aparelho da academia" loading="lazy" decoding="async" width="1170" height="1546">
         </div>
       </div>
     </div>
