@@ -7,6 +7,17 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  /*
+    Projetos de cliente na Vercel apontam para este mesmo repositório e
+    definem SITE_HOME (ex.: "/ailton-davila"): a raiz do domínio passa a
+    abrir a landing do cliente. Sem a variável — o projeto da Vertex —, nada
+    muda.
+  */
+  async redirects() {
+    const home = process.env.SITE_HOME;
+    if (!home || home === "/") return [];
+    return [{ source: "/", destination: home, permanent: false }];
+  },
   async headers() {
     return [
       {
