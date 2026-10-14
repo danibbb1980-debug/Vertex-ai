@@ -1,0 +1,338 @@
+/*
+  Estilos próprios da landing do Ailton D’Avila.
+
+  Tudo fica sob .ad (o wrapper do layout desta rota), para que nada vaze para
+  o site da Vertex numa navegação client-side. Os tokens de cor e fonte estão
+  no @theme de app/globals.css, com o prefixo ad-.
+
+  Movimento: só transform/opacity (compositor). O bloco de
+  prefers-reduced-motion de globals.css já zera duração e iterações de toda
+  animação e transição da página — inclusive as daqui.
+*/
+
+.ad {
+  /*
+    Redefinidas aqui porque --font-anton e --font-instrument-serif só existem
+    a partir deste wrapper (next/font no layout da rota). No :root, onde o
+    @theme as declara, elas ainda não estão definidas.
+  */
+  --font-ad-display: var(--font-anton), "Arial Narrow", Impact, sans-serif;
+  --font-ad-serif: var(--font-instrument-serif), Georgia, serif;
+  background-color: var(--color-ad-black);
+  color: var(--color-ad-paper);
+  /* Permite animar a altura dos <details> do FAQ até "auto". */
+  interpolate-size: allow-keywords;
+}
+
+.ad h1,
+.ad h2,
+.ad h3 {
+  font-family: var(--font-ad-display);
+  font-weight: 400;
+  letter-spacing: 0.002em;
+  /* Anton tem acentos altos: abaixo de ~1.0 o Ç e o Ê das linhas vizinhas se tocam. */
+  line-height: 1.02;
+  text-transform: uppercase;
+}
+
+.ad :focus-visible {
+  outline: 2px solid var(--color-ad-lime);
+  outline-offset: 3px;
+}
+
+.ad ::selection {
+  background: var(--color-ad-lime);
+  color: var(--color-ad-black);
+}
+
+.ad-serif {
+  font-family: var(--font-ad-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Texto vazado, para números e tipografia decorativa. */
+.ad-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in oklab, var(--color-ad-paper) 38%, transparent);
+}
+
+/*
+  Granulado de filme. SVG de 2 KB repetido, sem filtro em tempo real: o ruído
+  é rasterizado uma vez e só repete. Dá textura às fotos e esconde a baixa
+  resolução das originais.
+*/
+.ad-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Header: fundo surge com o scroll, sem JavaScript ───────────────────── */
+.ad-header {
+  background: linear-gradient(to bottom, rgb(9 9 9 / 0.85), rgb(9 9 9 / 0));
+}
+
+@supports (animation-timeline: scroll()) {
+  @keyframes ad-header-solid {
+    to {
+      background-color: rgb(9 9 9 / 0.88);
+      border-bottom-color: var(--color-ad-line);
+      backdrop-filter: blur(14px);
+    }
+  }
+
+  .ad-header {
+    animation: ad-header-solid linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 160px;
+  }
+}
+
+/* ── Entrada do hero ────────────────────────────────────────────────────── */
+
+/* Cada linha do título sobe de dentro de uma máscara. */
+@keyframes ad-line-up {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.ad-line {
+  display: block;
+  overflow: hidden;
+  /* Folga para acentos e descendentes não serem cortados pela máscara. */
+  padding-block: 0.06em;
+  margin-block: -0.06em;
+}
+
+.ad-line > span {
+  display: block;
+  animation: ad-line-up calc(0.85s * var(--anim-dur, 1)) var(--ease-out-soft) both;
+  animation-delay: calc(var(--d, 0s) * var(--stagger, 1));
+}
+
+/* Foto do hero: leve aproximação na chegada. */
+@keyframes ad-settle {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ad-settle {
+  animation: ad-settle calc(1.6s * var(--anim-dur, 1)) var(--ease-out-soft) both;
+}
+
+/* Indicador de rolagem. */
+@keyframes ad-scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.ad-scroll-cue {
+  animation: ad-scroll-cue 2.4s var(--ease-out-soft) 1.4s infinite;
+}
+
+/* ── Botão principal ────────────────────────────────────────────────────── */
+.ad-btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Brilho que atravessa o botão no hover. */
+.ad-btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+  transform: translate3d(-110%, 0, 0);
+  transition: transform 0.7s var(--ease-out-soft);
+}
+
+.ad-btn-primary:hover::before {
+  transform: translate3d(110%, 0, 0);
+}
+
+.ad-btn-arrow {
+  transition: transform 0.3s var(--ease-out-soft);
+}
+
+.ad-btn-primary:hover .ad-btn-arrow,
+.ad-btn-secondary:hover .ad-btn-arrow {
+  transform: translate3d(4px, 0, 0);
+}
+
+/* ── Faixa de palavras em movimento ─────────────────────────────────────── */
+@keyframes ad-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.ad-marquee {
+  animation: ad-marquee 48s linear infinite;
+}
+
+/* ── Benefícios: linha que cresce no hover ──────────────────────────────── */
+.ad-benefit .ad-benefit-rule {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-out-soft);
+}
+
+.ad-benefit .ad-benefit-num {
+  transition:
+    color 0.4s var(--ease-out-soft),
+    -webkit-text-stroke-color 0.4s var(--ease-out-soft);
+}
+
+@media (hover: hover) {
+  .ad-benefit:hover .ad-benefit-rule {
+    transform: scaleX(1);
+  }
+
+  .ad-benefit:hover .ad-benefit-num {
+    color: var(--color-ad-lime);
+    -webkit-text-stroke-color: var(--color-ad-lime);
+  }
+}
+
+/* ── Etapas: a linha se desenha quando o bloco entra na tela ────────────── */
+.ad-draw {
+  transform-origin: left;
+  transition: transform 1.4s var(--ease-out-soft) 0.25s;
+}
+
+[data-js="1"] .reveal:not(.is-in) .ad-draw {
+  transform: scaleX(0);
+}
+
+/* Luz que se abre sobre a seção "treinar no escuro". */
+.ad-spotlight {
+  background: radial-gradient(
+    ellipse 55% 60% at 50% 0%,
+    color-mix(in oklab, var(--color-ad-paper) 11%, transparent),
+    color-mix(in oklab, var(--color-ad-lime) 4%, transparent) 45%,
+    transparent 75%
+  );
+  transition:
+    opacity 1.6s var(--ease-out-soft),
+    transform 1.6s var(--ease-out-soft);
+}
+
+[data-js="1"] .reveal:not(.is-in) .ad-spotlight {
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+/* ── FAQ: abertura suave do <details> onde houver suporte ───────────────── */
+.ad details::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition:
+    block-size 0.4s var(--ease-out-soft),
+    content-visibility 0.4s allow-discrete;
+}
+
+.ad details[open]::details-content {
+  block-size: auto;
+}
+
+.ad-faq-icon {
+  transition: transform 0.35s var(--ease-out-soft);
+}
+
+.ad details[open] .ad-faq-icon {
+  transform: rotate(45deg);
+}
+
+/* ── Botão flutuante do WhatsApp ────────────────────────────────────────── */
+.ad-float {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 16px, 0) scale(0.9);
+  transition:
+    opacity 0.3s var(--ease-out-soft),
+    transform 0.3s var(--ease-out-soft),
+    visibility 0.3s;
+}
+
+.ad-float.is-in {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+@keyframes ad-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  80%,
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+/* Três pulsos discretos e para — chama a atenção sem virar ruído. */
+.ad-float.is-in .ad-ping {
+  animation: ad-ping 2s var(--ease-out-soft) 0.4s 3;
+}
+
+/*
+  Parallax discreto em fotos, atrelado à passagem do elemento pela tela
+  (view timeline). Roda no compositor e só no desktop; sem suporte, a foto
+  fica estática no mesmo enquadramento.
+*/
+@keyframes ad-drift {
+  from {
+    transform: scale(1.08) translate3d(0, -3%, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(0, 3%, 0);
+  }
+}
+
+.ad-parallax {
+  transform: scale(1.08);
+}
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .ad-parallax {
+      animation: ad-drift linear both;
+      animation-timeline: view();
+    }
+  }
+}

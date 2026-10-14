@@ -35,6 +35,20 @@
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
+  /*
+    Ailton D’Avila — Personal Trainer (rota /ailton-davila).
+    Prefixo ad- para não colidir com a identidade da Vertex.
+    Contraste: paper/black 18.6:1 · mute/black 8.1:1 · black/lime 15.4:1.
+  */
+  --color-ad-black: #090909;
+  --color-ad-graphite: #171717;
+  --color-ad-line: #2a2a2a;
+  --color-ad-paper: #f5f3ef;
+  --color-ad-mute: #a3a3a3;
+  --color-ad-lime: #c6f36b;
+  --font-ad-display: var(--font-anton), "Arial Narrow", Impact, sans-serif;
+  --font-ad-serif: var(--font-instrument-serif), Georgia, serif;
+
   /* Escalas de animação (desktop = referência). */
   --stagger: 1;
   --anim-dur: 1;

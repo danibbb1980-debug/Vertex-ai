@@ -321,3 +321,38 @@ skill sugeriu paleta clara com dourado para o padrão "Trust & Authority"; a
 identidade da marca pede preto profundo com gradiente violeta/índigo. Foram
 mantidos o padrão estrutural (*Pricing-Focused Landing*: CTA fixo, FAQ,
 tratamento de objeções) e a tipografia **Space Grotesk / Inter**.
+
+---
+
+## Landing de cliente: Ailton D’Avila — Personal Trainer
+
+Rota própria em `/ailton-davila`, independente do site da Vertex (fontes, paleta,
+metadata, favicon e imagem OG próprios). O site da Vertex não carrega nada dela.
+
+```
+app/ailton-davila/     layout (fontes Anton + Instrument Serif), page, ailton.css,
+                       opengraph-image, icon
+components/ailton/     Header, Hero, SocialProof, Benefits, Marquee,
+                       CoachingProcess, Testimonials, ConversionCta, Faq,
+                       FinalCta, Footer, WhatsAppButton, CountUp, ui
+lib/ailton.ts          todos os dados e textos: telefone, endereço, nota do
+                       Google, mensagens de WhatsApp por CTA, avaliações, FAQ
+public/ailton/         fotos reais enviadas pelo cliente, tratadas em P&B
+```
+
+- **Nada inventado.** Sem certificações, anos de experiência, preços, planos,
+  horários ou modalidades. Onde a informação não existe, a página manda para o
+  WhatsApp. As avaliações são as três públicas fornecidas, com texto original.
+- **Nota por avaliação não é exibida**: uma média 5,0 com 37 avaliações não
+  garante que cada uma seja 5 estrelas. A página afirma só a média e o total.
+- **JSON-LD sem `aggregateRating`**: o Google não aceita avaliações
+  autodeclaradas de um negócio sobre si mesmo.
+- **Cada CTA tem mensagem própria** (`messages` em `lib/ailton.ts`), então o
+  Ailton sabe de onde a conversa veio.
+- **Fotos**: as originais têm baixa resolução (a maior tem 508×677). O
+  tratamento P&B com granulado disfarça, mas fotos novas em alta resolução são
+  a maior melhoria possível. Substitua os arquivos em `public/ailton/`
+  mantendo os nomes.
+- **Para publicar em domínio próprio**, faça o deploy deste projeto com
+  `NEXT_PUBLIC_SITE_URL` apontando para o domínio — canonical, OG e sitemap
+  seguem a variável.
