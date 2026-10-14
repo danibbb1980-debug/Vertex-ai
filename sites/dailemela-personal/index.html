@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dai Lemela | Personal Trainer em Poços de Caldas</title>
+<meta name="description" content="Personal trainer em Poços de Caldas. Musculação para mulheres com foco em emagrecimento, definição e força. Studio exclusivo, online ou academia.">
+<meta name="theme-color" content="#141416">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="fotos/capa.jpg">
+
+<script>
+  /* =========================================================
+     CONFIG — edite os dados do site aqui
+     ========================================================= */
+  const CONFIG = {
+    rascunho: true,
+    nome: "Dai Lemela",
+    cref: "CREF 022612-G/MG",
+    instagram: "dailemelapersonal",
+    whatsapp: "5535992344408",
+    cidade: "Poços de Caldas, MG",
+    anosExperiencia: "+17 anos",
+    endereco: "",
+    msgAvaliacao: "Olá, Dai! Vim pelo seu site e gostaria de agendar uma avaliação.",
+    mensagens: {
+      emagrecimento: "Olá, Dai! Vim pelo seu site e tenho interesse no treino de emagrecimento e definição.",
+      forca: "Olá, Dai! Vim pelo seu site e tenho interesse em musculação e força.",
+      atendimento: "Olá, Dai! Vim pelo seu site e gostaria de saber mais sobre o atendimento (studio, online ou academia).",
+      contato: "Olá, Dai! Vim pelo seu site e gostaria de conversar sobre os treinos."
+    }
+  };
+</script>
+
+<style>
+  :root {
+    --bg: #141416;
+    --bg-2: #1c1c1f;
+    --bg-3: #232327;
+    --text: #F3EEE7;
+    --muted: #b7b0a6;
+    --gold: #C9A66B;
+    --gold-2: #dcc08e;
+    --line: rgba(243, 238, 231, .12);
+    --display: "Bricolage Grotesque", "Archivo", system-ui, sans-serif;
+    --body: "Inter", system-ui, -apple-system, sans-serif;
+    --gutter: 20px;
+    --radius: 18px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 16px/1.6 var(--body);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.05; margin: 0; letter-spacing: -.02em; }
+  p { margin: 0; }
+  .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font: 600 12px/1 var(--body); letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+
+  /* Botões */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 52px; padding: 0 26px; border-radius: 999px;
+    font: 600 16px/1 var(--body); text-decoration: none;
+    transition: transform .15s ease, background .2s ease, color .2s ease;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-gold { background: var(--gold); color: #141416; }
+  .btn-gold:hover { background: var(--gold-2); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+
+  /* Faixa de rascunho */
+  .draft {
+    background: var(--gold); color: #141416; text-align: center;
+    font: 600 12px/1 var(--body); letter-spacing: .08em; text-transform: uppercase;
+    padding: 8px var(--gutter);
+  }
+
+  /* Hero */
+  .hero {
+    position: relative; min-height: 100svh; display: flex; align-items: flex-end;
+    isolation: isolate; overflow: hidden;
+  }
+  .hero > img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: 38% 30%; z-index: -2;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(180deg, rgba(20,20,22,.55) 0%, rgba(20,20,22,0) 22%),
+      linear-gradient(0deg, #141416 0%, rgba(20,20,22,.92) 32%, rgba(20,20,22,.35) 62%, rgba(20,20,22,0) 80%);
+  }
+  .hero-top {
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px var(--gutter);
+  }
+  .brand { font: 800 20px/1 var(--display); letter-spacing: -.02em; text-decoration: none; }
+  .brand span { color: var(--gold); }
+  .hero-ig {
+    font: 500 13px/1 var(--body); text-decoration: none; color: var(--text);
+    padding: 9px 14px; border: 1px solid rgba(243,238,231,.35); border-radius: 999px;
+    background: rgba(20,20,22,.35); backdrop-filter: blur(6px);
+  }
+  .hero-content { padding-top: 120px; padding-bottom: 44px; }
+  .hero h1 {
+    font-size: clamp(40px, 11.5vw, 84px); font-weight: 800;
+    max-width: 12ch; margin: 18px 0 18px;
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero-sub { font-size: 17px; color: #e4ddd3; max-width: 34ch; }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hero-cref { margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+  /* Faixa de números */
+  .facts { border-block: 1px solid var(--line); background: var(--bg); }
+  .facts ul {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .facts li {
+    padding: 22px 14px 22px 0; border-bottom: 1px solid var(--line);
+  }
+  .facts li:nth-child(even) { padding-left: 18px; border-left: 1px solid var(--line); }
+  .facts li:nth-last-child(-n+2) { border-bottom: 0; }
+  .facts strong { display: block; font: 800 26px/1.05 var(--display); color: var(--gold); letter-spacing: -.02em; }
+  .facts span { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); }
+
+  section { padding: 76px 0; }
+  .section-title { font-size: clamp(32px, 8.5vw, 56px); font-weight: 800; margin: 14px 0 0; max-width: 16ch; }
+
+  /* Sobre */
+  .about-grid { display: grid; gap: 34px; }
+  .about-photo { position: relative; }
+  .about-photo img {
+    width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%;
+    border-radius: var(--radius);
+  }
+  .about-photo::before {
+    content: ""; position: absolute; inset: 14px -10px -10px 14px;
+    border: 1px solid var(--gold); border-radius: var(--radius); z-index: -1;
+  }
+  .about-photo { isolation: isolate; margin-right: 10px; }
+  .about-text p { color: #d9d2c8; margin-top: 18px; font-size: 17px; }
+  .about-text p:first-of-type { margin-top: 22px; }
+  .cref-tag {
+    display: inline-block; margin-top: 26px; padding: 10px 16px;
+    border: 1px solid var(--gold); border-radius: 999px;
+    font: 600 13px/1 var(--body); letter-spacing: .06em; color: var(--gold);
+  }
+
+  /* Serviços */
+  .services { background: var(--bg-2); }
+  .cards { display: grid; gap: 16px; margin-top: 38px; }
+  .card {
+    position: relative; display: flex; flex-direction: column;
+    padding: 28px 24px 24px; border-radius: var(--radius);
+    background: var(--bg-3); border: 1px solid var(--line); overflow: hidden;
+  }
+  .card-num { font: 800 15px/1 var(--display); color: var(--gold); letter-spacing: .04em; }
+  .card h3 { font-size: 26px; font-weight: 700; margin: 16px 0 12px; }
+  .card p { color: var(--muted); flex: 1; }
+  .card .btn { margin-top: 24px; align-self: stretch; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tags span {
+    font-size: 13px; padding: 6px 12px; border-radius: 999px;
+    background: rgba(201,166,107,.12); color: var(--gold-2);
+  }
+
+  /* Como funciona */
+  .steps { list-style: none; margin: 38px 0 0; padding: 0; display: grid; gap: 0; counter-reset: s; }
+  .steps li {
+    display: grid; grid-template-columns: 64px 1fr; gap: 6px 14px;
+    padding: 26px 0; border-top: 1px solid var(--line);
+  }
+  .steps li:last-child { border-bottom: 1px solid var(--line); }
+  .steps li::before {
+    counter-increment: s; content: "0" counter(s);
+    grid-row: span 2; font: 800 40px/1 var(--display); color: var(--gold);
+  }
+  .steps h3 { font-size: 22px; font-weight: 700; align-self: end; }
+  .steps p { color: var(--muted); }
+
+  /* Galeria */
+  .gallery { padding-top: 0; }
+  .gallery-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 34px;
+  }
+  .gallery-grid figure { margin: 0; overflow: hidden; border-radius: 14px; background: var(--bg-3); }
+  .gallery-grid img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3 / 5; }
+  .gallery-grid figure:first-child { grid-column: span 2; }
+  .gallery-grid figure:first-child img { aspect-ratio: 4 / 3; object-position: 50% 22%; }
+
+  /* Endereço (só aparece se preenchido) */
+  .address { padding-top: 0; }
+  .address p { margin-top: 14px; font-size: 18px; color: #d9d2c8; }
+
+  /* CTA final */
+  .cta { padding: 0 0 76px; }
+  .cta-box {
+    position: relative; overflow: hidden; border-radius: 24px;
+    padding: 48px 24px; text-align: left;
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(201,166,107,.22), transparent 60%),
+      #0d0d0f;
+    border: 1px solid rgba(201,166,107,.3);
+  }
+  .cta-box h2 { font-size: clamp(32px, 9vw, 56px); font-weight: 800; max-width: 14ch; margin-top: 14px; }
+  .cta-box p { color: var(--muted); margin-top: 16px; max-width: 40ch; }
+  .cta-box .btn { margin-top: 28px; width: 100%; }
+
+  /* Rodapé */
+  footer { border-top: 1px solid var(--line); padding: 36px 0 120px; font-size: 14px; color: var(--muted); }
+  .foot { display: grid; gap: 16px; }
+  .foot .brand { font-size: 22px; color: var(--text); }
+  .foot a { color: var(--gold); text-decoration: none; }
+  .foot a:hover { text-decoration: underline; }
+  .foot-meta { display: grid; gap: 4px; }
+
+  /* Botão flutuante */
+  .wa-float {
+    position: fixed; right: 18px; bottom: 84px; z-index: 9999;
+    width: 58px; height: 58px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: #25D366; color: #fff;
+    box-shadow: 0 10px 28px rgba(0,0,0,.45), 0 0 0 4px rgba(20,20,22,.6);
+    transition: transform .2s ease;
+  }
+  .wa-float:hover { transform: scale(1.06); }
+  .wa-float svg { width: 30px; height: 30px; }
+
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  @media (min-width: 720px) {
+    :root { --gutter: 32px; }
+    section { padding: 110px 0; }
+    .hero-content { padding-bottom: 72px; }
+    .facts ul { grid-template-columns: repeat(4, 1fr); }
+    .facts li, .facts li:nth-child(even) { padding: 30px 20px; border-bottom: 0; border-left: 1px solid var(--line); }
+    .facts li:first-child { border-left: 0; padding-left: 0; }
+    .about-grid { grid-template-columns: 5fr 6fr; align-items: center; gap: 64px; }
+    .cards { grid-template-columns: repeat(3, 1fr); }
+    .steps { grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .steps li { grid-template-columns: 1fr; border-bottom: 1px solid var(--line); }
+    .steps li::before { grid-row: auto; margin-bottom: 14px; }
+    .gallery-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+    .gallery-grid figure:first-child { grid-column: auto; }
+    .gallery-grid figure:first-child img { aspect-ratio: 3 / 5; height: 100%; }
+    .cta-box { padding: 72px 64px; }
+    .cta-box .btn { width: auto; }
+    .foot { grid-template-columns: 1fr auto; align-items: end; }
+    footer { padding-bottom: 48px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="draft" id="draft" hidden>Rascunho de como ficaria o site</div>
+
+<header class="hero">
+  <img src="fotos/capa.jpg" alt="Dai Lemela sorrindo e batendo as mãos com uma aluna no studio, com halteres e bola de pilates ao fundo" width="1080" height="1080" fetchpriority="high">
+  <div class="hero-top">
+    <a class="brand" href="#" data-nome>Dai Lemela</a>
+    <a class="hero-ig" data-ig target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="wrap hero-content">
+    <span class="eyebrow">Personal trainer</span>
+    <h1>Força, definição e <em>confiança</em> no seu corpo.</h1>
+    <p class="hero-sub"><strong>Musculação para mulheres</strong>, com treino pensado para emagrecimento, definição e força.</p>
+    <div class="hero-actions">
+      <a class="btn btn-gold" data-wa="msgAvaliacao" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+        Agendar avaliação
+      </a>
+    </div>
+    <p class="hero-cref"><span data-cref>CREF 022612-G/MG</span> · <span data-cidade>Poços de Caldas, MG</span></p>
+  </div>
+</header>
+
+<main>
+  <div class="facts">
+    <div class="wrap">
+      <ul>
+        <li><strong data-anos>+17 anos</strong><span>de experiência</span></li>
+        <li><strong>Studio</strong><span>exclusivo</span></li>
+        <li><strong>Online</strong><span>de onde você estiver</span></li>
+        <li><strong>Academia</strong><span>atendimento na academia</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <section id="sobre">
+    <div class="wrap about-grid">
+      <div class="about-photo">
+        <img src="fotos/sobre.jpg" alt="Retrato de Dai Lemela, personal trainer, sorrindo no studio de treino" width="560" height="1080" loading="lazy" decoding="async">
+      </div>
+      <div class="about-text">
+        <span class="eyebrow">Sobre</span>
+        <h2 class="section-title">Oi, eu sou a <span data-nome>Dai Lemela</span>.</h2>
+        <p>Sou personal trainer há mais de 17 anos e trabalho com musculação para mulheres. Meu foco é ajudar você a emagrecer, definir e ficar mais forte, com treino feito para a sua rotina e o seu corpo.</p>
+        <p>Você pode treinar comigo no studio exclusivo, online ou na academia. Em qualquer formato, você tem alguém do seu lado em cada treino.</p>
+        <span class="cref-tag" data-cref>CREF 022612-G/MG</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="servicos">
+    <div class="wrap">
+      <span class="eyebrow">Serviços</span>
+      <h2 class="section-title">Como posso te ajudar</h2>
+      <div class="cards">
+        <article class="card">
+          <span class="card-num">01</span>
+          <h3>Emagrecimento e definição</h3>
+          <p>Treino de musculação montado para o seu objetivo de emagrecer e definir, com acompanhamento de perto.</p>
+          <a class="btn btn-gold" data-wa="mensagens.emagrecimento" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+            Quero saber mais
+          </a>
+        </article>
+        <article class="card">
+          <span class="card-num">02</span>
+          <h3>Musculação e força</h3>
+          <p>Musculação para mulheres que querem ganhar força e se sentir seguras na hora de treinar.</p>
+          <a class="btn btn-gold" data-wa="mensagens.forca" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+            Quero saber mais
+          </a>
+        </article>
+        <article class="card">
+          <span class="card-num">03</span>
+          <h3>Atendimento do seu jeito</h3>
+          <p>Escolha o formato que encaixa na sua rotina.</p>
+          <div class="tags"><span>Studio exclusivo</span><span>Online</span><span>Academia</span></div>
+          <a class="btn btn-gold" data-wa="mensagens.atendimento" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+            Quero saber mais
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-funciona">
+    <div class="wrap">
+      <span class="eyebrow">Como funciona</span>
+      <h2 class="section-title">Do primeiro contato ao treino</h2>
+      <ol class="steps">
+        <li><h3>Avaliação</h3><p>A gente conversa sobre seus objetivos, sua rotina e seu histórico de treino.</p></li>
+        <li><h3>Treino montado para você</h3><p>Seu treino é feito a partir da avaliação, pensado para o seu objetivo.</p></li>
+        <li><h3>Acompanhamento</h3><p>Eu acompanho sua evolução e ajusto o treino ao longo do caminho.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="gallery" id="galeria">
+    <div class="wrap">
+      <span class="eyebrow">No studio</span>
+      <h2 class="section-title">Treino com quem está do seu lado</h2>
+      <div class="gallery-grid">
+        <figure><img src="fotos/galeria-1.jpg" alt="Dai Lemela e uma aluna de legging estampada posando juntas em frente ao espelho do studio" width="336" height="690" loading="lazy" decoding="async"></figure>
+        <figure><img src="fotos/galeria-2.jpg" alt="Dai Lemela tirando selfie no espelho com uma aluna de roupa preta após o treino" width="336" height="690" loading="lazy" decoding="async"></figure>
+        <figure><img src="fotos/galeria-3.jpg" alt="Dai Lemela e uma aluna sorrindo no espelho do studio, com bola de pilates ao fundo" width="336" height="690" loading="lazy" decoding="async"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="address" id="endereco" hidden>
+    <div class="wrap">
+      <span class="eyebrow">Onde fica</span>
+      <p data-endereco></p>
+    </div>
+  </section>
+
+  <section class="cta" id="contato">
+    <div class="wrap">
+      <div class="cta-box">
+        <span class="eyebrow">Vamos começar?</span>
+        <h2>Seu treino começa com uma conversa.</h2>
+        <p>Me chame no WhatsApp e a gente marca sua avaliação.</p>
+        <a class="btn btn-gold" data-wa="mensagens.contato" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="brand" data-nome>Dai Lemela</div>
+      <div class="foot-meta">
+        <span>Personal trainer · <span data-cref>CREF 022612-G/MG</span></span>
+        <span data-cidade>Poços de Caldas, MG</span>
+      </div>
+    </div>
+    <a data-ig target="_blank" rel="noopener">@dailemelapersonal</a>
+  </div>
+</footer>
+
+<a class="wa-float" data-wa="msgAvaliacao" target="_blank" rel="noopener" aria-label="Falar com a Dai no WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>
+</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.93.95-3.48-.22-.36a9.4 9.4 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.44-9.43a9.37 9.37 0 0 1 9.42 9.44c0 5.2-4.23 9.43-9.43 9.43zm8.03-17.46A11.3 11.3 0 0 0 12.05.7C5.78.7.68 5.8.67 12.07c0 2 .52 3.96 1.52 5.69L.57 23.7l6.08-1.6a11.33 11.33 0 0 0 5.4 1.38h.01c6.27 0 11.37-5.1 11.38-11.37a11.3 11.3 0 0 0-3.36-8.06z"/></symbol>
+</svg>
+
+<script>
+  (function () {
+    const get = (path) => path.split(".").reduce((o, k) => (o ? o[k] : undefined), CONFIG);
+    const wa = (msg) => "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
+    const ig = "https://instagram.com/" + CONFIG.instagram;
+
+    if (CONFIG.rascunho) document.getElementById("draft").hidden = false;
+
+    document.querySelectorAll("[data-wa]").forEach((a) => {
+      a.href = wa(get(a.dataset.wa) || CONFIG.msgAvaliacao);
+    });
+    document.querySelectorAll("[data-ig]").forEach((a) => {
+      a.href = ig;
+      if (a.textContent.trim().startsWith("@")) a.textContent = "@" + CONFIG.instagram;
+    });
+    document.querySelectorAll("[data-nome]").forEach((el) => (el.textContent = CONFIG.nome));
+    document.querySelectorAll("[data-cref]").forEach((el) => (el.textContent = CONFIG.cref));
+    document.querySelectorAll("[data-cidade]").forEach((el) => (el.textContent = CONFIG.cidade));
+    document.querySelectorAll("[data-anos]").forEach((el) => (el.textContent = CONFIG.anosExperiencia));
+
+    if (CONFIG.endereco && CONFIG.endereco.trim()) {
+      document.querySelector("[data-endereco]").textContent = CONFIG.endereco;
+      document.getElementById("endereco").hidden = false;
+    }
+  })();
+</script>
+</body>
+</html>
