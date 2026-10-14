@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="fotos/capa.jpg">
+<link rel="preload" as="image" type="image/avif" imagesrcset="fotos/capa-1080.avif 1080w, fotos/capa-1600.avif 1600w" imagesizes="(max-aspect-ratio: 1/1) 100vh, 100vw" fetchpriority="high">
 
 <script>
   /* =========================================================
@@ -60,6 +60,7 @@
     -webkit-font-smoothing: antialiased;
   }
   img { display: block; max-width: 100%; }
+  picture { display: contents; }
   a { color: inherit; }
   h1, h2, h3 { font-family: var(--display); line-height: 1.05; margin: 0; letter-spacing: -.02em; }
   p { margin: 0; }
@@ -97,7 +98,7 @@
     position: relative; min-height: 100svh; display: flex; align-items: flex-end;
     isolation: isolate; overflow: hidden;
   }
-  .hero > img {
+  .hero picture img {
     position: absolute; inset: 0; width: 100%; height: 100%;
     object-fit: cover; object-position: 38% 30%; z-index: -2;
   }
@@ -280,7 +281,7 @@
 <div class="draft" id="draft" hidden>Rascunho de como ficaria o site</div>
 
 <header class="hero">
-  <img src="fotos/capa.jpg" alt="Dai Lemela sorrindo e batendo as mãos com uma aluna no studio, com halteres e bola de pilates ao fundo" width="1080" height="1080" fetchpriority="high">
+  <picture><source type="image/avif" srcset="fotos/capa-1080.avif 1080w, fotos/capa-1600.avif 1600w" sizes="(max-aspect-ratio: 1/1) 100vh, 100vw"><img src="fotos/capa-1080.webp" srcset="fotos/capa-1080.webp 1080w, fotos/capa-1600.webp 1600w" sizes="(max-aspect-ratio: 1/1) 100vh, 100vw" alt="Dai Lemela sorrindo e batendo as mãos com uma aluna no studio, com halteres e bola de pilates ao fundo" width="1080" height="1080" fetchpriority="high" decoding="async"></picture>
   <div class="hero-top">
     <a class="brand" href="#" data-nome>Dai Lemela</a>
     <a class="hero-ig" data-ig target="_blank" rel="noopener">Instagram</a>
@@ -314,7 +315,7 @@
   <section id="sobre">
     <div class="wrap about-grid">
       <div class="about-photo">
-        <img src="fotos/sobre.jpg" alt="Retrato de Dai Lemela, personal trainer, sorrindo no studio de treino" width="560" height="1080" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="fotos/sobre-560.avif 560w, fotos/sobre-840.avif 840w" sizes="(min-width: 720px) 440px, calc(100vw - 50px)"><img src="fotos/sobre-560.webp" srcset="fotos/sobre-560.webp 560w, fotos/sobre-840.webp 840w" sizes="(min-width: 720px) 440px, calc(100vw - 50px)" alt="Retrato de Dai Lemela, personal trainer, sorrindo no studio de treino" width="560" height="1080" loading="lazy" decoding="async"></picture>
       </div>
       <div class="about-text">
         <span class="eyebrow">Sobre</span>
@@ -380,9 +381,9 @@
       <span class="eyebrow">No studio</span>
       <h2 class="section-title">Treino com quem está do seu lado</h2>
       <div class="gallery-grid">
-        <figure><img src="fotos/galeria-1.jpg" alt="Dai Lemela e uma aluna de legging estampada posando juntas em frente ao espelho do studio" width="336" height="690" loading="lazy" decoding="async"></figure>
-        <figure><img src="fotos/galeria-2.jpg" alt="Dai Lemela tirando selfie no espelho com uma aluna de roupa preta após o treino" width="336" height="690" loading="lazy" decoding="async"></figure>
-        <figure><img src="fotos/galeria-3.jpg" alt="Dai Lemela e uma aluna sorrindo no espelho do studio, com bola de pilates ao fundo" width="336" height="690" loading="lazy" decoding="async"></figure>
+        <figure><picture><source type="image/avif" srcset="fotos/galeria-1-336.avif 336w, fotos/galeria-1-672.avif 672w" sizes="(min-width: 720px) 400px, 100vw"><img src="fotos/galeria-1-336.webp" srcset="fotos/galeria-1-336.webp 336w, fotos/galeria-1-672.webp 672w" sizes="(min-width: 720px) 400px, 100vw" alt="Dai Lemela e uma aluna de legging estampada posando juntas em frente ao espelho do studio" width="336" height="690" loading="lazy" decoding="async"></picture></figure>
+        <figure><picture><source type="image/avif" srcset="fotos/galeria-2-336.avif 336w, fotos/galeria-2-672.avif 672w" sizes="(min-width: 720px) 300px, 50vw"><img src="fotos/galeria-2-336.webp" srcset="fotos/galeria-2-336.webp 336w, fotos/galeria-2-672.webp 672w" sizes="(min-width: 720px) 300px, 50vw" alt="Dai Lemela tirando selfie no espelho com uma aluna de roupa preta após o treino" width="336" height="690" loading="lazy" decoding="async"></picture></figure>
+        <figure><picture><source type="image/avif" srcset="fotos/galeria-3-336.avif 336w, fotos/galeria-3-672.avif 672w" sizes="(min-width: 720px) 300px, 50vw"><img src="fotos/galeria-3-336.webp" srcset="fotos/galeria-3-336.webp 336w, fotos/galeria-3-672.webp 672w" sizes="(min-width: 720px) 300px, 50vw" alt="Dai Lemela e uma aluna sorrindo no espelho do studio, com bola de pilates ao fundo" width="336" height="690" loading="lazy" decoding="async"></picture></figure>
       </div>
     </div>
   </section>
