@@ -23,7 +23,9 @@ TypeScript fica em 6.0 neste app (e não no 7.0 do site da Vertex) porque o
 
 ### Deploy na Vercel
 
-Importe o repositório e defina **Root Directory = `vip-shape`**. Ao conectar o
+Importe o repositório e defina **Root Directory = `vip-shape`**. O `vercel.json`
+fixa o framework em Next.js: com o preset "Other" a Vercel publica sem as
+rotas do Next e o site responde "404: NOT_FOUND". Ao conectar o
 domínio oficial, configure `NEXT_PUBLIC_SITE_URL` (ver `.env.example`): só então
 a tag canonical é emitida, e Open Graph/sitemap/JSON-LD passam a usar o domínio.
 
