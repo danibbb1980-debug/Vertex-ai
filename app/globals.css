@@ -35,6 +35,24 @@
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
+  /*
+    Studio VIP (/studio-vip) — cores do logotipo do cliente.
+    Ficam no mesmo @theme para gerar utilitários (bg-vip-900, text-vip-green…);
+    o restante do estilo da página está em app/studio-vip/studio-vip.css.
+    Verde sobre vip-900 = 6,1:1; grafite sobre verde = 8:1. Verde nunca é usado
+    como cor de texto sobre fundo claro (2:1).
+  */
+  --color-vip-950: #022a46;
+  --color-vip-900: #04375a;
+  --color-vip-800: #064875;
+  --color-vip-700: #0b5a89;
+  --color-vip-green: #83c832;
+  --color-vip-green-bright: #9bdb4a;
+  --color-vip-mist: #eaf0f4;
+  --color-vip-graphite: #15212b;
+  --font-vip-display: var(--font-barlow-condensed), "Arial Narrow", ui-sans-serif, sans-serif;
+  --font-vip-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
   /* Escalas de animação (desktop = referência). */
   --stagger: 1;
   --anim-dur: 1;

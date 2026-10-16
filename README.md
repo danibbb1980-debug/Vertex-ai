@@ -321,3 +321,45 @@ skill sugeriu paleta clara com dourado para o padrão "Trust & Authority"; a
 identidade da marca pede preto profundo com gradiente violeta/índigo. Foram
 mantidos o padrão estrutural (*Pricing-Focused Landing*: CTA fixo, FAQ,
 tratamento de objeções) e a tipografia **Space Grotesk / Inter**.
+
+---
+
+## Landing page do Studio VIP (`/studio-vip`)
+
+Página de cliente — Studio VIP, estúdio de treinamento personalizado em Poços de
+Caldas — servida na mesma aplicação, em `/studio-vip`, sem tocar na home da
+Vertex. Tem layout, fontes (Barlow Condensed + Montserrat), metadados, favicon e
+imagem de Open Graph próprios.
+
+```
+app/studio-vip/
+  layout.tsx            fontes, title/description, OG, theme-color
+  page.tsx              composição das seções + JSON-LD (ExerciseGym + FAQPage)
+  studio-vip.css        forma do logo, bordas rasgadas, botões, animações
+  opengraph-image.tsx   imagem de compartilhamento com a foto real da equipe
+  icon.png apple-icon.png
+components/studio-vip/  uma seção por arquivo (Header, HeroSection, … Footer)
+lib/studio-vip.ts       endereço, telefone, links e TODAS as mensagens de WhatsApp
+lib/studio-vip-content.ts  depoimentos (trechos literais do Google) e FAQ
+public/studio-vip/      recortes das fotos fornecidas pelo estúdio + logo
+```
+
+**Para trocar telefone, endereço, links ou o texto pré-preenchido do WhatsApp,
+edite só `lib/studio-vip.ts`.** Nenhum componente monta URL de WhatsApp sozinho.
+
+Regras de conteúdo seguidas — mantenha ao editar:
+
+- Sem preço, horário de funcionamento, número de alunos, resultado prometido,
+  escassez ou desconto. Nada disso foi informado pelo estúdio.
+- Depoimentos são trechos literais das avaliações do Google, com o nome de quem
+  escreveu. Não reescreva.
+- Na foto da equipe só o Vando é identificado (pela peça dele no Instagram).
+  Para nomear as outras pessoas, confirme com o estúdio quem é quem antes.
+- Não há fotos do espaço físico; as seções de diferenciais e nutrição são
+  tipográficas de propósito, para não sugerir equipamento ou serviço que talvez
+  não exista. Quando o estúdio enviar fotos reais, elas entram ali.
+- O mapa é um iframe com `loading="lazy"`; atrás dele há um bloco com link para o
+  Google Maps, visível se o embed for bloqueado.
+
+As fotos em `public/studio-vip/` são recortes das imagens originais (sem
+retoque nos rostos); o `next/image` gera AVIF/WebP no tamanho certo para cada tela.

@@ -1,0 +1,496 @@
+/*
+  Studio VIP — estilos da landing page.
+
+  Os tokens de cor e fonte estão no @theme de app/globals.css (prefixo vip-).
+  Aqui ficam só os padrões de elemento da página e os componentes visuais que
+  não cabem bem em utilitários: a forma do logotipo, as bordas rasgadas, os
+  chevrons e as animações.
+
+  As regras entram nas camadas do Tailwind (base / components), então qualquer
+  utilitário aplicado no JSX continua tendo prioridade.
+*/
+
+@layer base {
+  /* Só existe nesta rota: a página do Studio VIP é a única com .vip. */
+  html:has(.vip) {
+    scroll-padding-top: 5rem;
+    background-color: var(--color-vip-900);
+  }
+
+  body:has(.vip) {
+    background-color: var(--color-vip-900);
+  }
+
+  .vip {
+    /*
+      As variáveis do next/font ficam no próprio .vip (não no <html>), então
+      os tokens precisam ser recalculados aqui — no :root elas não existem.
+    */
+    --font-vip-display: var(--font-barlow-condensed), "Arial Narrow", ui-sans-serif, sans-serif;
+    --font-vip-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-vip-sans);
+    color: #fff;
+    background-color: var(--color-vip-900);
+  }
+
+  .vip h1,
+  .vip h2,
+  .vip h3 {
+    font-family: var(--font-vip-display);
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: -0.005em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .vip :focus-visible {
+    outline: 3px solid var(--color-vip-green);
+    outline-offset: 3px;
+  }
+
+  .vip ::selection {
+    background: var(--color-vip-green);
+    color: var(--color-vip-graphite);
+  }
+}
+
+@layer components {
+  /*
+    ── Forma do logotipo ──────────────────────────────────────────────────
+    O selo do Studio VIP é um quadrado com dois cantos retos (superior
+    esquerdo e inferior direito) e dois cantos bem arredondados. É o recurso
+    gráfico central da página: fotos, blocos e o selo de avaliação usam a
+    mesma silhueta, com a linha verde fina deslocada, como no logo.
+  */
+  .vip-shape {
+    border-radius: 0 var(--vip-r, 4.5rem) 0 var(--vip-r, 4.5rem);
+  }
+
+  .vip-shape-line {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .vip-shape-line::before {
+    content: "";
+    position: absolute;
+    inset: calc(var(--vip-line-gap, 14px) * -1);
+    border: 1.5px solid var(--color-vip-green);
+    border-radius: 0 calc(var(--vip-r, 4.5rem) + var(--vip-line-gap, 14px)) 0
+      calc(var(--vip-r, 4.5rem) + var(--vip-line-gap, 14px));
+    /* Só os dois cantos curvos, como a linha do logotipo. */
+    mask: linear-gradient(135deg, transparent 38%, #000 52%, #000 100%) top right / 60% 60%
+        no-repeat,
+      linear-gradient(-45deg, transparent 38%, #000 52%, #000 100%) bottom left / 60% 60% no-repeat;
+    pointer-events: none;
+    z-index: -1;
+    transition: transform 0.9s var(--ease-out-soft);
+  }
+
+  .vip-shape-line:hover::before {
+    transform: translate3d(4px, -4px, 0);
+  }
+
+  /* ── Texto gigante vertical "STUDIO VIP", herdado das peças do Instagram ── */
+  .vip-ghost {
+    font-family: var(--font-vip-display);
+    font-weight: 800;
+    font-style: italic;
+    line-height: 0.8;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1.5px color-mix(in oklab, #fff 16%, transparent);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .vip-ghost-solid {
+    color: color-mix(in oklab, #fff 7%, transparent);
+    -webkit-text-stroke: 0;
+  }
+
+  /* ── Borda rasgada (papel) entre seções, também das peças da marca ── */
+  .vip-torn {
+    display: block;
+    width: 100%;
+    height: clamp(18px, 3vw, 36px);
+  }
+
+  /* ── Chevrons >>> ── */
+  @keyframes vip-chevron {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      opacity: 1;
+      transform: translate3d(6px, 0, 0);
+    }
+  }
+
+  .vip-chevrons > * {
+    animation: vip-chevron 2.4s var(--ease-out-soft) infinite;
+  }
+
+  .vip-chevrons > *:nth-child(2) {
+    animation-delay: 0.18s;
+  }
+
+  .vip-chevrons > *:nth-child(3) {
+    animation-delay: 0.36s;
+  }
+
+  /* ── Botões ── */
+  .vip-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    min-height: 3.5rem;
+    padding: 0.9rem 1.6rem;
+    border-radius: 0 1.25rem 0 1.25rem;
+    font-family: var(--font-vip-sans);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      transform 0.25s var(--ease-out-soft),
+      box-shadow 0.25s var(--ease-out-soft),
+      background-color 0.25s var(--ease-out-soft),
+      border-color 0.25s var(--ease-out-soft),
+      color 0.25s var(--ease-out-soft);
+  }
+
+  .vip-btn:active {
+    transform: scale(0.98);
+  }
+
+  .vip-btn-primary {
+    background: var(--color-vip-green);
+    color: var(--color-vip-graphite);
+    box-shadow: 0 14px 34px -14px color-mix(in oklab, var(--color-vip-green) 85%, transparent);
+  }
+
+  /* Reflexo que atravessa o botão no hover. */
+  .vip-btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      100deg,
+      transparent 30%,
+      color-mix(in oklab, #fff 55%, transparent) 50%,
+      transparent 70%
+    );
+    transform: translate3d(-120%, 0, 0);
+    transition: transform 0.7s var(--ease-out-soft);
+  }
+
+  @media (hover: hover) {
+    .vip-btn-primary:hover {
+      background: var(--color-vip-green-bright);
+      transform: translate3d(0, -2px, 0);
+      box-shadow: 0 18px 40px -14px color-mix(in oklab, var(--color-vip-green) 95%, transparent);
+    }
+
+    .vip-btn-primary:hover::after {
+      transform: translate3d(120%, 0, 0);
+    }
+
+    .vip-btn-ghost:hover {
+      border-color: var(--color-vip-green);
+      color: var(--color-vip-green);
+    }
+
+    .vip-btn-dark:hover {
+      background: var(--color-vip-800);
+      transform: translate3d(0, -2px, 0);
+    }
+
+    .vip-btn:hover .vip-btn-arrow {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+
+  .vip-btn-ghost {
+    border: 1.5px solid color-mix(in oklab, #fff 40%, transparent);
+    color: #fff;
+  }
+
+  .vip-btn-dark {
+    background: var(--color-vip-900);
+    color: #fff;
+  }
+
+  .vip-btn-arrow {
+    transition: transform 0.25s var(--ease-out-soft);
+  }
+
+  /* ── Faixa de palavras em movimento ── */
+  @keyframes vip-marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .vip-marquee {
+    display: flex;
+    width: max-content;
+    animation: vip-marquee 38s linear infinite;
+  }
+
+  /* ── FAQ: abre com altura animada onde o navegador suporta ── */
+  .vip-faq {
+    interpolate-size: allow-keywords;
+  }
+
+  .vip-faq::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.4s var(--ease-out-soft),
+      content-visibility 0.4s allow-discrete;
+  }
+
+  .vip-faq[open]::details-content {
+    block-size: auto;
+  }
+
+  .vip-faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .vip-faq-icon {
+    transition: transform 0.35s var(--ease-out-soft);
+  }
+
+  .vip-faq[open] .vip-faq-icon {
+    transform: rotate(45deg);
+  }
+
+  /* ── Botão flutuante do WhatsApp ── */
+  .vip-float {
+    transform: translate3d(0, 120%, 0) scale(0.8);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      transform 0.4s var(--ease-out-soft),
+      opacity 0.3s var(--ease-out-soft),
+      visibility 0.4s;
+  }
+
+  .vip-float.is-in {
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @keyframes vip-pulse {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-vip-green) 55%, transparent);
+    }
+    70%,
+    100% {
+      box-shadow: 0 0 0 16px transparent;
+    }
+  }
+
+  .vip-float.is-in .vip-float-dot {
+    animation: vip-pulse 2.6s ease-out 1s 3;
+  }
+
+  /* ── Cabeçalho ── */
+  .vip-header {
+    transition:
+      background-color 0.35s var(--ease-out-soft),
+      box-shadow 0.35s var(--ease-out-soft),
+      backdrop-filter 0.35s;
+  }
+
+  .vip-header.is-scrolled {
+    background-color: color-mix(in oklab, var(--color-vip-950) 88%, transparent);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 color-mix(in oklab, #fff 8%, transparent);
+  }
+
+  .vip-menu {
+    transition:
+      opacity 0.3s var(--ease-out-soft),
+      transform 0.3s var(--ease-out-soft),
+      visibility 0.3s;
+  }
+
+  .vip-menu:not(.is-open) {
+    opacity: 0;
+    transform: translate3d(0, -8px, 0);
+    visibility: hidden;
+  }
+
+  .vip-link {
+    position: relative;
+  }
+
+  .vip-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background: var(--color-vip-green);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.35s var(--ease-out-soft);
+  }
+
+  @media (hover: hover) {
+    .vip-link:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+
+  /* Cartão de depoimento */
+  .vip-quote {
+    transition:
+      transform 0.45s var(--ease-out-soft),
+      box-shadow 0.45s var(--ease-out-soft);
+  }
+
+  @media (hover: hover) {
+    .vip-quote:hover {
+      transform: translate3d(0, -6px, 0);
+      box-shadow: 0 30px 60px -30px color-mix(in oklab, var(--color-vip-900) 60%, transparent);
+    }
+  }
+
+  /* Blocos de diferenciais: número que acende no hover */
+  .vip-feature .vip-feature-num {
+    transition:
+      color 0.4s var(--ease-out-soft),
+      -webkit-text-stroke-color 0.4s var(--ease-out-soft);
+  }
+
+  @media (hover: hover) {
+    .vip-feature:hover .vip-feature-num {
+      color: var(--color-vip-green);
+      -webkit-text-stroke-color: var(--color-vip-green);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vip-marquee,
+    .vip-chevrons > *,
+    .vip-float-dot {
+      animation: none !important;
+    }
+  }
+}
+
+/*
+  Estes ajustes mexem no estado do .reveal (definido em @layer utilities no
+  globals.css), então precisam estar na mesma camada para ter efeito.
+*/
+@layer utilities {
+  /* ── Estrelas de avaliação: acendem em sequência ao entrar na tela ── */
+  .vip-stars > * {
+    transform-origin: center;
+  }
+
+  [data-js="1"] .vip-stars.reveal > * {
+    opacity: 0.2;
+    transform: scale(0.6) rotate(-20deg);
+    transition:
+      opacity 0.45s var(--ease-out-soft),
+      transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  [data-js="1"] .vip-stars.reveal.is-in > * {
+    opacity: 1;
+    transform: none;
+  }
+
+  .vip-stars > *:nth-child(2) {
+    transition-delay: 0.08s !important;
+  }
+  .vip-stars > *:nth-child(3) {
+    transition-delay: 0.16s !important;
+  }
+  .vip-stars > *:nth-child(4) {
+    transition-delay: 0.24s !important;
+  }
+  .vip-stars > *:nth-child(5) {
+    transition-delay: 0.32s !important;
+  }
+
+  /* As estrelas não devem "subir" junto com o reveal padrão. */
+  [data-js="1"] .vip-stars.reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  /*
+    ── Revelação de imagem ──
+    A foto entra por uma cortina (clip-path) e um leve zoom-out. Só com JS
+    ativo; sem JS a imagem está sempre visível.
+  */
+  [data-js="1"] .vip-clip.reveal {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.1s var(--ease-out-soft);
+  }
+
+  [data-js="1"] .vip-clip.reveal img {
+    transform: scale(1.12);
+    transition: transform 1.6s var(--ease-out-soft);
+  }
+
+  [data-js="1"] .vip-clip.reveal.is-in {
+    clip-path: inset(0 0 0 0);
+  }
+
+  [data-js="1"] .vip-clip.reveal.is-in img {
+    transform: scale(1);
+  }
+
+  /* Linha verde que "desenha" sob títulos. */
+  [data-js="1"] .vip-rule.reveal {
+    opacity: 1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s var(--ease-out-soft);
+  }
+
+  [data-js="1"] .vip-rule.reveal.is-in {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-js="1"] .vip-clip.reveal {
+      clip-path: none;
+    }
+
+    [data-js="1"] .vip-clip.reveal img {
+      transform: none;
+    }
+  }
+}
+
+@layer components {
+  /* Em telas maiores o rótulo do botão cabe numa linha; no celular pode quebrar. */
+  @media (min-width: 640px) {
+    .vip-btn {
+      white-space: nowrap;
+    }
+  }
+}
