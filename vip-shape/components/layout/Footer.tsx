@@ -82,11 +82,11 @@ export function Footer() {
                   {site.address.city} – {site.address.state}, {site.address.postalCode}
                 </span>
               </a>
-              <a href={`tel:${site.phone.e164}`} className="flex items-center gap-3 py-1 transition-colors hover:text-white">
+              <a href={`tel:${site.phone.e164}`} className="flex min-h-11 items-center gap-3 transition-colors hover:text-white">
                 <Phone className="h-4 w-4 shrink-0 text-orange" aria-hidden="true" />
                 {site.phone.display}
               </a>
-              <a href={site.links.instagram} {...external} className="flex items-center gap-3 py-1 transition-colors hover:text-white">
+              <a href={site.links.instagram} {...external} className="flex min-h-11 items-center gap-3 transition-colors hover:text-white">
                 <InstagramIcon className="h-4 w-4 shrink-0 text-orange" />
                 {site.links.instagramHandle}
               </a>
@@ -110,7 +110,7 @@ export function Footer() {
           <p>
             © <span data-year>{year}</span> {site.name}. Todos os direitos reservados.
           </p>
-          <a href="#inicio" className="inline-block py-1 transition-colors hover:text-white">
+          <a href="#inicio" className="inline-flex min-h-11 items-center transition-colors hover:text-white">
             Voltar ao topo ↑
           </a>
         </div>

@@ -7,7 +7,7 @@ import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 type Tile = { photo: PhotoData; caption: string; area: string; className: string; sizes: string };
 
 /*
-  Grade editorial com fotos reais da unidade em proporções diferentes.
+  Grade editorial com fotos em proporções diferentes.
   No mobile vira um carrossel horizontal com scroll-snap (sem JS), o que
   mantém cada foto grande o bastante para ser vista no celular.
 */
@@ -75,7 +75,7 @@ export function Structure() {
           <Reveal delay={120} className="max-w-sm">
             <p className="text-mist">
               Musculação, pesos livres, cardio e máquinas modernas em um ambiente amplo, iluminado e
-              organizado. Todas as fotos são da unidade de {site.city}.
+              organizado.
             </p>
           </Reveal>
         </div>
@@ -100,17 +100,19 @@ export function Structure() {
                   imgClassName="transition-transform duration-[1.2s] ease-out-soft group-hover:scale-[1.05]"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-ink/90 via-ink/10 to-transparent" />
-                <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-6">
+                {/* O número é decorativo e vem do CSS, para não colar no texto da legenda. */}
+                <figcaption
+                  data-n={String(i + 1).padStart(2, "0")}
+                  className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 after:font-display after:text-sm after:text-white/50 after:content-[attr(data-n)] sm:p-6"
+                >
                   <span>
-                    <span className="block text-[0.68rem] font-semibold tracking-[0.22em] text-orange uppercase">
+                    <span className="block text-[0.72rem] font-semibold tracking-[0.22em] text-orange uppercase">
                       {tile.area}
                     </span>
+                    <span className="sr-only"> – </span>
                     <span className="mt-1 block font-display text-lg font-bold text-white uppercase sm:text-xl">
                       {tile.caption}
                     </span>
-                  </span>
-                  <span aria-hidden="true" className="font-display text-sm text-white/50">
-                    {String(i + 1).padStart(2, "0")}
                   </span>
                 </figcaption>
               </figure>

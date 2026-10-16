@@ -66,7 +66,7 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 ease-out-soft ${
+      className={`fixed inset-x-0 z-50 ${site.rascunho ? "top-7" : "top-0"} transition-[background-color,border-color,backdrop-filter] duration-500 ease-out-soft ${
         solid ? "border-b border-white/8 bg-ink/92 backdrop-blur-md" : "border-b border-transparent bg-transparent"
       }`}
     >
@@ -123,7 +123,7 @@ export function Header() {
         id="menu-mobile"
         ref={panelRef}
         inert={!open}
-        className={`texture-grid fixed inset-x-0 top-0 -z-0 flex h-dvh flex-col bg-ink px-5 pt-24 pb-8 transition-[opacity,visibility] duration-300 ease-out-soft lg:hidden ${
+        className={`texture-grid fixed inset-x-0 top-0 -z-0 flex flex-col ${site.rascunho ? "h-[calc(100dvh-1.75rem)]" : "h-dvh"} bg-ink px-5 pt-24 pb-8 transition-[opacity,visibility] duration-300 ease-out-soft lg:hidden ${
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >

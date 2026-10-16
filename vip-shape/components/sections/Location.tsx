@@ -62,7 +62,7 @@ export function Location() {
                 <p className="flex items-start gap-4">
                   <MapPin className="mt-1 h-5 w-5 shrink-0 text-orange" aria-hidden="true" />
                   <span>
-                    <span className="block text-[0.68rem] font-semibold tracking-[0.2em] text-mist uppercase">Endereço</span>
+                    <span className="block text-[0.72rem] font-semibold tracking-[0.2em] text-mist uppercase">Endereço</span>
                     <span className="mt-1 block text-white">
                       {site.address.street}
                       <br />
@@ -75,10 +75,10 @@ export function Location() {
                 <p className="mt-6 flex items-start gap-4">
                   <Phone className="mt-1 h-5 w-5 shrink-0 text-orange" aria-hidden="true" />
                   <span>
-                    <span className="block text-[0.68rem] font-semibold tracking-[0.2em] text-mist uppercase">
+                    <span className="block text-[0.72rem] font-semibold tracking-[0.2em] text-mist uppercase">
                       Telefone e WhatsApp
                     </span>
-                    <a href={`tel:${site.phone.e164}`} className="mt-1 inline-block py-1 text-white hover:text-orange">
+                    <a href={`tel:${site.phone.e164}`} className="inline-block py-2.5 text-white hover:text-orange">
                       {site.phone.display}
                     </a>
                   </span>
@@ -109,11 +109,9 @@ export function Location() {
                     data-weekday={day.weekday}
                     className="group flex items-center justify-between border-b border-white/8 py-2.5 text-sm last:border-0 data-[today=true]:text-white"
                   >
-                    <dt className="flex items-center gap-2 text-mist group-data-[today=true]:font-semibold group-data-[today=true]:text-white">
+                    {/* O selo "Hoje" só existe depois que o OpenStatus marca o dia atual (via JS). */}
+                    <dt className="flex items-center gap-2 text-mist group-data-[today=true]:font-semibold group-data-[today=true]:text-white group-data-[today=true]:after:bg-orange group-data-[today=true]:after:px-1.5 group-data-[today=true]:after:py-0.5 group-data-[today=true]:after:text-[0.6rem] group-data-[today=true]:after:font-bold group-data-[today=true]:after:tracking-wider group-data-[today=true]:after:text-ink group-data-[today=true]:after:content-['HOJE']">
                       {day.label}
-                      <span className="hidden bg-orange px-1.5 py-0.5 text-[0.6rem] font-bold tracking-wider text-ink uppercase group-data-[today=true]:inline">
-                        Hoje
-                      </span>
                     </dt>
                     <dd className={`font-display font-bold ${day.opens ? "text-white" : "text-mist"}`}>{formatRange(day)}</dd>
                   </div>

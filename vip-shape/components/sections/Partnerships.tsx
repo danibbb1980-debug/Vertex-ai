@@ -6,12 +6,12 @@ import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 
 /*
   Os nomes aparecem como texto, não como logotipos: o uso das marcas oficiais
-  depende de autorização das plataformas. A condição "a partir do TP1+" vem
-  do material de divulgação da academia.
+  depende de autorização das plataformas. Planos e condições aceitos não são
+  detalhados aqui até serem confirmados pela academia.
 */
 const partners = [
-  { name: "Wellhub", note: "Consulte a elegibilidade do seu plano." },
-  { name: "TotalPass", note: "Divulgado a partir do plano TP1+." },
+  { name: "Wellhub", note: "Consulte as condições com a equipe pelo WhatsApp." },
+  { name: "TotalPass", note: "Consulte as condições com a equipe pelo WhatsApp." },
 ];
 
 export function Partnerships() {
@@ -32,7 +32,7 @@ export function Partnerships() {
               Mais possibilidades para incluir a VIP Shape na sua rotina.
             </p>
             <p className="mt-3 max-w-md text-sm text-mist">
-              Consulte a equipe para confirmar a disponibilidade, o plano elegível e as condições de acesso.
+              Wellhub e TotalPass: consulte as condições com a equipe pelo WhatsApp.
             </p>
             <Button
               href={whatsappUrl("partnerships")}

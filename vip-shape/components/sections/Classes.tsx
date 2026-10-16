@@ -20,12 +20,6 @@ const icons: Record<ModalityId, LucideIcon> = {
   jump: Waves,
 };
 
-/** Dias em que cada aula coletiva acontece, derivados da grade (fonte única). */
-function daysFor(id: ModalityId): string {
-  const days = classSchedule.filter((c) => c.modality === id).map((c) => c.short);
-  return days.join(" · ");
-}
-
 export function Classes() {
   const [strength, ...group] = modalities;
 
@@ -81,8 +75,8 @@ export function Classes() {
                     <Icon className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
                   </span>
                   <div className="relative">
-                    <p className="text-[0.68rem] font-semibold tracking-[0.22em] text-mist uppercase">
-                      {m.kind} · <span className="text-orange">{daysFor(m.id)}</span>
+                    <p className="text-[0.72rem] font-semibold tracking-[0.22em] text-mist uppercase">
+                      {m.kind}
                     </p>
                     <h3 className="mt-1 font-display text-2xl font-bold text-white uppercase sm:text-3xl">{m.name}</h3>
                     <p className="mt-1.5 max-w-md text-sm text-mist sm:text-base">{m.description}</p>

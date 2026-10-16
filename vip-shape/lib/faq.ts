@@ -57,7 +57,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "A VIP Shape aceita Wellhub e TotalPass?",
     answer:
-      "A academia divulga a aceitação de Wellhub e de TotalPass — no caso do TotalPass, a partir do plano TP1+. As condições podem variar conforme o plano, então confirme a elegibilidade e as regras de acesso com a equipe antes de ir.",
+      "Wellhub e TotalPass: consulte as condições com a equipe pelo WhatsApp antes de ir.",
     link: "partnerships",
   },
 ];

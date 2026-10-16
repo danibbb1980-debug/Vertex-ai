@@ -29,6 +29,23 @@ rotas do Next e o site responde "404: NOT_FOUND". Ao conectar o
 domínio oficial, configure `NEXT_PUBLIC_SITE_URL` (ver `.env.example`): só então
 a tag canonical é emitida, e Open Graph/sitemap/JSON-LD passam a usar o domínio.
 
+### Netlify (versão estática)
+
+```bash
+npm run build:netlify                     # gera out/ com a URL https://vipshape.netlify.app
+npx netlify deploy --prod --dir=out       # requer login (netlify login) ou NETLIFY_AUTH_TOKEN
+```
+
+Para outro domínio, troque `NEXT_PUBLIC_SITE_URL` no script `build:netlify`.
+Os cabeçalhos ficam em `public/_headers` (copiado para `out/`).
+
+### Rascunho
+
+`site.rascunho` em `lib/site-data.ts` liga a faixa "Rascunho para avaliação" e o
+noindex nas metas. O `X-Robots-Tag: noindex, nofollow` está em `public/_headers`
+(Netlify) e em `next.config.ts` (Vercel). Na aprovação: `rascunho: false` e
+remova a linha do X-Robots-Tag em `public/_headers`.
+
 ## Onde mudar cada coisa
 
 | O quê | Onde |

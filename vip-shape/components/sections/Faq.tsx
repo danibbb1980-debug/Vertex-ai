@@ -13,27 +13,27 @@ import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 */
 const links: Record<string, ReactNode> = {
   maps: (
-    <a href={site.links.maps} target="_blank" rel="noopener noreferrer" className="text-orange underline underline-offset-4">
+    <a href={site.links.maps} target="_blank" rel="noopener noreferrer" className="inline-block py-2.5 text-orange underline underline-offset-4">
       Abrir no Google Maps<span className="sr-only"> (abre em nova aba)</span>
     </a>
   ),
   plans: (
-    <a href={whatsappUrl("plans")} target="_blank" rel="noopener noreferrer" className="text-orange underline underline-offset-4">
+    <a href={whatsappUrl("plans")} target="_blank" rel="noopener noreferrer" className="inline-block py-2.5 text-orange underline underline-offset-4">
       Consultar valores no WhatsApp<span className="sr-only"> (abre em nova aba)</span>
     </a>
   ),
   visit: (
-    <a href={whatsappUrl("visit")} target="_blank" rel="noopener noreferrer" className="text-orange underline underline-offset-4">
+    <a href={whatsappUrl("visit")} target="_blank" rel="noopener noreferrer" className="inline-block py-2.5 text-orange underline underline-offset-4">
       Combinar uma visita pelo WhatsApp<span className="sr-only"> (abre em nova aba)</span>
     </a>
   ),
   partnerships: (
-    <a href={whatsappUrl("partnerships")} target="_blank" rel="noopener noreferrer" className="text-orange underline underline-offset-4">
+    <a href={whatsappUrl("partnerships")} target="_blank" rel="noopener noreferrer" className="inline-block py-2.5 text-orange underline underline-offset-4">
       Confirmar meu plano no WhatsApp<span className="sr-only"> (abre em nova aba)</span>
     </a>
   ),
   classes: (
-    <a href="#modalidades" className="text-orange underline underline-offset-4">
+    <a href="#modalidades" className="inline-block py-2.5 text-orange underline underline-offset-4">
       Ver a grade de aulas
     </a>
   ),
@@ -44,7 +44,7 @@ export function Faq() {
     <section id="faq" aria-labelledby="faq-title" className="relative border-t border-white/8 bg-graphite py-24 sm:py-32">
       <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-4">
-          <div className="lg:sticky lg:top-28">
+          <div className="lg:sticky lg:top-32">
             <p className="eyebrow">Dúvidas frequentes</p>
             <h2 id="faq-title" className="display mt-5 text-[2.5rem] sm:text-5xl">
               Perguntas <span className="text-orange">frequentes</span>
@@ -72,7 +72,7 @@ export function Faq() {
                 </summary>
                 <div className="pr-4 pb-7 text-mist sm:pr-16">
                   <p>{item.answer}</p>
-                  {item.link && <p className="mt-3">{links[item.link]}</p>}
+                  {item.link && <p className="mt-1">{links[item.link]}</p>}
                 </div>
               </details>
             </Reveal>

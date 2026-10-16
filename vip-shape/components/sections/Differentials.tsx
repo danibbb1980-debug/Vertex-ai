@@ -50,23 +50,22 @@ export function Differentials() {
                 eyebrow="Por que a VIP Shape"
                 title={
                   <>
-                    Mais que treinar.
-                    <br />
-                    <span className="text-orange">É evoluir.</span>
+                    <span className="block">Mais que treinar.</span>{" "}
+                    <span className="block text-orange">É evoluir.</span>
                   </>
                 }
                 description="Um ambiente feito para você cuidar de si, ganhar disposição e construir uma rotina de treino."
               />
             </Reveal>
-            <Reveal variant="scale" delay={120} className="relative mt-12 hidden lg:block">
+            <Reveal as="figure" variant="scale" delay={120} className="relative mt-12 hidden lg:block">
               <Photo
                 photo={photos.estacoes}
                 sizes="(min-width: 1024px) 36vw, 0px"
                 className="chamfer aspect-[4/5] w-full"
               />
-              <span className="absolute -bottom-5 left-6 bg-ink px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.2em] text-mist uppercase">
+              <figcaption className="absolute -bottom-5 left-6 bg-ink px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.2em] text-mist uppercase">
                 Estações de musculação
-              </span>
+              </figcaption>
             </Reveal>
           </div>
 

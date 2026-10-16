@@ -1,4 +1,5 @@
 import { Header } from "@/components/layout/Header";
+import { DraftBanner } from "@/components/layout/DraftBanner";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { IdentityStrip } from "@/components/sections/IdentityStrip";
@@ -21,6 +22,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()).replace(/</g, "\\u003c") }}
       />
+      <DraftBanner />
       <Header />
       <main id="conteudo" tabIndex={-1} className="outline-none">
         <Hero />

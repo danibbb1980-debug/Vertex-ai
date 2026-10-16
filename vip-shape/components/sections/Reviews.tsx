@@ -5,24 +5,21 @@ import { Button } from "@/components/ui/Button";
 import { GoogleIcon } from "@/components/ui/BrandIcons";
 
 /*
-  Os comentários abaixo são RESUMOS dos temas dos comentários públicos,
-  não citações. Por isso não usam aspas nem atribuem frases inventadas aos
-  autores. Para publicar uma citação literal, copie o texto original do
-  Google sem alterar nenhuma palavra.
+  Os comentários abaixo são RESUMOS dos temas de comentários públicos no
+  Google, sem citação e sem nome dos autores (rascunho: a atribuição nominal
+  depende de confirmação). Para publicar uma citação literal, copie o texto
+  original do Google sem alterar nenhuma palavra.
 */
 const highlights = [
   {
-    author: "Felipe Amaro",
     topics: ["Ambiente acolhedor", "Instrutores atenciosos"],
     summary: "Destacou o ambiente acolhedor da academia e a atenção dos instrutores.",
   },
   {
-    author: "Henrique Silva",
     topics: ["Equipamentos", "Atendimento"],
     summary: "Elogiou o ambiente agradável, os equipamentos e o bom atendimento.",
   },
   {
-    author: "Paloma Albino",
     topics: ["Música ambiente"],
     summary: "Mencionou a música agradável que acompanha os treinos.",
   },
@@ -67,16 +64,12 @@ export function Reviews() {
           <p className="sr-only">
             Nota {site.rating.value} de 5 estrelas, com {site.rating.count} avaliações no Google.
           </p>
-          <p className="mt-6 max-w-sm text-xs text-mist">
-            Nota e número de avaliações informados pela academia em {site.rating.reference}. Confira os
-            números atualizados no perfil oficial.
-          </p>
           <Button
             href={site.links.maps}
             external
             variant="outline"
             icon={<GoogleIcon className="h-5 w-5" />}
-            className="mt-8"
+            className="mt-10"
           >
             Ver avaliações no Google
           </Button>
@@ -85,33 +78,22 @@ export function Reviews() {
         {/* Destaques dos comentários */}
         <div className="lg:col-span-7">
           <p className="mb-6 text-sm text-mist">
-            O que os alunos destacam nos comentários — resumo dos temas, não citações literais.
+            O que os alunos destacam nos comentários: resumo dos temas, sem citações literais.
           </p>
           <ul className="grid gap-4">
             {highlights.map((h, i) => (
               <Reveal
                 as="li"
-                key={h.author}
+                key={h.summary}
                 delay={i * 90}
                 className={`relative border-l-2 border-orange bg-ink p-7 sm:p-9 ${i === 1 ? "lg:ml-12" : ""}`}
               >
                 <Quote className="absolute top-7 right-7 h-8 w-8 text-white/10" aria-hidden="true" />
-                <ul className="flex flex-wrap gap-2" aria-label="Temas do comentário">
-                  {h.topics.map((t) => (
-                    <li
-                      key={t}
-                      className="border border-white/15 px-2.5 py-1 text-[0.68rem] font-semibold tracking-[0.15em] text-mist uppercase"
-                    >
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-5 max-w-lg text-lg leading-relaxed text-white sm:text-xl">{h.summary}</p>
-                <p className="mt-5 flex items-center gap-3 text-sm">
-                  <span className="font-semibold text-white">{h.author}</span>
-                  <span className="h-px w-6 bg-white/20" aria-hidden="true" />
-                  <span className="text-mist">avaliação no Google</span>
+                <p className="text-[0.72rem] font-semibold tracking-[0.15em] text-orange uppercase">
+                  {h.topics.join(" · ")}
                 </p>
+                <p className="mt-5 max-w-lg text-lg leading-relaxed text-white sm:text-xl">{h.summary}</p>
+                <p className="mt-5 text-sm text-mist">Comentário no Google</p>
               </Reveal>
             ))}
           </ul>

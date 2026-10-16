@@ -99,16 +99,13 @@ export function Hero() {
               Atendimento acolhedor
             </li>
           </ul>
-          <p className="hero-rise mt-3 text-xs text-white/50" style={delay(480)}>
-            Nota e número de avaliações informados pela academia ({site.rating.reference}).
-          </p>
         </div>
       </div>
 
-      {/* Legenda da foto, só no desktop: deixa claro que é a unidade real. */}
+      {/* Legenda da foto, só no desktop. */}
       <p className="absolute right-8 bottom-8 hidden items-center gap-3 text-[0.7rem] font-medium tracking-[0.2em] text-white/70 uppercase lg:flex">
         <span className="h-px w-10 bg-orange" />
-        Área de cardio · unidade {site.city}
+        Área de cardio
       </p>
     </section>
   );

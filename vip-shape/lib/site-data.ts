@@ -63,15 +63,19 @@ export const site = {
   },
 
   /**
-   * Nota e total de avaliações informados pela academia. Não são lidos de uma
-   * integração com o Google: por isso a página sempre exibe a data de
-   * referência e manda o visitante conferir no perfil oficial.
+   * Nota e total de avaliações no Google. Não são lidos de uma integração:
+   * atualize aqui quando mudarem.
    */
   rating: {
     value: "5,0",
     count: 70,
-    reference: "outubro de 2026",
   },
+
+  /**
+   * Rascunho para avaliação do cliente: liga a faixa no topo e o noindex.
+   * Mude para false somente quando o site for aprovado.
+   */
+  rascunho: true,
 } as const;
 
 export const fullAddress = `${site.address.street} – ${site.address.district}, ${site.address.city} – ${site.address.state}, CEP ${site.address.postalCode}`;
@@ -227,13 +231,13 @@ export const photos = {
     src: "/images/area-cardio.jpg",
     width: 508,
     height: 677,
-    alt: "Área de cardio da VIP Shape com esteiras e bicicletas, iluminação azul e paredes laranja",
+    alt: "Área de cardio com esteiras e bicicletas, iluminação azul e paredes laranja",
   },
   salao: {
     src: "/images/salao-principal.jpg",
     width: 508,
     height: 677,
-    alt: "Salão principal da VIP Shape com piso de madeira, esteiras e estações de musculação",
+    alt: "Salão principal com piso de madeira, esteiras e estações de musculação",
   },
   estacoes: {
     src: "/images/estacoes-musculacao.jpg",

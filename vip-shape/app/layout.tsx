@@ -1,23 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
 import { site } from "@/lib/site-data";
+/*
+  Fontes auto-hospedadas (Fontsource, variáveis). Saem do mesmo domínio do site,
+  sem depender do Google Fonts, e cada subconjunto só é baixado se a página usar
+  aqueles caracteres (unicode-range).
+*/
+import "@fontsource-variable/inter";
+import "@fontsource-variable/space-grotesk";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "700"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
-
 const title = `${site.name} | Academia e musculação em ${site.city} – ${site.state}`;
+/** Mesmo título do hero, para o compartilhamento em redes sociais. */
+const shareTitle = `Seu próximo nível começa aqui. | ${site.name}`;
 const description =
   `Academia em ${site.city} com equipamentos modernos, musculação e aulas de Hit Dance, Dança e Jump. ` +
   `Ambiente acolhedor e equipe atenciosa no Residencial Tiradentes. Fale com a VIP Shape pelo WhatsApp.`;
@@ -43,15 +37,18 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     url: "/",
     siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
+    title: shareTitle,
     description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.tagline}`,
+    title: shareTitle,
     description,
   },
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
+  // Rascunho: noindex/nofollow (também enviado no header X-Robots-Tag, ver public/_headers).
+  robots: site.rascunho
+    ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+    : { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   formatDetection: { telephone: false, address: false, email: false },
 };
 
@@ -64,7 +61,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="pt-BR">
       <body>
         {/* Habilita as animações de revelação antes da primeira pintura (ver globals.css). */}
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.dataset.js="1"` }} />

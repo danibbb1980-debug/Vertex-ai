@@ -31,8 +31,8 @@ export function Logo({ className = "", compact = false }: { className?: string; 
       <span className="flex flex-col leading-none">
         <span className="font-display text-[1.05rem] font-bold tracking-[0.04em] text-white">
           VIP SHAPE
-        </span>
-        <span className="mt-1 text-[0.6rem] font-medium tracking-[0.42em] text-mist">ACADEMIA</span>
+        </span>{" "}
+        <span className="mt-1 text-[0.65rem] font-medium tracking-[0.4em] text-mist">ACADEMIA</span>
       </span>
     </span>
   );
