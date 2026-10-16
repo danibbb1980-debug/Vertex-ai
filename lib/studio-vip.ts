@@ -11,12 +11,21 @@
 
 import { site } from "./site";
 
+/**
+ * No projeto próprio do estúdio (build com STUDIO_VIP_STANDALONE=1) a página
+ * é servida na raiz; dentro do site da Vertex, em /studio-vip.
+ * Só é lido no servidor (metadata, JSON-LD, sitemap).
+ */
+const standalone = process.env.STUDIO_VIP_STANDALONE === "1";
+const path = standalone ? "/" : "/studio-vip";
+
 export const studio = {
   name: "Studio VIP",
   fullName: "Studio VIP — Studio para Treinos",
-  path: "/studio-vip",
+  standalone,
+  path,
   /** URL canônica da página, derivada da URL do projeto (ver lib/site.ts). */
-  url: `${site.url}/studio-vip`,
+  url: standalone ? site.url : `${site.url}${path}`,
 
   address: {
     street: "Rua Assis Figueiredo, 36, Sala 1",

@@ -13,6 +13,7 @@ import { LocationSection } from "@/components/studio-vip/LocationSection";
 import { FinalCTA } from "@/components/studio-vip/FinalCTA";
 import { Footer } from "@/components/studio-vip/Footer";
 import { WhatsAppButton } from "@/components/studio-vip/WhatsAppButton";
+import { site } from "@/lib/site";
 import { studio } from "@/lib/studio-vip";
 import { faq } from "@/lib/studio-vip-content";
 
@@ -27,11 +28,11 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "ExerciseGym",
-      "@id": `${studio.url}#studio`,
+      "@id": `${studio.url}${studio.standalone ? "/" : ""}#studio`,
       name: studio.fullName,
       alternateName: studio.name,
       url: studio.url,
-      image: `${studio.url}/opengraph-image`,
+      image: `${site.url}/studio-vip/opengraph-image`,
       telephone: `+${studio.phone.e164}`,
       address: {
         "@type": "PostalAddress",
