@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+/*
+  VIP Shape Academia — tokens de design.
+  Contrastes verificados (WCAG):
+    branco  #FFFFFF sobre #090909 → 19,6:1
+    cinza   #B8B8B8 sobre #090909 → 9,9:1  | sobre #151515 → 8,9:1
+    laranja #FF5A1F sobre #090909 → 6,3:1  (texto e ícones)
+    preto   #090909 sobre #FF5A1F → 6,3:1  (texto dos botões laranja)
+  Branco sobre laranja fica em ~3,1:1, por isso os botões laranja usam texto preto.
+*/
+@theme {
+  --color-ink: #090909;
+  --color-graphite: #151515;
+  --color-graphite-2: #1d1d1d;
+  --color-line: #2a2a2a;
+  --color-orange: #ff5a1f;
+  --color-orange-hot: #ff6a00;
+  --color-white: #ffffff;
+  --color-mist: #b8b8b8;
+  --color-whatsapp: #25d366;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius-card: 1.25rem;
+
+  --animate-marquee: marquee 38s linear infinite;
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Compensa o header fixo nas âncoras. */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+    /* Anima a altura do accordion nos navegadores que suportam. */
+    interpolate-size: allow-keywords;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-white);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-orange);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Rótulo pequeno acima dos títulos, com o traço da marca. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-orange);
+  }
+  @media (min-width: 640px) {
+    .eyebrow {
+      letter-spacing: 0.22em;
+    }
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 2px;
+    background: currentColor;
+  }
+
+  /* Título de seção: grande, condensado, em caixa alta. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  /* Textura sutil de grade, inspirada em piso emborrachado. */
+  .texture-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Granulado fotográfico, aplicado sobre as fotos para dar unidade. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.18;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Cantos chanfrados, ecoando o hexágono do logotipo. */
+  .chamfer {
+    clip-path: polygon(0 0, calc(100% - 1.5rem) 0, 100% 1.5rem, 100% 100%, 1.5rem 100%, 0 calc(100% - 1.5rem));
+  }
+  .chamfer-sm {
+    clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 0.75rem, 100% 100%, 0.75rem 100%, 0 calc(100% - 0.75rem));
+  }
+
+  /* Texto vazado, usado em números e palavras decorativas. */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(255 255 255 / 0.22);
+  }
+
+  /* ---------- Accordion (FAQ) ---------- */
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.35s var(--ease-out-soft),
+      content-visibility 0.35s allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    background: var(--color-orange);
+    color: var(--color-ink);
+    border-color: var(--color-orange);
+  }
+}
+
+/* ---------- Revelação no scroll ----------
+   Melhoria progressiva: sem JS todo o conteúdo fica visível. O estado
+   escondido só existe quando <html data-js="1">, definido antes da primeira
+   pintura, e o ClientEnhancements adiciona .is-in ao entrar no viewport. */
+[data-js="1"] .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-out-soft) var(--reveal-delay, 0ms),
+    transform 0.7s var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+[data-js="1"] .reveal-scale {
+  transform: scale(1.04);
+  transform-origin: center;
+}
+[data-js="1"] .reveal-left {
+  transform: translateX(-28px);
+}
+[data-js="1"] .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Entrada do hero: CSS puro, roda sem esperar o JavaScript. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+}
+@keyframes photo-in {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+.hero-rise {
+  animation: rise 0.8s var(--ease-out-soft) both;
+  animation-delay: var(--d, 0ms);
+}
+.hero-photo {
+  animation: photo-in 1.2s var(--ease-out-soft) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-js="1"] .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
