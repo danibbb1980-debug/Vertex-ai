@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+/*
+  Star Sorrindo — tokens de design.
+  Luxo discreto: marfim, azul-marinho profundo, dourado champanhe pontual.
+
+  Contrastes verificados (WCAG 2.2):
+    navy     #0E1D36 sobre marfim #FAF7F1 → 15,7:1
+    mineral  #5A6372 sobre marfim         → 5,7:1   | sobre areia #F2ECE2 → 5,2:1
+    ouro-ink #7A5D2E sobre marfim         → 5,6:1   (texto pequeno dourado)
+    champ.   #C5A572 sobre navy           → 7,2:1   (só sobre fundo navy)
+    névoa    #B9C2D0 sobre navy           → 9,4:1
+  O champanhe claro (#C5A572) nunca é usado como texto sobre fundo claro (2,2:1).
+*/
+@theme {
+  --color-ivory: #faf7f1;
+  --color-sand: #f2ece2;
+  --color-sand-2: #e9e1d4;
+  --color-line: #e3dbcd;
+  --color-navy: #0e1d36;
+  --color-navy-2: #162a4a;
+  --color-navy-3: #213a60;
+  --color-mineral: #5a6372;
+  --color-gold: #c5a572;
+  --color-gold-ink: #7a5d2e;
+  --color-mist: #b9c2d0;
+  --color-whatsapp: #25d366;
+  --color-whatsapp-ink: #0b6b3a;
+
+  --font-serif: var(--font-cormorant), "Times New Roman", serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+    interpolate-size: allow-keywords;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-navy);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-navy);
+    color: var(--color-ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-ink);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .on-navy :focus-visible,
+  .on-navy:focus-visible {
+    outline-color: var(--color-gold);
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Título editorial em serifa. */
+  .serif {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.04;
+  }
+
+  /* Rótulo pequeno acima dos títulos, com fio dourado. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold-ink);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
+  }
+  .on-navy .eyebrow {
+    color: var(--color-gold);
+  }
+
+  /* Moldura em arco — o motivo visual da marca (janela, sorriso). */
+  .arch {
+    border-radius: 999px 999px 1.25rem 1.25rem;
+  }
+
+  /* Granulado sutil sobre superfícies grandes, para dar textura de papel. */
+  .paper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .5 0 0 0 0 .42 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Link de texto com sublinhado que cresce no hover. */
+  .link-line {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s var(--ease-out-soft);
+  }
+  .link-line:hover,
+  .link-line:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* ---------- Accordion (FAQ) ---------- */
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.4s var(--ease-out-soft),
+      content-visibility 0.4s allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    background: var(--color-navy);
+    color: var(--color-ivory);
+    border-color: var(--color-navy);
+  }
+}
+
+/* ---------- Revelação no scroll ----------
+   Melhoria progressiva: sem JS todo o conteúdo fica visível. O estado
+   escondido só existe com <html data-js="1">, definido antes da primeira
+   pintura; o ClientEnhancements adiciona .is-in ao entrar no viewport. */
+[data-js="1"] .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.9s var(--ease-out-soft) var(--reveal-delay, 0ms),
+    transform 0.9s var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+[data-js="1"] .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Entrada do hero: CSS puro, sem esperar o JavaScript. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+@keyframes arch-in {
+  from {
+    opacity: 0;
+    clip-path: inset(18% 0 0 0 round 999px 999px 1.25rem 1.25rem);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 999px 999px 1.25rem 1.25rem);
+  }
+}
+@keyframes draw {
+  from {
+    stroke-dashoffset: var(--len, 600);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.hero-rise {
+  animation: rise 1s var(--ease-out-soft) both;
+  animation-delay: var(--d, 0ms);
+}
+.hero-arch {
+  animation: arch-in 1.4s var(--ease-out-soft) both;
+}
+.draw {
+  stroke-dasharray: var(--len, 600);
+  animation: draw 2.4s var(--ease-out-soft) both;
+  animation-delay: var(--d, 300ms);
+}
+.twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: twinkle 4s ease-in-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-js="1"] .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

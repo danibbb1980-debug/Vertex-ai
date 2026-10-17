@@ -5,6 +5,9 @@ por assinatura (R$197/mês) para negócios locais no Brasil.
 
 Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · pronto para Vercel.
 
+> A pasta `star-sorrindo/` é o site da clínica Star Sorrindo (Poços de Caldas),
+> outro cliente da Vertex, com build próprio. Ver `star-sorrindo/README.md`.
+>
 > A pasta `vip-shape/` é outro app: o site da VIP Shape Academia, cliente da
 > Vertex, com build próprio. Ver `vip-shape/README.md`. Ela fica fora do
 > `tsconfig.json` e das fontes do Tailwind deste site.
