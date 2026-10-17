@@ -1,0 +1,4 @@
+# RASCUNHO: impede indexação enquanto o site não for aprovado.
+# Na publicação, apague as duas linhas abaixo (ver README).
+/*
+  X-Robots-Tag: noindex, nofollow

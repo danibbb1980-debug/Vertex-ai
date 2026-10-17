@@ -1,0 +1,7 @@
+# RASCUNHO: bloqueia todos os buscadores.
+# Na publicação, troque por:
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://starsorrindo-pocos.netlify.app/sitemap.xml
+User-agent: *
+Disallow: /

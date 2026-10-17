@@ -8,6 +8,10 @@ Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · pronto para Vercel.
 > A pasta `vip-shape/` é outro app: o site da VIP Shape Academia, cliente da
 > Vertex, com build próprio. Ver `vip-shape/README.md`. Ela fica fora do
 > `tsconfig.json` e das fontes do Tailwind deste site.
+>
+> A pasta `star-sorrindo/` é o rascunho do site da clínica Star Sorrindo Poços de
+> Caldas: HTML/CSS/JS estáticos, sem build. Ver `star-sorrindo/README.md`. O ZIP
+> pronto para o Netlify Drop é `star-sorrindo-site.zip`.
 
 ---
 
