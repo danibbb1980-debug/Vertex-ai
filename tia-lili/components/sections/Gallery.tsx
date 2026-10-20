@@ -4,16 +4,10 @@ import type { Photo } from "@/lib/site-data";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 /*
-  Grade de fotos: 2 colunas no celular e mosaico 4×2 no desktop.
+  Grade de fotos: 2 colunas no celular e 4 no desktop.
   Todas abaixo da dobra, com lazy-load padrão do next/image.
 */
-const items: { photo: Photo; className: string }[] = [
-  { photo: photos.atendimentoMesa, className: "aspect-[4/5] lg:row-span-2 lg:aspect-auto" },
-  { photo: photos.recepcao, className: "aspect-[4/5] lg:aspect-auto" },
-  { photo: photos.tchauChupeta, className: "aspect-[4/5] lg:aspect-auto" },
-  { photo: photos.mesaAtividades, className: "aspect-[4/5] lg:row-span-2 lg:aspect-auto" },
-  { photo: photos.consultorio, className: "col-span-2 aspect-[16/10] lg:aspect-auto" },
-];
+const items: Photo[] = [photos.atendimentoMesa, photos.recepcao, photos.tchauChupeta, photos.mesaAtividades];
 
 export function Gallery() {
   return (
@@ -30,9 +24,9 @@ export function Gallery() {
           intro="Imagens do consultório e de momentos do atendimento, compartilhadas no perfil da Tia Lili."
         />
 
-        <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:h-[36rem] lg:grid-cols-4 lg:grid-rows-2">
-          {items.map(({ photo, className }) => (
-            <li key={photo.src} className={`overflow-hidden rounded-[1.75rem] bg-mint-50 ${className}`}>
+        <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {items.map((photo) => (
+            <li key={photo.src} className="aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-mint-50">
               <Image
                 src={photo.src}
                 width={photo.width}

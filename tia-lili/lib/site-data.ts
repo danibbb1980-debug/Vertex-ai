@@ -95,12 +95,6 @@ export const photos = {
     height: 508,
     alt: "Recepção clara com balcão branco e painel lúdico colorido na parede",
   },
-  consultorio: {
-    src: "/images/consultorio.jpg",
-    width: 412,
-    height: 406,
-    alt: "Consultório com cadeira odontológica, monitor e janela ampla",
-  },
   mesaAtividades: {
     src: "/images/mesa-atividades.jpg",
     width: 381,
