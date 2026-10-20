@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+/*
+  Tia Lili Odontopediatra — tokens de design.
+  Contrastes verificados (WCAG):
+    ink    #2E2A30 sobre cream #FBF7F1 → 13,2:1
+    muted  #625C66 sobre cream          → 6,1:1  | sobre mint-50 → 5,7:1
+    teal   #1F6B5C sobre cream          → 5,9:1  (links e ícones)
+    branco sobre teal                   → 6,3:1  (botão principal)
+    coral  #B24A30 sobre cream          → 5,0:1  (destaques em texto)
+    #0B3D1E sobre whatsapp #25D366      → 6,2:1  (botão flutuante)
+*/
+@theme {
+  --color-cream: #fbf7f1;
+  --color-paper: #ffffff;
+  --color-ink: #2e2a30;
+  --color-muted: #625c66;
+  --color-line: #ebe3d8;
+
+  --color-mint-50: #e6f3ee;
+  --color-mint-200: #c7e6db;
+  --color-teal: #1f6b5c;
+  --color-teal-dark: #17564a;
+  --color-sky-100: #e3eef8;
+  --color-coral: #b24a30;
+  --color-coral-200: #f6c9b8;
+  --color-butter: #f7de8a;
+  --color-lilac-100: #efe7f4;
+  --color-whatsapp: #25d366;
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Compensa o header fixo nas âncoras. */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+    interpolate-size: allow-keywords;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-teal);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-teal);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--color-coral-200);
+    box-shadow: 0.75rem 0 0 var(--color-mint-200);
+    margin-right: 0.75rem;
+  }
+
+  /* Moldura orgânica das fotos. */
+  .blob-frame {
+    border-radius: 46% 54% 42% 58% / 52% 44% 56% 48%;
+  }
+
+  /* ---------- Accordion (FAQ) ---------- */
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.35s var(--ease-out-soft),
+      content-visibility 0.35s allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    background: var(--color-teal);
+    color: #fff;
+    border-color: var(--color-teal);
+  }
+}
+
+/* Entrada suave do hero: CSS puro, sem JavaScript. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+.hero-rise {
+  animation: rise 0.8s var(--ease-out-soft) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
