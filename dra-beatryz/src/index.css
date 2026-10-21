@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --color-marfim: #fbf7f2;
+  --color-creme: #f5ede5;
+  --color-rosa-50: #f9ecf0;
+  --color-rosa-100: #f2d9e2;
+  --color-rosa: #c56e8e;
+  --color-rosa-escuro: #8e3557;
+  --color-rosa-profundo: #6f2843;
+  --color-lilas-50: #f3edf6;
+  --color-lilas-100: #e6dcee;
+  --color-lilas: #8c72b0;
+  --color-lilas-profundo: #45305e;
+  --color-tinta: #3b2a36;
+  --color-suave: #6b5866;
+  --color-sol: #f1cf72;
+  --color-ceu: #d3e6f0;
+
+  --font-serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-hand: "Caveat", "Segoe Script", cursive;
+  --font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-suave: cubic-bezier(0.19, 1, 0.22, 1);
+  --animate-marquee: marquee var(--duration, 48s) linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - var(--gap, 2.5rem))); }
+  }
+  @keyframes flutuar {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(4deg); }
+  }
+}
+
+:root {
+  --faixa-h: 0px;
+  color-scheme: light;
+}
+:root[data-rascunho="true"] {
+  --faixa-h: 32px;
+}
+
+@layer base {
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--faixa-h) + 84px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-marfim);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-rosa-100);
+  color: var(--color-rosa-profundo);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-rosa-escuro);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 450;
+  letter-spacing: -0.015em;
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+}
+
+/* Palavra manuscrita em destaque, como nos posts da doutora. */
+.manuscrita {
+  font-family: var(--font-hand);
+  font-weight: 600;
+  color: var(--color-rosa-escuro);
+  font-size: 1.22em;
+  line-height: 0.8;
+  letter-spacing: 0;
+}
+
+/* Grão de papel muito leve no fundo, para fugir do "chapado" de template. */
+.papel {
+  background-image:
+    radial-gradient(1200px 600px at 85% -10%, rgba(230, 220, 238, 0.55), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, rgba(242, 217, 226, 0.45), transparent 60%);
+}
+
+.flutuar { animation: flutuar 7s ease-in-out infinite; }
+
+.marquee-pausa:hover .animate-marquee { animation-play-state: paused; }
+
+/* Barra fixa de WhatsApp no celular não cobre o conteúdo. */
+@media (max-width: 767px) {
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .animate-marquee { animation: none !important; transform: none !important; }
+}
