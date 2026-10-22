@@ -57,8 +57,14 @@ export const CONFIG = {
   clinicaParceira: null as string | null,
 
   fotos: {
-    retrato: "/fotos/dra-ana-villela-retrato.webp",
-    consultorio: "/fotos/dra-ana-villela-consultorio.webp",
+    // Fotos da doutora em 3 larguras (o navegador escolhe a ideal para cada tela).
+    retrato: "/fotos/dra-ana-villela-retrato-760.webp",
+    retratoSrcSet:
+      "/fotos/dra-ana-villela-retrato-480.webp 480w, /fotos/dra-ana-villela-retrato-760.webp 760w, /fotos/dra-ana-villela-retrato-1015.webp 1015w",
+    // Na foto do consultório, o quadro com close de sorriso foi coberto e a marca da clínica na cadeira foi cortada.
+    consultorio: "/fotos/dra-ana-villela-consultorio-760.webp",
+    consultorioSrcSet:
+      "/fotos/dra-ana-villela-consultorio-480.webp 480w, /fotos/dra-ana-villela-consultorio-760.webp 760w, /fotos/dra-ana-villela-consultorio-953.webp 953w",
     // Fotos da ficha do Google. A marca da clínica foi removida da fachada e da entrada,
     // e as imagens de sorriso (quadros e monitor) foram cobertas. CONFIRMAR autorização de uso.
     fachada: "/fotos/fachada.webp",

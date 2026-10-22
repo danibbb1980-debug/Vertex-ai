@@ -78,15 +78,17 @@ export function Hero() {
 
         <figure className="hero-photo relative mx-auto w-full max-w-[22rem] lg:max-w-[25rem]">
           <div aria-hidden className="absolute -inset-3 translate-x-4 translate-y-4 rounded-t-[999px] rounded-b-[1.75rem] border border-champagne/70" />
-          <div className="relative aspect-[297/470] overflow-hidden rounded-t-[999px] rounded-b-[1.75rem] bg-porcelana-2">
+          <div className="relative aspect-[5/8] overflow-hidden rounded-t-[999px] rounded-b-[1.75rem] bg-porcelana-2">
             <img
               src={CONFIG.fotos.retrato}
-              alt={`${CONFIG.nome}, de jaleco branco, sorrindo no consultório`}
-              width={297}
-              height={508}
+              srcSet={CONFIG.fotos.retratoSrcSet}
+              sizes="(min-width: 1024px) 400px, min(352px, calc(100vw - 40px))"
+              alt={`${CONFIG.nome}, de blazer azul-marinho, sorrindo`}
+              width={1015}
+              height={1726}
               fetchPriority="high"
               decoding="async"
-              className="h-full w-full object-cover object-top"
+              className="h-full w-full object-cover object-[50%_42%]"
             />
           </div>
           <figcaption className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-tinta/10 bg-porcelana px-5 py-2.5 text-center shadow-[0_10px_30px_-18px_rgba(27,37,54,0.45)]">
