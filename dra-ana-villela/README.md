@@ -20,7 +20,7 @@ Para publicar no Netlify Drop: `cd dist && zip -r ../site-dra-ana-villela.zip . 
 - **URL definitiva**: troque `siteUrl` (usada em canonical, og:url, og:image e JSON-LD).
 - **Fotos**: substitua os arquivos em `public/fotos/` mantendo os nomes (ou ajuste `fotos` no config). Use WebP. A imagem de compartilhamento é `public/og-image.jpg` (1200x630).
 - **Logo**: hoje é uma assinatura tipográfica (`Logo` em `src/components/Header.tsx`). Troque pelo logo oficial quando houver.
-- **Textos**: tratamentos, etapas e compromissos ficam em `src/components/Sections.tsx`; dúvidas em `src/components/Contato.tsx`.
+- **Textos**: tratamentos, etapas, galeria do consultório e compromissos ficam em `src/components/Sections.tsx`; dúvidas em `src/components/Contato.tsx`.
 
 ## Desligar o modo rascunho (quando aprovado)
 
@@ -37,7 +37,7 @@ Para publicar no Netlify Drop: `cd dist && zip -r ../site-dra-ana-villela.zip . 
 - [ ] Lista de serviços e textos educativos de cada tratamento.
 - [ ] Alinhadores: se é prestadora credenciada Invisalign e se pode citar a marca (hoje: "alinhadores transparentes").
 - [ ] Vínculo com a clínica parceira (não citada no site sem autorização).
-- [ ] Autorização de uso das fotos (vieram da ficha do Google) e fotos em maior resolução.
+- [ ] Autorização de uso das fotos (vieram da ficha do Google) e fotos em maior resolução. Nas fotos da fachada e da entrada a marca da clínica foi removida; na sala, os quadros de sorriso e a imagem do monitor foram cobertos. Com fotos originais autorizadas, basta substituir os arquivos em `public/fotos/`.
 - [ ] Logo oficial.
 - [ ] Avaliações do Google: seção omitida até haver autorização para exibir avaliações reais.
 - [ ] Compromissos de atendimento (Naturalidade, Planejamento individual, Clareza, Acompanhamento).

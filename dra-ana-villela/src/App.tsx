@@ -1,7 +1,7 @@
 import { LazyMotion, domAnimation, MotionConfig } from "motion/react";
 import { DraftBanner, Header } from "./components/Header";
 import { Hero, Marquee } from "./components/Hero";
-import { ComoFunciona, Compromissos, Filosofia, Sobre, Tratamentos } from "./components/Sections";
+import { ComoFunciona, Compromissos, Consultorio, Filosofia, Sobre, Tratamentos } from "./components/Sections";
 import { CtaFinal, Duvidas, Localizacao, Rodape, WhatsappFixo } from "./components/Contato";
 
 export default function App() {
@@ -17,6 +17,7 @@ export default function App() {
         <Tratamentos />
         <ComoFunciona />
         <Sobre />
+        <Consultorio />
         <Compromissos />
         {/* Avaliações do Google: omitidas até haver avaliações reais autorizadas. */}
         <Duvidas />

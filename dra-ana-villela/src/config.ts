@@ -59,6 +59,11 @@ export const CONFIG = {
   fotos: {
     retrato: "/fotos/dra-ana-villela-retrato.webp",
     consultorio: "/fotos/dra-ana-villela-consultorio.webp",
+    // Fotos da ficha do Google. A marca da clínica foi removida da fachada e da entrada,
+    // e as imagens de sorriso (quadros e monitor) foram cobertas. CONFIRMAR autorização de uso.
+    fachada: "/fotos/fachada.webp",
+    sala: "/fotos/sala-de-atendimento.webp",
+    entrada: "/fotos/entrada.webp",
     og: "/og-image.jpg",
   },
 } as const;

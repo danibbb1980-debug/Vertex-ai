@@ -282,6 +282,108 @@ export function Sobre() {
   );
 }
 
+/* ---------------- Consultório ---------------- */
+function Foto({
+  src,
+  alt,
+  legenda,
+  w,
+  h,
+  className = "",
+}: {
+  src: string;
+  alt: string;
+  legenda: string;
+  w: number;
+  h: number;
+  className?: string;
+}) {
+  return (
+    <figure className={`group flex flex-col ${className}`}>
+      <div className="relative min-h-0 flex-1 overflow-hidden rounded-[1.5rem] bg-porcelana-2">
+        <img
+          src={src}
+          alt={alt}
+          width={w}
+          height={h}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+        />
+      </div>
+      <figcaption className="mt-3 flex items-center gap-3 text-[0.8rem] text-grafite">
+        <span aria-hidden className="h-px w-6 bg-champagne" />
+        {legenda}
+      </figcaption>
+    </figure>
+  );
+}
+
+export function Consultorio() {
+  return (
+    <section aria-labelledby="consultorio-titulo" className="py-24 sm:py-32">
+      <div className="container-site">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <SectionHeading
+            id="consultorio-titulo"
+            eyebrow="O consultório"
+            title={
+              <>
+                Um espaço <em className="text-rose-ink">tranquilo</em> no Centro.
+              </>
+            }
+          />
+          <Reveal delay={0.1} className="max-w-sm lg:pb-3">
+            <p className="text-grafite">
+              Atendimento na Rua Rio Grande do Sul, em Poços de Caldas, num ambiente calmo para conversar sobre o seu sorriso
+              sem pressa.
+            </p>
+          </Reveal>
+        </div>
+
+        <Reveal className="mt-14 grid grid-cols-2 gap-4 sm:gap-6 lg:h-[38rem] lg:grid-cols-12 lg:grid-rows-2">
+          <Foto
+            src={CONFIG.fotos.fachada}
+            alt="Fachada do consultório: sobrado de tijolinhos com floreiras nas janelas, grade e jardim na calçada"
+            legenda="Fachada"
+            w={379}
+            h={508}
+            className="col-span-2 aspect-[4/5] sm:aspect-[4/3] lg:col-span-5 lg:row-span-2 lg:aspect-auto"
+          />
+          <Foto
+            src={CONFIG.fotos.sala}
+            alt="Sala de atendimento clara, com cadeira odontológica, bancada de vidro e iluminação embutida"
+            legenda="Sala de atendimento"
+            w={404}
+            h={508}
+            className="aspect-[3/4] lg:col-span-4 lg:row-span-2 lg:aspect-auto"
+          />
+          <Foto
+            src={CONFIG.fotos.entrada}
+            alt="Entrada com porta de vidro, sala de espera e jardim lateral com plantas"
+            legenda="Entrada e recepção"
+            w={457}
+            h={318}
+            className="aspect-[3/4] lg:col-span-3 lg:aspect-auto"
+          />
+          <div className="col-span-2 flex flex-col justify-between rounded-[1.5rem] border border-tinta/10 p-7 lg:col-span-3">
+            <p className="font-display text-2xl leading-snug text-tinta">
+              Venha <em className="text-rose-ink">conhecer</em> pessoalmente.
+            </p>
+            <a
+              href="#contato"
+              className="group mt-6 inline-flex items-center gap-2 text-[0.92rem] font-medium text-tinta"
+            >
+              <span className="link-sublinhado">Endereço e horários</span>
+              <IconArrowUpRight width={18} height={18} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- Compromissos ---------------- */
 // Compromissos de atendimento: VALIDAR COM A DOUTORA antes da versão final.
 const compromissos = [
