@@ -221,14 +221,14 @@ export function Sobre() {
         <Reveal className="relative order-last mx-auto w-full max-w-[22rem] lg:order-first lg:max-w-[24rem]">
           <div aria-hidden className="absolute -left-6 -top-6 h-40 w-40 rounded-full border border-champagne/70" />
           <figure className="relative">
-            <div className="aspect-[4/6] overflow-hidden rounded-[1.75rem] bg-porcelana-2">
+            <div className="aspect-[953/1716] overflow-hidden rounded-[1.75rem] bg-porcelana-2">
               <img
                 src={CONFIG.fotos.consultorio}
                 srcSet={CONFIG.fotos.consultorioSrcSet}
                 sizes="(min-width: 1024px) 384px, min(352px, calc(100vw - 40px))"
                 alt={`${CONFIG.nome} no consultório, de jaleco azul-marinho, calçando luvas`}
                 width={953}
-                height={1560}
+                height={1716}
                 loading="lazy"
                 decoding="async"
                 className="h-full w-full object-cover object-top"

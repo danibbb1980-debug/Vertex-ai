@@ -61,7 +61,7 @@ export const CONFIG = {
     retrato: "/fotos/dra-ana-villela-retrato-760.webp",
     retratoSrcSet:
       "/fotos/dra-ana-villela-retrato-480.webp 480w, /fotos/dra-ana-villela-retrato-760.webp 760w, /fotos/dra-ana-villela-retrato-1015.webp 1015w",
-    // Na foto do consultório, o quadro com close de sorriso foi coberto e a marca da clínica na cadeira foi cortada.
+    // Foto do consultório: original, sem edição (pedido da cliente).
     consultorio: "/fotos/dra-ana-villela-consultorio-760.webp",
     consultorioSrcSet:
       "/fotos/dra-ana-villela-consultorio-480.webp 480w, /fotos/dra-ana-villela-consultorio-760.webp 760w, /fotos/dra-ana-villela-consultorio-953.webp 953w",

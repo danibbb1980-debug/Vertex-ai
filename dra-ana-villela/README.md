@@ -38,6 +38,7 @@ Para publicar no Netlify Drop: `cd dist && zip -r ../site-dra-ana-villela.zip . 
 - [ ] Alinhadores: se é prestadora credenciada Invisalign e se pode citar a marca (hoje: "alinhadores transparentes").
 - [ ] Vínculo com a clínica parceira (não citada no site sem autorização).
 - [ ] Autorização de uso das fotos (vieram da ficha do Google) e fotos em maior resolução. Nas fotos da fachada e da entrada a marca da clínica foi removida; na sala, os quadros de sorriso e a imagem do monitor foram cobertos. Com fotos originais autorizadas, basta substituir os arquivos em `public/fotos/`.
+- [ ] Foto da doutora com luvas (seção Sobre): publicada sem edição, a pedido. Confirmar que o quadro de sorriso ao fundo não é foto de paciente e que a marca da clínica na cadeira pode aparecer.
 - [ ] Logo oficial.
 - [ ] Avaliações do Google: seção omitida até haver autorização para exibir avaliações reais.
 - [ ] Compromissos de atendimento (Naturalidade, Planejamento individual, Clareza, Acompanhamento).
