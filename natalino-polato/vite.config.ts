@@ -43,7 +43,7 @@ function siteMeta(): Plugin {
     transformIndexHtml(html) {
       return html
         .replace('<html lang="pt-BR">', `<html lang="pt-BR" style="--banner-h:${CONFIG.rascunho ? '2rem' : '0px'}">`)
-        .replace('%TITLE%', esc(TITLE))
+        .replace(/%TITLE%/g, esc(TITLE))
         .replace(/%DESCRIPTION%/g, esc(DESCRIPTION))
         .replace(/%ROBOTS%/g, robots)
         .replace(/%URL%/g, url + '/')
