@@ -29,7 +29,7 @@ export const CONFIG = {
 
   /** Mostra a seção de planos e preços. */
   mostrarPrecos: true,
-  /** Mostra a seção "Exemplos de estilos" (marcas fictícias, rotuladas). */
+  /** Mostra a seção "Exemplos de estilos" (capturas em public/exemplos, rotuladas como ilustrativas). */
   mostrarExemplos: true,
 
   /** [CONFIRMAR] Texto sobre prazo do rascunho. Não prometa prazo exato. */

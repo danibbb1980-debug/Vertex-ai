@@ -22,7 +22,7 @@ Tudo que muda de um estúdio para outro está nesse arquivo:
 | `razaoSocial` | Aparece no rodapé, ao lado do CNPJ. Vazio = oculto. |
 | `fotoResponsavel`, `nomeResponsavel` | Foto opcional na seção "Sobre". Coloque a imagem em `public/` (ex.: `/responsavel.webp`). |
 | `mostrarPrecos` | `true`/`false`: mostra ou esconde a seção de planos. |
-| `mostrarExemplos` | `true`/`false`: mostra ou esconde os exemplos ilustrativos (marcas fictícias). |
+| `mostrarExemplos` | `true`/`false`: mostra ou esconde os exemplos ilustrativos (capturas em `public/exemplos/`, geradas por `node scripts/exemplos.mjs <imagem> <nome> ...`). |
 | `prazoRascunho` | Texto do prazo do rascunho. Não prometa prazo exato. |
 | `planos`, `inclusoEmTodos`, `naoIncluso` | Conteúdo dos cartões de planos. |
 
