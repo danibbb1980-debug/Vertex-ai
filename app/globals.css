@@ -1,6 +1,8 @@
 @import "tailwindcss";
 /* vip-shape/ é outro app (site de cliente), com o próprio build. */
 @source not "../vip-shape";
+/* vertex-site/ é o novo site institucional (Vite + 3D), com o próprio build. */
+@source not "../vertex-site";
 
 /*
   Vertex Web Studios — design tokens.
