@@ -8,7 +8,7 @@ import {
   mapsEmbedUrl,
   whatsappUrl,
 } from './config'
-import { DraftBanner, Header, Signature } from './components/Header'
+import { DraftBanner, Header } from './components/Header'
 import { Accordion, ArrowIcon, MagneticLink, Reveal, SectionLabel, WhatsAppIcon, type FaqItem } from './components/ui'
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -121,9 +121,18 @@ function Hero() {
         >
           <div className="relative w-full max-w-[22rem] border border-line-dark bg-ink/60 p-7 md:p-8">
             <span aria-hidden="true" className="absolute -top-px left-7 h-px w-16 bg-bronze" />
-            <div className="flex items-end gap-5">
+            <img
+              src={CONFIG.logo.completa}
+              alt={`${CONFIG.nome} · ${CONFIG.profissao}`}
+              width={640}
+              height={329}
+              fetchPriority="high"
+              className="mx-auto h-auto w-full max-w-[17rem]"
+            />
+            <span aria-hidden="true" className="mt-7 block h-px w-full bg-line-dark" />
+            <div className="mt-7 flex items-end gap-5">
               <div className="relative shrink-0 p-1.5 ring-1 ring-bronze/40">
-                <Portrait className="h-[7.5rem] w-[7.5rem]" />
+                <Portrait className="h-[6.5rem] w-[6.5rem]" />
               </div>
               <p className="label pb-1 text-[0.62rem] leading-relaxed text-mist">
                 Escritório em
@@ -133,8 +142,6 @@ function Hero() {
                 </span>
               </p>
             </div>
-            <p className="display mt-7 text-[2rem] text-ivory">{CONFIG.nome}</p>
-            <p className="mt-1 text-[0.92rem] text-mist">{CONFIG.profissao}</p>
             <dl className="mt-6 divide-y divide-line-dark border-y border-line-dark text-[0.86rem]">
               <div className="flex justify-between gap-4 py-3">
                 <dt className="text-mist">Inscrição</dt>
@@ -567,7 +574,14 @@ function Footer() {
       <div className="wrap">
         <div className="grid gap-10 border-b border-line-dark pb-12 md:grid-cols-12">
           <div className="md:col-span-5">
-            <Signature />
+            <img
+              src={CONFIG.logo.completa}
+              alt={`${CONFIG.nome} · ${CONFIG.profissao}`}
+              width={640}
+              height={329}
+              loading="lazy"
+              className="h-auto w-56"
+            />
             <p className="label mt-6 text-bronze">{CONFIG.oab}</p>
           </div>
           <div className="text-[0.9rem] md:col-span-4">

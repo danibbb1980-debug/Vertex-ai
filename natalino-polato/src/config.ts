@@ -102,6 +102,15 @@ export const CONFIG = {
     },
   ] satisfies Area[],
 
+  /** Logo (extraída da arte enviada; trocar pelo vetor original quando houver). */
+  logo: {
+    completa: '/img/logo-natalino-polato.webp', // 640×329, fundo transparente
+    monograma: '/img/logo-monograma.webp', // 167×128, fundo transparente
+  },
+
+  /** Imagem de compartilhamento (1200×630). */
+  ogImage: '/img/og-natalino-polato.jpg',
+
   /** Retrato. Deixe vazio ('') para mostrar o bloco "Foto do advogado (substituir)". */
   foto: {
     src: '/img/natalino-polato-150.webp',

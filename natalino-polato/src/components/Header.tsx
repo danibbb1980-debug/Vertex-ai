@@ -14,9 +14,7 @@ const LINKS = [
 export function Signature({ className = '' }: { className?: string }) {
   return (
     <span className={`flex items-center gap-3 ${className}`}>
-      <span aria-hidden="true" className="display grid h-10 w-10 place-items-center border border-bronze/50 text-[1.15rem] tracking-tight text-bronze">
-        NP
-      </span>
+      <img src={CONFIG.logo.monograma} alt="" width={52} height={40} className="h-10 w-auto" />
       <span className="flex flex-col leading-none">
         <span className="display text-[1.3rem] text-ivory">{CONFIG.nome}</span>
         <span className="label mt-1.5 text-[0.6rem] text-mist">{CONFIG.profissao}</span>

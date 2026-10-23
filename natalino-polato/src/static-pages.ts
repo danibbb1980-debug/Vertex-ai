@@ -8,7 +8,7 @@ const base = (title: string, robots: string, body: string) => `<!doctype html>
 <title>${title}</title>
 <meta name="robots" content="${robots}" />
 <meta name="googlebot" content="${robots}" />
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.png" type="image/png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Manrope:wght@400;500;600&display=swap" />

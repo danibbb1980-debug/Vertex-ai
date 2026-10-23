@@ -16,7 +16,7 @@ Tudo fica em **`src/config.ts`**: nome, OAB, WhatsApp, telefone, endereço, hor�
 - **Domínio próprio:** troque `siteUrl` (usado em canonical, og:url e og:image).
 - **Áreas:** só aparecem as com `confirmado: true`.
 - **Foto:** substitua `public/img/natalino-polato-150.webp` e `-300.webp` (quadradas). A atual veio de um arquivo de 150×150 px; peça uma versão em alta (mín. 600×600). Com `foto.src: ''` aparece o bloco "Foto do advogado (substituir)".
-- **Logo:** a assinatura usa o monograma "NP" em texto. A arte enviada (`referencias/logo-mockup.jpg`) é um mockup em parede de mármore, não serve como arquivo de logo; peça o vetor (SVG/PDF) para aplicar.
+- **Logo:** `public/img/logo-natalino-polato.webp` (completa) e `logo-monograma.webp` (cabeçalho), extraídas da arte enviada (`referencias/logo-mockup.jpg`) com fundo transparente. Também geram o favicon e a imagem de compartilhamento `og-natalino-polato.jpg`. Quando houver o arquivo vetorial original (SVG/PDF), substitua mantendo os mesmos nomes.
 
 ## Confirmar com o advogado
 
@@ -29,7 +29,7 @@ Tudo fica em **`src/config.ts`**: nome, OAB, WhatsApp, telefone, endereço, hor�
 - [ ] Divulgar o Instagram (`mostrarInstagram`, hoje desligado)
 - [ ] Outras áreas de atuação (inquérito, ação penal, Júri, recursos), hoje ocultas
 - [ ] Os 4 princípios de atuação
-- [ ] Foto em alta resolução e logo em vetor
+- [ ] Foto em alta resolução e logo em vetor (a atual foi extraída do mockup)
 
 ## Publicação
 

@@ -23,6 +23,7 @@ function siteMeta(): Plugin {
     description: 'Advogado criminalista. Atuação em Direito Penal e Processo Penal.',
     url: url + '/',
     telephone: CONFIG.telefoneFixoLink,
+    logo: url + CONFIG.logo.completa,
     ...(CONFIG.foto.src ? { image: url + CONFIG.foto.src2x } : {}),
     address: {
       '@type': 'PostalAddress',
@@ -47,7 +48,7 @@ function siteMeta(): Plugin {
         .replace(/%DESCRIPTION%/g, esc(DESCRIPTION))
         .replace(/%ROBOTS%/g, robots)
         .replace(/%URL%/g, url + '/')
-        .replace('%OG_IMAGE%', CONFIG.foto.src ? `<meta property="og:image" content="${url}${CONFIG.foto.src2x}" />\n    <meta property="og:image:alt" content="${esc(CONFIG.foto.alt)}" />` : '')
+        .replace('%OG_IMAGE%', CONFIG.ogImage ? `<meta property="og:image" content="${url}${CONFIG.ogImage}" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />\n    <meta property="og:image:alt" content="${esc(CONFIG.nome + ' · ' + CONFIG.profissao)}" />` : '')
         .replace('%JSONLD%', JSON.stringify(jsonLd))
         .replace('%ENDERECO%', esc(enderecoCompleto))
     },
