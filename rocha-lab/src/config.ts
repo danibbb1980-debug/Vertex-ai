@@ -36,7 +36,7 @@ export const CONFIG = {
   rascunho: true,
 
   /** URL pública do site, sem barra no final. CONFIRMAR COM O LABORATÓRIO (domínio definitivo). */
-  siteUrl: 'https://rocha-lab-rascunho.netlify.app',
+  siteUrl: 'https://rocha-lab-rascunho.vercel.app',
 
   nome: 'Laboratório de Prótese Dentária Rocha',
   nomeCurto: 'Laboratório Rocha',

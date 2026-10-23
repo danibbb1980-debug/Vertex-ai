@@ -13,6 +13,13 @@ npm run dev     # desenvolvimento
 npm run build   # gera dist/ (com o HTML já pré-renderizado)
 ```
 
+## Publicar na Vercel
+
+Projeto `rocha-lab-rascunho` na Vercel, com **Root Directory = `rocha-lab`**. O `vercel.json`
+fixa o build (`npm run build` → `dist`) e envia o `X-Robots-Tag: noindex` e o cache dos arquivos
+estáticos (a Vercel não lê o `_headers` do Netlify). Ao desligar o rascunho, remova também o
+`X-Robots-Tag` do `vercel.json`.
+
 ## Publicar no Netlify Drop
 
 ```bash
@@ -71,7 +78,7 @@ substitua o conteúdo de `Simbolo`/`Logo` em `src/components/ui.tsx` e o `public
 ### Desligar o rascunho (quando tudo estiver aprovado)
 
 1. `CONFIG.rascunho = false` e `CONFIG.siteUrl` com o domínio definitivo.
-2. Em `public/_headers`, remova a linha `X-Robots-Tag: noindex, nofollow`.
+2. Em `public/_headers` e em `vercel.json`, remova o `X-Robots-Tag: noindex, nofollow`.
 3. Em `public/robots.txt`, troque `Disallow: /` por `Allow: /`.
 4. Em `public/privacidade.html` e `public/404.html`, remova a faixa `<div class="faixa">` e as metas `noindex`.
 
