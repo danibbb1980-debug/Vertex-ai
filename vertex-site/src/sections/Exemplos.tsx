@@ -5,6 +5,7 @@ const exemplos = [
   { img: "laboratorio", estilo: "Laboratório de prótese dentária", alt: "Captura de um site de laboratório de prótese em tons de creme e verde-escuro, com fotos de trabalhos" },
   { img: "odontopediatria", estilo: "Odontopediatria", alt: "Captura de um site de odontopediatria em tons claros e vinho, com foto da dentista no consultório" },
   { img: "clinica", estilo: "Clínica odontológica", alt: "Captura de um site de clínica odontológica em tons de creme, azul-marinho e dourado, com foto da recepção" },
+  { img: "advocacia", estilo: "Advocacia", alt: "Captura de um site de advogado criminalista em tons de azul-noite e dourado, com cartão de apresentação" },
 ];
 
 function Badge() {
@@ -57,7 +58,14 @@ export function Exemplos() {
 
         <ul className="mt-16 grid gap-x-8 gap-y-14 md:grid-cols-2">
           {exemplos.map((e, i) => (
-            <li key={e.img} data-reveal style={{ ["--d" as string]: `${(i % 2) * 120}ms` }} className={i % 2 === 1 ? "md:translate-y-12" : ""}>
+            <li key={e.img} data-reveal style={{ ["--d" as string]: `${(i % 2) * 120}ms` }} className={
+                i === exemplos.length - 1 && i % 2 === 0
+                  ? "md:col-span-2 md:mx-auto md:mt-12 md:w-[calc(50%-1rem)]"
+                  : i % 2 === 1
+                    ? "md:translate-y-12"
+                    : ""
+              }
+            >
               <figure className="group">
                 <Badge />
                 <Browser img={e.img} alt={e.alt} />
