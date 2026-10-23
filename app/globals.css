@@ -1,6 +1,7 @@
 @import "tailwindcss";
 /* vip-shape/ é outro app (site de cliente), com o próprio build. */
 @source not "../vip-shape";
+@source not "../natalino-polato";
 
 /*
   Vertex Web Studios — design tokens.
