@@ -1,5 +1,5 @@
 import { CONFIG } from '../config'
-import { CabecalhoSecao, Foto, FotoMontada, Pendente } from './ui'
+import { CabecalhoSecao, Foto, FotoMontada } from './ui'
 
 const galeria: { nome: string; tamanho: [number, number]; alt: string; legenda: string }[] = [
   {
@@ -86,20 +86,29 @@ export function Sobre() {
             </p>
           </div>
 
+          {/* CONFIRMAR COM O LABORATÓRIO: formação e registros no CRO-SP (src/config.ts).
+              Cada dado aparece na lista assim que for preenchido; enquanto faltar algum,
+              fica só a linha discreta abaixo. */}
           <dl className="mt-10 border-t border-linha text-[0.9375rem]">
-            {[
-              ['Responsável', CONFIG.responsavel],
-              ['Formação', CONFIG.formacaoResponsavel],
-              ['CRO-SP do laboratório', CONFIG.croLaboratorio],
-              ['CRO-SP do responsável', CONFIG.croResponsavel],
-            ].map(([rotulo, valor]) => (
-              <div key={rotulo} className="grid grid-cols-[minmax(0,11rem)_1fr] items-baseline gap-4 border-b border-linha py-3.5">
-                <dt className="rotulo text-petroleo-600">{rotulo}</dt>
-                {/* CONFIRMAR COM O LABORATÓRIO: formação e registros no CRO-SP */}
-                <dd className="text-tinta">{valor ?? <Pendente />}</dd>
-              </div>
-            ))}
+            {(
+              [
+                ['Responsável', CONFIG.responsavel],
+                ['Formação', CONFIG.formacaoResponsavel],
+                ['CRO-SP do laboratório', CONFIG.croLaboratorio],
+                ['CRO-SP do responsável', CONFIG.croResponsavel],
+              ] as const
+            )
+              .filter(([, valor]) => valor)
+              .map(([rotulo, valor]) => (
+                <div key={rotulo} className="grid grid-cols-[minmax(0,11rem)_1fr] items-baseline gap-4 border-b border-linha py-3.5">
+                  <dt className="rotulo text-petroleo-600">{rotulo}</dt>
+                  <dd className="text-tinta">{valor}</dd>
+                </div>
+              ))}
           </dl>
+          {(!CONFIG.formacaoResponsavel || !CONFIG.croLaboratorio || !CONFIG.croResponsavel) && (
+            <p className="mt-4 text-[0.875rem] text-cinza">Formação e registros no CRO: a confirmar com o laboratório.</p>
+          )}
         </div>
       </div>
 

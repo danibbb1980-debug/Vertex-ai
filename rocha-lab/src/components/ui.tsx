@@ -338,27 +338,3 @@ export function FotoMontada({
     </figure>
   )
 }
-
-/** Bloco reservado para foto que ainda será enviada pelo laboratório. */
-export function FotoReservada({ legenda = 'Foto do trabalho (substituir)', className = '' }: { legenda?: string; className?: string }) {
-  return (
-    <div
-      className={`milimetrado relative flex h-full min-h-[140px] w-full flex-col items-center justify-center gap-4 bg-marfim text-petroleo-400 ${className}`}
-      role="img"
-      aria-label={legenda}
-    >
-      <svg viewBox="0 0 120 120" className="h-24 w-24" aria-hidden="true">
-        <circle cx="60" cy="60" r="46" fill="none" stroke="currentColor" strokeWidth=".8" strokeDasharray="2 4" />
-        <path
-          d="M38 46c0-11 9-15 17-11 3 1.3 7 1.3 10 0 8-4 17 0 17 11 0 11-5 16-6.5 25-1.3 7.5-2.8 15.5-6.3 15.5-3.7 0-4-12-7.7-12s-4 12-7.7 12c-3.5 0-5-8-6.3-15.5C43 62 38 57 38 46z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.2"
-          strokeLinejoin="round"
-        />
-        <path d="M14 60h12M94 60h12M60 14v12M60 94v12" stroke="currentColor" strokeWidth=".8" />
-      </svg>
-      <span className="rotulo text-cinza">{legenda}</span>
-    </div>
-  )
-}

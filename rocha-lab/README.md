@@ -33,9 +33,23 @@ Arraste o `site-rocha-lab.zip` (o `index.html` fica na raiz do zip, junto com `_
 | Logo (assinatura temporária em SVG) | `Logo` e `Simbolo` em `src/components/ui.tsx`; favicon em `public/favicon.svg` |
 | Imagem de compartilhamento | `public/og.jpg` (1200 × 630) |
 
-Valores `null` em `src/config.ts` (CRO, formação, nota do Google) aparecem no site como
-placeholder "a confirmar". Ao preencher, o placeholder some sozinho. A nota do Google só
+Enquanto formação e registros no CRO estiverem `null`, a seção Sobre mostra só a linha
+"Formação e registros no CRO: a confirmar com o laboratório." Ao preencher, cada dado entra na lista
+e a linha some quando os três estiverem preenchidos. A nota do Google só
 aparece quando `nota` **e** `avaliacoes` estiverem preenchidas com os valores reais.
+
+### Trabalhos: cartões e "Outros trabalhos"
+
+A lista completa fica em `CONFIG.trabalhos`. Cada item tem:
+
+- `destaque: true` → cartão grande com foto (exige `foto` e `fotoTamanho` preenchidos);
+- `destaque: false` → faixa compacta "Outros trabalhos", só com o nome e o `resumo` (uma linha), sem imagem.
+
+Hoje têm cartão: enceramento diagnóstico, prótese total, metalocerâmica e glaze/finalização e
+estratificação de facetas. Na faixa: cerômero, PPR, E.max, protocolo sobre implantes e provisórios
+impressos. Quando chegar uma boa foto de um desses, preencha `foto`/`fotoTamanho`/`fotoAlt` e mude
+`destaque` para `true`. PPR e protocolo já têm fotos pequenas (vindas do Google Maps) no config, mas
+ficam na faixa até haver imagem melhor.
 
 ### Trocar fotos
 
@@ -43,10 +57,9 @@ aparece quando `nota` **e** `avaliacoes` estiverem preenchidas com os valores re
 2. Rode `python3 scripts/otimizar-fotos.py` (precisa de Pillow): gera `public/fotos/coroa-ceromero.webp`
    e, se tiver mais de 700 px de largura, também a versão `-640`.
 3. Em `src/config.ts`, no trabalho correspondente, preencha `foto: 'coroa-ceromero'`,
-   `fotoTamanho: [largura, altura]` e `fotoAlt`.
+   `fotoTamanho: [largura, altura]`, `fotoAlt` e `destaque: true`.
 
-Trabalhos com `foto: null` mostram o bloco "Foto do trabalho (substituir)". Fotos com menos de
-700 px aparecem montadas sobre um passe-partout, sem ampliação exagerada. Não use fotos de
+Fotos com menos de 700 px aparecem montadas sobre um passe-partout, sem ampliação exagerada. Não use fotos de
 pacientes nem antes e depois. Fotos reais que não entraram no site estão em `referencias/fotos/extras/`.
 
 ### Trocar a logo
@@ -75,7 +88,7 @@ substitua o conteúdo de `Simbolo`/`Logo` em `src/components/ui.tsx` e o `public
 - [ ] Se atende dentistas de outras cidades
 - [ ] Nota e quantidade de avaliações do Google (só com valores reais)
 - [ ] Textos dos compromissos de atendimento (Precisão, Acabamento, Comunicação, Prazos)
-- [ ] Fotos dos trabalhos sem imagem (cerômero, E.max, provisórios impressos) e fotos em melhor resolução
+- [ ] Fotos dos trabalhos da faixa "Outros trabalhos" (cerômero, PPR, E.max, protocolo, provisórios impressos) e fotos em melhor resolução
 - [ ] Logo em arquivo vetorial
 - [ ] Domínio definitivo e responsável pelo tratamento de dados (página de privacidade)
 

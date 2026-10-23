@@ -14,6 +14,13 @@ export type Trabalho = {
   nome: string
   categoria: 'Prótese fixa' | 'Prótese removível' | 'Sobre implantes' | 'Planejamento' | 'Acabamento'
   descricao: string
+  /** Uma linha neutra, usada na faixa "Outros trabalhos". */
+  resumo: string
+  /**
+   * true = cartão grande com foto na seção Trabalhos (só para trabalhos com foto real).
+   * false = aparece na faixa compacta "Outros trabalhos", sem imagem.
+   */
+  destaque: boolean
   tags: string[]
   /** Nome da foto em public/fotos (sem extensão). null = bloco reservado. */
   foto: string | null
@@ -95,14 +102,47 @@ export const CONFIG = {
       `Olá! Sou cirurgião-dentista e gostaria de conversar sobre ${nome} com o Laboratório Rocha.`,
   },
 
-  /** Ordem de exibição na seção Trabalhos. */
+  /**
+   * Lista completa de trabalhos, na ordem de exibição. Os com `destaque: true` viram
+   * cartões com foto; os demais vão para a faixa "Outros trabalhos".
+   */
   trabalhos: [
+    {
+      id: 'enceramento',
+      nome: 'Enceramento diagnóstico',
+      categoria: 'Planejamento',
+      descricao:
+        'Reprodução em cera, sobre o modelo, da forma proposta para os dentes. Ajuda a visualizar o planejamento, a conversar com o paciente e a orientar as etapas seguintes.',
+      resumo: 'Forma proposta para os dentes reproduzida em cera sobre o modelo.',
+      destaque: true,
+      tags: ['Cera', 'Planejamento'],
+      foto: 'enceramento-diagnostico',
+      fotoTamanho: [1080, 1080],
+      fotoAlt: 'Enceramento diagnóstico em cera cinza nos dentes anteriores de um modelo de gesso.',
+      confirmado: true,
+    },
+    {
+      id: 'protese-total',
+      nome: 'Prótese total',
+      categoria: 'Prótese removível',
+      descricao:
+        'Prótese total confeccionada por etapas, da base de prova à acrilização, com montagem de dentes guiada pelos registros e referências enviados pelo dentista.',
+      resumo: 'Prótese total por etapas, da base de prova à acrilização.',
+      destaque: true,
+      tags: ['PT', 'Montagem de dentes'],
+      foto: 'protese-total-modelo',
+      fotoTamanho: [1080, 1080],
+      fotoAlt: 'Par de próteses totais com gengiva em resina rosada, montadas sobre modelos de gesso.',
+      confirmado: true,
+    },
     {
       id: 'metaloceramica',
       nome: 'Metalocerâmica',
       categoria: 'Prótese fixa',
       descricao:
         'Infraestrutura metálica recoberta por cerâmica, para coroas unitárias e próteses fixas. Estrutura e cerâmica são trabalhadas por etapas, conforme o modelo e a prescrição do caso.',
+      resumo: 'Infraestrutura metálica recoberta por cerâmica, para coroas e próteses fixas.',
+      destaque: true,
       tags: ['Coroas', 'Próteses fixas'],
       foto: 'metaloceramica-ponte',
       fotoTamanho: [1080, 1080],
@@ -110,13 +150,44 @@ export const CONFIG = {
       confirmado: true,
     },
     {
+      // CONFIRMAR COM O LABORATÓRIO (aparece em posts do Instagram)
+      id: 'acabamento',
+      nome: 'Glaze, finalização e estratificação de facetas',
+      categoria: 'Acabamento',
+      descricao:
+        'Etapas finais da cerâmica: estratificação em camadas, caracterização e glaze, em busca de integração de cor e textura com o caso.',
+      resumo: 'Estratificação, caracterização e glaze nas etapas finais da cerâmica.',
+      destaque: true,
+      tags: ['Estratificação', 'Glaze'],
+      foto: 'coroas-acabamento',
+      fotoTamanho: [224, 298],
+      fotoAlt: 'Coroas cerâmicas com acabamento brilhante, vistas de perfil sobre o modelo de gesso.',
+      confirmado: false,
+    },
+    {
       id: 'ceromero',
       nome: 'Coroa em cerômero',
       categoria: 'Prótese fixa',
       descricao:
         'Restauração indireta em cerômero, compósito processado em laboratório. Confeccionada a partir do modelo e da prescrição, com atenção à anatomia, aos pontos de contato e ao acabamento de superfície.',
+      resumo: 'Coroa em compósito processado em laboratório, a partir do modelo e da prescrição.',
+      destaque: false,
       tags: ['Cerômero', 'Unitária'],
       foto: null,
+      confirmado: true,
+    },
+    {
+      id: 'ppr',
+      nome: 'Prótese parcial removível',
+      categoria: 'Prótese removível',
+      descricao:
+        'PPR com estrutura metálica, base em resina e dentes de estoque, confeccionada sobre o modelo a partir do planejamento definido pelo dentista.',
+      resumo: 'Estrutura metálica com base e dentes em resina, confeccionada sobre o modelo.',
+      destaque: false,
+      tags: ['PPR', 'Estrutura metálica'],
+      foto: 'ppr-estrutura',
+      fotoTamanho: [195, 139],
+      fotoAlt: 'Prótese parcial removível superior com estrutura metálica e dentes em resina.',
       confirmado: true,
     },
     {
@@ -126,45 +197,11 @@ export const CONFIG = {
       categoria: 'Prótese fixa',
       descricao:
         'Coroa em cerâmica de dissilicato de lítio, confeccionada de acordo com a cor, a forma e as orientações registradas na prescrição do dentista.',
+      resumo: 'Coroa em cerâmica de dissilicato de lítio, conforme a prescrição do dentista.',
+      destaque: false,
       tags: ['Dissilicato de lítio', 'Cerâmica'],
       foto: null,
       confirmado: false,
-    },
-    {
-      id: 'enceramento',
-      nome: 'Enceramento diagnóstico',
-      categoria: 'Planejamento',
-      descricao:
-        'Reprodução em cera, sobre o modelo, da forma proposta para os dentes. Ajuda a visualizar o planejamento, a conversar com o paciente e a orientar as etapas seguintes.',
-      tags: ['Cera', 'Planejamento'],
-      foto: 'enceramento-diagnostico',
-      fotoTamanho: [1080, 1080],
-      fotoAlt: 'Enceramento diagnóstico em cera cinza nos dentes anteriores de um modelo de gesso.',
-      confirmado: true,
-    },
-    {
-      id: 'ppr',
-      nome: 'Prótese parcial removível',
-      categoria: 'Prótese removível',
-      descricao:
-        'PPR com estrutura metálica, base em resina e dentes de estoque, confeccionada sobre o modelo a partir do planejamento definido pelo dentista.',
-      tags: ['PPR', 'Estrutura metálica'],
-      foto: 'ppr-estrutura',
-      fotoTamanho: [195, 139],
-      fotoAlt: 'Prótese parcial removível superior com estrutura metálica e dentes em resina.',
-      confirmado: true,
-    },
-    {
-      id: 'protese-total',
-      nome: 'Prótese total',
-      categoria: 'Prótese removível',
-      descricao:
-        'Prótese total confeccionada por etapas, da base de prova à acrilização, com montagem de dentes guiada pelos registros e referências enviados pelo dentista.',
-      tags: ['PT', 'Montagem de dentes'],
-      foto: 'protese-total-modelo',
-      fotoTamanho: [1080, 1080],
-      fotoAlt: 'Par de próteses totais com gengiva em resina rosada, montadas sobre modelos de gesso.',
-      confirmado: true,
     },
     {
       // CONFIRMAR COM O LABORATÓRIO (consta na ficha do Google)
@@ -173,6 +210,8 @@ export const CONFIG = {
       categoria: 'Sobre implantes',
       descricao:
         'Prótese fixa sobre implantes do tipo protocolo, confeccionada sobre o modelo de trabalho conforme o planejamento protético do caso.',
+      resumo: 'Prótese fixa sobre implantes, conforme o planejamento protético do caso.',
+      destaque: false,
       tags: ['Implantes', 'Prótese fixa'],
       foto: 'protocolo-barra',
       fotoTamanho: [195, 163],
@@ -186,21 +225,10 @@ export const CONFIG = {
       categoria: 'Sobre implantes',
       descricao:
         'Provisórios produzidos por impressão a partir de planejamento digital, em casos selecionados e conforme combinado com o dentista.',
+      resumo: 'Provisórios por impressão a partir de planejamento digital, em casos selecionados.',
+      destaque: false,
       tags: ['Impressão', 'Fluxo digital'],
       foto: null,
-      confirmado: false,
-    },
-    {
-      // CONFIRMAR COM O LABORATÓRIO (aparece em posts do Instagram)
-      id: 'acabamento',
-      nome: 'Glaze, finalização e estratificação de facetas',
-      categoria: 'Acabamento',
-      descricao:
-        'Etapas finais da cerâmica: estratificação em camadas, caracterização e glaze, em busca de integração de cor e textura com o caso.',
-      tags: ['Estratificação', 'Glaze'],
-      foto: 'coroas-acabamento',
-      fotoTamanho: [224, 298],
-      fotoAlt: 'Coroas cerâmicas com acabamento brilhante, vistas de perfil sobre o modelo de gesso.',
       confirmado: false,
     },
   ] satisfies Trabalho[],
