@@ -29,6 +29,7 @@ export function FaixaRascunho() {
 export function Header() {
   const [rolou, setRolou] = useState(false)
   const [aberto, setAberto] = useState(false)
+  const [atual, setAtual] = useState<string | null>(null)
   const botaoRef = useRef<HTMLButtonElement>(null)
   const painelRef = useRef<HTMLDivElement>(null)
 
@@ -37,6 +38,26 @@ export function Header() {
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Destaca no menu a seção que está no meio da tela.
+  useEffect(() => {
+    const secoes = links
+      .map((l) => document.querySelector<HTMLElement>(l.href))
+      .filter((el): el is HTMLElement => el !== null)
+    const io = new IntersectionObserver(
+      (entradas) => {
+        for (const e of entradas) if (e.isIntersecting) setAtual(`#${e.target.id}`)
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    secoes.forEach((s) => io.observe(s))
+    const noTopo = () => window.scrollY < window.innerHeight * 0.5 && setAtual(null)
+    window.addEventListener('scroll', noTopo, { passive: true })
+    return () => {
+      io.disconnect()
+      window.removeEventListener('scroll', noTopo)
+    }
   }, [])
 
   useEffect(() => {
@@ -60,7 +81,7 @@ export function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-[var(--faixa)] z-50 transition-[background-color,border-color,box-shadow] duration-500 ${
+      className={`fixed inset-x-0 top-[var(--faixa)] z-50 transition-[background-color,border-color,box-shadow] duration-300 ${
         solido
           ? 'border-b border-linha/80 bg-perola/92 shadow-[0_10px_30px_-24px_rgb(15_51_53/0.5)] backdrop-blur-md'
           : 'border-b border-transparent bg-transparent'
@@ -73,7 +94,7 @@ export function Header() {
         Pular para o conteúdo
       </a>
       <div className="container-site flex h-[4.5rem] items-center justify-between gap-6">
-        <a href="#topo" className="shrink-0">
+        <a href="#topo" className="flex min-h-11 shrink-0 items-center">
           <Logo />
         </a>
 
@@ -83,7 +104,8 @@ export function Header() {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="relative py-2 text-[0.875rem] font-medium text-tinta/80 transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-petroleo-700 after:transition-transform after:duration-300 hover:text-petroleo-800 hover:after:scale-x-100"
+                  aria-current={atual === l.href ? 'location' : undefined}
+                  className="relative py-2 text-[0.875rem] font-medium text-tinta/80 transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-petroleo-700 after:transition-transform after:duration-300 hover:text-petroleo-800 hover:after:scale-x-100 aria-[current=location]:text-petroleo-800 aria-[current=location]:after:scale-x-100"
                 >
                   {l.label}
                 </a>

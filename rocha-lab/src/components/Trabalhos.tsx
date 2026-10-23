@@ -59,7 +59,7 @@ export function Trabalhos() {
               </>
             }
           />
-          <p className="max-w-sm text-[0.9375rem] leading-relaxed text-cinza lg:pb-2">
+          <p className="max-w-sm text-[1rem] leading-relaxed text-cinza lg:pb-2">
             A indicação clínica é sempre do cirurgião-dentista responsável pelo caso. O laboratório executa a partir do modelo,
             dos registros e da prescrição.
           </p>
@@ -76,8 +76,8 @@ export function Trabalhos() {
                     className="absolute inset-0"
                     initial={{ opacity: 0, scale: 1.03 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    exit={{ opacity: 0, transition: { duration: 0.25 } }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <Imagem t={atual} tamanhoGrande="40vw" />
                   </m.div>
@@ -110,13 +110,13 @@ export function Trabalhos() {
                 >
                   <span
                     aria-hidden="true"
-                    className={`absolute top-[-1px] left-0 h-px bg-petroleo-700 transition-[width] duration-700 ease-[var(--ease-atelie)] ${
+                    className={`absolute top-[-1px] left-0 h-px bg-petroleo-700 transition-[width] duration-500 ease-[var(--ease-atelie)] ${
                       ehAtivo ? 'w-full' : 'w-0'
                     }`}
                   />
                   <div className="grid gap-x-6 gap-y-4 sm:grid-cols-[3.5rem_1fr]">
                     <span
-                      className={`font-serif text-[0.95rem] tabular-nums transition-colors duration-500 sm:pt-2 ${
+                      className={`font-serif text-[0.95rem] tabular-nums transition-colors duration-300 sm:pt-2 ${
                         ehAtivo ? 'text-terracota' : 'text-cinza'
                       }`}
                       aria-hidden="true"
@@ -126,7 +126,7 @@ export function Trabalhos() {
                     <div>
                       <p className="rotulo text-petroleo-600">{t.categoria}</p>
                       <h3
-                        className={`mt-2 text-[1.75rem] leading-tight font-light transition-colors duration-500 sm:text-[2.125rem] ${
+                        className={`mt-2 text-[1.75rem] leading-tight font-light transition-colors duration-300 sm:text-[2.125rem] ${
                           ehAtivo ? 'text-petroleo-900' : 'text-petroleo-900/80'
                         }`}
                       >
@@ -138,7 +138,7 @@ export function Trabalhos() {
                         <Imagem t={t} tamanhoGrande="90vw" />
                       </div>
 
-                      <p className="mt-4 max-w-xl text-[0.9875rem] leading-relaxed text-cinza">{t.descricao}</p>
+                      <p className="mt-4 max-w-xl text-[1rem] leading-relaxed text-cinza">{t.descricao}</p>
                       <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
                         <ul className="flex flex-wrap gap-2" aria-label="Características">
                           {t.tags.map((tag) => (

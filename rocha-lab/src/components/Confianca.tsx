@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+import { m, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { CONFIG } from '../config'
 import { IconEstrela } from './ui'
 
@@ -25,7 +27,7 @@ export function Confianca() {
               <span className="font-serif text-[1.375rem] leading-tight font-light text-petroleo-800 lg:text-[1.5rem]">
                 {it.destaque}
               </span>
-              <span className="text-[0.875rem] leading-snug text-cinza">
+              <span className="text-[0.9375rem] leading-snug text-cinza">
                 {it.texto}
               </span>
             </li>
@@ -45,7 +47,11 @@ export function Confianca() {
   )
 }
 
-/** Faixa discreta com os tipos de trabalho, em rolagem lenta (para com reduced-motion). */
+/**
+ * Faixa discreta com os tipos de trabalho. Desliza só acompanhando a rolagem da
+ * página (nunca sozinha), então não precisa de botão de pausa (WCAG 2.2.2).
+ * Com reduced-motion fica parada.
+ */
 export function FaixaTrabalhos() {
   const nomes = [
     'Cerômero',
@@ -70,12 +76,17 @@ export function FaixaTrabalhos() {
       ))}
     </ul>
   )
+  const ref = useRef<HTMLDivElement>(null)
+  const reduzir = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-22%'])
+
   return (
-    <div className="marquee overflow-hidden border-b border-linha py-6" aria-label="Tipos de trabalho" role="region">
-      <div className="marquee-trilho flex w-max">
+    <div ref={ref} className="overflow-hidden border-b border-linha py-6" aria-label="Tipos de trabalho" role="region">
+      <m.div className="flex w-max will-change-transform" style={{ x: reduzir ? 0 : x }}>
         {grupo(false)}
         {grupo(true)}
-      </div>
+      </m.div>
     </div>
   )
 }

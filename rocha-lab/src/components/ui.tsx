@@ -104,7 +104,7 @@ export function Logo({ claro = false }: { claro?: boolean }) {
       <span className="flex flex-col leading-none">
         <span className="font-serif text-[1.6rem] font-normal italic tracking-[-0.01em]">Rocha</span>
         <span
-          className={`mt-1 text-[0.5625rem] font-semibold tracking-[0.16em] uppercase ${claro ? 'text-petroleo-200' : 'text-cinza'}`}
+          className={`mt-1 text-[0.625rem] font-semibold tracking-[0.14em] uppercase ${claro ? 'text-petroleo-200' : 'text-cinza'}`}
         >
           Laboratório de Prótese Dentária
         </span>
@@ -175,7 +175,7 @@ export function Botao({
       onPointerMove={mover}
       onPointerLeave={sair}
       style={ativo ? { x: sx, y: sy } : undefined}
-      className={`group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-6 text-[0.9375rem] font-semibold tracking-[-0.005em] transition-colors duration-300 ${estilos[variante]} ${className}`}
+      className={`group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-6 text-[0.9375rem] font-semibold tracking-[-0.005em] transition-[color,background-color,border-color,scale] duration-200 active:scale-[0.97] ${estilos[variante]} ${className}`}
     >
       {icone}
       <span className="whitespace-nowrap">{children}</span>
@@ -200,7 +200,7 @@ export function LinkSeta({
     <a
       href={href}
       {...(externoLink ? externo : {})}
-      className={`group inline-flex items-center gap-2 py-2 text-sm font-semibold underline decoration-current/25 underline-offset-[6px] transition-colors hover:decoration-current ${className}`}
+      className={`group inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline decoration-current/25 underline-offset-[6px] transition-colors hover:decoration-current ${className}`}
     >
       {children}
       <IconSetaDiagonal size={15} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -220,7 +220,7 @@ export function Pendente({ children, claro = false }: { children?: ReactNode; cl
       }`}
     >
       {children && <span>{children}</span>}
-      <span className={`rotulo ${children ? 'text-[0.5625rem]' : 'text-[0.625rem]'}`}>a confirmar</span>
+      <span className={`rotulo text-[0.6875rem] ${children ? 'tracking-[0.14em]' : ''}`}>a confirmar</span>
     </span>
   )
 }

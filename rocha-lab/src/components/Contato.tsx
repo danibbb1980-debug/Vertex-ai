@@ -169,21 +169,21 @@ export function Rodape() {
           </div>
           <div className="lg:col-span-2">
             <p className="rotulo text-pessego/80">Contato</p>
-            <ul className="mt-4 space-y-1 text-[0.875rem]">
+            <ul className="mt-3 text-[0.875rem]">
               <li>
-                <a href={whatsappLink()} {...externo} className="inline-flex min-h-9 items-center gap-2 hover:text-perola">
+                <a href={whatsappLink()} {...externo} className="inline-flex min-h-11 items-center gap-2 hover:text-perola">
                   <IconWhatsApp size={16} /> {CONFIG.telefoneExibicao}
                   <span className="sr-only">(WhatsApp, abre em nova aba)</span>
                 </a>
               </li>
               <li>
-                <a href={CONFIG.instagram} {...externo} className="inline-flex min-h-9 items-center gap-2 hover:text-perola">
+                <a href={CONFIG.instagram} {...externo} className="inline-flex min-h-11 items-center gap-2 hover:text-perola">
                   <IconInstagram size={16} /> Instagram
                   <span className="sr-only">(abre em nova aba)</span>
                 </a>
               </li>
               <li>
-                <a href={CONFIG.googleMaps} {...externo} className="inline-flex min-h-9 items-center gap-2 hover:text-perola">
+                <a href={CONFIG.googleMaps} {...externo} className="inline-flex min-h-11 items-center gap-2 hover:text-perola">
                   <IconSetaDiagonal size={16} /> Google Maps
                   <span className="sr-only">(abre em nova aba)</span>
                 </a>
@@ -192,7 +192,7 @@ export function Rodape() {
           </div>
           <nav aria-label="Rodapé" className="lg:col-span-3">
             <p className="rotulo text-pessego/80">Navegação</p>
-            <ul className="mt-4 grid grid-cols-2 gap-x-4 text-[0.875rem]">
+            <ul className="mt-3 grid grid-cols-2 gap-x-4 text-[0.875rem]">
               {[
                 ['#trabalhos', 'Trabalhos'],
                 ['#como-enviar', 'Como enviar'],
@@ -202,7 +202,7 @@ export function Rodape() {
                 ['/privacidade.html', 'Privacidade'],
               ].map(([href, label]) => (
                 <li key={href}>
-                  <a href={href} className="inline-flex min-h-9 items-center hover:text-perola">
+                  <a href={href} className="inline-flex min-h-11 min-w-11 items-center hover:text-perola">
                     {label}
                   </a>
                 </li>
@@ -250,7 +250,7 @@ export function WhatsAppFixo() {
         {...externo}
         aria-label="Falar com o laboratório pelo WhatsApp (abre em nova aba)"
         tabIndex={visivel ? 0 : -1}
-        className={`fixed right-6 bottom-6 z-40 hidden h-14 w-14 items-center justify-center rounded-full bg-petroleo-700 text-perola ring-1 ring-perola/25 shadow-[0_18px_40px_-16px_rgb(15_51_53/0.7)] transition-[opacity,transform,background-color] duration-500 hover:bg-petroleo-800 sm:flex ${
+        className={`fixed right-6 bottom-6 z-40 hidden h-14 w-14 items-center justify-center rounded-full bg-petroleo-700 text-perola ring-1 ring-perola/25 shadow-[0_18px_40px_-16px_rgb(15_51_53/0.7)] transition-[opacity,transform,background-color] duration-300 hover:bg-petroleo-800 sm:flex ${
           visivel ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
         }`}
       >
@@ -260,7 +260,7 @@ export function WhatsAppFixo() {
         <a
           href={whatsappLink()}
           {...externo}
-          className="flex min-h-12 items-center justify-center gap-2.5 rounded-full bg-petroleo-700 text-[0.9375rem] font-semibold text-perola"
+          className="flex min-h-12 items-center justify-center gap-2.5 rounded-full bg-petroleo-700 text-[0.9375rem] font-semibold text-perola transition-[scale] duration-200 active:scale-[0.98]"
         >
           <IconWhatsApp size={18} />
           Falar com o laboratório

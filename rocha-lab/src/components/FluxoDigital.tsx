@@ -79,7 +79,7 @@ export function FluxoDigital() {
               <li key={it.titulo} className="bg-petroleo-900 p-5">
                 <span className="rotulo text-pessego/80">{String(i + 1).padStart(2, '0')}</span>
                 <h3 className="mt-3 text-[1.25rem] leading-snug font-light">{it.titulo}</h3>
-                <p className="mt-2 text-[0.875rem] leading-relaxed text-petroleo-200">{it.texto}</p>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-petroleo-200">{it.texto}</p>
               </li>
             ))}
           </ul>

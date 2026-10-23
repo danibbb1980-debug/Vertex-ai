@@ -113,7 +113,7 @@ export function Sobre() {
             href={CONFIG.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[0.875rem] font-semibold text-petroleo-700 underline decoration-petroleo-700/25 underline-offset-[6px] hover:decoration-petroleo-700"
+            className="inline-flex min-h-11 items-center text-[0.875rem] font-semibold text-petroleo-700 underline decoration-petroleo-700/25 underline-offset-[6px] hover:decoration-petroleo-700"
           >
             Mais no Instagram<span className="sr-only"> (abre em nova aba)</span>
           </a>
@@ -129,7 +129,7 @@ export function Sobre() {
                       tamanho={g.tamanho}
                       alt={g.alt}
                       sizes="(min-width: 1024px) 22vw, 45vw"
-                      className="h-full w-full object-cover transition-transform duration-[1.2s] ease-[var(--ease-atelie)] group-hover:scale-[1.04]"
+                      className="h-full w-full object-cover transition-transform duration-500 ease-[var(--ease-atelie)] group-hover:scale-[1.03]"
                     />
                   ) : (
                     <FotoMontada nome={g.nome} tamanho={g.tamanho} alt={g.alt} className="p-4 sm:p-6" />

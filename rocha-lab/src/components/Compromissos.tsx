@@ -33,7 +33,7 @@ export function Compromissos() {
                 {String(i + 1).padStart(2, '0')}
               </span>
               <h3 className="mt-5 text-[1.5rem] leading-tight font-light text-petroleo-900">{p.titulo}</h3>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-cinza">{p.texto}</p>
+              <p className="mt-3 text-[1rem] leading-relaxed text-cinza">{p.texto}</p>
             </li>
           ))}
         </ol>
@@ -66,7 +66,7 @@ export function Avaliacoes() {
                 </>
               )}
             </h2>
-            <p className="mt-3 max-w-md text-[0.9375rem] text-cinza">
+            <p className="mt-3 max-w-md text-[1rem] text-cinza">
               As avaliações públicas ficam na ficha do laboratório no Google Maps.
             </p>
           </div>
@@ -74,7 +74,7 @@ export function Avaliacoes() {
             href={CONFIG.googleMaps}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex min-h-12 shrink-0 items-center justify-center gap-2.5 rounded-full border border-petroleo-700/35 px-6 text-[0.9375rem] font-semibold text-petroleo-800 transition-colors hover:border-petroleo-700"
+            className="group inline-flex min-h-12 shrink-0 items-center justify-center gap-2.5 rounded-full border border-petroleo-700/35 px-6 text-[0.9375rem] font-semibold text-petroleo-800 transition-[border-color,scale] duration-200 hover:border-petroleo-700 active:scale-[0.97]"
           >
             Ver avaliações no Google
             <IconSetaDiagonal size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

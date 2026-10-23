@@ -47,7 +47,7 @@ export function Hero() {
                 <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
                   <span
                     className={`revelar inline-block ${p.italico ? 'font-normal text-petroleo-700 italic' : ''}`}
-                    style={{ animationDelay: `${80 + i * 60}ms` }}
+                    style={{ animationDelay: `${60 + i * 45}ms` }}
                   >
                     {p.t}
                   </span>
@@ -105,7 +105,7 @@ export function Hero() {
                 className="h-full w-full scale-[1.35] object-cover object-[45%_45%]"
               />
             </div>
-            <figcaption className="rotulo bg-marfim px-1 pt-2 pb-0.5 text-[0.5625rem] text-cinza">
+            <figcaption className="rotulo bg-marfim px-1 pt-2 pb-0.5 text-[0.6875rem] tracking-[0.14em] text-cinza">
               Fig. 02 · Metalocerâmica
             </figcaption>
           </figure>

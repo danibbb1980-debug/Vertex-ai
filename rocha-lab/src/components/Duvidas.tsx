@@ -86,7 +86,7 @@ function Item({ p, r, aberto, onToggle }: { p: string; r: ReactNode; aberto: boo
             {p}
           </span>
           <span
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-[transform,background-color,border-color,color] duration-500 ease-[var(--ease-atelie)] ${
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-[transform,background-color,border-color,color] duration-300 ease-[var(--ease-atelie)] ${
               aberto ? 'rotate-45 border-petroleo-700 bg-petroleo-700 text-perola' : 'border-linha text-petroleo-700'
             }`}
             aria-hidden="true"
@@ -99,7 +99,7 @@ function Item({ p, r, aberto, onToggle }: { p: string; r: ReactNode; aberto: boo
         id={`${id}-r`}
         role="region"
         aria-labelledby={`${id}-b`}
-        className={`grid transition-[grid-template-rows] duration-500 ease-[var(--ease-atelie)] ${
+        className={`grid transition-[grid-template-rows] duration-400 ease-[var(--ease-atelie)] ${
           aberto ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
         }`}
         inert={!aberto}
