@@ -143,6 +143,18 @@
   pointer-events: none;
 }
 .hero-gl .hero-backdrop { opacity: 1; }
+/* Vídeo da cena (aparelhos sem GPU): mesmo enquadramento da cena 3D */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 50%;
+}
+@media (max-width: 1023px) {
+  .hero-video { top: auto; height: 58%; object-position: 72% 50%; }
+}
 /* Véu de leitura: escurece atrás da headline e dos botões */
 .hero-veil {
   position: absolute;

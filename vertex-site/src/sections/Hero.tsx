@@ -5,6 +5,7 @@ import { HeroScene } from "../components/HeroScene";
 import { Vertice } from "../components/Vertice";
 import { useHeroGL } from "../components/useHeroGL";
 import { GLBoundary } from "../lib/webgl";
+import { HeroVideo } from "../components/HeroVideo";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -13,6 +14,12 @@ export function Hero() {
   return (
     <section ref={ref} id="topo" aria-labelledby="hero-title" className={`relative isolate overflow-hidden${gl.ready ? " hero-gl" : ""}`}>
       {/* Fundo em WebGL (V de vidro e telas). Carregado só em aparelhos capazes. */}
+      {gl.video && !gl.Comp && (
+        <div className="hero-backdrop" aria-hidden="true">
+          <HeroVideo mode={gl.video} onReady={() => gl.setReady(true)} />
+          <div className="hero-veil" />
+        </div>
+      )}
       {gl.Comp && (
         <div className="hero-backdrop" aria-hidden="true">
           <GLBoundary key={gl.lite ? "lite" : "full"} onError={gl.fail}>
@@ -72,7 +79,7 @@ export function Hero() {
         </div>
 
         <div className="mx-auto w-full max-w-[36rem] sm:max-w-[42rem] lg:col-span-6 lg:max-w-none">
-          <HeroScene glReady={gl.ready} lite={gl.lite} />
+          <HeroScene glReady={gl.ready} lite={gl.video ? false : gl.lite} />
         </div>
       </div>
     </section>

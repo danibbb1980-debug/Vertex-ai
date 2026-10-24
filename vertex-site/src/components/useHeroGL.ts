@@ -6,8 +6,9 @@ import type { HeroGLProps } from "./HeroGL";
  * Carrega a cena WebGL do hero sob demanda (depois do load, em tempo ocioso),
  * conforme `heroPlan()` em lib/webgl.ts.
  *
+ * - Sem GPU (ou se as duas versões falharem): vídeo gravado da própria cena.
  * - Se a versão completa falhar (ex.: vidro com refração numa GPU específica),
- *   tenta a versão leve antes de desistir; só então fica o mockup em CSS.
+ *   tenta a versão leve antes de partir para o vídeo.
  * - Movimento reduzido: a cena aparece parada.
  * - A renderização pausa quando o hero sai da tela ou a aba fica oculta.
  * - `?debug3d` mostra na tela o caminho escolhido e o motivo.
@@ -19,6 +20,8 @@ export function useHeroGL(heroRef: RefObject<HTMLElement | null>) {
   const [lite, setLite] = useState(false);
   const [still, setStill] = useState(false);
   const [debug, setDebug] = useState<string | null>(null);
+  /** Vídeo gravado da cena, para aparelhos sem GPU. "still" = só a imagem parada. */
+  const [video, setVideo] = useState<null | "play" | "still">(null);
 
   useEffect(() => {
     const plan = heroPlan();
@@ -27,6 +30,12 @@ export function useHeroGL(heroRef: RefObject<HTMLElement | null>) {
       if (wantDebug) setDebug(msg);
       console.info(`[Vertex 3D] ${msg}`);
     };
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!plan.mode && plan.video) {
+      note(`vídeo da cena${reduced ? " (imagem parada: movimento reduzido)" : ""} — ${plan.reason}`);
+      whenIdle(() => setVideo(reduced ? "still" : "play"));
+      return;
+    }
     note(plan.mode ? `cena ${plan.mode === "full" ? "completa" : "leve"} — ${plan.reason}` : `mockup em CSS — ${plan.reason}`);
     if (!plan.mode) return;
     setLite(plan.mode === "lite");
@@ -73,10 +82,11 @@ export function useHeroGL(heroRef: RefObject<HTMLElement | null>) {
       setLite(true);
       return;
     }
-    console.info("[Vertex 3D] a cena falhou; ficando no mockup em CSS");
-    setDebug((d) => (d ? `${d} · leve falhou → CSS` : d));
+    console.info("[Vertex 3D] a cena falhou; usando o vídeo da cena");
+    setDebug((d) => (d ? `${d} · leve falhou → vídeo` : d));
     setComp(null);
+    setVideo(matchMedia("(prefers-reduced-motion: reduce)").matches ? "still" : "play");
   };
 
-  return { Comp, visible, ready, lite, still, debug, setReady, fail };
+  return { Comp, visible, ready, lite, still, debug, video, setReady, fail };
 }

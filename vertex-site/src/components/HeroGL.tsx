@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, advance, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { projetos } from "../projetos";
 import { ProceduralEnv, armGeometry, clamp01, easeOutExpo } from "./three/shared";
@@ -67,6 +67,20 @@ const SWING = THREE.MathUtils.degToRad(15);
 const PERIOD = 18;
 const MAX_TILT = THREE.MathUtils.degToRad(3);
 const FOV = 32;
+
+/*
+ * ?capture3d (uso interno): tempo controlado quadro a quadro, para gravar o
+ * vídeo usado em aparelhos sem GPU (scripts/gravar-hero.mjs).
+ * window.__vertexStep(t) renderiza o instante t (em segundos).
+ */
+const CAPTURE = typeof location !== "undefined" && new URLSearchParams(location.search).has("capture3d");
+declare global {
+  interface Window {
+    __vtime?: number;
+    __vertexStep?: (t: number) => void;
+    __vertexReady?: boolean;
+  }
+}
 
 function roundedRect(w: number, h: number, r: number) {
   const s = new THREE.Shape();
@@ -239,9 +253,9 @@ function Scene({ lite, still = false, onReady, onFail }: Omit<HeroGLProps, "acti
 
   useFrame((state, delta) => {
     const S = st.current;
-    const dt = Math.min(delta, 1 / 20);
+    const dt = CAPTURE ? 1 / 24 : Math.min(delta, 1 / 20);
     // Parada: tempo congelado e entrada já concluída
-    const t = still ? 0 : state.clock.elapsedTime;
+    const t = CAPTURE ? (window.__vtime ?? 0) : still ? 0 : state.clock.elapsedTime;
     if (S.t0 < 0) {
       if (!loaded.current) return;
       S.t0 = t;
@@ -268,7 +282,7 @@ function Scene({ lite, still = false, onReady, onFail }: Omit<HeroGLProps, "acti
       S.pitch = THREE.MathUtils.damp(S.pitch, S.ty * MAX_TILT, 3, dt);
     }
     const hero = document.getElementById("topo");
-    if (hero) {
+    if (hero && !CAPTURE) {
       const r = hero.getBoundingClientRect();
       S.sp = THREE.MathUtils.damp(S.sp, clamp01(-r.top / (r.height * 0.9)), 8, dt);
     }
@@ -283,6 +297,7 @@ function Scene({ lite, still = false, onReady, onFail }: Omit<HeroGLProps, "acti
 
     if (!S.ready) {
       S.ready = true;
+      if (CAPTURE) window.__vertexReady = true;
       requestAnimationFrame(onReady);
     }
   });
@@ -337,7 +352,7 @@ function Scene({ lite, still = false, onReady, onFail }: Omit<HeroGLProps, "acti
 export default function HeroGL({ active, lite, still = false, onReady, onFail }: HeroGLProps) {
   return (
     <Canvas
-      frameloop={!active ? "never" : still ? "demand" : "always"}
+      frameloop={CAPTURE || !active ? "never" : still ? "demand" : "always"}
       dpr={[1, 1.5]}
       camera={{ fov: FOV, position: [0, 0, 13], near: 0.1, far: 80 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance", failIfMajorPerformanceCaveat: true }}
@@ -347,6 +362,12 @@ export default function HeroGL({ active, lite, still = false, onReady, onFail }:
         gl.toneMapping = THREE.ACESFilmicToneMapping;
         gl.toneMappingExposure = 1.05;
         gl.domElement.addEventListener("webglcontextlost", onFail, { once: true });
+        if (CAPTURE) {
+          window.__vertexStep = (t: number) => {
+            window.__vtime = t;
+            advance(performance.now());
+          };
+        }
       }}
     >
       <Scene lite={lite} still={still} onReady={onReady} onFail={onFail} />
