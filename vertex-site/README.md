@@ -44,27 +44,16 @@ Depois de editar, rode `npm run build` de novo.
 - Fallback em SVG quando: `prefers-reduced-motion`, sem WebGL, renderização por software, `hardwareConcurrency <= 4`, `deviceMemory <= 4`, `saveData` ou erro.
 - Para testar: `?no3d` força o fallback e `?force3d` força o 3D.
 
-## Hero 3D e vídeo para aparelhos sem GPU
+## Hero 3D
 
-O fundo do hero é uma cena WebGL (`src/components/HeroGL.tsx`): o V em vidro cercado pelas capturas reais.
+O hero mostra as capturas reais em profundidade numa cena WebGL (`src/components/HeroGL.tsx`).
 A decisão de quem recebe o quê fica em `heroPlan()` (`src/lib/webgl.ts`):
 
 - desktop com GPU: cena completa; celular ou aparelho modesto: versão leve;
 - movimento reduzido: cena parada;
-- sem GPU (ex.: Windows com "Microsoft Basic Render Driver"): vídeo gravado da cena (`public/hero/`).
+- sem GPU (ex.: Windows com "Microsoft Basic Render Driver"): mockup em CSS 3D.
 
-Testes na URL: `?debug3d` (mostra o caminho e o motivo), `?force3d`, `?video3d`, `?no3d`.
-
-**Regravar o vídeo** (depois de trocar capturas ou a composição):
-
-```bash
-npm run build && npm run preview   # em outro terminal
-npm i --no-save playwright-core
-CHROME=/caminho/do/chrome OUT=gravacao-hero node scripts/gravar-hero.mjs
-ffmpeg -y -framerate 24 -i gravacao-hero/f%04d.png -c:v libvpx-vp9 -b:v 0 -crf 42 -row-mt 1 -pix_fmt yuv420p -an public/hero/hero-loop.webm
-ffmpeg -y -framerate 24 -i gravacao-hero/f%04d.png -c:v libx264 -crf 28 -preset slow -pix_fmt yuv420p -movflags +faststart -an public/hero/hero-loop.mp4
-node -e 'require("sharp")("gravacao-hero/poster.png").webp({quality:80}).toFile("public/hero/hero-poster.webp")'
-```
+Testes na URL: `?debug3d` (mostra o caminho e o motivo), `?force3d`, `?no3d`.
 
 ## Publicar
 

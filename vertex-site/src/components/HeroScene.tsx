@@ -1,4 +1,6 @@
 import { useEffect, useRef } from "react";
+import { GLBoundary } from "../lib/webgl";
+import { useHeroGL } from "./useHeroGL";
 
 /*
  * Composição do hero: dois navegadores em perspectiva, em planos diferentes,
@@ -6,9 +8,8 @@ import { useEffect, useRef } from "react";
  * Polato ao fundo). As capturas entram inteiras, na proporção original.
  *
  * Este mockup em CSS 3D vem pré-renderizado e é sempre o primeiro a aparecer.
- * Em aparelhos capazes, depois do load, a cena WebGL (HeroGL) entra no fundo
- * do hero inteiro e este mockup sai (classe hs-gl); ele continua como
- * fallback para quem não recebe o WebGL.
+ * Em aparelhos capazes, depois do load, entra por cima a cena WebGL (HeroGL),
+ * com as cinco capturas em profundidade; o CSS 3D fica como fallback.
  * Movimento: entrada suave, flutuação lenta, inclinação pelo cursor limitada
  * (só desktop com mouse, só dentro do hero) e leve inclinação ao rolar.
  * Com prefers-reduced-motion a composição fica parada.
@@ -16,9 +17,10 @@ import { useEffect, useRef } from "react";
 
 const MAX_TILT = 4; // graus
 
-export function HeroScene({ glReady = false, lite = false }: { glReady?: boolean; lite?: boolean }) {
+export function HeroScene() {
   const stageRef = useRef<HTMLDivElement>(null);
   const rigRef = useRef<HTMLDivElement>(null);
+  const gl = useHeroGL(stageRef);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -85,7 +87,7 @@ export function HeroScene({ glReady = false, lite = false }: { glReady?: boolean
 
   return (
     <figure className="hs-figure">
-      <div ref={stageRef} className={`hs-stage${glReady ? " hs-gl" : ""}`}>
+      <div ref={stageRef} className={`hs-stage${gl.ready ? " hs-gl" : ""}`}>
         <div className="hs-light" aria-hidden="true" />
         <div className="hs-floor" aria-hidden="true" />
         <div className="hs-enter">
@@ -143,15 +145,20 @@ export function HeroScene({ glReady = false, lite = false }: { glReady?: boolean
             </div>
           </div>
         </div>
+        {gl.Comp && (
+          <div className="hs-canvas" aria-hidden="true">
+            <GLBoundary key={gl.lite ? "lite" : "full"} onError={gl.fail}>
+              <gl.Comp active={gl.visible} lite={gl.lite} still={gl.still} onReady={() => gl.setReady(true)} onFail={gl.fail} />
+            </GLBoundary>
+          </div>
+        )}
       </div>
       <figcaption className="hs-caption">
         <span className="num">Na tela</span>
-        {glReady ? (
+        {gl.ready ? (
           <span>
-            O V da Vertex em vidro, cercado por sites reais do estúdio:{" "}
-            {lite
-              ? "Star Sorrindo, VIP Shape Academia e Natalino Polato"
-              : "Star Sorrindo, VIP Shape Academia, Natalino Polato, Dra. Beatryz Furlaneto e Rocha"}
+            Star Sorrindo, clínica em Poços de Caldas, à frente <span aria-hidden="true">·</span> ao fundo,{" "}
+            {gl.lite ? "VIP Shape Academia e Natalino Polato" : "VIP Shape Academia, Natalino Polato, Dra. Beatryz Furlaneto e Rocha"}
           </span>
         ) : (
           <span>
@@ -160,6 +167,12 @@ export function HeroScene({ glReady = false, lite = false }: { glReady?: boolean
           </span>
         )}
       </figcaption>
+      {/* Diagnóstico do 3D, só com ?debug3d na URL */}
+      {gl.debug && (
+        <p className="fixed bottom-3 left-3 z-[70] max-w-[min(92vw,40rem)] rounded border border-gold/40 bg-ink-0/95 px-3 py-2 font-mono text-[11px] leading-snug text-champ">
+          {gl.debug}
+        </p>
+      )}
     </figure>
   );
 }

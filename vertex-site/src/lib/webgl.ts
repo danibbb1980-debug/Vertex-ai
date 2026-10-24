@@ -53,23 +53,18 @@ export type HeroPlan = {
   still: boolean;
   /** Motivo da decisão, para o diagnóstico com ?debug3d. */
   reason: string;
-  /**
-   * Sem condições de renderizar (sem WebGL ou sem GPU): usar o vídeo gravado
-   * da cena no lugar do 3D interativo.
-   */
-  video?: boolean;
 };
 
 let heroPlanCache: HeroPlan | null = null;
 
 /**
  * Decide a cena do hero:
- * - sem WebGL ou renderização por software → vídeo gravado da cena;
+ * - sem WebGL ou renderização por software → mockup em CSS;
  * - economia de dados → mockup em CSS;
  * - movimento reduzido → cena parada (sem animação), em vez de nenhuma;
  * - desktop com mouse, mais de 4 núcleos e mais de 4 GB → versão completa;
  * - demais (celular, aparelhos modestos) → versão leve.
- * `?no3d`, `?force3d` e `?video3d` (força o vídeo) servem para testes.
+ * `?no3d` e `?force3d` servem para testes.
  */
 export function heroPlan(): HeroPlan {
   if (heroPlanCache) return heroPlanCache;
@@ -81,23 +76,22 @@ function computeHeroPlan(): HeroPlan {
   const q = new URLSearchParams(location.search);
   const wide = matchMedia("(min-width: 1024px) and (pointer: fine)").matches;
   if (q.has("no3d")) return { mode: null, still: false, reason: "?no3d" };
-  if (q.has("video3d")) return { mode: null, still: false, reason: "?video3d", video: true };
   if (q.has("force3d")) return { mode: wide ? "full" : "lite", still: false, reason: "?force3d" };
 
   let renderer = "";
   try {
     const c = document.createElement("canvas");
     const gl = c.getContext("webgl2") || c.getContext("webgl");
-    if (!gl) return { mode: null, still: false, reason: "navegador sem WebGL", video: true };
+    if (!gl) return { mode: null, still: false, reason: "navegador sem WebGL" };
     const g = gl as WebGLRenderingContext;
     const dbg = g.getExtension("WEBGL_debug_renderer_info");
     renderer = dbg ? String(g.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "desconhecido";
     g.getExtension("WEBGL_lose_context")?.loseContext();
   } catch {
-    return { mode: null, still: false, reason: "erro ao criar WebGL", video: true };
+    return { mode: null, still: false, reason: "erro ao criar WebGL" };
   }
   if (/swiftshader|llvmpipe|software|basic render/i.test(renderer)) {
-    return { mode: null, still: false, reason: `sem aceleração de GPU (${renderer})`, video: true };
+    return { mode: null, still: false, reason: `sem aceleração de GPU (${renderer})` };
   }
 
   const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
