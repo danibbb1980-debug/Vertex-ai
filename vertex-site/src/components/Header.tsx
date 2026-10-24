@@ -4,8 +4,8 @@ import { Logo } from "./VMark";
 import { IconClose, IconMenu, IconWhatsApp } from "./Icons";
 
 const links = [
+  { href: "#projetos", label: "Projetos" },
   { href: "#como-funciona", label: "Como funciona" },
-  { href: "#segmentos", label: "Segmentos" },
   { href: "#planos", label: "Planos" },
   { href: "#duvidas", label: "Dúvidas" },
   { href: "#contato", label: "Contato" },
@@ -50,7 +50,7 @@ export function Header() {
       }`}
     >
       <div className="container-v flex h-[4.5rem] items-center justify-between gap-6">
-        <a href="#topo" className="shrink-0 rounded-md" aria-label="Vertex Web Studios: início">
+        <a href="#topo" className="shrink-0 rounded-md">
           <Logo />
         </a>
 

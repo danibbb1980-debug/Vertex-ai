@@ -22,11 +22,18 @@ Tudo que muda de um estúdio para outro está nesse arquivo:
 | `razaoSocial` | Aparece no rodapé, ao lado do CNPJ. Vazio = oculto. |
 | `fotoResponsavel`, `nomeResponsavel` | Foto opcional na seção "Sobre". Coloque a imagem em `public/` (ex.: `/responsavel.webp`). |
 | `mostrarPrecos` | `true`/`false`: mostra ou esconde a seção de planos. |
-| `mostrarExemplos` | `true`/`false`: mostra ou esconde os exemplos ilustrativos (capturas em `public/exemplos/`, geradas por `node scripts/exemplos.mjs <imagem> <nome> ...`). |
+| `mostrarExemplos` | `true`/`false`: mostra ou esconde a seção de projetos. |
 | `prazoRascunho` | Texto do prazo do rascunho. Não prometa prazo exato. |
 | `planos`, `inclusoEmTodos`, `naoIncluso` | Conteúdo dos cartões de planos. |
 
 As mensagens do WhatsApp (geral, por plano e por segmento) ficam na função `waLink`, no mesmo arquivo.
+
+## Projetos: `src/projetos.ts`
+
+Nome, segmento, cidade, status, objetivo, decisão de design e link de cada projeto da seção "Projetos".
+Só use links abertos ao público (rascunhos protegidos por login na Vercel ficam sem link) e não invente resultados.
+As capturas ficam em `public/exemplos/` (desktop, em 640/960/1200 px) e `public/projetos/` (celular).
+Os arquivos originais, em alta resolução, ficam em `referencias/projetos/`.
 
 Depois de editar, rode `npm run build` de novo.
 

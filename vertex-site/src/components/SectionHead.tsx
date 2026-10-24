@@ -1,38 +1,15 @@
 import type { ReactNode } from "react";
+import { Vertice } from "./Vertice";
 
-export function SectionHead({
-  num,
-  label,
-  title,
-  intro,
-  id,
-  align = "left",
-}: {
-  num: string;
-  label: string;
-  title: ReactNode;
-  intro?: ReactNode;
-  id: string;
-  align?: "left" | "center";
-}) {
-  const center = align === "center";
+/** Rótulo de seção: o vértice da marca + nome da seção em caixa-alta pequena. */
+export function Label({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <div className={center ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
-      <p data-reveal className={`flex items-center gap-4 ${center ? "justify-center" : ""}`}>
-        <span className="num">{num}</span>
-        <span className="h-px w-10 bg-gold/50" aria-hidden="true" />
-        <span className="eyebrow">{label}</span>
-      </p>
-      <h2 id={id} data-reveal style={{ ["--d" as string]: "80ms" }} className="mt-6 text-[clamp(2.1rem,6vw,3.75rem)]">
-        {title}
-      </h2>
-      {intro && (
-        <p data-reveal style={{ ["--d" as string]: "160ms" }} className={`mt-6 text-[1.08rem] leading-relaxed text-mist ${center ? "mx-auto max-w-2xl" : "max-w-2xl"} [.on-light_&]:text-cocoa-2`}>
-          {intro}
-        </p>
-      )}
-    </div>
+    <p className={`flex items-center gap-3 meta ${className}`}>
+      <Vertice className="h-[10px] w-auto text-gold [.on-light_&]:text-bronze" />
+      {children}
+    </p>
   );
 }
 
-export const Em = ({ children }: { children: ReactNode }) => <em className="serif-accent text-[1.08em]">{children}</em>;
+/** Itálico da serif, na cor do texto. Usado com parcimônia. */
+export const Em = ({ children }: { children: ReactNode }) => <em className="font-serif italic">{children}</em>;

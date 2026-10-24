@@ -1,7 +1,6 @@
 import { CONFIG, waLink } from "../config";
-import { Em, SectionHead } from "../components/SectionHead";
-import { IconCheck, IconMinus, IconWhatsApp } from "../components/Icons";
-import { Spot } from "../components/Spot";
+import { Label } from "../components/SectionHead";
+import { IconCheck, IconWhatsApp } from "../components/Icons";
 
 const escopo: Record<string, string> = {
   essencial: "Uma página ou cardápio digital",
@@ -12,44 +11,37 @@ export function Planos() {
   return (
     <section id="planos" aria-labelledby="planos-title" className="relative z-10 bg-ink-0 py-24 sm:py-32">
       <div className="container-v">
-        <SectionHead
-          id="planos-title"
-          num="06"
-          label="Planos"
-          align="center"
-          title={
-            <>
-              Um valor mensal. <Em>Nada</Em> escondido.
-            </>
-          }
-          intro="Sem taxa de criação. Cobrança só após a aprovação. 7 dias de garantia. Domínio por conta do cliente."
-        />
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-7">
+            <Label>Planos</Label>
+            <h2 id="planos-title" className="mt-7 text-[clamp(2.4rem,6vw,4.2rem)] text-pearl">
+              Um valor por mês, e nada escondido.
+            </h2>
+          </div>
+          <p className="max-w-md text-mist lg:col-span-4 lg:col-start-9 lg:pb-2">
+            Sem taxa de criação. Cobrança só após a aprovação. 7 dias de garantia. Domínio por conta do cliente.
+          </p>
+        </div>
 
-        <div className="mx-auto mt-16 grid max-w-5xl gap-5 md:grid-cols-2">
-          {CONFIG.planos.map((p, i) => (
-            <Spot
-              key={p.id}
-              data-reveal
-              style={{ ["--d" as string]: `${i * 120}ms` }}
-              className={`flex flex-col rounded-3xl p-8 sm:p-10 ${p.destaque ? "bg-gradient-to-b from-ink-3 to-ink-2" : "bg-ink-2/70"}`}
-            >
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="font-display text-[0.8rem] font-medium tracking-[0.3em] text-gold-hi uppercase">{p.nome}</h3>
-                <span className="rounded-full border border-pearl/12 px-3 py-1 text-[0.75rem] text-mist">{escopo[p.id]}</span>
+        <div className="mt-16 grid gap-px overflow-hidden rounded-[4px] border border-pearl/12 bg-pearl/12 md:grid-cols-2">
+          {CONFIG.planos.map((p) => (
+            <div key={p.id} className={`relative flex flex-col p-8 sm:p-10 ${p.destaque ? "bg-ink-2" : "bg-ink-0"}`}>
+              {p.destaque && <span className="absolute inset-x-0 top-0 h-[2px] bg-gold" aria-hidden="true" />}
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <h3 className="font-display text-[0.8rem] font-medium tracking-[0.26em] text-gold-hi uppercase">{p.nome}</h3>
+                <span className="meta">{escopo[p.id]}</span>
               </div>
               <p className="mt-8 flex items-baseline gap-2">
-                <span className="font-display text-xl text-mist">R$</span>
-                <span className="font-display text-[4.5rem] leading-none font-light tracking-[-0.04em] text-pearl">{p.preco}</span>
+                <span className="font-display text-lg text-mist">R$</span>
+                <span className="font-serif text-[5rem] leading-none text-pearl">{p.preco}</span>
                 <span className="text-mist">/mês</span>
               </p>
-              <p className="mt-4 min-h-[3.2em] text-mist">{p.paraQuem}</p>
+              <p className="mt-4 text-mist md:min-h-[3.2em]">{p.paraQuem}</p>
 
-              <div className="hairline my-8" />
-
-              <ul className="flex-1 space-y-3.5">
+              <ul className="mt-8 flex-1 space-y-3 border-t border-pearl/10 pt-7">
                 {CONFIG.inclusoEmTodos.map((it) => (
-                  <li key={it} className="flex gap-3 text-pearl/90">
-                    <IconCheck className="mt-1 size-4 shrink-0 text-gold-hi" />
+                  <li key={it} className="flex gap-3 text-[0.98rem] text-pearl/90">
+                    <IconCheck className="mt-1 size-4 shrink-0 text-gold" />
                     <span>{it}</span>
                   </li>
                 ))}
@@ -64,22 +56,15 @@ export function Planos() {
                 <IconWhatsApp />
                 Quero o plano {p.nome}
               </a>
-            </Spot>
+            </div>
           ))}
         </div>
 
-        <div data-reveal className="mx-auto mt-10 grid max-w-5xl gap-6 rounded-2xl border border-pearl/8 p-6 text-[0.93rem] sm:p-8 md:grid-cols-[auto_1fr] md:gap-10">
-          <p className="font-display text-[0.75rem] tracking-[0.25em] text-dim uppercase">Não incluso</p>
-          <div>
-            <ul className="flex flex-wrap gap-x-8 gap-y-2 text-mist">
-              {CONFIG.naoIncluso.map((n) => (
-                <li key={n} className="flex items-center gap-2">
-                  <IconMinus className="size-3.5 text-dim" />
-                  {n}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-3 text-dim">
+        <div className="mt-8 grid gap-4 text-[0.93rem] md:grid-cols-12">
+          <p className="meta md:col-span-3">Não incluso</p>
+          <div className="md:col-span-9">
+            <p className="text-mist">{CONFIG.naoIncluso.join(" · ")}</p>
+            <p className="mt-2 text-dim">
               Páginas novas e reformulações grandes são orçadas à parte. O domínio é pago por você e fica registrado no seu nome.
             </p>
           </div>

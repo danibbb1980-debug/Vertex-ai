@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { CONFIG } from "../config";
-import { Em, SectionHead } from "../components/SectionHead";
+import { CONFIG, waLink } from "../config";
+import { Label } from "../components/SectionHead";
 import { IconPlus } from "../components/Icons";
 
 const faqs = [
@@ -20,16 +20,17 @@ export function Faq() {
     <section id="duvidas" aria-labelledby="faq-title" className="relative z-10 bg-ink-1 py-24 sm:py-32">
       <div className="container-v grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <SectionHead
-            id="faq-title"
-            num="07"
-            label="Dúvidas"
-            title={
-              <>
-                Perguntas <Em>frequentes.</Em>
-              </>
-            }
-          />
+          <Label>Dúvidas</Label>
+          <h2 id="faq-title" className="mt-7 text-[clamp(2.3rem,5vw,3.6rem)] text-pearl">
+            Perguntas frequentes.
+          </h2>
+          <p className="mt-6 max-w-xs text-mist">
+            Não achou a sua?{" "}
+            <a href={waLink()} target="_blank" rel="noopener" className="link-line text-champ">
+              Pergunte no WhatsApp
+            </a>
+            .
+          </p>
         </div>
         <div className="lg:col-span-8">
           <ul className="border-t border-pearl/10">
@@ -37,7 +38,7 @@ export function Faq() {
               const isOpen = open === i;
               return (
                 <li key={q} className="border-b border-pearl/10">
-                  <h3 className="text-[1.15rem] sm:text-[1.3rem]">
+                  <h3 className="text-[1.1rem] sm:text-[1.2rem]">
                     <button
                       type="button"
                       id={`faq-q-${i}`}
@@ -47,12 +48,8 @@ export function Faq() {
                       className="group flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left text-pearl"
                     >
                       <span className="transition-colors group-hover:text-champ">{q}</span>
-                      <span
-                        className={`flex size-9 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
-                          isOpen ? "rotate-45 border-gold-hi text-gold-hi" : "border-pearl/15 text-mist"
-                        }`}
-                      >
-                        <IconPlus />
+                      <span className={`shrink-0 transition-transform duration-500 ${isOpen ? "rotate-45 text-gold-hi" : "text-mist"}`}>
+                        <IconPlus className="size-5" />
                       </span>
                     </button>
                   </h3>

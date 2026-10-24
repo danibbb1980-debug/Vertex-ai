@@ -1,4 +1,4 @@
-import { Em, SectionHead } from "../components/SectionHead";
+import { Label } from "../components/SectionHead";
 
 const itens = [
   ["Design personalizado", "Pensado para o seu segmento e para o seu público, não um modelo pronto com outro logo."],
@@ -13,35 +13,28 @@ const itens = [
 
 export function Padrao() {
   return (
-    <section aria-labelledby="padrao-title" className="on-light relative z-10 bg-ivory py-24 text-cocoa sm:py-32">
+    <section aria-labelledby="padrao-title" className="on-light relative z-10 bg-ivory-2 py-20 text-cocoa sm:py-24">
       <div className="container-v">
-        <SectionHead
-          id="padrao-title"
-          num="05"
-          label="O padrão Vertex"
-          title={
-            <>
-              O que todo site da Vertex <Em>tem.</Em>
-            </>
-          }
-          intro="Não são extras nem pacotes. É o nosso processo, aplicado a cada projeto, do Essencial ao Completo."
-        />
-        <ul className="mt-16 grid border-t border-cocoa/15 sm:grid-cols-2">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <Label>O padrão Vertex</Label>
+            <h2 id="padrao-title" className="mt-6 text-[clamp(2rem,4vw,2.8rem)]">
+              O que todo site tem, em qualquer plano.
+            </h2>
+          </div>
+          <p className="max-w-xs text-[0.95rem] text-cocoa-2 md:pb-1">Não são extras nem pacotes: é o processo de cada projeto.</p>
+        </div>
+        <dl className="mt-12 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
           {itens.map(([t, d], i) => (
-            <li
-              key={t}
-              data-reveal
-              style={{ ["--d" as string]: `${(i % 2) * 90}ms` }}
-              className="grid grid-cols-[2.5rem_1fr] gap-4 border-b border-cocoa/15 py-7 sm:odd:pr-10 sm:even:border-l sm:even:pl-10"
-            >
-              <span className="num pt-1.5">{String(i + 1).padStart(2, "0")}</span>
-              <div>
-                <h3 className="text-[1.3rem] text-cocoa">{t}</h3>
-                <p className="mt-2 text-cocoa-2">{d}</p>
-              </div>
-            </li>
+            <div key={t} className="border-t border-cocoa/20 pt-4">
+              <dt className="font-display text-[1.05rem] font-medium text-cocoa">
+                <span className="num mb-3 block">{String(i + 1).padStart(2, "0")}</span>
+                {t}
+              </dt>
+              <dd className="mt-1.5 text-[0.93rem] text-cocoa-2">{d}</dd>
+            </div>
           ))}
-        </ul>
+        </dl>
       </div>
     </section>
   );
