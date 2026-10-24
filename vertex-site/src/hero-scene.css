@@ -1,0 +1,176 @@
+/* ============================================================
+   Hero: capturas reais em perspectiva (CSS 3D)
+   Unidades em cqw: tudo escala com a largura da composição.
+   ============================================================ */
+
+.hs-figure { margin: 0; }
+
+.hs-stage {
+  --ry0: 17deg;
+  --rx0: 7deg;
+  --rz0: -1deg;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.12;
+  container-type: inline-size;
+  perspective: 300cqw;
+  perspective-origin: 40% 40%;
+  user-select: none;
+}
+
+/* Uma única luz fria atrás da tela, para destacar o recorte do navegador */
+.hs-light {
+  position: absolute;
+  inset: 0 -8% 0 4%;
+  background: radial-gradient(46% 42% at 56% 46%, rgba(70, 104, 220, 0.2), transparent 72%);
+  opacity: 0;
+  animation: hs-fade 2s 0.3s var(--ease-vertex) forwards;
+}
+.hs-floor {
+  position: absolute;
+  left: 12%;
+  right: 6%;
+  bottom: 1%;
+  height: 14%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.7), transparent 72%);
+  filter: blur(6px);
+  opacity: 0;
+  animation: hs-fade 1.6s 0.5s var(--ease-vertex) forwards;
+}
+
+.hs-enter,
+.hs-rig,
+.hs-float {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.hs-enter { animation: hs-enter 1.6s 0.1s var(--ease-vertex) both; }
+.hs-rig {
+  --tx: 0;
+  --ty: 0;
+  --sp: 0;
+  transform:
+    translate3d(0, calc(var(--sp) * -5cqw), 0)
+    rotateX(calc(var(--rx0) + var(--ty) * var(--max, 4deg) + var(--sp) * 9deg))
+    rotateY(calc(var(--ry0) - var(--tx) * var(--max, 4deg) - var(--sp) * 5deg))
+    rotateZ(var(--rz0));
+  will-change: transform;
+}
+.hs-float { animation: hs-float 10s ease-in-out infinite alternate; }
+.hs-paused .hs-float { animation-play-state: paused; }
+
+.hs-layer {
+  position: absolute;
+  transform: translate3d(
+    calc(var(--tx) * var(--p) * -1cqw),
+    calc(var(--ty) * var(--p) * -1cqw),
+    var(--z)
+  );
+  animation: hs-layer-in 1.2s var(--d, 0s) var(--ease-vertex) both;
+}
+.hs-browser { left: 0; top: 22%; width: 82%; }
+.hs-back { right: 0; top: 2%; width: 60%; }
+.hs-back .hs-win { filter: brightness(0.82); }
+
+/* Navegador */
+.hs-win {
+  position: relative;
+  font-size: 1cqw;
+  border-radius: 0.9em;
+  overflow: hidden;
+  background: #16171d;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    -1em -0.5em 4em -1.8em rgba(84, 122, 255, 0.4),
+    0 4.5em 8em -2.5em rgba(0, 0, 0, 0.85),
+    0 1.2em 2.4em -0.8em rgba(0, 0, 0, 0.5);
+}
+.hs-chrome {
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  height: 3.4em;
+  padding: 0 1.4em;
+  background: #1d1e25;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.hs-dots { display: flex; gap: 0.5em; }
+.hs-dots i { width: 0.85em; height: 0.85em; border-radius: 50%; background: rgba(243, 240, 232, 0.2); }
+.hs-url {
+  margin-inline: auto;
+  padding: 0.45em 1.4em;
+  border-radius: 0.5em;
+  background: #121318;
+  color: #8d897f;
+  font-family: var(--font-sans);
+  font-size: 1.05em;
+  letter-spacing: 0.02em;
+  transform: translateX(-2.6em);
+}
+.hs-shot { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 750; }
+
+.hs-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.09) 50%, transparent 60%);
+  background-size: 260% 100%;
+  background-position: calc(50% + var(--tx) * 25%) 0;
+}
+
+
+.hs-caption {
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  margin-top: 0.75rem;
+  padding-left: 3%;
+  max-width: 36rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--color-dim);
+}
+.hs-caption .num { flex-shrink: 0; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; }
+
+/* Cena WebGL por cima: entra quando o primeiro quadro fica pronto */
+.hs-canvas {
+  position: absolute;
+  inset: -6% -8% -4% -6%;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease-vertex);
+  pointer-events: none;
+}
+.hs-gl .hs-canvas { opacity: 1; }
+.hs-enter, .hs-light, .hs-floor { transition: opacity 0.7s var(--ease-vertex); }
+.hs-gl .hs-enter, .hs-gl .hs-light, .hs-gl .hs-floor { opacity: 0 !important; }
+
+@keyframes hs-fade { to { opacity: 1; } }
+@keyframes hs-enter {
+  from { transform: translate3d(0, 6cqw, -6cqw) rotateX(12deg); }
+  to { transform: none; }
+}
+@keyframes hs-layer-in {
+  from { opacity: 0; translate: 0 3cqw; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes hs-float {
+  from { transform: translate3d(0, 0.6cqw, 0) rotateX(-0.4deg) rotateY(0.3deg); }
+  to { transform: translate3d(0, -0.6cqw, 0) rotateX(0.4deg) rotateY(-0.3deg); }
+}
+
+@media (max-width: 1023px) {
+  .hs-stage { --ry0: 11deg; --rx0: 6deg; }
+}
+@media (max-width: 639px) {
+  .hs-stage { --ry0: 8deg; --rx0: 5deg; --rz0: -0.6deg; aspect-ratio: 1.16; }
+  .hs-browser { left: 0; width: 86%; top: 20%; }
+  .hs-back { right: 0; width: 62%; top: 2%; }
+  .hs-float { animation-duration: 13s; }
+  .hs-caption { padding-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-stage,
+  .hs-stage * { animation-delay: 0s !important; }
+}

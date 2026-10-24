@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink-0: #090a0d;
+  --color-ink-1: #0f1015;
+  --color-ink-2: #15161d;
+  --color-ink-3: #1b1c24;
+  --color-pearl: #f3f0e8;
+  --color-mist: #b4b0a6;
+  --color-dim: #8d897f;
+  --color-gold: #c9a24b;
+  --color-gold-hi: #e9c876;
+  --color-gold-lo: #ac7e28;
+  --color-champ: #faecc4;
+  --color-ivory: #f4efe4;
+  --color-ivory-2: #ebe4d4;
+  --color-cocoa: #1a1814;
+  --color-cocoa-2: #4d473c;
+  --color-bronze: #7a5a17;
+
+  --font-display: "Outfit", "Outfit Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Outfit", "Outfit Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
+
+  --ease-vertex: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Fallback com métricas próximas da Outfit, para reduzir o salto quando a fonte carrega */
+@font-face {
+  font-family: "Outfit Fallback";
+  src: local("Arial");
+  size-adjust: 94%;
+  ascent-override: 106%;
+  descent-override: 28%;
+  line-gap-override: 0%;
+}
+
+/* A Instrument Serif é estreita: a fonte provisória é reduzida para ocupar a mesma largura */
+@font-face {
+  font-family: "Instrument Serif Fallback";
+  src: local("Times New Roman"), local("Georgia"), local("Liberation Serif"), local("DejaVu Serif");
+  size-adjust: 82%;
+  ascent-override: 116%;
+  descent-override: 34%;
+  line-gap-override: 0%;
+}
+
+@layer base {
+  html {
+    background: var(--color-ink-0);
+    color: var(--color-pearl);
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    min-height: 100dvh;
+    overflow-x: clip;
+    background: var(--color-ink-0);
+  }
+  ::selection {
+    background: #c9a24b;
+    color: #090a0d;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold-hi);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  /* Títulos em serif editorial; h3 e rótulos ficam na Outfit */
+  h1, h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.012em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  p { text-wrap: pretty; }
+}
+
+@layer components {
+  .container-v {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-v { padding-inline: 2.5rem; }
+  }
+
+  /* Metadados: caixa-alta pequena com tracking */
+  .meta {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+  }
+  .on-light .meta { color: #6b6457; }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-gold-hi);
+  }
+  .on-light .eyebrow { color: var(--color-bronze); }
+  @media (max-width: 480px) {
+    .eyebrow { letter-spacing: 0.18em; font-size: 0.7rem; }
+  }
+
+  .num {
+    font-family: var(--font-display);
+    font-feature-settings: "tnum";
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    color: var(--color-gold);
+  }
+  .on-light .num { color: var(--color-bronze); }
+
+  /* Único acento dourado em itálico: a headline do hero e o CTA final */
+  .serif-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(180deg, #faecc4 0%, #e9c876 45%, #c79a3c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-right: 0.06em;
+  }
+
+  .rule { height: 1px; background: rgba(243, 240, 232, 0.12); }
+  .on-light .rule { background: rgba(26, 24, 20, 0.15); }
+
+  /* Botões: retangulares, com microinteração na seta */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    min-height: 3.25rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: 3px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.96rem;
+    letter-spacing: 0.01em;
+    transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.2s;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn .arr { transition: transform 0.35s var(--ease-vertex); }
+  .btn:hover .arr { transform: translateX(4px); }
+  .btn-gold { color: #14110a; background: #e2bf6b; }
+  .btn-gold:hover { background: #ecd08a; }
+  .btn-ghost {
+    color: var(--color-pearl);
+    border: 1px solid rgba(243, 240, 232, 0.25);
+  }
+  .btn-ghost:hover { border-color: var(--color-gold-hi); color: var(--color-champ); }
+  .on-light .btn-ghost { color: var(--color-cocoa); border-color: rgba(26, 24, 20, 0.3); }
+  .on-light .btn-ghost:hover { border-color: var(--color-bronze); color: #5c430f; }
+
+  /* Link de texto com sublinhado que se completa */
+  .link-u {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.4s var(--ease-vertex), color 0.2s;
+  }
+  .link-u:hover { background-size: 100% 1px; }
+  .link-line {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+
+  /* Revelação discreta: usada só nas imagens de projetos */
+  [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition: opacity 1s var(--ease-vertex), transform 1s var(--ease-vertex);
+    transition-delay: var(--d, 0ms);
+  }
+  [data-reveal].is-in { opacity: 1; transform: none; }
+  .no-js [data-reveal] { opacity: 1; transform: none; }
+
+  .fade-up {
+    animation: fade-up 0.9s var(--ease-vertex) both;
+    animation-delay: var(--d, 0ms);
+  }
+  @keyframes fade-up {
+    from { opacity: 0.01; transform: translate3d(0, 10px, 0); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Acordeão */
+  .acc-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s var(--ease-vertex);
+  }
+  .acc-panel[data-open="true"] { grid-template-rows: 1fr; }
+  .acc-panel > div { overflow: hidden; }
+
+  /* Molduras de captura */
+  .frame-browser {
+    overflow: hidden;
+    border-radius: 6px;
+    background: #16171d;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+  }
+  .frame-browser .bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 26px;
+    padding-inline: 12px;
+    background: #1d1e25;
+  }
+  .frame-browser .bar i { width: 7px; height: 7px; border-radius: 50%; background: rgba(243, 240, 232, 0.18); }
+  .on-light .frame-browser { box-shadow: 0 0 0 1px rgba(26, 24, 20, 0.12), 0 30px 60px -34px rgba(26, 24, 20, 0.55); }
+
+
+  .vfallback { transition: opacity 0.9s var(--ease-vertex); }
+  html.has-3d .vfallback { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; }
+}
