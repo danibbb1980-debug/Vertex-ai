@@ -15,11 +15,23 @@ export function Hero() {
       {/* Fundo em WebGL (V de vidro e telas). Carregado só em aparelhos capazes. */}
       {gl.Comp && (
         <div className="hero-backdrop" aria-hidden="true">
-          <GLBoundary onError={gl.fail}>
-            <gl.Comp active={gl.visible} lite={gl.lite} onReady={() => gl.setReady(true)} onFail={gl.fail} />
+          <GLBoundary key={gl.lite ? "lite" : "full"} onError={gl.fail}>
+            <gl.Comp
+              active={gl.visible}
+              lite={gl.lite}
+              still={gl.still}
+              onReady={() => gl.setReady(true)}
+              onFail={gl.fail}
+            />
           </GLBoundary>
           <div className="hero-veil" />
         </div>
+      )}
+      {/* Diagnóstico do 3D, só com ?debug3d na URL */}
+      {gl.debug && (
+        <p className="fixed bottom-3 left-3 z-[70] max-w-[min(92vw,40rem)] rounded border border-gold/40 bg-ink-0/95 px-3 py-2 font-mono text-[11px] leading-snug text-champ">
+          {gl.debug}
+        </p>
       )}
       <div className="container-v grid grid-cols-1 items-center gap-12 pt-28 pb-14 sm:pt-32 lg:min-h-[min(100svh,960px)] lg:grid-cols-12 lg:gap-6 lg:pt-28 lg:pb-16">
         <div className="lg:col-span-6">

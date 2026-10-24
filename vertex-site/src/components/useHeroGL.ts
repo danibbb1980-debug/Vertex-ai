@@ -1,35 +1,41 @@
 import { useEffect, useState, type ComponentType, type RefObject } from "react";
-import { shouldUse3D, whenIdle } from "../lib/webgl";
+import { heroPlan, whenIdle } from "../lib/webgl";
 import type { HeroGLProps } from "./HeroGL";
 
 /**
- * Carrega a cena WebGL do hero sob demanda (depois do load, em tempo ocioso).
+ * Carrega a cena WebGL do hero sob demanda (depois do load, em tempo ocioso),
+ * conforme `heroPlan()` em lib/webgl.ts.
  *
- * - Aparelho que passa no critério estrito: versão completa no desktop e
- *   versão leve em telas estreitas ou de toque.
- * - Aparelho que só passa no critério relaxado (ex.: celular que informa
- *   4 núcleos ou 4 GB): versão leve.
- * - Nenhum dos dois (sem GPU, movimento reduzido, economia de dados): nada é
- *   baixado e o mockup em CSS 3D continua na tela.
- *
- * A renderização pausa quando o hero sai da tela ou a aba fica oculta.
+ * - Se a versão completa falhar (ex.: vidro com refração numa GPU específica),
+ *   tenta a versão leve antes de desistir; só então fica o mockup em CSS.
+ * - Movimento reduzido: a cena aparece parada.
+ * - A renderização pausa quando o hero sai da tela ou a aba fica oculta.
+ * - `?debug3d` mostra na tela o caminho escolhido e o motivo.
  */
 export function useHeroGL(heroRef: RefObject<HTMLElement | null>) {
   const [Comp, setComp] = useState<ComponentType<HeroGLProps> | null>(null);
   const [visible, setVisible] = useState(true);
   const [ready, setReady] = useState(false);
   const [lite, setLite] = useState(false);
+  const [still, setStill] = useState(false);
+  const [debug, setDebug] = useState<string | null>(null);
 
   useEffect(() => {
-    const strict = shouldUse3D();
-    if (!strict && !shouldUse3D({ relaxed: true })) return;
-    const narrow = matchMedia("(max-width: 1023px), (pointer: coarse)").matches;
-    setLite(!strict || narrow);
+    const plan = heroPlan();
+    const wantDebug = new URLSearchParams(location.search).has("debug3d");
+    const note = (msg: string) => {
+      if (wantDebug) setDebug(msg);
+      console.info(`[Vertex 3D] ${msg}`);
+    };
+    note(plan.mode ? `cena ${plan.mode === "full" ? "completa" : "leve"} — ${plan.reason}` : `mockup em CSS — ${plan.reason}`);
+    if (!plan.mode) return;
+    setLite(plan.mode === "lite");
+    setStill(plan.still);
     let cancelled = false;
     whenIdle(() => {
       import("./HeroGL")
         .then((m) => !cancelled && setComp(() => m.default))
-        .catch(() => {});
+        .catch((e) => note(`falha ao carregar a cena: ${String(e)}`));
     });
     return () => {
       cancelled = true;
@@ -60,8 +66,17 @@ export function useHeroGL(heroRef: RefObject<HTMLElement | null>) {
 
   const fail = () => {
     setReady(false);
+    if (!lite) {
+      // Versão completa falhou: tenta a leve
+      console.info("[Vertex 3D] a versão completa falhou; tentando a versão leve");
+      setDebug((d) => (d ? `${d} · completa falhou → leve` : d));
+      setLite(true);
+      return;
+    }
+    console.info("[Vertex 3D] a cena falhou; ficando no mockup em CSS");
+    setDebug((d) => (d ? `${d} · leve falhou → CSS` : d));
     setComp(null);
   };
 
-  return { Comp, visible, ready, lite, setReady, fail };
+  return { Comp, visible, ready, lite, still, debug, setReady, fail };
 }

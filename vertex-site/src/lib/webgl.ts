@@ -46,6 +46,72 @@ function check(relaxed: boolean): boolean {
   return true;
 }
 
+export type HeroPlan = {
+  /** Versão da cena do hero, ou null para ficar no mockup em CSS. */
+  mode: "full" | "lite" | null;
+  /** Cena parada (movimento reduzido): sem entrada, giro nem cursor. */
+  still: boolean;
+  /** Motivo da decisão, para o diagnóstico com ?debug3d. */
+  reason: string;
+};
+
+let heroPlanCache: HeroPlan | null = null;
+
+/**
+ * Decide a cena do hero:
+ * - sem WebGL ou renderização por software → mockup em CSS;
+ * - economia de dados → mockup em CSS;
+ * - movimento reduzido → cena parada (sem animação), em vez de nenhuma;
+ * - desktop com mouse, mais de 4 núcleos e mais de 4 GB → versão completa;
+ * - demais (celular, aparelhos modestos) → versão leve.
+ * `?no3d` e `?force3d` continuam valendo.
+ */
+export function heroPlan(): HeroPlan {
+  if (heroPlanCache) return heroPlanCache;
+  heroPlanCache = computeHeroPlan();
+  return heroPlanCache;
+}
+
+function computeHeroPlan(): HeroPlan {
+  const q = new URLSearchParams(location.search);
+  const wide = matchMedia("(min-width: 1024px) and (pointer: fine)").matches;
+  if (q.has("no3d")) return { mode: null, still: false, reason: "?no3d" };
+  if (q.has("force3d")) return { mode: wide ? "full" : "lite", still: false, reason: "?force3d" };
+
+  let renderer = "";
+  try {
+    const c = document.createElement("canvas");
+    const gl = c.getContext("webgl2") || c.getContext("webgl");
+    if (!gl) return { mode: null, still: false, reason: "navegador sem WebGL" };
+    const g = gl as WebGLRenderingContext;
+    const dbg = g.getExtension("WEBGL_debug_renderer_info");
+    renderer = dbg ? String(g.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "desconhecido";
+    g.getExtension("WEBGL_lose_context")?.loseContext();
+  } catch {
+    return { mode: null, still: false, reason: "erro ao criar WebGL" };
+  }
+  if (/swiftshader|llvmpipe|software|basic render/i.test(renderer)) {
+    return { mode: null, still: false, reason: `sem aceleração de GPU (${renderer})` };
+  }
+
+  const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+  if (nav.connection?.saveData) return { mode: null, still: false, reason: "economia de dados ativa" };
+
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const cores = nav.hardwareConcurrency ?? 8;
+  const mem = nav.deviceMemory;
+  const strong = cores > 4 && (typeof mem !== "number" || mem > 4);
+  const mode = wide && strong ? "full" : "lite";
+  const why = [
+    `GPU: ${renderer}`,
+    `núcleos: ${cores}`,
+    `memória: ${typeof mem === "number" ? `${mem} GB` : "n/d"}`,
+    wide ? "desktop com mouse" : "tela estreita ou toque",
+    still ? "movimento reduzido → cena parada" : "com animação",
+  ].join(" · ");
+  return { mode, still, reason: why };
+}
+
 /** Executa `cb` depois do load, em tempo ocioso. */
 export function whenIdle(cb: () => void, timeout = 2000): void {
   const run = () => {

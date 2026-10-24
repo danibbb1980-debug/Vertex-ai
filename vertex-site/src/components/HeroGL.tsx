@@ -21,6 +21,8 @@ import { ProceduralEnv, armGeometry, clamp01, easeOutExpo } from "./three/shared
 export type HeroGLProps = {
   active: boolean;
   lite: boolean;
+  /** Movimento reduzido: composição final, parada, renderizada sob demanda. */
+  still?: boolean;
   onReady: () => void;
   onFail: () => void;
 };
@@ -82,8 +84,8 @@ function roundedRect(w: number, h: number, r: number) {
   return new THREE.ShapeGeometry(s, 5);
 }
 
-function Scene({ lite, onReady, onFail }: Omit<HeroGLProps, "active">) {
-  const { gl, camera, size } = useThree();
+function Scene({ lite, still = false, onReady, onFail }: Omit<HeroGLProps, "active">) {
+  const { gl, camera, size, invalidate } = useThree();
   const shotsDef = lite ? SHOTS_LITE : SHOTS_FULL;
   const failRef = useRef(onFail);
   failRef.current = onFail;
@@ -180,6 +182,7 @@ function Scene({ lite, onReady, onFail }: Omit<HeroGLProps, "active">) {
     let id = 0;
     const check = () => {
       loaded.current = shots.every((s) => (s.tex.image as HTMLImageElement | undefined)?.complete);
+      if (loaded.current) invalidate();
       if (!loaded.current) id = window.setTimeout(check, 60);
     };
     check();
@@ -237,12 +240,13 @@ function Scene({ lite, onReady, onFail }: Omit<HeroGLProps, "active">) {
   useFrame((state, delta) => {
     const S = st.current;
     const dt = Math.min(delta, 1 / 20);
-    const t = state.clock.elapsedTime;
+    // Parada: tempo congelado e entrada já concluída
+    const t = still ? 0 : state.clock.elapsedTime;
     if (S.t0 < 0) {
       if (!loaded.current) return;
       S.t0 = t;
     }
-    const el = t - S.t0;
+    const el = still ? 99 : t - S.t0;
 
     // Entrada: telas chegam do fundo, com leve flutuação depois
     items.current.forEach((o, i) => {
@@ -259,8 +263,10 @@ function Scene({ lite, onReady, onFail }: Omit<HeroGLProps, "active">) {
     armR.current.position.set((1 - kv) * 1.6, (1 - kv) * 0.8, 0);
 
     // Câmera: vai-e-volta lento + cursor + recuo ao rolar
-    S.yaw = THREE.MathUtils.damp(S.yaw, S.tx * MAX_TILT, 3, dt);
-    S.pitch = THREE.MathUtils.damp(S.pitch, S.ty * MAX_TILT, 3, dt);
+    if (!still) {
+      S.yaw = THREE.MathUtils.damp(S.yaw, S.tx * MAX_TILT, 3, dt);
+      S.pitch = THREE.MathUtils.damp(S.pitch, S.ty * MAX_TILT, 3, dt);
+    }
     const hero = document.getElementById("topo");
     if (hero) {
       const r = hero.getBoundingClientRect();
@@ -328,10 +334,10 @@ function Scene({ lite, onReady, onFail }: Omit<HeroGLProps, "active">) {
   );
 }
 
-export default function HeroGL({ active, lite, onReady, onFail }: HeroGLProps) {
+export default function HeroGL({ active, lite, still = false, onReady, onFail }: HeroGLProps) {
   return (
     <Canvas
-      frameloop={active ? "always" : "never"}
+      frameloop={!active ? "never" : still ? "demand" : "always"}
       dpr={[1, 1.5]}
       camera={{ fov: FOV, position: [0, 0, 13], near: 0.1, far: 80 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance", failIfMajorPerformanceCaveat: true }}
@@ -343,7 +349,7 @@ export default function HeroGL({ active, lite, onReady, onFail }: HeroGLProps) {
         gl.domElement.addEventListener("webglcontextlost", onFail, { once: true });
       }}
     >
-      <Scene lite={lite} onReady={onReady} onFail={onFail} />
+      <Scene lite={lite} still={still} onReady={onReady} onFail={onFail} />
     </Canvas>
   );
 }
