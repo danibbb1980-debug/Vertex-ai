@@ -133,6 +133,18 @@
 }
 .hs-caption .num { flex-shrink: 0; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; }
 
+/* Cena WebGL por cima: entra quando o primeiro quadro fica pronto */
+.hs-canvas {
+  position: absolute;
+  inset: -6% -8% -4% -6%;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease-vertex);
+  pointer-events: none;
+}
+.hs-gl .hs-canvas { opacity: 1; }
+.hs-enter, .hs-light, .hs-floor { transition: opacity 0.7s var(--ease-vertex); }
+.hs-gl .hs-enter, .hs-gl .hs-light, .hs-gl .hs-floor { opacity: 0 !important; }
+
 @keyframes hs-fade { to { opacity: 1; } }
 @keyframes hs-enter {
   from { transform: translate3d(0, 6cqw, -6cqw) rotateX(12deg); }

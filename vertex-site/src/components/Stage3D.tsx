@@ -1,45 +1,8 @@
-import { Component, useEffect, useState, type ComponentType, type ReactNode } from "react";
+import { useEffect, useState, type ComponentType } from "react";
+import { GLBoundary as Boundary, shouldUse3D } from "../lib/webgl";
 
 export type SceneProps = { active: boolean; onReady: () => void; onFail: () => void };
 
-/** Decide se o aparelho deve receber o 3D. Qualquer dúvida → fallback em SVG. */
-function shouldUse3D(): boolean {
-  const q = new URLSearchParams(location.search);
-  if (q.has("no3d")) return false;
-  if (q.has("force3d")) return true;
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
-  const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
-  if (nav.connection?.saveData) return false;
-  if ((nav.hardwareConcurrency ?? 8) <= 4) return false;
-  if (typeof nav.deviceMemory === "number" && nav.deviceMemory <= 4) return false;
-  try {
-    const c = document.createElement("canvas");
-    const gl = c.getContext("webgl2") || c.getContext("webgl");
-    if (!gl) return false;
-    const g = gl as WebGLRenderingContext;
-    // Sem aceleração de GPU (renderização por software) → fallback
-    const dbg = g.getExtension("WEBGL_debug_renderer_info");
-    const renderer = dbg ? String(g.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "";
-    g.getExtension("WEBGL_lose_context")?.loseContext();
-    if (/swiftshader|llvmpipe|software|basic render/i.test(renderer)) return false;
-  } catch {
-    return false;
-  }
-  return true;
-}
-
-class Boundary extends Component<{ onError: () => void; children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-  componentDidCatch() {
-    this.props.onError();
-  }
-  render() {
-    return this.state.failed ? null : this.props.children;
-  }
-}
 
 /**
  * Camada fixa com um único canvas. Fica atrás do conteúdo: as seções com fundo
