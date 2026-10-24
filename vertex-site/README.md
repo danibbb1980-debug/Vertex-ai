@@ -32,7 +32,7 @@ As mensagens do WhatsApp (geral, por plano e por segmento) ficam na função `wa
 
 Nome, segmento, cidade, status, objetivo, decisão de design e link de cada projeto da seção "Projetos".
 Só use links abertos ao público (rascunhos protegidos por login na Vercel ficam sem link) e não invente resultados.
-As capturas ficam em `public/exemplos/` (desktop, em 640/960/1200 px) e `public/projetos/` (celular).
+As capturas ficam em `public/exemplos/` (em 640, 960 e 1200 px).
 Os arquivos originais, em alta resolução, ficam em `referencias/projetos/`.
 
 Depois de editar, rode `npm run build` de novo.

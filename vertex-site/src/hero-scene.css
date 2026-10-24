@@ -11,7 +11,7 @@
   --rz0: -1deg;
   position: relative;
   width: 100%;
-  aspect-ratio: 1.22;
+  aspect-ratio: 1.12;
   container-type: inline-size;
   perspective: 300cqw;
   perspective-origin: 40% 40%;
@@ -69,8 +69,9 @@
   );
   animation: hs-layer-in 1.2s var(--d, 0s) var(--ease-vertex) both;
 }
-.hs-browser { left: 2%; top: 8%; width: 88%; }
-.hs-phone { right: 1%; top: 34%; width: 21%; }
+.hs-browser { left: 0; top: 22%; width: 82%; }
+.hs-back { right: 0; top: 2%; width: 60%; }
+.hs-back .hs-win { filter: brightness(0.82); }
 
 /* Navegador */
 .hs-win {
@@ -118,31 +119,6 @@
   background-position: calc(50% + var(--tx) * 25%) 0;
 }
 
-/* Celular: a tela segue a proporção da captura (sem cortes) */
-.hs-ph {
-  position: relative;
-  padding: 0.7cqw;
-  border-radius: 3cqw;
-  background: linear-gradient(160deg, #2a2d34, #0d0e12 60%);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.09),
-    -0.8cqw 0 3cqw -1cqw rgba(84, 122, 255, 0.4),
-    0 4cqw 7cqw -2cqw rgba(0, 0, 0, 0.85);
-  overflow: hidden;
-}
-.hs-notch {
-  position: absolute;
-  z-index: 2;
-  top: 1.3cqw;
-  left: 50%;
-  width: 28%;
-  height: 1.4cqw;
-  border-radius: 999px;
-  background: #0b0c0f;
-  transform: translateX(-50%);
-}
-.hs-ph-screen { overflow: hidden; border-radius: 2.4cqw; background: #0b0c0f; padding-top: 3.4cqw; }
-.hs-ph-screen img { display: block; width: 100%; height: auto; aspect-ratio: 480 / 694; }
 
 .hs-caption {
   display: flex;
@@ -176,8 +152,8 @@
 }
 @media (max-width: 639px) {
   .hs-stage { --ry0: 8deg; --rx0: 5deg; --rz0: -0.6deg; aspect-ratio: 1.16; }
-  .hs-browser { left: 0; width: 88%; top: 6%; }
-  .hs-phone { right: 0; top: 30%; width: 26%; }
+  .hs-browser { left: 0; width: 86%; top: 20%; }
+  .hs-back { right: 0; width: 62%; top: 2%; }
   .hs-float { animation-duration: 13s; }
   .hs-caption { padding-left: 0; }
 }

@@ -245,13 +245,6 @@
   .frame-browser .bar i { width: 7px; height: 7px; border-radius: 50%; background: rgba(243, 240, 232, 0.18); }
   .on-light .frame-browser { box-shadow: 0 0 0 1px rgba(26, 24, 20, 0.12), 0 30px 60px -34px rgba(26, 24, 20, 0.55); }
 
-  .frame-phone {
-    padding: 7px;
-    border-radius: 26px;
-    background: linear-gradient(160deg, #2a2d34, #0d0e12 60%);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 30px 60px -28px rgba(0, 0, 0, 0.9);
-  }
-  .frame-phone .screen { overflow: hidden; border-radius: 20px; background: #0b0c0f; padding-top: 22px; }
 
   .vfallback { transition: opacity 0.9s var(--ease-vertex); }
   html.has-3d .vfallback { opacity: 0; }

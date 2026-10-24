@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 
 /*
- * Composição do hero: um navegador em perspectiva com a captura real de um
- * site da Vertex (Star Sorrindo) e, à frente, um celular com outro projeto
- * (Clínica Lumière). As capturas entram inteiras, na proporção original.
+ * Composição do hero: dois navegadores em perspectiva, em planos diferentes,
+ * com capturas reais de sites da Vertex (Star Sorrindo à frente, Natalino
+ * Polato ao fundo). As capturas entram inteiras, na proporção original.
  *
  * CSS 3D: imagem nítida, nada de WebGL e custo por quadro mínimo.
  * Movimento: entrada suave, flutuação lenta, inclinação pelo cursor limitada
@@ -88,6 +88,30 @@ export function HeroScene() {
         <div className="hs-enter">
           <div ref={rigRef} className="hs-rig" style={{ ["--max" as string]: `${MAX_TILT}deg` }}>
             <div className="hs-float">
+              <div className="hs-layer hs-back" style={{ ["--z" as string]: "-16cqw", ["--d" as string]: "0.45s", ["--p" as string]: "-0.8" }}>
+                <div className="hs-win">
+                  <div className="hs-chrome" aria-hidden="true">
+                    <span className="hs-dots">
+                      <i />
+                      <i />
+                      <i />
+                    </span>
+                    <span className="hs-url">Natalino Polato · Mogi Guaçu</span>
+                  </div>
+                  <img
+                    src="/exemplos/advocacia-640.webp"
+                    srcSet="/exemplos/advocacia-640.webp 640w, /exemplos/advocacia-960.webp 960w"
+                    sizes="(min-width: 1024px) 420px, 60vw"
+                    width={1200}
+                    height={750}
+                    alt="Site do advogado Natalino Polato, de Mogi Guaçu, aberto no navegador"
+                    decoding="async"
+                    fetchPriority="low"
+                    className="hs-shot"
+                  />
+                </div>
+              </div>
+
               <div className="hs-layer hs-browser" style={{ ["--z" as string]: "0cqw", ["--d" as string]: "0.15s", ["--p" as string]: "0" }}>
                 <div className="hs-win">
                   <div className="hs-chrome" aria-hidden="true">
@@ -113,24 +137,6 @@ export function HeroScene() {
                 </div>
               </div>
 
-              <div className="hs-layer hs-phone" style={{ ["--z" as string]: "15cqw", ["--d" as string]: "0.6s", ["--p" as string]: "1.2" }}>
-                <div className="hs-ph">
-                  <span className="hs-notch" aria-hidden="true" />
-                  <div className="hs-ph-screen">
-                    <img
-                      src="/projetos/clinica-lumiere-480.webp"
-                      srcSet="/projetos/clinica-lumiere-300.webp 300w, /projetos/clinica-lumiere-480.webp 480w"
-                      sizes="(min-width: 1024px) 140px, 26vw"
-                      width={480}
-                      height={694}
-                      alt="Site da Clínica Lumière, projeto demonstrativo, aberto no celular"
-                      decoding="async"
-                      fetchPriority="low"
-                    />
-                  </div>
-                  <span className="hs-sheen" aria-hidden="true" />
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -138,8 +144,8 @@ export function HeroScene() {
       <figcaption className="hs-caption">
         <span className="num">Na tela</span>
         <span>
-          Star Sorrindo, clínica em Poços de Caldas <span aria-hidden="true">·</span> no celular, Clínica Lumière, projeto
-          demonstrativo
+          Star Sorrindo, clínica em Poços de Caldas <span aria-hidden="true">·</span> ao fundo, Natalino Polato, advocacia
+          em Mogi Guaçu
         </span>
       </figcaption>
     </figure>

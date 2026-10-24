@@ -29,27 +29,6 @@ function Desktop({ p, sizes, priority = false }: { p: Projeto; sizes: string; pr
   );
 }
 
-function Mobile({ p }: { p: Projeto }) {
-  const m = p.mobile!;
-  return (
-    <div className="frame-phone">
-      <div className="screen">
-        <img
-          src={m.src480}
-          srcSet={`${m.src480} 480w, ${m.src} ${m.w}w`}
-          sizes="(min-width: 768px) 260px, 44vw"
-          width={m.w}
-          height={m.h}
-          loading="lazy"
-          decoding="async"
-          alt={p.alt}
-          className="block h-auto w-full"
-        />
-      </div>
-    </div>
-  );
-}
-
 /** Ficha do projeto: índice, segmento, nome, objetivo e a decisão de design. */
 function Ficha({ p, className = "", large = false }: { p: Projeto; className?: string; large?: boolean }) {
   return (
@@ -90,11 +69,9 @@ export function Projetos() {
   const bea = byId("dra-beatryz");
   const rocha = byId("rocha");
   const natalino = byId("natalino-polato");
-  const lumiere = byId("lumiere");
-  const aurum = byId("aurum");
 
   return (
-    <section id="projetos" aria-labelledby="projetos-title" className="relative z-10 bg-ink-0 pt-24 sm:pt-32">
+    <section id="projetos" aria-labelledby="projetos-title" className="relative z-10 bg-ink-0 py-24 sm:py-32">
       <div className="container-v">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
@@ -104,7 +81,7 @@ export function Projetos() {
             </h2>
           </div>
           <p className="max-w-md text-mist lg:col-span-4 lg:col-start-9 lg:pb-2">
-            Sites, rascunhos e projetos demonstrativos da Vertex. Em cada um, o objetivo e uma decisão de design que guiou
+            Sites e rascunhos feitos pela Vertex. Em cada um, o objetivo e uma decisão de design que guiou
             o resultado.
           </p>
         </div>
@@ -148,28 +125,6 @@ export function Projetos() {
           </div>
           <Ficha p={natalino} className="lg:col-span-4 lg:col-start-8" />
         </article>
-      </div>
-
-      {/* 06 e 07 — demonstrações, vistas no celular */}
-      <div className="mt-20 bg-ink-1 py-16 sm:mt-32 sm:py-24">
-        <div className="container-v">
-          <div className="grid gap-6 lg:grid-cols-12">
-            <p className="meta lg:col-span-3">Projetos demonstrativos</p>
-            <p className="max-w-xl text-mist lg:col-span-6">
-              Conceitos criados pela Vertex para mostrar caminhos em segmentos diferentes. Não representam clientes.
-            </p>
-          </div>
-          <div className="mt-14 grid gap-14 lg:grid-cols-2 lg:gap-10">
-            {[lumiere, aurum].map((p, i) => (
-              <article key={p.id} className="grid grid-cols-1 items-start gap-8 sm:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)] lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]">
-                <div data-reveal style={{ ["--d" as string]: `${i * 120}ms` }} className="w-[62%] max-w-[240px] sm:w-auto sm:max-w-none">
-                  <Mobile p={p} />
-                </div>
-                <Ficha p={p} className="pt-1" />
-              </article>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
