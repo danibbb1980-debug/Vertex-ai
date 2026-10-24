@@ -133,15 +133,39 @@
 }
 .hs-caption .num { flex-shrink: 0; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; }
 
-/* Cena WebGL por cima: entra quando o primeiro quadro fica pronto */
-.hs-canvas {
+/* Fundo WebGL do hero inteiro: entra quando o primeiro quadro fica pronto */
+.hero-backdrop {
   position: absolute;
-  inset: -6% -8% -4% -6%;
+  inset: 0;
+  z-index: -1;
   opacity: 0;
-  transition: opacity 0.9s var(--ease-vertex);
+  transition: opacity 1.1s var(--ease-vertex);
   pointer-events: none;
 }
-.hs-gl .hs-canvas { opacity: 1; }
+.hero-gl .hero-backdrop { opacity: 1; }
+/* Véu de leitura: escurece atrás da headline e dos botões */
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(9, 10, 13, 0.96) 0%, rgba(9, 10, 13, 0.9) 34%, rgba(9, 10, 13, 0.55) 46%, rgba(9, 10, 13, 0) 62%),
+    linear-gradient(0deg, rgba(9, 10, 13, 0.9) 0%, rgba(9, 10, 13, 0) 14%);
+}
+@media (max-width: 1023px) {
+  .hero-veil {
+    background: linear-gradient(180deg, rgba(9, 10, 13, 0.92) 0%, rgba(9, 10, 13, 0.85) 48%, rgba(9, 10, 13, 0.1) 62%, rgba(9, 10, 13, 0) 72%, rgba(9, 10, 13, 0.35) 100%);
+  }
+}
+/* Com a cena WebGL, a legenda fica só para leitores de tela (o canvas é aria-hidden) */
+.hero-gl .hs-caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* O mockup em CSS 3D sai quando a cena WebGL assume */
 .hs-enter, .hs-light, .hs-floor { transition: opacity 0.7s var(--ease-vertex); }
 .hs-gl .hs-enter, .hs-gl .hs-light, .hs-gl .hs-floor { opacity: 0 !important; }
 

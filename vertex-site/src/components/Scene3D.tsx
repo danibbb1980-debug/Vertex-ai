@@ -1,90 +1,12 @@
 import { useEffect, useMemo, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import type { SceneProps } from "./Stage3D";
-
-/*
- * Geometria do V, em unidades de cena (1 = 100 px da logo de 1024 px).
- * Os braços internos ficam um pouco afastados do centro porque o chanfro
- * cresce para fora; o resultado mantém a fresta fina da logo.
- */
-const H = 1.85;
-const OUT = 2.15;
-const IN_TOP = 1.1;
-const GAP = 0.085;
-const V_HEIGHT = H * 2 + 0.1;
-
-function armShape(side: -1 | 1) {
-  const s = new THREE.Shape();
-  s.moveTo(side * OUT, H);
-  s.lineTo(side * IN_TOP, H);
-  s.lineTo(side * GAP, 0);
-  s.lineTo(side * GAP, -H);
-  s.closePath();
-  return s;
-}
+import { ProceduralEnv, V_HEIGHT, armGeometry, clamp01, easeOutExpo } from "./three/shared";
 
 function useArmGeometry(side: -1 | 1) {
-  return useMemo(() => {
-    const g = new THREE.ExtrudeGeometry(armShape(side), {
-      depth: 0.38,
-      bevelEnabled: true,
-      bevelThickness: 0.07,
-      bevelSize: 0.035,
-      bevelSegments: 4,
-      curveSegments: 1,
-    });
-    g.translate(0, 0, -0.19);
-    g.computeVertexNormals();
-    return g;
-  }, [side]);
+  return useMemo(() => armGeometry(side), [side]);
 }
-
-/** Mapa de ambiente procedural: gradiente escuro com faixas de luz quente, gerado em canvas. */
-function ProceduralEnv() {
-  const { gl, scene } = useThree();
-  useEffect(() => {
-    const c = document.createElement("canvas");
-    c.width = 512;
-    c.height = 256;
-    const ctx = c.getContext("2d")!;
-    const bg = ctx.createLinearGradient(0, 0, 0, 256);
-    bg.addColorStop(0, "#07080b");
-    bg.addColorStop(0.42, "#2a2418");
-    bg.addColorStop(0.5, "#fff2cf");
-    bg.addColorStop(0.56, "#3a301e");
-    bg.addColorStop(1, "#050506");
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, 512, 256);
-    // "softboxes" que desenham os reflexos no metal
-    const box = (x: number, y: number, w: number, h: number, a: number) => {
-      const g = ctx.createRadialGradient(x + w / 2, y + h / 2, 2, x + w / 2, y + h / 2, Math.max(w, h) / 1.4);
-      g.addColorStop(0, `rgba(255,246,222,${a})`);
-      g.addColorStop(1, "rgba(255,246,222,0)");
-      ctx.fillStyle = g;
-      ctx.fillRect(x - w, y - h, w * 3, h * 3);
-    };
-    box(60, 40, 90, 50, 0.95);
-    box(330, 60, 120, 40, 0.7);
-    box(220, 170, 60, 30, 0.35);
-    const tex = new THREE.CanvasTexture(c);
-    tex.mapping = THREE.EquirectangularReflectionMapping;
-    tex.colorSpace = THREE.SRGBColorSpace;
-    const pmrem = new THREE.PMREMGenerator(gl);
-    const rt = pmrem.fromEquirectangular(tex);
-    scene.environment = rt.texture;
-    tex.dispose();
-    pmrem.dispose();
-    return () => {
-      scene.environment = null;
-      rt.dispose();
-    };
-  }, [gl, scene]);
-  return null;
-}
-
-const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
-const easeOutExpo = (t: number) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
 
 function VertexV({ onReady }: { onReady: () => void }) {
   const group = useRef<THREE.Group>(null!);

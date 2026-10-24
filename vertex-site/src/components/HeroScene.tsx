@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState, type ComponentType } from "react";
-import { GLBoundary, shouldUse3D, whenIdle } from "../lib/webgl";
-import type { HeroGLProps } from "./HeroGL";
+import { useEffect, useRef } from "react";
 
 /*
  * Composição do hero: dois navegadores em perspectiva, em planos diferentes,
@@ -8,8 +6,9 @@ import type { HeroGLProps } from "./HeroGL";
  * Polato ao fundo). As capturas entram inteiras, na proporção original.
  *
  * Este mockup em CSS 3D vem pré-renderizado e é sempre o primeiro a aparecer.
- * Em aparelhos capazes, depois do load, entra por cima a cena WebGL (HeroGL),
- * com as cinco capturas em profundidade; o CSS 3D fica como fallback.
+ * Em aparelhos capazes, depois do load, a cena WebGL (HeroGL) entra no fundo
+ * do hero inteiro e este mockup sai (classe hs-gl); ele continua como
+ * fallback para quem não recebe o WebGL.
  * Movimento: entrada suave, flutuação lenta, inclinação pelo cursor limitada
  * (só desktop com mouse, só dentro do hero) e leve inclinação ao rolar.
  * Com prefers-reduced-motion a composição fica parada.
@@ -17,61 +16,9 @@ import type { HeroGLProps } from "./HeroGL";
 
 const MAX_TILT = 4; // graus
 
-/** Carrega a cena WebGL sob demanda e a exibe por cima do mockup em CSS. */
-function useHeroGL(stageRef: React.RefObject<HTMLDivElement | null>) {
-  const [Comp, setComp] = useState<ComponentType<HeroGLProps> | null>(null);
-  const [visible, setVisible] = useState(true);
-  const [ready, setReady] = useState(false);
-  const [lite, setLite] = useState(false);
-
-  useEffect(() => {
-    if (!shouldUse3D()) return;
-    setLite(matchMedia("(max-width: 1023px), (pointer: coarse)").matches);
-    let cancelled = false;
-    whenIdle(() => {
-      import("./HeroGL")
-        .then((m) => !cancelled && setComp(() => m.default))
-        .catch(() => {});
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  // Pausa a renderização fora da tela e com a aba oculta
-  useEffect(() => {
-    if (!Comp || !stageRef.current) return;
-    let onScreen = true;
-    let hidden = document.hidden;
-    const update = () => setVisible(onScreen && !hidden);
-    const io = new IntersectionObserver(([e]) => {
-      onScreen = e.isIntersecting;
-      update();
-    });
-    io.observe(stageRef.current);
-    const onVis = () => {
-      hidden = document.hidden;
-      update();
-    };
-    document.addEventListener("visibilitychange", onVis);
-    return () => {
-      io.disconnect();
-      document.removeEventListener("visibilitychange", onVis);
-    };
-  }, [Comp, stageRef]);
-
-  const fail = () => {
-    setReady(false);
-    setComp(null);
-  };
-
-  return { Comp, visible, ready, lite, setReady, fail };
-}
-
-export function HeroScene() {
+export function HeroScene({ glReady = false, lite = false }: { glReady?: boolean; lite?: boolean }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const rigRef = useRef<HTMLDivElement>(null);
-  const gl = useHeroGL(stageRef);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -138,7 +85,7 @@ export function HeroScene() {
 
   return (
     <figure className="hs-figure">
-      <div ref={stageRef} className={`hs-stage${gl.ready ? " hs-gl" : ""}`}>
+      <div ref={stageRef} className={`hs-stage${glReady ? " hs-gl" : ""}`}>
         <div className="hs-light" aria-hidden="true" />
         <div className="hs-floor" aria-hidden="true" />
         <div className="hs-enter">
@@ -196,20 +143,15 @@ export function HeroScene() {
             </div>
           </div>
         </div>
-        {gl.Comp && (
-          <div className="hs-canvas" aria-hidden="true">
-            <GLBoundary onError={gl.fail}>
-              <gl.Comp active={gl.visible} lite={gl.lite} onReady={() => gl.setReady(true)} onFail={gl.fail} />
-            </GLBoundary>
-          </div>
-        )}
       </div>
       <figcaption className="hs-caption">
         <span className="num">Na tela</span>
-        {gl.ready ? (
+        {glReady ? (
           <span>
-            Star Sorrindo, clínica em Poços de Caldas, à frente <span aria-hidden="true">·</span> ao fundo,{" "}
-            {gl.lite ? "VIP Shape Academia e Natalino Polato" : "VIP Shape Academia, Natalino Polato, Dra. Beatryz Furlaneto e Rocha"}
+            O V da Vertex em vidro, cercado por sites reais do estúdio:{" "}
+            {lite
+              ? "Star Sorrindo, VIP Shape Academia e Natalino Polato"
+              : "Star Sorrindo, VIP Shape Academia, Natalino Polato, Dra. Beatryz Furlaneto e Rocha"}
           </span>
         ) : (
           <span>

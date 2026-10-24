@@ -1,27 +1,35 @@
 import { Component, type ReactNode } from "react";
 
-let cached: boolean | null = null;
+const cache: Record<"strict" | "relaxed", boolean | null> = { strict: null, relaxed: null };
 
 /**
  * Decide se o aparelho deve receber cenas WebGL. Qualquer dúvida → fallback.
  * `?no3d` força o fallback e `?force3d` força o 3D (para testes).
  * O resultado fica guardado: a checagem cria um contexto WebGL temporário.
+ *
+ * - padrão (estrito): também exige mais de 4 núcleos e mais de 4 GB.
+ * - `relaxed`: dispensa o corte por núcleos e memória (os navegadores arredondam
+ *   esses valores e muitos celulares bons ficam de fora). Usado pela versão leve
+ *   do hero, que é barata. GPU real, sem economia de dados e sem movimento
+ *   reduzido continuam obrigatórios.
  */
-export function shouldUse3D(): boolean {
-  if (cached !== null) return cached;
-  cached = check();
-  return cached;
+export function shouldUse3D(opts: { relaxed?: boolean } = {}): boolean {
+  const mode = opts.relaxed ? "relaxed" : "strict";
+  if (cache[mode] === null) cache[mode] = check(mode === "relaxed");
+  return cache[mode]!;
 }
 
-function check(): boolean {
+function check(relaxed: boolean): boolean {
   const q = new URLSearchParams(location.search);
   if (q.has("no3d")) return false;
   if (q.has("force3d")) return true;
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
   const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
   if (nav.connection?.saveData) return false;
-  if ((nav.hardwareConcurrency ?? 8) <= 4) return false;
-  if (typeof nav.deviceMemory === "number" && nav.deviceMemory <= 4) return false;
+  if (!relaxed) {
+    if ((nav.hardwareConcurrency ?? 8) <= 4) return false;
+    if (typeof nav.deviceMemory === "number" && nav.deviceMemory <= 4) return false;
+  }
   try {
     const c = document.createElement("canvas");
     const gl = c.getContext("webgl2") || c.getContext("webgl");

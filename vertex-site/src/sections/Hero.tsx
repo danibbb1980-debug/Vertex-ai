@@ -1,11 +1,26 @@
+import { useRef } from "react";
 import { waLink } from "../config";
 import { IconArrow, IconWhatsApp } from "../components/Icons";
 import { HeroScene } from "../components/HeroScene";
 import { Vertice } from "../components/Vertice";
+import { useHeroGL } from "../components/useHeroGL";
+import { GLBoundary } from "../lib/webgl";
 
 export function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const gl = useHeroGL(ref);
+
   return (
-    <section id="topo" aria-labelledby="hero-title" className="relative isolate overflow-hidden">
+    <section ref={ref} id="topo" aria-labelledby="hero-title" className={`relative isolate overflow-hidden${gl.ready ? " hero-gl" : ""}`}>
+      {/* Fundo em WebGL (V de vidro e telas). Carregado só em aparelhos capazes. */}
+      {gl.Comp && (
+        <div className="hero-backdrop" aria-hidden="true">
+          <GLBoundary onError={gl.fail}>
+            <gl.Comp active={gl.visible} lite={gl.lite} onReady={() => gl.setReady(true)} onFail={gl.fail} />
+          </GLBoundary>
+          <div className="hero-veil" />
+        </div>
+      )}
       <div className="container-v grid grid-cols-1 items-center gap-12 pt-28 pb-14 sm:pt-32 lg:min-h-[min(100svh,960px)] lg:grid-cols-12 lg:gap-6 lg:pt-28 lg:pb-16">
         <div className="lg:col-span-6">
           <p className="fade-up flex items-center gap-3 eyebrow">
@@ -45,7 +60,7 @@ export function Hero() {
         </div>
 
         <div className="mx-auto w-full max-w-[36rem] sm:max-w-[42rem] lg:col-span-6 lg:max-w-none">
-          <HeroScene />
+          <HeroScene glReady={gl.ready} lite={gl.lite} />
         </div>
       </div>
     </section>
