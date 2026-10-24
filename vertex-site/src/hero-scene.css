@@ -153,7 +153,16 @@
   object-position: 70% 50%;
 }
 @media (max-width: 1023px) {
-  .hero-video { top: auto; height: 58%; object-position: 72% 50%; }
+  .hero-video { top: auto; bottom: 0; height: 38%; object-position: 73% 50%; }
+}
+/* Tablet: vídeo mais largo que a tela, com o V centralizado */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hero-video {
+    height: 50%;
+    transform: translateX(-21%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 18%, #000 32%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 18%, #000 32%, #000 84%, transparent 100%);
+  }
 }
 /* Véu de leitura: escurece atrás da headline e dos botões */
 .hero-veil {
