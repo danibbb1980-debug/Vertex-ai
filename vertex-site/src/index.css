@@ -29,9 +29,9 @@
 @font-face {
   font-family: "Outfit Fallback";
   src: local("Arial");
-  size-adjust: 100%;
-  ascent-override: 100%;
-  descent-override: 26%;
+  size-adjust: 94%;
+  ascent-override: 106%;
+  descent-override: 28%;
   line-gap-override: 0%;
 }
 

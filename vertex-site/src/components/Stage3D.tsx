@@ -58,16 +58,24 @@ export function Stage3D() {
       import("./Scene3D")
         .then((m) => !cancelled && setScene(() => m.default))
         .catch(() => {});
-    const idle = () => {
-      const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number })
-        .requestIdleCallback;
-      if (ric) ric(load, { timeout: 2500 });
-      else setTimeout(load, 900);
-    };
-    if (document.readyState === "complete") idle();
-    else window.addEventListener("load", idle, { once: true });
+    // O V só aparece no CTA final: baixa o three.js quando a pessoa se aproxima dele
+    const cta = document.querySelector("[data-stage]");
+    if (!cta) return;
+    const near = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        near.disconnect();
+        const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number })
+          .requestIdleCallback;
+        if (ric) ric(load, { timeout: 1200 });
+        else setTimeout(load, 300);
+      },
+      { rootMargin: "150% 0px" },
+    );
+    near.observe(cta);
     return () => {
       cancelled = true;
+      near.disconnect();
     };
   }, []);
 
