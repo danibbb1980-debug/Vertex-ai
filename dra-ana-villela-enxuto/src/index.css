@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@theme {
+  --color-porcelana: #faf7f2;
+  --color-porcelana-2: #f3ede4;
+  --color-tinta: #1b2536;
+  --color-tinta-2: #26324a;
+  --color-grafite: #4a5263;
+  --color-rose: #e9d3cb;
+  --color-rose-2: #d9b8ad;
+  --color-rose-ink: #8f5f53;
+  --color-perola: #ddd2c1;
+  --color-champagne: #c8b79c;
+
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-porcelana);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 350;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    font-variation-settings: "opsz" 120;
+  }
+  em {
+    font-style: italic;
+  }
+  ::selection {
+    background: var(--color-rose);
+    color: var(--color-tinta);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-rose-ink);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .bg-tinta :focus-visible,
+  .on-dark :focus-visible {
+    outline-color: var(--color-rose);
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .serif-display {
+    font-family: var(--font-display);
+    font-weight: 350;
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 120;
+  }
+  .container-site {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2.5rem;
+    }
+  }
+  .filete {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-champagne), transparent);
+  }
+  .grao::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .link-sublinhado {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s var(--ease-suave);
+  }
+  .link-sublinhado:hover,
+  .link-sublinhado:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* Entrada (único efeito de entrada): palavras do título sobem de dentro de uma máscara,
+   adaptado do "Vertical Cut Reveal" do 21st.dev. CSS puro, roda já na primeira pintura. */
+@keyframes cutUp {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes heroFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+.cut-word > span:first-child {
+  animation: cutUp 0.9s var(--ease-suave) both;
+}
+.hero-fade {
+  animation: heroFade 0.9s var(--ease-suave) both;
+}
+
+/* Único efeito de rolagem: os cartões de tratamento surgem em sequência (só com JS ativo). */
+.js .reveal-group .reveal-item {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s var(--ease-suave),
+    transform 0.7s var(--ease-suave);
+}
+.js .reveal-group.is-visible .reveal-item {
+  opacity: 1;
+  transform: none;
+}
+
+/* Detalhe sutil dos cartões: filete rosé que se desenha no topo ao passar o mouse ou focar. */
+.card-filete {
+  transform: scaleX(0);
+  transition: transform 0.6s var(--ease-suave);
+}
+.card-trat:hover .card-filete,
+.card-trat:focus-visible .card-filete {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
