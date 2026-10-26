@@ -1,0 +1,351 @@
+@import "tailwindcss";
+
+/*
+  Laboratório Tonon — tokens de design.
+
+  Contrastes verificados (WCAG 2.2, calculados):
+    grafite   #171918 sobre off-white #F5F3EE → 15,9:1
+    tinta     #4A4E4B sobre #F5F3EE           → 7,6:1  (texto secundário em fundo claro)
+    tinta     #4A4E4B sobre azul #B4C3CF      → 4,7:1  (pior caso no hero)
+    sálvia    #46584F sobre #F5F3EE           → 6,8:1  (destaques em fundo claro)
+    mineral   #A8AAA5 sobre grafite #171918   → 7,5:1  (texto secundário em fundo escuro)
+    champanhe #C8B58B sobre #171918           → 8,8:1  (detalhes em fundo escuro)
+    grafite   #171918 sobre azul #C9D4DE      → 11,7:1
+  Mineral e champanhe NÃO são usados como texto sobre fundo claro (< 3:1).
+*/
+@theme {
+  --color-graphite: #171918;
+  --color-graphite-2: #1f2321;
+  --color-graphite-3: #2a2f2c;
+  --color-paper: #f5f3ee;
+  --color-paper-2: #ece9e2;
+  --color-ink: #4a4e4b;
+  --color-mineral: #a8aaa5;
+  --color-sage: #46584f;
+  --color-sage-soft: #dfe3dc;
+  --color-champagne: #c8b58b;
+  --color-mist-1: #e6ecf0;
+  --color-mist-2: #c9d4de;
+  --color-mist-3: #b4c3cf;
+  --color-whatsapp: #25d366;
+
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+    interpolate-size: allow-keywords;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-graphite);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-sage);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-sage);
+    outline-offset: 3px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-champagne);
+  }
+
+  a,
+  button,
+  summary,
+  label[for] {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Rótulo editorial: número da seção + nome, em versalete espaçado. */
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .label::before {
+    content: "";
+    width: 2.25rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.55;
+  }
+
+  /* Títulos na serifa editorial. */
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.022em;
+  }
+  .display em {
+    font-style: italic;
+    letter-spacing: -0.03em;
+  }
+
+  .h-hero {
+    font-size: clamp(2.9rem, 1.6rem + 5.4vw, 6.6rem);
+  }
+  .h-section {
+    font-size: clamp(2.35rem, 1.5rem + 3.4vw, 4.6rem);
+  }
+  .h-statement {
+    font-size: clamp(1.85rem, 1.2rem + 2.5vw, 3.6rem);
+    line-height: 1.08;
+  }
+
+  .lead {
+    font-size: clamp(1.02rem, 0.96rem + 0.3vw, 1.18rem);
+    line-height: 1.7;
+  }
+
+  /* Fio fino de 1px usado no lugar de cartões. */
+  .rule {
+    height: 1px;
+    background: currentColor;
+    opacity: 0.14;
+  }
+
+  /* Link de texto com sublinhado que cresce. */
+  .link-line {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-size 0.45s var(--ease-out-soft);
+  }
+  .link-line:hover {
+    background-size: 35% 1px;
+  }
+
+  /* Granulado fotográfico discreto sobre áreas grandes de cor. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.12;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Hero ---------- */
+  .hero-bg {
+    background:
+      radial-gradient(120% 70% at 62% 38%, rgb(255 255 255 / 0.55) 0%, rgb(255 255 255 / 0) 55%),
+      linear-gradient(180deg, var(--color-mist-1) 0%, var(--color-mist-2) 58%, var(--color-mist-3) 100%);
+  }
+  /* Transição natural do azul do hero para o off-white da página. */
+  .hero-fade {
+    background: linear-gradient(180deg, rgb(245 243 238 / 0) 0%, var(--color-paper) 100%);
+  }
+  .ghost-word {
+    font-family: var(--font-serif);
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: rgb(255 255 255 / 0.42);
+    user-select: none;
+  }
+
+  /* Anotações do objeto 3D: surgem conforme a rolagem do hero. */
+  .annotation {
+    opacity: clamp(0, calc(var(--hero-progress, 0) * 4 - 0.25), 1);
+    transform: translateY(calc((1 - clamp(0, calc(var(--hero-progress, 0) * 4 - 0.25), 1)) * 10px));
+  }
+
+  /* ---------- Comparador antes/depois ---------- */
+  .compare {
+    --pos: 50%;
+  }
+  .compare-after {
+    clip-path: inset(0 0 0 var(--pos));
+  }
+  .compare-handle {
+    left: var(--pos);
+  }
+  .compare input[type="range"] {
+    appearance: none;
+    background: transparent;
+  }
+  .compare input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 44px;
+    height: 100vh;
+    background: transparent;
+    cursor: ew-resize;
+  }
+  .compare input[type="range"]::-moz-range-thumb {
+    width: 44px;
+    height: 100vh;
+    border: 0;
+    background: transparent;
+    cursor: ew-resize;
+  }
+
+  /* ---------- Accordion (FAQ) ---------- */
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 0.4s var(--ease-out-soft),
+      content-visibility 0.4s allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item .faq-icon::after {
+    transition: transform 0.35s var(--ease-out-soft);
+  }
+  .faq-item[open] .faq-icon::after {
+    transform: rotate(90deg) scaleX(0);
+  }
+}
+
+/* Sem JavaScript o header não sabe quando a página rolou: fica sempre sólido. */
+html:not([data-js="1"]) .site-header {
+  background-color: rgb(245 243 238 / 0.92);
+  border-bottom-color: rgb(23 25 24 / 0.1);
+}
+
+/* ---------- Botão flutuante de WhatsApp ---------- */
+.floating-cta {
+  transition:
+    opacity 0.5s var(--ease-out-soft),
+    transform 0.5s var(--ease-out-soft),
+    visibility 0.5s;
+}
+[data-js="1"] .floating-cta:not([data-visible="true"]) {
+  opacity: 0;
+  transform: translateY(1rem);
+  visibility: hidden;
+}
+
+/* ---------- Revelação no scroll ----------
+   Melhoria progressiva: sem JS todo o conteúdo fica visível. O estado
+   escondido só existe quando <html data-js="1">, definido antes da primeira
+   pintura; o ClientEnhancements adiciona .is-in ao entrar no viewport. */
+[data-js="1"] .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease-out-soft) var(--reveal-delay, 0ms),
+    transform 0.9s var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+[data-js="1"] .reveal-scale {
+  transform: scale(1.035);
+}
+[data-js="1"] .reveal-left {
+  transform: translateX(-28px);
+}
+[data-js="1"] .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Revelação de imagem por máscara: sobe uma cortina. */
+[data-js="1"] .reveal.reveal-mask {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.2s var(--ease-in-out-soft) var(--reveal-delay, 0ms);
+}
+[data-js="1"] .reveal.reveal-mask.is-in {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Entrada do hero: CSS puro, roda sem esperar o JavaScript. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.hero-rise {
+  animation: rise 1s var(--ease-out-soft) both;
+  animation-delay: var(--d, 0ms);
+}
+.hero-fade-in {
+  animation: fade-in 1.6s var(--ease-out-soft) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-js="1"] .reveal,
+  [data-js="1"] .reveal-mask {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+  .annotation {
+    opacity: 1;
+    transform: none;
+  }
+}

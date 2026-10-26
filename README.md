@@ -5,9 +5,10 @@ por assinatura (R$197/mês) para negócios locais no Brasil.
 
 Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · pronto para Vercel.
 
-> A pasta `vip-shape/` é outro app: o site da VIP Shape Academia, cliente da
-> Vertex, com build próprio. Ver `vip-shape/README.md`. Ela fica fora do
-> `tsconfig.json` e das fontes do Tailwind deste site.
+> As pastas `vip-shape/` e `tonon/` são outros apps, sites de clientes da
+> Vertex com build próprio: a VIP Shape Academia (`vip-shape/README.md`) e o
+> Laboratório Tonon (`tonon/README.md`). Ficam fora do `tsconfig.json` e das
+> fontes do Tailwind deste site.
 
 ---
 
