@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-gelo: #faf9f6;
+  --color-tinta: #0f2a4a;
+  --color-cobalto: #1f5fd1;
+  --color-cobalto-escuro: #1a4fb0;
+  --color-nevoa: #e8f0fb;
+  --color-filete: #d9e3f2;
+  --color-texto: #3b4a5e;
+
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-gelo font-sans text-tinta antialiased;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-cobalto);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-variation-settings: 'opsz' 96;
+    letter-spacing: -0.015em;
+  }
+  em {
+    font-style: italic;
+    color: var(--color-cobalto);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@utility rotulo {
+  @apply text-[11px] font-semibold tracking-[0.18em] uppercase;
+}
+@utility btn {
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[15px] font-medium transition-colors duration-200;
+}
+@utility btn-principal {
+  @apply btn bg-cobalto text-white hover:bg-cobalto-escuro;
+}
+@utility btn-linha {
+  @apply btn border border-current;
+}
+@utility wrap {
+  @apply mx-auto w-full max-w-[1120px] px-5 sm:px-8;
+}
+
+/* Text Reveal (21st.dev · kuratlielia/text-reveal), adaptado.
+   Cada palavra sobe de dentro de um recorte enquanto sai do desfoque.
+   Roda em CSS: começa no primeiro paint e nunca esconde o texto se o JS atrasar. */
+.reveal .line {
+  display: inline;
+}
+.reveal .clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0 0.08em 0.12em;
+  margin: 0 -0.08em -0.12em;
+}
+.reveal .word {
+  display: inline-block;
+  animation: reveal-rise 0.95s cubic-bezier(0.2, 0.7, 0.15, 1) both;
+  animation-delay: var(--reveal-delay, 0s);
+}
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(70%);
+    filter: blur(var(--reveal-blur, 8px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal .word {
+    animation: none;
+  }
+}
