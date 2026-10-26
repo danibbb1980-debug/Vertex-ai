@@ -43,23 +43,17 @@ function Header() {
   )
 }
 
-/** Composição gráfica original: ovais finas em azul, eco do logo. Reserva para foto. */
-function FotoReservada() {
+function FotoFachada() {
   return (
     <figure className="relative h-full overflow-hidden rounded-[20px] bg-nevoa">
-      <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 size-full" aria-hidden="true">
-        <g fill="none" stroke="#1F5FD1" strokeWidth="1">
-          {[150, 128, 106, 84, 62].map((rx, i) => (
-            <ellipse key={rx} cx="215" cy="205" rx={rx * 1.35} ry={rx * 0.82} transform="rotate(-14 215 205)" opacity={0.18 + i * 0.13} />
-          ))}
-        </g>
-        <path d="M40 300 C 140 250, 260 330, 380 270" fill="none" stroke="#0F2A4A" strokeWidth="1" opacity=".35" />
-        <circle cx="318" cy="112" r="5" fill="#1F5FD1" />
-      </svg>
-      {/* SUBSTITUIR: foto real da fachada ou recepção em public/fotos/ */}
-      <figcaption className="rotulo absolute bottom-4 left-4 rounded-full bg-gelo/90 px-3 py-1.5 text-tinta/70">
-        Foto da clínica (substituir)
-      </figcaption>
+      <img
+        src={CONFIG.fotoFachada}
+        alt={`Fachada do ${CONFIG.nome}, em ${CONFIG.cidade}`}
+        width={294}
+        height={297}
+        fetchPriority="high"
+        className="absolute inset-0 size-full object-cover object-[35%_45%]"
+      />
     </figure>
   )
 }
@@ -94,7 +88,7 @@ function Hero() {
         </ul>
       </div>
       <div className="h-44 sm:h-64 md:col-span-5 md:h-auto md:min-h-[440px]">
-        <FotoReservada />
+        <FotoFachada />
       </div>
     </section>
   )
@@ -180,13 +174,13 @@ function Instituto() {
             O Instituto reúne áreas médicas e odontologia. Tudo na mesma clínica, no {CONFIG.endereco.bairro}.
           </p>
         </div>
-        <ul className="grid gap-3 md:col-span-7 md:grid-cols-3 md:self-end">
+        <ul className="grid gap-3 md:col-span-7 md:grid-cols-2 md:self-end">
           {CONFIG.profissionais.map((p) => (
-            <li key={p.nome} className="flex items-center gap-4 rounded-[16px] border border-filete bg-gelo p-4 md:flex-col md:items-start md:p-5">
+            <li key={p.nome} className="flex items-center gap-4 rounded-[16px] border border-filete bg-gelo p-4">
               {p.foto ? (
-                <img src={p.foto} alt={p.nome} loading="lazy" className="size-14 shrink-0 rounded-full object-cover" />
+                <img src={p.foto} alt={`Foto de ${p.nome}`} width={64} height={64} loading="lazy" className="size-16 shrink-0 rounded-full object-cover" />
               ) : (
-                <span aria-hidden="true" className="grid size-14 shrink-0 place-items-center rounded-full border border-cobalto/40 font-display text-[19px] text-cobalto italic">
+                <span aria-hidden="true" className="grid size-16 shrink-0 place-items-center rounded-full border border-cobalto/40 font-display text-[20px] text-cobalto italic">
                   {iniciais(p.nome)}
                 </span>
               )}

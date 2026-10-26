@@ -26,10 +26,11 @@ Cada item ainda não validado tem o comentário `CONFIRMAR COM A CLÍNICA`.
 - **Logo**: `public/logo-pro-vida.webp` (logo original da clínica, só com a
   margem branca recortada). Original em `referencias/logo-pro-vida.png`.
   Para trocar, substitua o arquivo mantendo o nome.
-- **Foto do hero**: hoje é um bloco gráfico com a legenda "Foto da clínica
-  (substituir)". Para usar uma foto real (fachada ou recepção), troque o
-  componente `FotoReservada` em `src/App.tsx` por um `<img>` em WebP.
-  Não use fotos de pacientes nem do Google/Instagram sem autorização.
+- **Fotos**: em `public/fotos/` (WebP). A fachada e os retratos do Dr. Márcio
+  e do Dr. João foram recortados das imagens enviadas pela cliente (sem textos,
+  logo antiga ou paciente). A fachada tem só 294 px: pedir versão em alta
+  resolução. Dr. Gutemberg e Dra. Cátia aparecem com iniciais até ter foto.
+  Não use fotos de pacientes.
 
 ## Desligar o rascunho (ao publicar)
 
@@ -67,7 +68,8 @@ Arraste o zip em https://app.netlify.com/drop (o `index.html` fica na raiz).
 registros que podem agilizar a confirmação: Dr. Márcio A. Pennacchi
 (CRM-SP 130.886), Dr. Gutemberg Adrian Oliveira (CRM-SP 92162) e um
 neurocirurgião, Dr. João Buçard (CRM-SP 196.920), que não está na ficha do
-Google. Nada disso foi colocado no site até a clínica confirmar.
+Google (foi incluído no site a pedido). Os números ainda não aparecem no site
+até a clínica confirmar.
 
 ## Créditos
 

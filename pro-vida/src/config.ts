@@ -24,7 +24,7 @@ export const CONFIG = {
   rascunho: true,
 
   /** URL absoluta onde o site ficará publicado. CONFIRMAR COM A CLÍNICA */
-  siteUrl: 'https://pro-vida-rascunho.netlify.app',
+  siteUrl: 'https://pro-vida-rascunho.vercel.app',
 
   nome: 'Instituto Médico Pró Vida',
   nomeCurto: 'Pró Vida',
@@ -33,6 +33,9 @@ export const CONFIG = {
 
   /** Logo original da clínica, usada como está (sem redesenho). */
   logo: '/logo-pro-vida.webp',
+
+  /** Foto da fachada (enviada pela cliente). Trocar por versão em alta resolução. */
+  fotoFachada: '/fotos/fachada.webp',
 
   // Endereço do perfil do WhatsApp Business. CONFIRMAR COM A CLÍNICA
   endereco: {
@@ -74,7 +77,19 @@ export const CONFIG = {
   // Nomes, áreas e registros: CONFIRMAR COM A CLÍNICA
   profissionais: [
     { nome: 'Dr. Gutemberg Adrian Oliveira', area: 'Urologia', registro: 'CRM [A CONFIRMAR]' },
-    { nome: 'Dr. Márcio Antônio Pennacchi', area: 'Cirurgia vascular', registro: 'CRM [A CONFIRMAR]' },
+    {
+      nome: 'Dr. Márcio Antônio Pennacchi',
+      area: 'Cirurgia vascular',
+      registro: 'CRM [A CONFIRMAR]',
+      foto: '/fotos/marcio-pennacchi.webp',
+    },
+    // Enviado pela cliente (post do Instagram), não aparece na ficha do Google.
+    {
+      nome: 'Dr. João Buçard',
+      area: 'Neurocirurgia',
+      registro: 'CRM [A CONFIRMAR]',
+      foto: '/fotos/joao-bucard.webp',
+    },
     { nome: 'Dra. Cátia Barbutti', area: 'Odontologia', registro: 'CRO [A CONFIRMAR]' },
   ] as Profissional[],
 
