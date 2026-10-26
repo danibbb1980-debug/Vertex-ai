@@ -31,7 +31,7 @@ npm run dev
 npm run build   # gera dist/ com HTML pré-renderizado
 ```
 
-Deploy: site Netlify `dranavillela-enxuto` (o `netlify.toml` já define build e pasta `dist`). Ou arraste o zip do `dist/` em Deploys no painel do site.
+Deploy: projeto Vercel `dra-ana-villela-enxuto`, ligado a este repositório com Root Directory `dra-ana-villela-enxuto` (o `vercel.json` define build, pasta `dist` e os cabeçalhos de noindex e cache). Também há `netlify.toml` e o zip do `dist/` para o Netlify, se preferir.
 
 ## Como editar
 

@@ -9,7 +9,7 @@ export const CONFIG = {
   rascunho: true,
 
   /** URL pública do site, sem barra no final. Usada no canonical, og:url e og:image. */
-  siteUrl: "https://dranavillela-enxuto.netlify.app", // CONFIRMAR: trocar pelo domínio definitivo
+  siteUrl: "https://dra-ana-villela-enxuto.vercel.app", // CONFIRMAR: trocar pelo domínio definitivo
 
   nome: "Dra. Ana Villela",
   nomeCurto: "Ana Villela",
