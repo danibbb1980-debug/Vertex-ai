@@ -2,6 +2,7 @@
 /* vip-shape/ é outro app (site de cliente), com o próprio build. */
 @source not "../vip-shape";
 @source not "../pro-vida";
+@source not "../tonon";
 
 /*
   Vertex Web Studios — design tokens.

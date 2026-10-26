@@ -1,0 +1,130 @@
+@import 'tailwindcss';
+
+/* Fonte de reserva com largura ajustada à Instrument Serif: evita que o título
+   mude de quebra de linha (e empurre a página) quando a fonte carrega. */
+@font-face {
+  font-family: 'Instrument Fallback';
+  src: local('Times New Roman'), local('TimesNewRomanPSMT'), local('Liberation Serif');
+  size-adjust: 83%;
+}
+
+@theme {
+  --color-porcelana: #f4f1ec;
+  --color-grafite: #161514;
+  --color-pedra: #e4ddd2;
+  --color-petroleo: #24453f;
+  --color-petroleo-escuro: #1a332e;
+  --color-texto: #4a4640;
+  --color-filete: #d9d1c4;
+  --color-claro: #b9d3cb;
+
+  --font-display: 'Instrument Serif', 'Instrument Fallback', Georgia, serif;
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-porcelana font-sans text-grafite antialiased;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-petroleo);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  em {
+    font-style: italic;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@utility rotulo {
+  @apply text-[11px] font-medium tracking-[0.2em] uppercase;
+}
+@utility btn {
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[15px] font-medium transition-colors duration-200;
+}
+@utility btn-principal {
+  @apply btn bg-petroleo text-porcelana hover:bg-petroleo-escuro;
+}
+@utility btn-linha {
+  @apply btn border border-current;
+}
+@utility wrap {
+  @apply mx-auto w-full max-w-[1180px] px-5 sm:px-8;
+}
+
+/* Text Reveal (21st.dev · kuratlielia/text-reveal), adaptado. */
+.reveal .line {
+  display: inline;
+}
+.reveal .clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0 0.08em 0.14em;
+  margin: 0 -0.08em -0.14em;
+}
+.reveal .word {
+  display: inline-block;
+  animation: reveal-rise 1s cubic-bezier(0.2, 0.7, 0.15, 1) both;
+  animation-delay: var(--reveal-delay, 0s);
+}
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(70%);
+    filter: blur(var(--reveal-blur, 8px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+/* Escala de cor: amostras que sobem e mostram o código no hover/foco. */
+.amostra {
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.15, 1);
+}
+.amostra:hover,
+.amostra:focus-visible {
+  transform: translateY(-10px);
+}
+.amostra .codigo {
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+.amostra:hover .codigo,
+.amostra:focus-visible .codigo {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal .word {
+    animation: none;
+  }
+  .amostra {
+    transition: none;
+  }
+  .amostra:hover,
+  .amostra:focus-visible {
+    transform: none;
+  }
+}

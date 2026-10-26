@@ -11,6 +11,9 @@ Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · pronto para Vercel.
 >
 > A pasta `pro-vida/` também é outro app (rascunho do site do Instituto Médico
 > Pró Vida), com build próprio em Vite. Ver `pro-vida/README.md`.
+>
+> A pasta `tonon/` é o rascunho do site do Laboratório Tonon, no mesmo formato.
+> Ver `tonon/README.md`.
 
 ---
 
