@@ -10,6 +10,12 @@ const tarefas = [
   // Retratos dos profissionais (hoje: fotos de perfil do Instagram, 150 px).
   { de: "referencias/fotos/dra-poly-anderson.jpg", para: "public/fotos/dra-poly-anderson", largura: 300 },
   { de: "referencias/fotos/dr-joao-ricardo.jpg", para: "public/fotos/dr-joao-ricardo", largura: 300 },
+  // Fotos do espaço (recortadas de capturas da ficha do Google Maps, sem a interface do celular).
+  { de: "referencias/fotos/instituto-recepcao.jpg", para: "public/fotos/instituto-recepcao", largura: 1000 },
+  { de: "referencias/fotos/instituto-recepcao.jpg", para: "public/fotos/instituto-recepcao-600", largura: 600 },
+  { de: "referencias/fotos/instituto-sala-de-espera.jpg", para: "public/fotos/instituto-sala-de-espera", largura: 900 },
+  { de: "referencias/fotos/instituto-sala-de-espera.jpg", para: "public/fotos/instituto-sala-de-espera-600", largura: 600 },
+  { de: "referencias/fotos/instituto-fachada.jpg", para: "public/fotos/instituto-fachada", largura: 640 },
   // Logo: recorte do logotipo oficial, fundo transparente.
   { de: "referencias/logo/logo-instituto-harmoniza.png", para: "public/marca/logo-instituto-harmoniza", largura: 411, png: true },
 ];
@@ -18,7 +24,7 @@ await mkdir("public/fotos", { recursive: true });
 await mkdir("public/marca", { recursive: true });
 
 for (const t of tarefas) {
-  const base = sharp(t.de).resize({ width: t.largura, withoutEnlargement: false });
+  const base = sharp(t.de).resize({ width: t.largura });
   await base.clone().avif({ quality: 62 }).toFile(`${t.para}.avif`);
   await base.clone().webp({ quality: 80 }).toFile(`${t.para}.webp`);
   if (t.png) await base.clone().png({ compressionLevel: 9 }).toFile(`${t.para}.png`);

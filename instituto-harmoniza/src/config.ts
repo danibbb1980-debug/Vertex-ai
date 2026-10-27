@@ -28,6 +28,17 @@ export type Atendimento = {
   ativo: boolean;
 };
 
+/** Foto em /public: `src` sem extensão (gera .avif e .webp); `menor` é a versão de 600 px para celular. */
+export type Foto = {
+  src: string;
+  menor?: string;
+  alt: string;
+  largura: number;
+  altura: number;
+  /** Ponto focal para o recorte (CSS object-position). */
+  foco?: string;
+};
+
 export type Profissional = {
   nome: string;
   titulo: "Cirurgiã-dentista" | "Cirurgião-dentista";
@@ -208,11 +219,35 @@ export const CONFIG = {
   ] as Profissional[],
 
   // ───────────────────────── Imagens ─────────────────────────
+  /**
+   * Fotos do espaço. null = composição gráfica / bloco reservado.
+   * Origem atual: capturas da ficha do Google Maps (recepção e sala de espera foram
+   * publicadas por visitantes). CONFIRMAR COM A CLÍNICA o uso, ou trocar por fotos próprias.
+   */
   fotos: {
-    /** Foto do espaço para o hero (caminho sem extensão em /public). null = composição gráfica. */
-    hero: null as string | null,
-    /** Foto para "Estrutura e conforto". null = bloco reservado. */
-    estrutura: null as string | null,
+    hero: {
+      src: "/fotos/instituto-recepcao",
+      menor: "/fotos/instituto-recepcao-600",
+      alt: "Recepção do Instituto Harmoniza: balcão em mármore e madeira, piso claro e um balanço decorado com flores",
+      largura: 1000,
+      altura: 1310,
+      foco: "40% 50%",
+    } as Foto | null,
+    estrutura: {
+      src: "/fotos/instituto-sala-de-espera",
+      menor: "/fotos/instituto-sala-de-espera-600",
+      alt: "Sala de espera do Instituto Harmoniza, com sofá, quadros e um balanço decorado com orquídeas",
+      largura: 900,
+      altura: 1315,
+      foco: "60% 45%",
+    } as Foto | null,
+    contato: {
+      src: "/fotos/instituto-fachada",
+      alt: "Fachada do Instituto Harmoniza à noite, com o logotipo iluminado e a sala de espera vista pela vitrine",
+      largura: 640,
+      altura: 673,
+      foco: "50% 18%",
+    } as Foto | null,
   },
   logo: "/marca/logo-instituto-harmoniza",
   /** Imagem de compartilhamento (1200×630). Vazio = sem og:image. */

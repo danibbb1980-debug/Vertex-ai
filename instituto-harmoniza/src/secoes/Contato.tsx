@@ -6,6 +6,7 @@ import { Confirmar } from "../components/Confirmar";
 import { Revelar } from "../components/Revelar";
 import { Botao } from "../components/Botao";
 import { IconeInstagram, IconeMapa, IconeWhatsApp } from "../components/Icones";
+import { Foto } from "../components/Foto";
 
 function MapaReservado() {
   return (
@@ -85,7 +86,7 @@ export function Contato() {
             </div>
           </Revelar>
 
-          <Revelar atraso={120} className="relative min-h-[380px] overflow-hidden rounded-[28px] border border-linha lg:col-span-7">
+          <Revelar atraso={120} className="relative min-h-[420px] overflow-hidden rounded-[28px] border border-linha lg:col-span-7">
             {mostrarMapa ? (
               <iframe
                 title={`Mapa: localização do ${CONFIG.nome}`}
@@ -96,12 +97,34 @@ export function Contato() {
               />
             ) : (
               <>
-                <MapaReservado />
-                <div className="relative flex h-full min-h-[380px] flex-col items-center justify-end gap-4 p-7 text-center">
-                  <Botao href={CONFIG.googleMaps} externo icone={<IconeMapa tamanho={17} />} magnetico>
+                {CONFIG.fotos.contato ? (
+                  <>
+                    <Foto
+                      foto={CONFIG.fotos.contato}
+                      sizes="(min-width: 1024px) 56vw, 92vw"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                    <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-noite/85 via-noite/25 to-transparent" />
+                  </>
+                ) : (
+                  <MapaReservado />
+                )}
+                <div
+                  className={`relative flex h-full min-h-[420px] flex-col items-center justify-end gap-4 p-7 text-center ${
+                    CONFIG.fotos.contato ? "sobre-escuro" : ""
+                  }`}
+                  style={CONFIG.fotos.contato ? { ["--halo" as string]: "transparent" } : undefined}
+                >
+                  <Botao
+                    href={CONFIG.googleMaps}
+                    externo
+                    variante={CONFIG.fotos.contato ? "claro" : "primario"}
+                    icone={<IconeMapa tamanho={17} />}
+                    magnetico
+                  >
                     Como chegar
                   </Botao>
-                  <p className="max-w-[36ch] text-[0.82rem] text-suave">
+                  <p className={`max-w-[36ch] text-[0.82rem] ${CONFIG.fotos.contato ? "text-marfim/90" : "text-suave"}`}>
                     Abre a localização no Google Maps. O mapa interativo entra aqui quando o endereço for confirmado.
                   </p>
                 </div>

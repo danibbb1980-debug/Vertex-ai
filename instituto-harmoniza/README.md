@@ -56,7 +56,13 @@ Hoje:
 - **Logo:** recortado da arte oficial do instituto (sem redesenho), com fundo
   transparente. Vale pedir o arquivo vetorial (SVG/PDF) para trocar.
 - **Retratos:** fotos de perfil do Instagram (150 px). Pedir fotos em alta.
-- **Fotos do espaço:** nenhuma ainda.
+- **Fotos do espaço:** recepção (hero), sala de espera ("Estrutura e conforto") e
+  fachada ("Localização e contato"), recortadas de capturas da ficha do Google
+  Maps, sem a interface do celular. A fachada foi recortada para não mostrar a
+  placa "Odontologia Especializada" (o termo só pode ser usado com especialidade
+  registrada no CFO). A recepção e a sala de espera foram publicadas por
+  visitantes no Google: **confirmar com a clínica** o uso ou trocar por fotos
+  próprias em alta resolução.
 - **Imagens não usadas de propósito:** as referências tinham posts de "antes e
   depois" e fotos de pacientes. Elas ficaram de fora do site e do repositório
   (regras de publicidade do CFO e necessidade de autorização do paciente).
@@ -95,7 +101,7 @@ avaliação" e fica fora do Google em três camadas: meta `robots`/`googlebot`,
 - [ ] Compromissos da seção "O instituto" (avaliação individual, planejamento explicado, atendimento para toda a família)
 - [ ] Formação dos profissionais (só entra com comprovação; sem "especialista" sem registro no CFO)
 - [ ] Anos de experiência do Dr. João Ricardo (`mostrarAnosDeExperiencia`)
-- [ ] Fotos do espaço e retratos em alta resolução; logo em vetor
+- [ ] Uso das fotos do espaço tiradas da ficha do Google (ou fotos próprias em alta); retratos em alta; logo em vetor
 - [ ] Se pode mostrar a nota do Google (só nota e link)
 
 ## Desempenho e acessibilidade

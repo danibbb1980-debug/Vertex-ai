@@ -4,6 +4,7 @@ import { Botao } from "../components/Botao";
 import { CorteVertical } from "../components/CorteVertical";
 import { IconeEstacionamento, IconeRelogio } from "../components/Icones";
 import { Confirmar } from "../components/Confirmar";
+import { Foto } from "../components/Foto";
 
 function ComposicaoHero() {
   // Composição gráfica original enquanto não há foto do instituto.
@@ -97,17 +98,12 @@ export function Hero() {
             <div aria-hidden="true" className="absolute -inset-3 rounded-t-[999px] rounded-b-[28px] border border-ouro/45 md:-inset-4" />
             <div className="relative aspect-[4/5] overflow-hidden rounded-t-[999px] rounded-b-[22px] bg-areia">
               {CONFIG.fotos.hero ? (
-                <picture>
-                  <source srcSet={`${CONFIG.fotos.hero}.avif`} type="image/avif" />
-                  <img
-                    src={`${CONFIG.fotos.hero}.webp`}
-                    alt="Ambiente do Instituto Harmoniza"
-                    className="h-full w-full object-cover"
-                    width={800}
-                    height={1000}
-                    fetchPriority="high"
-                  />
-                </picture>
+                <Foto
+                  foto={CONFIG.fotos.hero}
+                  prioridade
+                  sizes="(min-width: 1024px) 40vw, (min-width: 500px) 460px, 92vw"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
               ) : (
                 <>
                   <ComposicaoHero />
@@ -122,7 +118,7 @@ export function Hero() {
           <figcaption className="mt-8 flex items-center justify-between gap-4 text-[0.78rem] text-cinza">
             <span className="rotulo text-bronze">Fig. 01</span>
             <span className="h-px flex-1 bg-linha" aria-hidden="true" />
-            <span>Equilíbrio em movimento</span>
+            <span>{CONFIG.fotos.hero ? "Recepção do instituto" : "Equilíbrio em movimento"}</span>
           </figcaption>
         </figure>
       </div>

@@ -4,6 +4,7 @@ import { CabecalhoSecao } from "../components/CabecalhoSecao";
 import { Confirmar } from "../components/Confirmar";
 import { Revelar } from "../components/Revelar";
 import { IconeEstacionamento } from "../components/Icones";
+import { Foto } from "../components/Foto";
 
 export function Estrutura() {
   const [semana, sabado] = CONFIG.horarios.linhas;
@@ -49,17 +50,13 @@ export function Estrutura() {
               <Confirmar mostrar={!CONFIG.horarios.confirmado} />
             </p>
           </div>
-          <div className="relative min-h-[320px] lg:col-span-5 lg:min-h-full">
+          <div className="relative min-h-[420px] lg:col-span-5 lg:min-h-full">
             {CONFIG.fotos.estrutura ? (
-              <picture>
-                <source srcSet={`${CONFIG.fotos.estrutura}.avif`} type="image/avif" />
-                <img
-                  src={`${CONFIG.fotos.estrutura}.webp`}
-                  alt="Recepção do Instituto Harmoniza"
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              </picture>
+              <Foto
+                foto={CONFIG.fotos.estrutura}
+                sizes="(min-width: 1024px) 40vw, 92vw"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
             ) : (
               <div className="absolute inset-0 bg-[#e2d3ba]">
                 <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-hidden="true">
