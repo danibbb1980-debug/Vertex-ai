@@ -142,8 +142,3 @@ export function Marca({ claro = false, tamanho = 44 }: { claro?: boolean; tamanh
     </span>
   )
 }
-
-export const Placeholder = ({ children = '[A CONFIRMAR COM A CLÍNICA]' }: { children?: ReactNode }) => (
-  // CONFIRMAR COM A CLÍNICA
-  <span className="placeholder">{children}</span>
-)

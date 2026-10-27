@@ -12,14 +12,13 @@ const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').repl
 
 function jsonLd() {
   const url = CONFIG.siteUrl
-  // Só dados da ficha do Google. Horários marcados "confirmar" ficam de fora.
+  // Só dados da ficha do Google e do Instagram da clínica.
   const dias: Record<string, string[]> = {
-    'Terça a sexta': ['Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    'Segunda a sexta': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
     'Sábado': ['Saturday'],
-    'Segunda-feira': ['Monday'],
   }
   const opening = CONFIG.horarios
-    .filter((h) => !h.confirmar && h.abre.length && dias[h.dia])
+    .filter((h) => h.abre.length && dias[h.dia])
     .flatMap((h) =>
       h.abre.map((abre, i) => ({
         '@type': 'OpeningHoursSpecification',
@@ -46,6 +45,9 @@ function jsonLd() {
     },
     hasMap: CONFIG.mapsUrl,
     sameAs: [CONFIG.instagram],
+    paymentAccepted: 'Cartão de crédito, cartão de débito, pagamento por aproximação',
+    medicalSpecialty: ['Dentistry', 'Dermatology'],
+    employee: CONFIG.profissionais.map((p) => ({ '@type': 'Person', name: p.nome, jobTitle: p.categoria })),
     openingHoursSpecification: opening,
   }
   return JSON.stringify(data).replace(/</g, '\\u003c')

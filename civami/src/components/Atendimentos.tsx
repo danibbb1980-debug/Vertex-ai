@@ -1,8 +1,8 @@
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { useProgressoRolagem } from '../lib/rolagem'
-import { ATENDIMENTOS_EXEMPLO, CONFIG, type Area, type Atendimento } from '../config'
+import { CONFIG, type Area, type Atendimento } from '../config'
 import { waLink } from '../lib/whatsapp'
-import { Placeholder, Revelar, TituloSecao } from './ui/Primitivos'
+import { Revelar, TituloSecao } from './ui/Primitivos'
 import { IconeFamilia, IconePessoa, IconeSetaDiagonal, IconeUniao, IconeWhatsApp } from './ui/Icones'
 
 const AREAS: { id: Area; rotulo: string; resumo: string }[] = [
@@ -35,7 +35,11 @@ function CartaoAtendimento({ item, area, indice }: { item: Atendimento; area: st
           <span className="font-display text-[0.95rem] italic text-areia-escura">
             {String(indice + 1).padStart(2, '0')}
           </span>
-          {item.exemplo && <Placeholder />}
+          {item.profissional && (
+            <span className="text-right text-[0.72rem] font-bold uppercase tracking-[0.14em] text-verde">
+              {item.profissional}
+            </span>
+          )}
         </div>
         <h3 className="mt-6 text-[1.65rem] leading-tight sm:text-[1.8rem]">{item.titulo}</h3>
         <p className="mt-4 flex-1 text-[0.98rem] text-suave">{item.descricao}</p>
@@ -43,7 +47,7 @@ function CartaoAtendimento({ item, area, indice }: { item: Atendimento; area: st
           A indicação depende de avaliação individual.
         </p>
         <a
-          href={waLink(CONFIG.mensagens.atendimento(item.titulo.replace(/[[\]]/g, ''), area))}
+          href={waLink(CONFIG.mensagens.atendimento(item.titulo, area))}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-4 inline-flex min-h-12 items-center gap-2 self-start rounded-full text-[0.92rem] font-semibold text-azul underline-offset-4 hover:underline"
@@ -60,7 +64,7 @@ function CartaoAtendimento({ item, area, indice }: { item: Atendimento; area: st
 export function Atendimentos() {
   const [ativa, setAtiva] = useState<Area>('odontologia')
   const abasRef = useRef<(HTMLButtonElement | null)[]>([])
-  const lista = CONFIG.atendimentos.length ? CONFIG.atendimentos : ATENDIMENTOS_EXEMPLO
+  const lista = CONFIG.atendimentos
   const indiceAtivo = AREAS.findIndex((a) => a.id === ativa)
 
   const teclado = (e: KeyboardEvent) => {
@@ -79,11 +83,7 @@ export function Atendimentos() {
           <TituloSecao
             id="titulo-atendimentos"
             eyebrow="Atendimentos"
-            apoio={
-              CONFIG.atendimentos.length
-                ? 'Cada atendimento começa por uma avaliação individual, com explicações claras sobre o que faz sentido para você.'
-                : 'Os atendimentos abaixo são exemplos de estrutura e serão substituídos pela lista oficial da clínica.'
-            }
+            apoio="Cada atendimento começa por uma avaliação individual, com explicações claras sobre o que faz sentido para você."
           >
             Duas áreas, <em className="destaque">uma</em> conversa.
           </TituloSecao>
@@ -136,7 +136,11 @@ export function Atendimentos() {
               <span aria-hidden className="h-2 w-2 rounded-full bg-verde" />
               {a.resumo}
             </p>
-            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <ul
+              className={`grid gap-5 sm:grid-cols-2 ${
+                { 1: '', 2: '', 3: 'lg:grid-cols-3' }[lista.filter((i) => i.area === a.id).length] ?? 'lg:grid-cols-4'
+              }`}
+            >
               {lista
                 .filter((i) => i.area === a.id)
                 .map((item, i) => (
@@ -175,9 +179,6 @@ export function ParaQuem() {
           <TituloSecao id="titulo-para-quem" eyebrow="Para quem">
             Pensada para <em className="destaque">quem</em> você cuida.
           </TituloSecao>
-          <Revelar atraso={0.1} className="mt-6 text-sm text-suave">
-            Faixa etária atendida: <Placeholder />
-          </Revelar>
         </div>
         <ul className="grid gap-px overflow-hidden rounded-[var(--radius-suave)] border border-tinta/10 bg-tinta/10 sm:grid-cols-3 lg:col-span-8">
           {blocos.map(({ Icone, titulo, texto }, i) => (

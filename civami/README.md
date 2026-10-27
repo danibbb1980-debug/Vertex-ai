@@ -21,36 +21,23 @@ Quase tudo fica em **`src/config.ts`**:
 | WhatsApp, Instagram, Maps, endereço | `whatsapp`, `instagram`, `mapsUrl`, `endereco` |
 | Horários (inclui a pausa de almoço) | `horarios` (`confirmar: true` mostra o selo "Confirmar") |
 | Mensagens prontas do WhatsApp | `mensagens` |
-| Atendimentos | `atendimentos` (vazio = mostra os exemplos marcados `[A CONFIRMAR COM A CLÍNICA]`) |
-| Profissionais | `profissionais` (vazio = mostra cartões de exemplo) |
-| Responsáveis técnicos (CRO e CRM) | `responsaveisTecnicos` |
+| Atendimentos | `atendimentos` (área, título, descrição e profissional) |
+| Profissionais | `profissionais` (nome, categoria, especialidade, bio, foto e `registro` CRO/CRM) |
+| Estacionamento, acessibilidade, pagamento | `estrutura` |
+| Responsáveis técnicos (CRO e CRM) | `responsaveisTecnicos` (vazio = bloco não aparece no rodapé) |
 | Nota do Google | `mostrarNotaGoogle` + `notaGoogle` (desligada por padrão; sem depoimentos) |
 | Ligar/desligar seções | `secoes` |
 | URL final (canonical, og:url, og:image) | `siteUrl` |
 
-### Preencher atendimentos
+O que não foi informado pela clínica simplesmente não aparece no site (não há placeholders).
+
+### Incluir o registro de um profissional
 
 ```ts
-atendimentos: [
-  { area: 'odontologia', titulo: 'Ortodontia', descricao: 'Texto educativo curto, sem promessa.' },
-  { area: 'medicina', titulo: 'Clínica médica', descricao: '...' },
-],
+{ nome: 'Dra. Mirian Aquino', categoria: 'Cirurgiã-dentista', registro: 'CRO-MG 00000', ... }
 ```
 
-Assim que a lista tiver um item, os exemplos deixam de aparecer.
-
-### Preencher a equipe
-
-```ts
-profissionais: [
-  { nome: 'Dra. Nome Sobrenome', categoria: 'Cirurgiã-dentista', registro: 'CRO-MG 00000',
-    especialidade: 'Ortodontia (registro no CRO)', foto: '/fotos/nome.webp' },
-  { nome: 'Dr. Nome Sobrenome', categoria: 'Médico', registro: 'CRM-MG 00000',
-    especialidade: 'Clínica médica, RQE 0000' },
-],
-```
-
-Só informe especialidade com registro no CRO (odontologia) ou RQE (medicina).
+O registro aparece no cartão da equipe e no rodapé.
 
 ### Versão curta
 
@@ -61,8 +48,10 @@ O link do menu some junto com a seção.
 
 - Foto da equipe: `public/fotos/equipe-civami-{480,720,960,1170}.{avif,webp}`. Para trocar, gere os mesmos
   tamanhos e ajuste `fotos.equipe` em `config.ts`.
-- Foto do espaço: coloque o arquivo em `public/fotos/` e preencha `fotos.espaco` (`src` e `alt`). Sem ela,
-  aparece o bloco "Foto da clínica (substituir)".
+- Retratos dos profissionais: `public/fotos/{mirian-aquino,vanessa-aquino,cicero}-{360,600}.{avif,webp}`,
+  recortados das apresentações no Instagram da clínica.
+- Foto do espaço: coloque o arquivo em `public/fotos/` e preencha `fotos.espaco` (`src` e `alt`); ela aparece
+  na seção "Estrutura e conforto".
 - Logo: `public/brand/` (`civami-simbolo.png` no topo, `logo-civami.png` no rodapé, `logo-civami-original.jpg`
   é o arquivo recebido). O logo veio em JPG de 150 px; **um PNG ou SVG em alta resolução melhora muito o
   resultado** no topo e no rodapé.
@@ -77,23 +66,22 @@ O link do menu some junto com a seção.
    página de privacidade.
 5. `npm run build` e publique de novo.
 
-## O que a clínica precisa confirmar
+## Pendências antes da versão final
 
-- [ ] Lista de atendimentos de **odontologia** (e quais especialidades têm registro no CRO)
-- [ ] Lista de atendimentos de **medicina** (e quais especialidades têm RQE)
-- [ ] Profissionais: nome, categoria, **CRO-MG / CRM-MG**, especialidade/RQE e foto (opcional)
-- [ ] Responsável técnico odontológico (nome + CRO) e diretor técnico médico (nome + CRM)
-- [ ] Endereço (R. Bias Fortes, 722 - Centro, Alfenas - MG, 37130-085)
-- [ ] Horários, **inclusive segunda-feira** (a ficha do Google mostrava "Dia de Finados")
-- [ ] Faixa etária atendida
-- [ ] Formas de pagamento e convênios
-- [ ] Estacionamento e acessibilidade
-- [ ] Fotos do espaço da clínica
-- [ ] Autorização de uso da foto da equipe no site (e se os nomes podem aparecer)
-- [ ] Logo em PNG/SVG de alta resolução
-- [ ] Se a nota do Google pode ser exibida (só a nota, sem depoimentos)
-- [ ] Compromissos de atendimento (texto marcado "[A VALIDAR COM A CLÍNICA]")
-- [ ] Encarregado(a) de dados (LGPD), citado na página de privacidade
+Informado pela clínica (Instagram e ficha do Google) e já no site: profissionais e especialidades, atendimentos,
+horários, estacionamento, acessibilidade e formas de pagamento.
+
+Ainda falta, e é **exigido pelo CFO e pelo CFM** em publicidade de saúde:
+
+- [ ] Número do **CRO-MG** da Dra. Mirian Aquino e da Dra. Vanessa Aquino, e do **CRM-MG** do Dr. Cicero
+      (com o sobrenome completo dele)
+- [ ] Registro de especialista no CRO (implantodontia, ortodontia) e **RQE** de dermatologia
+- [ ] Responsável técnico odontológico (nome + CRO) e diretor técnico médico (nome + CRM), para o rodapé
+
+Opcional: fotos do espaço, logo em PNG/SVG de alta resolução e a nota do Google (só a nota, sem depoimentos).
+
+Ficou de fora de propósito: "performance", "longevidade" e "medicina regenerativa", citados no post do
+Dr. Cicero. O CFM restringe a divulgação desses temas; o site fala em "cuidado com feridas" e "emagrecimento".
 
 ## Regras de conteúdo (CFO e CFM)
 

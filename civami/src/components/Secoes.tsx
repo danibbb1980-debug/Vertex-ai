@@ -1,10 +1,11 @@
 import { useId, useState } from 'react'
-import { CONFIG, PROFISSIONAIS_EXEMPLO, enderecoCompleto, type Profissional } from '../config'
+import { CONFIG, enderecoCompleto, type Profissional } from '../config'
 import { waLink } from '../lib/whatsapp'
-import { BotaoMagnetico, Placeholder, Revelar, TituloSecao } from './ui/Primitivos'
+import { BotaoMagnetico, Revelar, TituloSecao } from './ui/Primitivos'
 import {
   IconeAcessivel,
   IconeAcolhimento,
+  IconeCalendario,
   IconeCartao,
   IconeClareza,
   IconeEscuta,
@@ -21,80 +22,68 @@ import {
 
 /* ───────────── Equipe ───────────── */
 
-const iniciais = (nome: string) =>
-  nome.startsWith('[')
-    ? '?'
-    : nome
-        .split(' ')
-        .filter((p) => p.length > 2)
-        .slice(0, 2)
-        .map((p) => p[0])
-        .join('')
-
 function CartaoProfissional({ p, i }: { p: Profissional; i: number }) {
+  const sizes = '(min-width: 768px) 30vw, 88vw'
   return (
-    <Revelar as="li" atraso={i * 0.07} className="h-full">
-      <article className="flex h-full flex-col rounded-[var(--radius-suave)] border border-tinta/10 bg-papel p-7">
-        <div className="flex items-center gap-4">
-          {p.foto ? (
-            <img src={p.foto} alt={`Foto de ${p.nome}`} width={72} height={72} loading="lazy" className="h-[4.5rem] w-[4.5rem] rounded-full object-cover" />
-          ) : (
-            <span
-              aria-hidden
-              className="grid h-[4.5rem] w-[4.5rem] shrink-0 place-items-center rounded-full border border-dashed border-areia bg-marfim font-display text-2xl italic text-azul"
-            >
-              {iniciais(p.nome)}
-            </span>
-          )}
-          <div>
-            <p className="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-verde">{p.categoria}</p>
-          </div>
-        </div>
-        <h3 className="mt-6 text-[1.55rem] leading-tight">{p.nome}</h3>
-        <dl className="mt-4 space-y-1.5 text-[0.92rem] text-suave">
-          <div className="flex gap-2">
-            <dt className="sr-only">Registro profissional</dt>
-            <dd className="font-semibold text-tinta/85">{p.registro}</dd>
-          </div>
-          {p.especialidade && (
-            <div>
-              <dt className="sr-only">Especialidade</dt>
-              <dd>{p.especialidade}</dd>
-            </div>
-          )}
-        </dl>
-        {p.exemplo && (
-          <div className="mt-6">
-            <Placeholder>Cartão de exemplo</Placeholder>
+    <Revelar as="li" atraso={i * 0.08} className="h-full">
+      <article className="group flex h-full flex-col">
+        {p.foto && (
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-nevoa">
+            <picture>
+              <source type="image/avif" srcSet={`${p.foto}-360.avif 360w, ${p.foto}-600.avif 600w`} sizes={sizes} />
+              <source type="image/webp" srcSet={`${p.foto}-360.webp 360w, ${p.foto}-600.webp 600w`} sizes={sizes} />
+              <img
+                src={`${p.foto}-600.webp`}
+                alt={`${p.nome}, ${p.categoria.toLowerCase()} da CIVAMI`}
+                width={600}
+                height={742}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover object-top transition-transform duration-700 ease-[var(--ease-calmo)] group-hover:scale-[1.03]"
+              />
+            </picture>
           </div>
         )}
+        <div className="flex flex-1 flex-col pt-6">
+          <p className="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-verde">{p.categoria}</p>
+          <h3 className="mt-2 text-[1.85rem] leading-tight">{p.nome}</h3>
+          {p.especialidade && <p className="mt-1.5 font-display text-lg italic text-azul">{p.especialidade}</p>}
+          {p.registro && <p className="mt-1 text-sm font-semibold text-tinta/80">{p.registro}</p>}
+          {p.bio && <p className="mt-4 flex-1 text-[0.98rem] text-suave">{p.bio}</p>}
+          <a
+            href={waLink(CONFIG.mensagens.profissional(p.nome))}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex min-h-12 items-center gap-2 self-start font-semibold text-azul underline-offset-4 hover:underline"
+          >
+            Agendar com {p.nome.split(' ').slice(0, 2).join(' ')}
+            <IconeSetaDiagonal width={16} height={16} />
+            <span className="sr-only">pelo WhatsApp</span>
+          </a>
+        </div>
       </article>
     </Revelar>
   )
 }
 
 export function Equipe() {
-  const lista = CONFIG.profissionais.length ? CONFIG.profissionais : PROFISSIONAIS_EXEMPLO
+  const lista = CONFIG.profissionais
+  if (!lista.length) return null
   return (
     <section id="equipe" aria-labelledby="titulo-equipe" className="bg-papel py-24 lg:py-36">
       <div className="container-site">
         <TituloSecao
           id="titulo-equipe"
           eyebrow="Equipe"
-          apoio="Cada profissional é apresentado com nome e registro no conselho da sua área (CRO ou CRM). Especialidades aparecem apenas quando registradas."
+          apoio="Odontologia e medicina no mesmo endereço, com profissionais que atendem com escuta e explicações claras."
         >
           Quem <em className="destaque">cuida</em> de você.
         </TituloSecao>
-        <ul className="mt-14 grid gap-5 md:grid-cols-3">
+        <ul className="mt-14 grid gap-x-6 gap-y-14 md:grid-cols-3">
           {lista.map((p, i) => (
-            <CartaoProfissional key={i} p={p} i={i} />
+            <CartaoProfissional key={p.nome} p={p} i={i} />
           ))}
         </ul>
-        {!CONFIG.profissionais.length && (
-          <p className="mt-8 text-sm text-suave">
-            A lista de profissionais será publicada após a confirmação dos registros. <Placeholder />
-          </p>
-        )}
       </div>
     </section>
   )
@@ -116,14 +105,9 @@ export function Compromissos() {
         <path d="M300 120c60-90 210-80 230 50 18 120-120 220-230 330" stroke="currentColor" />
       </svg>
       <div className="container-site relative">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <TituloSecao id="titulo-compromissos" eyebrow="Compromissos de atendimento" claro>
-            O que você pode <em className="destaque !text-verde-claro">esperar</em> daqui.
-          </TituloSecao>
-          <Revelar>
-            <Placeholder>[A VALIDAR COM A CLÍNICA]</Placeholder>
-          </Revelar>
-        </div>
+        <TituloSecao id="titulo-compromissos" eyebrow="Compromissos de atendimento" claro>
+          O que você pode <em className="destaque !text-verde-claro">esperar</em> daqui.
+        </TituloSecao>
         <ul className="mt-16 grid gap-px overflow-hidden rounded-[var(--radius-suave)] bg-marfim/10 sm:grid-cols-2 lg:grid-cols-4">
           {itens.map(({ Icone, titulo, texto }, i) => (
             <Revelar as="li" key={titulo} atraso={i * 0.08} className="bg-tinta p-8 lg:p-9">
@@ -144,63 +128,46 @@ export function Compromissos() {
 /* ───────────── Estrutura e conforto ───────────── */
 
 export function Estrutura() {
+  const e = CONFIG.estrutura
   const fatos = [
     { Icone: IconeLocal, titulo: 'Localização central', texto: `${CONFIG.endereco.rua}, ${CONFIG.endereco.bairro}, ${CONFIG.endereco.cidade} - ${CONFIG.endereco.uf}.` },
-    { Icone: IconeRelogio, titulo: 'Manhã e tarde', texto: 'Atendimento em dois turnos durante a semana e aos sábados pela manhã.' },
-  ]
-  const pendentes = [
-    { Icone: IconeEstacionamento, titulo: 'Estacionamento' },
-    { Icone: IconeAcessivel, titulo: 'Acessibilidade' },
-    { Icone: IconeCartao, titulo: 'Formas de pagamento' },
-  ]
+    { Icone: IconeRelogio, titulo: 'Manhã e tarde', texto: 'Atendimento em dois turnos de segunda a sexta e aos sábados pela manhã.' },
+    { Icone: IconeCalendario, titulo: 'Hora marcada', texto: e.agendamento },
+    { Icone: IconeEstacionamento, titulo: 'Estacionamento', texto: e.estacionamento },
+    { Icone: IconeAcessivel, titulo: 'Acessibilidade', texto: e.acessibilidade },
+    { Icone: IconeCartao, titulo: 'Formas de pagamento', texto: e.pagamento },
+    { Icone: IconeAcolhimento, titulo: 'Todas as pessoas são bem-vindas', texto: e.acolhimento },
+  ].filter((f) => f.texto)
   const espaco = CONFIG.fotos.espaco
   return (
     <section aria-labelledby="titulo-estrutura" className="py-24 lg:py-36">
-      <div className="container-site grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-        <Revelar className="order-2 lg:order-1">
-          {espaco ? (
-            <img src={espaco.src} alt={espaco.alt} loading="lazy" className="aspect-[4/5] w-full rounded-t-[999px] rounded-b-[1.75rem] object-cover" />
-          ) : (
-            // Bloco reservado: substituir por foto real do espaço da clínica
-            <div className="relative grid aspect-[4/5] w-full place-items-center overflow-hidden rounded-t-[999px] rounded-b-[1.75rem] bg-gradient-to-b from-nevoa to-[#cfdfd8]">
-              <svg aria-hidden viewBox="0 0 200 180" className="absolute w-[85%] opacity-40">
-                <path d="M100 46C90 22 66 8 42 12 16 17 2 42 6 70c4 32 38 62 94 100-12-40 12-90 0-124Z" fill="none" stroke="#154352" strokeWidth="0.6" />
-                <path d="M100 46C110 22 134 8 158 12c26 5 40 30 36 58-4 32-38 62-94 100-12-40 12-90 0-124Z" fill="none" stroke="#2a736a" strokeWidth="0.6" />
-              </svg>
-              <p className="relative rounded-full border border-dashed border-azul/40 bg-papel/80 px-5 py-2.5 text-sm font-semibold text-azul">
-                Foto da clínica (substituir)
-              </p>
-            </div>
-          )}
-        </Revelar>
-        <div className="order-1 lg:order-2">
-          <TituloSecao id="titulo-estrutura" eyebrow="Estrutura e conforto">
-            Um lugar para chegar <em className="destaque">com calma</em>.
-          </TituloSecao>
-          <ul className="mt-12 space-y-8">
-            {fatos.map(({ Icone, titulo, texto }, i) => (
-              <Revelar as="li" key={titulo} atraso={i * 0.08} className="flex gap-5">
-                <Icone width={26} height={26} className="mt-1 shrink-0 text-verde" />
-                <div>
-                  <h3 className="font-sans text-lg font-semibold leading-snug tracking-normal">{titulo}</h3>
-                  <p className="mt-1 text-suave">{texto}</p>
-                </div>
+      <div className="container-site grid gap-14 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-40">
+            <TituloSecao id="titulo-estrutura" eyebrow="Estrutura e conforto">
+              Um lugar para chegar <em className="destaque">com calma</em>.
+            </TituloSecao>
+            {espaco && (
+              <Revelar atraso={0.1} className="mt-10">
+                <img src={espaco.src} alt={espaco.alt} loading="lazy" className="aspect-[4/5] w-full rounded-t-[999px] rounded-b-[1.75rem] object-cover" />
               </Revelar>
-            ))}
-          </ul>
-          <div className="filete my-10" />
-          <ul className="grid gap-4 sm:grid-cols-3">
-            {pendentes.map(({ Icone, titulo }) => (
-              <li key={titulo} className="rounded-2xl border border-tinta/10 bg-papel p-5">
-                <Icone width={22} height={22} className="text-azul" />
-                <p className="mt-3 font-semibold text-tinta">{titulo}</p>
-                <div className="mt-2">
-                  <Placeholder>A confirmar</Placeholder>
-                </div>
-              </li>
-            ))}
-          </ul>
+            )}
+          </div>
         </div>
+        <ul className="grid gap-px self-start overflow-hidden rounded-[var(--radius-suave)] border border-tinta/10 bg-tinta/10 sm:grid-cols-2 lg:col-span-8">
+          {fatos.map(({ Icone, titulo, texto }, i) => (
+            <Revelar
+              as="li"
+              key={titulo}
+              atraso={(i % 2) * 0.08}
+              className={`bg-marfim p-7 sm:p-8 ${i === fatos.length - 1 && fatos.length % 2 ? 'sm:col-span-2' : ''}`}
+            >
+              <Icone width={26} height={26} className="text-verde" />
+              <h3 className="mt-5 font-sans text-lg font-semibold leading-snug tracking-normal">{titulo}</h3>
+              <p className="mt-1.5 text-suave">{texto}</p>
+            </Revelar>
+          ))}
+        </ul>
       </div>
     </section>
   )
@@ -228,7 +195,7 @@ export function AvaliacoesGoogle() {
 
 /* ───────────── Dúvidas (acordeão acessível) ───────────── */
 
-const PERGUNTAS: { p: string; r: string; confirmar?: boolean }[] = [
+const PERGUNTAS: { p: string; r: string }[] = [
   {
     p: 'Como funciona a avaliação?',
     r: 'É o primeiro encontro com o profissional. Ele ouve o que você procura, conhece seu histórico e observa o que for necessário. Ao final, explica o que foi visto e quais caminhos podem ser considerados. A indicação de qualquer atendimento depende dessa avaliação individual.',
@@ -243,22 +210,19 @@ const PERGUNTAS: { p: string; r: string; confirmar?: boolean }[] = [
   },
   {
     p: 'Onde fica e quais são os horários?',
-    r: `A clínica fica na ${enderecoCompleto()}. O atendimento é de terça a sexta, das 8h às 12h e das 13h às 18h, e aos sábados, das 8h às 12h. O horário de segunda-feira está em confirmação. Os horários podem variar em feriados.`,
+    r: `A clínica fica na ${enderecoCompleto()}. O atendimento é de segunda a sexta, das 8h às 12h e das 13h às 18h, e aos sábados, das 8h às 12h, sempre com hora marcada. Os horários podem variar em feriados.`,
+  },
+  {
+    p: 'Quais atendimentos a clínica oferece?',
+    r: 'Na odontologia, implantodontia (Dra. Mirian Aquino) e ortodontia (Dra. Vanessa Aquino). Na medicina, dermatologia, tricologia e transplante capilar, cuidado com feridas e acompanhamento para emagrecimento (Dr. Cicero). A indicação de cada um depende de avaliação individual.',
   },
   {
     p: 'Quais são as formas de pagamento?',
-    r: 'Informação em confirmação com a clínica. Enquanto isso, pergunte pelo WhatsApp.',
-    confirmar: true,
+    r: 'Cartão de crédito, cartão de débito e pagamento por aproximação (NFC) pelo celular.',
   },
   {
-    p: 'A clínica atende por convênio?',
-    r: 'Informação em confirmação com a clínica. Enquanto isso, pergunte pelo WhatsApp.',
-    confirmar: true,
-  },
-  {
-    p: 'Quais especialidades estão disponíveis?',
-    r: 'A lista de atendimentos e especialidades está sendo confirmada com a clínica e será publicada aqui, com o registro de cada profissional.',
-    confirmar: true,
+    p: 'Tem estacionamento? A clínica é acessível?',
+    r: 'Há estacionamento descoberto gratuito e vagas gratuitas na rua. A entrada e o banheiro são acessíveis para pessoas em cadeira de rodas.',
   },
   {
     p: 'O que devo levar no dia da consulta?',
@@ -274,7 +238,7 @@ const PERGUNTAS: { p: string; r: string; confirmar?: boolean }[] = [
   },
 ]
 
-function ItemDuvida({ p, r, confirmar, aberto, alternar }: { p: string; r: string; confirmar?: boolean; aberto: boolean; alternar: () => void }) {
+function ItemDuvida({ p, r, aberto, alternar }: { p: string; r: string; aberto: boolean; alternar: () => void }) {
   const id = useId()
   return (
     <li className="border-b border-tinta/12">
@@ -301,7 +265,7 @@ function ItemDuvida({ p, r, confirmar, aberto, alternar }: { p: string; r: strin
       <div id={`${id}-p`} role="region" aria-labelledby={`${id}-b`} className="acordeao-painel" data-aberto={aberto} inert={!aberto}>
         <div className="overflow-hidden">
           <p className="max-w-2xl pb-7 pr-14 text-suave">
-            {r} {confirmar && <Placeholder />}
+            {r}
           </p>
         </div>
       </div>
@@ -420,11 +384,6 @@ export function Contato() {
                       </th>
                       <td className="py-2.5 text-right text-suave">
                         {intervalo(h)}
-                        {h.confirmar && (
-                          <span className="ml-2 align-middle">
-                            <Placeholder>Confirmar</Placeholder>
-                          </span>
-                        )}
                       </td>
                     </tr>
                   ))}
@@ -497,24 +456,36 @@ export function Rodape() {
             <p className="mt-5 max-w-xs text-sm text-suave">{CONFIG.posicionamento}. Alfenas - MG.</p>
           </div>
           <div className="md:col-span-4">
-            <h2 className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-azul">Responsáveis técnicos</h2>
-            <dl className="mt-4 space-y-4 text-sm">
-              <div>
-                <dt className="text-suave">Odontologia</dt>
-                <dd className="mt-0.5 font-semibold text-tinta">
-                  {rt.odontologia.nome} · {rt.odontologia.registro}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-suave">Medicina (diretor técnico)</dt>
-                <dd className="mt-0.5 font-semibold text-tinta">
-                  {rt.medicina.nome} · {rt.medicina.registro}
-                </dd>
-              </div>
+            {rt.length > 0 && (
+              <>
+                <h2 className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-azul">Responsáveis técnicos</h2>
+                <dl className="mb-8 mt-4 space-y-4 text-sm">
+                  {rt.map((r) => (
+                    <div key={r.area}>
+                      <dt className="text-suave">{r.area}</dt>
+                      <dd className="mt-0.5 font-semibold text-tinta">
+                        {r.nome} · {r.registro}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </>
+            )}
+            <h2 className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-azul">Equipe</h2>
+            <dl className="mt-4 space-y-3 text-sm">
+              {CONFIG.profissionais.map((p) => (
+                <div key={p.nome}>
+                  <dt className="font-semibold text-tinta">
+                    {p.nome}
+                    {p.registro ? ` · ${p.registro}` : ''}
+                  </dt>
+                  <dd className="text-suave">
+                    {p.categoria}
+                    {p.especialidade ? ` · ${p.especialidade.split(' · ')[0]}` : ''}
+                  </dd>
+                </div>
+              ))}
             </dl>
-            <div className="mt-4">
-              <Placeholder />
-            </div>
           </div>
           <div className="md:col-span-4">
             <h2 className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-azul">Contato</h2>
