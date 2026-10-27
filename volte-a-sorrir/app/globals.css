@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/*
+  Dentista Volte a Sorrir — tokens.
+  Cores tiradas do logo original: amarelo #FFDD58 (fundo), azul-marinho
+  #0E2837 (traço e "DENTISTA") e coral-avermelhado (lettering "VOLTE A SORRIR").
+  Contraste (WCAG): navy sobre amarelo 10,2:1 · coral-ink sobre papel 5,4:1
+  e sobre amarelo 4,1:1 (só em títulos grandes) · stone sobre papel 4,9:1 ·
+  rótulos navy/70 sobre amarelo 4,7:1.
+*/
+@theme {
+  --color-sun: #ffdd58; /* amarelo da marca (fundo do logo) */
+  --color-sun-soft: #fff0b0;
+  --color-sun-deep: #f4c62d;
+  --color-sun-line: #e9c23f;
+
+  --color-navy: #142f4e; /* âncora tipográfica */
+  --color-navy-deep: #0e2837; /* azul do logo */
+  --color-navy-soft: #2b4766;
+
+  --color-coral: #d85e4e; /* só detalhes e elementos grandes */
+  --color-coral-ink: #b4442f; /* coral para texto pequeno (AA) */
+
+  --color-paper: #fffdf6; /* off-white quente */
+  --color-cream: #fff7df;
+  --color-stone: #66707c; /* cinza suave, AA sobre papel */
+  --color-line: #ece4cc;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    scroll-padding-top: 5.5rem;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-navy);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-sun);
+    color: var(--color-navy-deep);
+  }
+  :focus-visible {
+    outline: 2.5px solid var(--color-navy);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-sun);
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 60, "WONK" 0;
+  letter-spacing: -0.02em;
+}
+
+/* Rótulo de seção: versalete espaçado. */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ---------- Entrada suave das seções (só com JS ativo) ---------- */
+.js .reveal {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.9s var(--ease-out-soft),
+    transform 0.9s var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Hero: entrada do texto ---------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-rise {
+  animation: rise 1s var(--ease-out-soft) both;
+  animation-delay: var(--rise-delay, 0ms);
+}
+
+/* Pôster do dente: some quando a cena 3D desenha o primeiro quadro. */
+.tooth-poster {
+  transition: opacity 0.9s var(--ease-out-soft);
+}
+[data-scene-ready="true"] .tooth-poster {
+  opacity: 0;
+}
+.tooth-canvas {
+  opacity: 0;
+  transition: opacity 0.9s var(--ease-out-soft);
+}
+[data-scene-ready="true"] .tooth-canvas {
+  opacity: 1;
+}
+
+/* Pôster flutua levemente enquanto a cena carrega (ou quando não há 3D). */
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+.poster-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+/* Troca de caso em "Resultados". */
+@keyframes case-fade {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.case-fade {
+  animation: case-fade 0.5s var(--ease-out-soft) both;
+}
+.case-fade:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+/* FAQ: ícone gira ao abrir. */
+details[open] .faq-icon {
+  transform: rotate(45deg);
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .reveal,
+  .hero-rise,
+  .poster-float,
+  .case-fade {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
