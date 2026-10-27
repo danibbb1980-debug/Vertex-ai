@@ -182,7 +182,7 @@ export function Estrutura() {
               <Revelar as="li" key={titulo} atraso={i * 0.08} className="flex gap-5">
                 <Icone width={26} height={26} className="mt-1 shrink-0 text-verde" />
                 <div>
-                  <h3 className="font-sans text-lg font-semibold tracking-normal">{titulo}</h3>
+                  <h3 className="font-sans text-lg font-semibold leading-snug tracking-normal">{titulo}</h3>
                   <p className="mt-1 text-suave">{texto}</p>
                 </div>
               </Revelar>
@@ -278,7 +278,7 @@ function ItemDuvida({ p, r, confirmar, aberto, alternar }: { p: string; r: strin
   const id = useId()
   return (
     <li className="border-b border-tinta/12">
-      <h3 className="font-sans text-[1.05rem] font-semibold tracking-normal sm:text-lg">
+      <h3 className="font-sans text-[1.05rem] font-semibold leading-snug tracking-normal sm:text-lg">
         <button
           type="button"
           id={`${id}-b`}
@@ -415,7 +415,7 @@ export function Contato() {
                 <tbody>
                   {CONFIG.horarios.map((h) => (
                     <tr key={h.dia} className="border-b border-tinta/10">
-                      <th scope="row" className="py-2.5 pr-4 text-left font-medium text-tinta">
+                      <th scope="row" className="whitespace-nowrap py-2.5 pr-4 text-left font-medium text-tinta">
                         {h.dia}
                       </th>
                       <td className="py-2.5 text-right text-suave">

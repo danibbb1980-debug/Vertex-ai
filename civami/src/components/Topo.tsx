@@ -18,7 +18,7 @@ export function FaixaRascunho() {
   return (
     <div
       role="note"
-      className="fixed inset-x-0 top-0 z-[60] flex h-8 items-center justify-center bg-tinta px-4 text-center text-[0.72rem] font-medium tracking-[0.02em] text-marfim/90"
+      className="fixed inset-x-0 top-0 z-[60] flex h-8 items-center justify-center bg-tinta whitespace-nowrap px-3 text-center text-[0.64rem] font-medium sm:text-[0.72rem] sm:tracking-[0.02em] text-marfim/90"
     >
       Rascunho para avaliação. Informações sujeitas a confirmação.
     </div>
@@ -160,7 +160,7 @@ export function Cabecalho() {
             className="mt-8 inline-flex min-h-13 items-center justify-center gap-2 rounded-full bg-tinta px-6 py-3.5 font-semibold text-marfim"
           >
             <IconeWhatsApp width={18} height={18} />
-            Agendar avaliação pelo WhatsApp
+            Agendar pelo WhatsApp
           </a>
         </nav>
       </div>

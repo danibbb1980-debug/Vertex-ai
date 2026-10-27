@@ -82,7 +82,7 @@ export function Abertura() {
       {/* Formas orgânicas de fundo: duas curvas que se encontram */}
       <svg
         aria-hidden
-        className="pointer-events-none absolute -right-40 top-10 h-[52rem] w-[52rem] text-areia/60 lg:-right-20"
+        className="pointer-events-none absolute -right-20 top-10 hidden h-[52rem] w-[52rem] text-areia/60 lg:block"
         viewBox="0 0 600 600"
         fill="none"
       >

@@ -251,10 +251,10 @@ html.lenis body {
   will-change: transform;
 }
 .lobo-esq {
-  transform: translate3d(calc((1 - var(--j)) * -34%), 0, 0) rotate(calc((1 - var(--j)) * -16deg));
+  transform: translate3d(calc((1 - var(--j)) * -22%), 0, 0) rotate(calc((1 - var(--j)) * -12deg)) scale(calc(0.92 + var(--j) * 0.08));
 }
 .lobo-dir {
-  transform: translate3d(calc((1 - var(--j)) * 34%), 0, 0) rotate(calc((1 - var(--j)) * 16deg));
+  transform: translate3d(calc((1 - var(--j)) * 22%), 0, 0) rotate(calc((1 - var(--j)) * 12deg)) scale(calc(0.92 + var(--j) * 0.08));
 }
 .costura {
   opacity: var(--c);
