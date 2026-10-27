@@ -82,7 +82,7 @@ export function PrimeirosCuidados() {
         </div>
 
         <div className="lg:col-span-7">
-          {/* CONFIRMAR COM A CLÍNICA: revisar estas orientações com o responsável técnico */}
+          {/* Orientações genéricas; vale o responsável técnico revisar */}
           <ol className="divide-y divide-line border-y border-line">
             {CUIDADOS.map(({ Icon, t, d }, i) => (
               <li key={t} className="reveal flex gap-5 py-7 sm:gap-7">
@@ -100,7 +100,7 @@ export function PrimeirosCuidados() {
             ))}
           </ol>
 
-          {/* CONFIRMAR COM A CLÍNICA: texto do aviso com o responsável técnico */}
+          {/* Aviso de casos graves; vale o responsável técnico revisar */}
           <aside
             aria-label="Quando procurar atendimento hospitalar"
             className="reveal mt-8 flex gap-4 rounded-2xl border border-forest/15 bg-forest p-6 text-white/85 sm:p-7 on-dark"

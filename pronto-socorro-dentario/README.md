@@ -15,8 +15,9 @@ npm run preview  # serve o dist/ em http://localhost:4173
 Tudo fica em **`src/config.ts`**: nome, endereço, WhatsApp, telefone, Instagram, horário,
 equipe, estrutura, mensagens do WhatsApp e os atendimentos.
 
-- Um valor `PENDENTE` aparece no site como **[A CONFIRMAR]**. Troque pelo texto real.
-- Procure por `CONFIRMAR COM A CLÍNICA` no código para ver cada ponto pendente.
+- Os dados vieram da ficha do Google (incluindo a aba "Sobre"), das fotos da ficha e do Instagram.
+- O que a clínica não divulgou fica de fora do site (sem marcador de pendência). Em `CONFIG.estrutura`,
+  um item vazio (`''`) não aparece; preencha para ele surgir (ex.: `convenios`).
 - Os textos das seções ficam em `src/sections/`.
 
 ## Ligar e desligar seções
@@ -27,13 +28,15 @@ equipe, estrutura, FAQ etc.). Para uma versão curta, deixe só `quandoProcurar`
 
 ## Fotos e logo
 
-- **Fotos:** coloque os arquivos em `public/fotos/` (WebP, até ~1600 px de largura) e preencha
-  `CONFIG.fotos.hero` (ex.: `'/fotos/fachada.webp'`) e `CONFIG.fotos.galeria`.
-  Sem fotos, o site mostra blocos reservados "(substituir)". Nada de fotos de pacientes, bocas,
-  procedimentos ou antes e depois.
-- **Logo:** `public/logo.webp` e os ícones (`favicon.ico`, `favicon-32.png`, `apple-touch-icon.png`)
-  vieram do JPG de 150 px recebido. Um PNG ou SVG em alta resolução melhoraria a nitidez.
-  O verde da marca (`#00A346`) foi amostrado desse arquivo.
+- **Fotos** em `public/fotos/` (WebP, com versão menor `-480`/`-640` para celular) e configuradas em
+  `CONFIG.fotos` e `CONFIG.equipe`:
+  - `dr-antonio.webp`: hero (responsável técnico) e `dr-antonio-rosto.webp` no cartão da equipe;
+  - `recepcao.webp`: seção "A clínica";
+  - `fachada.webp`: seção "Como chegar" e base do `og.jpg` (imagem de compartilhamento).
+  Os originais recortados ficam em `referencias/fotos/`. Elas vieram de capturas de tela, então
+  fotos originais em alta resolução deixariam o site mais nítido. Nunca use fotos de pacientes.
+- **Logo:** `public/logo.webp` e os ícones vieram do JPG de 150 px recebido. Um PNG ou SVG em alta
+  resolução melhoraria a nitidez. O verde da marca (`#00A346`) foi amostrado desse arquivo.
 
 ## Desligar o modo rascunho (versão final)
 
@@ -51,18 +54,10 @@ Confira também `CONFIG.siteUrl` (canonical e og:url) com o domínio final.
 - **Vercel:** `vercel deploy --prod --yes` na pasta deste projeto (o `vercel.json` já configura o build).
 - **Netlify Drop:** arraste o zip do `dist/` (`cd dist && zip -r ../site-pronto-socorro-dentario.zip . -x "*.DS_Store"`).
 
-## O que a clínica precisa confirmar
+## Pontos para revisar com a clínica (fora do site)
 
-- [ ] Nome oficial da clínica e do responsável
-- [ ] Endereço e cidade (hoje vem da ficha do Google); depois disso dá para ligar `CONFIG.mostrarMapa`
-- [ ] Horário de cada dia da semana (só a terça-feira foi vista como 24 horas) e feriados
-- [ ] Responsável técnico e CRO (obrigatório no rodapé da versão final)
-- [ ] Equipe: nome, "Cirurgião(ã)-dentista" e CRO de cada profissional
-- [ ] Lista de atendimentos (emergência, pediátrico, estético, sedação) e o texto da sedação
-- [ ] Convênios e formas de pagamento
-- [ ] Estacionamento e acessibilidade
-- [ ] Fotos reais da clínica (fachada, recepção, consultório) e logo em alta resolução
-- [ ] Texto de "Primeiros cuidados" e do aviso de casos graves (revisar com o responsável técnico)
-- [ ] Texto institucional da seção "A clínica"
-- [ ] Responsável pelo tratamento de dados (página de privacidade)
-- [ ] Se pode mostrar a nota do Google (`CONFIG.mostrarNotaGoogle`); nunca exibir texto de avaliações
+- Nome: o Google e o Instagram usam "Pronto Socorro Dentário"; a placa da fachada diz "Referência Saúde Odonto".
+- Horário 24 horas: a ficha mostrou 24 horas; o site pede para confirmar pelo WhatsApp.
+- "Planos de pagamento" da ficha não foi publicado (o CFO não permite anunciar parcelamento).
+- Textos de "Primeiros cuidados" e do aviso de casos graves: vale o responsável técnico revisar.
+- Nota do Google: só ligar `CONFIG.mostrarNotaGoogle` com autorização; nunca exibir texto de avaliações.

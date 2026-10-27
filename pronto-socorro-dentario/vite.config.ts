@@ -21,7 +21,8 @@ function seo(): Plugin {
     name: CONFIG.nome,
     url: url + '/',
     telephone: CONFIG.telefone,
-    image: url + '/logo.webp',
+    image: [url + '/og.jpg', url + '/logo.webp'],
+    paymentAccepted: 'Cartão de crédito, cartão de débito, pagamento por aproximação (NFC)',
     address: {
       '@type': 'PostalAddress',
       streetAddress: CONFIG.endereco.rua,
@@ -46,7 +47,11 @@ function seo(): Plugin {
     <meta property="og:title" content="${esc(title)}" />
     <meta property="og:description" content="${esc(description)}" />
     <meta property="og:url" content="${url}/" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="${url}/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Fachada da clínica, no número 268" />
+    <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`
 
   return {

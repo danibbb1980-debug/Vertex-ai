@@ -1,15 +1,10 @@
 /**
  * TODOS os dados do site ficam aqui.
  *
- * Fontes: ficha do Google Maps e Instagram da clínica.
- * Tudo marcado com PENDENTE vira um aviso visível "[A CONFIRMAR]" no site.
- * Procure por "CONFIRMAR COM A CLÍNICA" para ver o que falta validar.
+ * Fontes: ficha do Google Maps (incluindo a aba "Sobre"), fotos da ficha e Instagram da clínica.
+ * Informação que a clínica não divulgou fica de fora do site (sem marcador de pendência).
  */
 
-/** Valor ainda não confirmado pela clínica. Aparece no site como "[A CONFIRMAR]". */
-export const PENDENTE = '[A CONFIRMAR]' as const
-export type Talvez<T> = T | typeof PENDENTE
-export const pendente = (v: unknown): v is typeof PENDENTE => v === PENDENTE
 
 export const CONFIG = {
   /** Modo rascunho: mostra a faixa de aviso e marca a página como noindex.
@@ -19,15 +14,14 @@ export const CONFIG = {
   /** URL pública final (sem barra no fim). Usada em canonical e og:url. Nunca localhost. */
   siteUrl: 'https://pronto-socorro-dentario-rascunho.vercel.app',
 
-  // CONFIRMAR COM A CLÍNICA: nome oficial da clínica e do responsável.
+  // Nome usado no Google Maps e no Instagram. Na fachada a placa diz "Referência Saúde Odonto".
   nome: 'Pronto Socorro Dentário',
   nomeCompleto: 'Pronto Socorro Dentário | Alfenas',
-  nomeOficialConfirmado: false,
 
   cidade: 'Alfenas',
   uf: 'MG',
 
-  // CONFIRMAR COM A CLÍNICA: endereço vindo da ficha do Google.
+  // Endereço da ficha do Google; o número 268 aparece na fachada.
   endereco: {
     rua: 'R. João Paulino Damasceno, 268',
     bairro: 'Centro',
@@ -35,12 +29,12 @@ export const CONFIG = {
     uf: 'MG',
     cep: '37130-000',
     referencia: 'Próximo ao Pronto Socorro da Santa Casa',
-    confirmado: false,
+    /** O que a pessoa vê ao chegar (foto da fachada). */
+    fachada: 'Na fachada, procure a placa "Referência Saúde Odonto" e o número 268.',
   },
 
   mapsUrl: 'https://maps.app.goo.gl/CccY3QmAm5bJboRJ6',
-  /** Mapa embutido: desligado até o endereço ser confirmado
-   *  (o mapa do Google também grava cookies, e o rascunho não usa cookies). */
+  /** Mapa embutido do Google: desligado porque grava cookies e o site não usa cookies. */
   mostrarMapa: false,
 
   instagram: {
@@ -54,43 +48,46 @@ export const CONFIG = {
   telefone: '+5535997415858',
   telefoneExibicao: '(35) 99741-5858',
 
-  // CONFIRMAR COM A CLÍNICA: a ficha mostrou "Atendimento 24 horas" na terça-feira; os outros dias não foram vistos.
+  // A ficha do Google mostrou "Atendimento 24 horas"; por isso a observação de confirmar pelo WhatsApp.
   horario24h: true,
   horarioObservacao: 'Confirme a disponibilidade pelo WhatsApp.',
-  feriados: PENDENTE as Talvez<string>,
+  /** Ficha do Google: "Necessário fazer agendamento". */
+  agendamento: true,
 
-  // CONFIRMAR COM A CLÍNICA: frases da ficha do Google.
   frasesFicha: ['Urgência Odontológica 24h', 'Atendimento para todas as idades'],
 
-  // CONFIRMAR COM A CLÍNICA: responsável técnico e CRO (obrigatório na versão final).
+  // Fonte: legenda da foto no Instagram ("R. T.: Dr. Antônio Alves de Faria Filho - CROMG 3068").
   responsavelTecnico: {
-    nome: PENDENTE as Talvez<string>,
-    cro: PENDENTE as Talvez<string>,
+    nome: 'Dr. Antônio Alves de Faria Filho',
+    cro: '3068',
   },
 
-  // CONFIRMAR COM A CLÍNICA: equipe. Só nome, "Cirurgião(ã)-dentista" e CRO confirmados.
+  /** Equipe: só profissionais com nome e CRO conhecidos. */
   equipe: [
-    { nome: PENDENTE as Talvez<string>, funcao: 'Cirurgião(ã)-dentista', cro: PENDENTE as Talvez<string> },
-    { nome: PENDENTE as Talvez<string>, funcao: 'Cirurgião(ã)-dentista', cro: PENDENTE as Talvez<string> },
+    { nome: 'Dr. Antônio Alves de Faria Filho', funcao: 'Cirurgião-dentista · Responsável técnico', cro: '3068', foto: '/fotos/dr-antonio-rosto.webp' },
   ],
 
-  // CONFIRMAR COM A CLÍNICA: estrutura.
+  /** Estrutura (ficha do Google, aba "Sobre"). Item vazio ('') não aparece no site. */
   estrutura: {
-    convenios: PENDENTE as Talvez<string>,
-    pagamento: PENDENTE as Talvez<string>,
-    estacionamento: PENDENTE as Talvez<string>,
-    acessibilidade: PENDENTE as Talvez<string>,
+    acessibilidade: 'Entrada, banheiro e estacionamento com acessibilidade para pessoas em cadeira de rodas.',
+    estacionamento: 'Estacionamento gratuito na rua.',
+    // "Planos de pagamento" ficou de fora: o CFO não permite anunciar parcelamento.
+    pagamento: 'Cartão de crédito, cartão de débito e pagamento por aproximação (NFC).',
+    comodidades: 'Banheiro e sala de amamentação.',
+    convenios: '',
   },
 
-  /** Fotos reais da clínica em public/fotos/ (WebP). Vazio = blocos reservados. */
+  /** Fotos reais da clínica em public/fotos/ (WebP). Nunca fotos de pacientes. */
   fotos: {
-    hero: '' as string,
-    galeria: [] as { src: string; alt: string }[],
+    hero: '/fotos/dr-antonio.webp',
+    heroAlt: 'Dr. Antônio Alves de Faria Filho, de jaleco branco, sentado ao lado da cadeira odontológica no consultório',
+    recepcao: { src: '/fotos/recepcao.webp', alt: 'Recepção da clínica, com balcão de atendimento, cadeiras de espera e a porta de entrada ao fundo', w: 1100, h: 596 },
+    fachada: { src: '/fotos/fachada.webp', alt: 'Fachada da clínica no número 268, com a placa Referência Saúde Odonto e a entrada com rampa e corrimão azul', w: 1100, h: 731 },
   },
 
   /** Nota do Google: só ligar com nota real e autorização. Nunca exibir texto de avaliações. */
   mostrarNotaGoogle: false,
-  notaGoogle: { nota: PENDENTE as Talvez<string>, total: PENDENTE as Talvez<string> },
+  notaGoogle: { nota: '', total: '' },
 
   mensagens: {
     urgencia: 'Olá! Vi o site do Pronto Socorro Dentário e preciso de atendimento de urgência.',
@@ -113,7 +110,7 @@ export const CONFIG = {
   },
 }
 
-/** Atendimentos listados na ficha do Google. CONFIRMAR COM A CLÍNICA. */
+/** Atendimentos listados na ficha do Google (aba Sobre, "Opções no menu"). */
 export const ATENDIMENTOS = [
   {
     id: 'emergencia',

@@ -1,20 +1,6 @@
 import type { ReactNode } from 'react'
-import { CONFIG, PENDENTE, pendente, telLink, waLink } from '../config'
+import { CONFIG, telLink, waLink } from '../config'
 import { Phone, WhatsApp } from './icons'
-
-/** Marcador visível de informação pendente. */
-export function Pendente({ label = PENDENTE }: { label?: string }) {
-  return (
-    <span className="pendente" title="Informação a confirmar com a clínica">
-      {label}
-    </span>
-  )
-}
-
-/** Mostra o valor ou o marcador [A CONFIRMAR]. */
-export function Val({ v }: { v: string }) {
-  return pendente(v) ? <Pendente /> : <>{v}</>
-}
 
 type BtnProps = { mensagem?: string; children?: ReactNode; className?: string; small?: boolean }
 
@@ -83,30 +69,5 @@ export function Logo({ size = 44 }: { size?: number }) {
       className="rounded-[22%] flex-none"
       decoding="async"
     />
-  )
-}
-
-/** Bloco reservado elegante, enquanto não houver foto real da clínica. */
-export function PhotoSlot({ label = 'Foto da clínica (substituir)', className = '', dark }: { label?: string; className?: string; dark?: boolean }) {
-  return (
-    <div
-      role="img"
-      aria-label="Espaço reservado para foto da clínica"
-      className={`relative overflow-hidden ${dark ? 'photo-slot-dark' : 'photo-slot'} ${className}`}
-    >
-      <svg className="absolute inset-0 h-full w-full" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="ps" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#00a346" stopOpacity=".0" />
-            <stop offset="1" stopColor="#00a346" stopOpacity=".12" />
-          </linearGradient>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#ps)" />
-      </svg>
-      <div className={`absolute inset-x-0 bottom-0 flex items-center gap-2 p-4 text-[0.72rem] font-bold uppercase tracking-[0.14em] ${dark ? 'text-white/60' : 'text-forest/55'}`}>
-        <span className={`h-px w-6 ${dark ? 'bg-white/40' : 'bg-forest/30'}`} />
-        {label}
-      </div>
-    </div>
   )
 }

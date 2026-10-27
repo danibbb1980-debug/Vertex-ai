@@ -21,7 +21,7 @@ export function Atendimentos() {
           />
         </div>
 
-        {/* CONFIRMAR COM A CLÍNICA: lista de atendimentos (ficha do Google) */}
+        {/* Fonte: ficha do Google (aba Sobre, "Opções no menu") */}
         <ul onPointerMove={trackSpot} className="mt-12 grid gap-4 md:grid-cols-2">
           {ATENDIMENTOS.map((a, i) => {
             const Icon = ICONS[a.id]

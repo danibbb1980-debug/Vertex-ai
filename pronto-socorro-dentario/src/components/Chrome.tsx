@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { CONFIG, enderecoLinha, telLink, waLink } from '../config'
 import { Close, Instagram, Menu, Phone, Pin, WhatsApp } from './icons'
-import { Logo, Pendente, Val, WaButton } from './ui'
+import { Logo, WaButton } from './ui'
 
 const NAV = [
   { href: '#atendimentos', label: 'Atendimentos', on: CONFIG.secoes.atendimentos },
@@ -212,18 +212,11 @@ export function Footer() {
           <p className="mt-5 max-w-sm text-[0.95rem]">
             Odontologia de urgência em {CONFIG.cidade} - {CONFIG.uf}.
           </p>
-          {/* CONFIRMAR COM A CLÍNICA: responsável técnico e CRO (obrigatório na versão final) */}
           <dl className="mt-6 space-y-1.5 text-[0.92rem]">
             <div className="flex flex-wrap gap-x-2">
               <dt className="text-white/55">Responsável técnico:</dt>
               <dd className="text-paper">
-                <Val v={rt.nome} />
-              </dd>
-            </div>
-            <div className="flex flex-wrap gap-x-2">
-              <dt className="text-white/55">CRO-{CONFIG.uf}:</dt>
-              <dd className="text-paper">
-                <Val v={rt.cro} />
+                {rt.nome} · CRO-{CONFIG.uf} {rt.cro}
               </dd>
             </div>
           </dl>
@@ -256,12 +249,6 @@ export function Footer() {
             <Pin size={17} className="mt-1 flex-none" />
             <span>
               {enderecoLinha}
-              {!CONFIG.endereco.confirmado && (
-                <>
-                  {' '}
-                  <Pendente />
-                </>
-              )}
             </span>
           </p>
           <a href={CONFIG.mapsUrl} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-11 items-center text-[0.95rem] font-semibold text-amber underline underline-offset-4">

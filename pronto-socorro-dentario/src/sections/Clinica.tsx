@@ -1,9 +1,10 @@
 import { useId, useState, type ReactNode } from 'react'
-import { CONFIG, enderecoLinha, pendente, telLink, waLink } from '../config'
-import { Access, ArrowUpRight, Car, Card, Clock, Instagram, Phone, Pin, Plus, Users, WhatsApp } from '../components/icons'
-import { CallButton, Pendente, PhotoSlot, SectionHead, Val, WaButton } from '../components/ui'
+import { CONFIG, enderecoLinha, telLink, waLink } from '../config'
+import { Access, ArrowUpRight, Car, Card, Child, Clock, Instagram, Phone, Pin, Plus, Users, WhatsApp } from '../components/icons'
+import { CallButton, SectionHead, WaButton } from '../components/ui'
 
 export function Clinica() {
+  const r = CONFIG.fotos.recepcao
   return (
     <section aria-labelledby="clinica-title" id="clinica" className="border-y border-line bg-paper py-20 lg:py-28">
       <div className="wrap grid gap-12 lg:grid-cols-12 lg:gap-10">
@@ -14,31 +15,39 @@ export function Clinica() {
             title="Atendimento sério, conversa clara"
             intro={`Somos uma clínica odontológica em ${CONFIG.cidade} com atendimento de urgência e para todas as idades. Cada paciente passa por avaliação individual e recebe explicação clara sobre o que foi encontrado e sobre as opções de tratamento.`}
           />
-          {/* CONFIRMAR COM A CLÍNICA: texto institucional */}
-          <p className="reveal mt-6 text-[0.9rem] text-muted">
-            Texto institucional <Pendente />
-          </p>
-        </div>
 
-        <div className="lg:col-span-7">
-          {/* CONFIRMAR COM A CLÍNICA: equipe (nome, função e CRO) */}
-          <ul className="grid gap-4 sm:grid-cols-2">
-            {CONFIG.equipe.map((p, i) => (
-              <li key={i} className="reveal overflow-hidden rounded-[1.5rem] border border-line bg-ivory" style={{ ['--d' as string]: `${i * 80}ms` }}>
-                <PhotoSlot label="Foto do profissional (substituir)" className="aspect-[4/3]" />
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold">
-                    <Val v={p.nome} />
-                    {pendente(p.nome) && <span className="sr-only">Nome do profissional a confirmar</span>}
-                  </h3>
-                  <p className="mt-1 text-muted">{p.funcao}</p>
-                  <p className="mt-3 text-sm font-semibold text-forest">
-                    CRO-{CONFIG.uf}: <Val v={p.cro} />
+          <ul className="mt-8 space-y-3">
+            {CONFIG.equipe.map((p) => (
+              <li key={p.nome} className="reveal flex items-center gap-4 rounded-[1.25rem] border border-line bg-ivory p-4">
+                <img
+                  src={p.foto}
+                  alt=""
+                  width={64}
+                  height={64}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-16 w-16 flex-none rounded-full object-cover"
+                />
+                <div>
+                  <h3 className="text-lg font-semibold sm:text-xl">{p.nome}</h3>
+                  <p className="text-[0.95rem] text-muted">{p.funcao}</p>
+                  <p className="mt-0.5 text-sm font-semibold text-forest">
+                    CRO-{CONFIG.uf} {p.cro}
                   </p>
                 </div>
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="lg:col-span-7">
+          <figure className="reveal m-0 overflow-hidden rounded-[1.5rem] border border-line bg-ivory">
+            <img src={r.src} srcSet={`/fotos/recepcao-640.webp 640w, ${r.src} 1100w`} sizes="(min-width: 1024px) 55vw, 100vw" alt={r.alt} width={r.w} height={r.h} loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover" />
+            <figcaption className="flex items-center gap-2 px-5 py-4 text-[0.82rem] font-bold uppercase tracking-[0.14em] text-muted">
+              <span className="h-px w-6 bg-forest/30" aria-hidden="true" />
+              Recepção
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -49,40 +58,29 @@ export function Estrutura() {
   const e = CONFIG.estrutura
   const itens = [
     { Icon: Clock, t: 'Atendimento 24 horas', v: 'Conforme a ficha do Google. Confirme a disponibilidade pelo WhatsApp.' },
-    { Icon: Pin, t: 'Localização', v: CONFIG.endereco.referencia },
-    { Icon: Car, t: 'Estacionamento', v: e.estacionamento },
+    { Icon: Pin, t: 'Localização', v: `${CONFIG.endereco.referencia}.` },
     { Icon: Access, t: 'Acessibilidade', v: e.acessibilidade },
+    { Icon: Car, t: 'Estacionamento', v: e.estacionamento },
     { Icon: Card, t: 'Formas de pagamento', v: e.pagamento },
+    { Icon: Child, t: 'Comodidades', v: e.comodidades },
     { Icon: Users, t: 'Convênios', v: e.convenios },
-  ]
-  const fotos = CONFIG.fotos.galeria
+  ].filter((i) => i.v)
   return (
     <section aria-labelledby="estrutura-title" id="estrutura" className="py-20 lg:py-28">
       <div className="wrap">
         <SectionHead id="estrutura-title" eyebrow="Estrutura e conforto" title="O que você encontra aqui" />
 
-        {/* CONFIRMAR COM A CLÍNICA: estacionamento, acessibilidade, pagamento e convênios */}
         <ul className="mt-12 grid gap-px overflow-hidden rounded-[1.5rem] border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {itens.map(({ Icon, t, v }) => (
             <li key={t} className="reveal flex gap-4 bg-ivory p-6 sm:p-7">
               <Icon size={24} className="mt-0.5 flex-none text-brand" />
               <div>
                 <h3 className="font-display text-lg font-semibold text-forest">{t}</h3>
-                <p className="mt-1 text-[0.97rem] text-muted">
-                  <Val v={v} />
-                </p>
+                <p className="mt-1 text-[0.97rem] text-muted">{v}</p>
               </div>
             </li>
           ))}
         </ul>
-
-        <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-3">
-          {fotos.length > 0
-            ? fotos.map((f) => <img key={f.src} src={f.src} alt={f.alt} loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-[1.25rem] object-cover" />)
-            : ['Fachada', 'Recepção', 'Consultório'].map((l, i) => (
-                <PhotoSlot key={l} label={`${l} (substituir)`} className={`reveal aspect-[4/3] rounded-[1.25rem] border border-line lg:aspect-[16/10] ${i === 2 ? 'col-span-2 !aspect-[8/3] lg:col-span-1 lg:!aspect-[16/10]' : ''}`} />
-              ))}
-        </div>
       </div>
     </section>
   )
@@ -90,7 +88,7 @@ export function Estrutura() {
 
 export function AvaliacoesGoogle() {
   const n = CONFIG.notaGoogle
-  if (!CONFIG.mostrarNotaGoogle || pendente(n.nota)) return null
+  if (!CONFIG.mostrarNotaGoogle || !n.nota) return null
   return (
     <section aria-labelledby="google-title" className="py-12">
       <div className="wrap flex flex-col items-start gap-4 rounded-[1.5rem] border border-line bg-paper p-7 sm:flex-row sm:items-center sm:justify-between">
@@ -98,7 +96,7 @@ export function AvaliacoesGoogle() {
           <h2 id="google-title" className="text-2xl">
             Nota {n.nota} no Google
           </h2>
-          {!pendente(n.total) && <p className="text-muted">{n.total} avaliações</p>}
+          {n.total && <p className="text-muted">{n.total} avaliações</p>}
         </div>
         <a href={CONFIG.mapsUrl} target="_blank" rel="noopener" className="link-arrow">
           Ver no Google Maps <ArrowUpRight size={18} />
@@ -111,16 +109,11 @@ export function AvaliacoesGoogle() {
 const FAQ: { q: string; a: ReactNode }[] = [
   {
     q: 'Vocês atendem 24 horas?',
-    a: (
-      <>
-        A ficha da clínica no Google indica atendimento 24 horas. Como a disponibilidade pode variar, confirme pelo WhatsApp ou por telefone antes de vir.
-        Atendimento em feriados: <Val v={CONFIG.feriados} />
-      </>
-    ),
+    a: 'A ficha da clínica no Google indica atendimento 24 horas. Como a disponibilidade pode variar, confirme pelo WhatsApp ou por telefone antes de vir.',
   },
   {
     q: 'Preciso agendar para urgência?',
-    a: 'O ideal é chamar antes pelo WhatsApp ou ligar. Assim conversamos sobre o seu caso e a disponibilidade, e você já chega sabendo o que fazer.',
+    a: 'A clínica trabalha com agendamento. Em caso de urgência, chame pelo WhatsApp ou ligue antes de vir: assim conversamos sobre o seu caso, vemos a disponibilidade e combinamos o atendimento.',
   },
   {
     q: 'O que fazer se um dente quebrar?',
@@ -128,7 +121,7 @@ const FAQ: { q: string; a: ReactNode }[] = [
   },
   {
     q: 'A clínica atende crianças?',
-    a: 'Sim. A clínica informa atendimento para todas as idades, incluindo atendimento pediátrico. Fale com a gente para saber como funciona para a sua família.',
+    a: 'Sim. A clínica informa atendimento para todas as idades, incluindo atendimento pediátrico, e tem sala de amamentação. Fale com a gente para saber como funciona para a sua família.',
   },
   {
     q: 'Como funciona a sedação, de forma geral?',
@@ -138,8 +131,7 @@ const FAQ: { q: string; a: ReactNode }[] = [
     q: 'Onde fica a clínica?',
     a: (
       <>
-        {enderecoLinha}. {CONFIG.endereco.referencia}.{' '}
-        {!CONFIG.endereco.confirmado && <Pendente />}{' '}
+        {enderecoLinha}. {CONFIG.endereco.referencia}. {CONFIG.endereco.fachada}{' '}
         <a href={CONFIG.mapsUrl} target="_blank" rel="noopener" className="font-semibold text-brand-ink underline underline-offset-4">
           Abrir no Google Maps
         </a>
@@ -147,20 +139,12 @@ const FAQ: { q: string; a: ReactNode }[] = [
     ),
   },
   {
-    q: 'Quais formas de pagamento são aceitas?',
-    a: (
-      <>
-        <Val v={CONFIG.estrutura.pagamento} /> Enquanto isso, pergunte pelo WhatsApp.
-      </>
-    ),
+    q: 'A clínica tem acessibilidade e estacionamento?',
+    a: `Sim. ${CONFIG.estrutura.acessibilidade} Há ${CONFIG.estrutura.estacionamento.charAt(0).toLowerCase()}${CONFIG.estrutura.estacionamento.slice(1)}`,
   },
   {
-    q: 'A clínica aceita convênios?',
-    a: (
-      <>
-        <Val v={CONFIG.estrutura.convenios} /> Pergunte pelo WhatsApp sobre o seu plano.
-      </>
-    ),
+    q: 'Quais formas de pagamento são aceitas?',
+    a: `${CONFIG.estrutura.pagamento} Para outras dúvidas, pergunte pelo WhatsApp.`,
   },
   {
     q: 'Como agendar uma avaliação estética?',
@@ -244,12 +228,6 @@ export function Contato() {
                 {CONFIG.endereco.bairro}, {CONFIG.endereco.cidade} - {CONFIG.endereco.uf}, {CONFIG.endereco.cep}
                 <br />
                 <span className="text-muted">{CONFIG.endereco.referencia}</span>
-                {!CONFIG.endereco.confirmado && (
-                  <>
-                    <br />
-                    <Pendente label="Endereço [A CONFIRMAR]" />
-                  </>
-                )}
               </span>
             </p>
             <p className="mt-6 flex gap-3 rounded-2xl border border-line bg-paper p-5 text-[0.97rem]">
@@ -280,75 +258,32 @@ export function Contato() {
         </div>
 
         <div className="lg:col-span-7">
-          <MapaOuArte />
+          <Fachada />
         </div>
       </div>
     </section>
   )
 }
 
-/** Mapa do Google só quando o endereço estiver confirmado (CONFIG.mostrarMapa). Carrega sob demanda. */
-function MapaOuArte() {
-  const [load, setLoad] = useState(false)
-  const q = encodeURIComponent(`${CONFIG.endereco.rua}, ${CONFIG.endereco.cidade} - ${CONFIG.endereco.uf}`)
+/** Foto da fachada, para a pessoa reconhecer a entrada ao chegar, e o botão "Como chegar". */
+function Fachada() {
+  const f = CONFIG.fotos.fachada
   return (
-    <div className="reveal relative overflow-hidden rounded-[1.75rem] border border-line bg-paper">
-      {CONFIG.mostrarMapa && load ? (
-        <iframe
-          title={`Mapa: ${CONFIG.nome}`}
-          src={`https://www.google.com/maps?q=${q}&output=embed`}
-          className="aspect-[4/3] w-full"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      ) : (
-        <div className="relative w-full sm:aspect-[16/11]">
-          <div className="relative aspect-[16/10] sm:absolute sm:inset-0 sm:aspect-auto">
-          {/* composição gráfica abstrata, não é um mapa real */}
-          <svg aria-hidden="true" viewBox="0 0 400 280" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="280" fill="#f3efe5" />
-            <g stroke="#e2dccd" strokeWidth="14" fill="none" strokeLinecap="round">
-              <path d="M-20 70 C 90 60, 160 110, 420 90" />
-              <path d="M60 -20 C 80 90, 120 180, 100 300" />
-              <path d="M-20 210 C 120 200, 250 230, 420 190" />
-              <path d="M290 -20 C 270 80, 300 170, 330 300" />
-            </g>
-            <g stroke="#ece7db" strokeWidth="6" fill="none">
-              <path d="M180 -10 L 200 300" />
-              <path d="M-10 140 L 410 150" />
-            </g>
-            <circle cx="210" cy="140" r="58" fill="#00a346" opacity=".08" />
-            <circle cx="210" cy="140" r="30" fill="#00a346" opacity=".12" />
-          </svg>
-          <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-[85%] flex-col items-center">
-            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-forest text-paper shadow-[0_16px_30px_-14px_rgba(11,36,24,.7)]">
-              <Pin size={26} />
-            </span>
-            <span className="h-3 w-px bg-forest" />
-          </div>
-          </div>
-          <div className="relative m-3 sm:absolute sm:inset-x-6 sm:bottom-6 sm:m-0 flex flex-col gap-3 rounded-2xl border border-line bg-paper/95 p-4 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-[0.95rem]">
-              <strong className="block font-display text-lg text-forest">
-                {CONFIG.nome} <span className="whitespace-nowrap">| {CONFIG.cidade}</span>
-              </strong>
-              <span className="text-muted">{CONFIG.endereco.referencia}</span>
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <a href={CONFIG.mapsUrl} target="_blank" rel="noopener" className="btn btn-dark !min-h-12 !text-[0.95rem]">
-                <Pin size={18} /> Como chegar
-                <span className="sr-only"> (abre o Google Maps)</span>
-              </a>
-              {CONFIG.mostrarMapa && (
-                <button type="button" onClick={() => setLoad(true)} className="btn btn-line !min-h-12 !text-[0.95rem]">
-                  Carregar mapa
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    <figure className="reveal relative m-0 overflow-hidden rounded-[1.75rem] border border-line bg-paper">
+      <img src={f.src} srcSet={`/fotos/fachada-640.webp 640w, ${f.src} 1100w`} sizes="(min-width: 1024px) 55vw, 100vw" alt={f.alt} width={f.w} height={f.h} loading="lazy" decoding="async" className="aspect-[3/2] w-full object-cover" />
+      <figcaption className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+        <p className="text-[0.95rem]">
+          <strong className="block font-display text-lg text-forest">
+            {CONFIG.nome} <span className="whitespace-nowrap">| {CONFIG.cidade}</span>
+          </strong>
+          <span className="text-muted">{CONFIG.endereco.fachada}</span>
+        </p>
+        <a href={CONFIG.mapsUrl} target="_blank" rel="noopener" className="btn btn-dark !min-h-12 flex-none !text-[0.95rem]">
+          <Pin size={18} /> Como chegar
+          <span className="sr-only"> (abre o Google Maps)</span>
+        </a>
+      </figcaption>
+    </figure>
   )
 }
 

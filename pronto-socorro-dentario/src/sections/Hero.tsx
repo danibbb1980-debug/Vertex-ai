@@ -66,7 +66,7 @@ export function Hero() {
 
       <div className="wrap">
         <ul className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line text-[0.95rem] sm:grid-cols-3">
-          {/* CONFIRMAR COM A CLÍNICA: frases da ficha do Google */}
+          {/* Fonte: frases da ficha do Google */}
           {[
             ['Urgência odontológica', 'Para dor, fraturas e traumas'],
             ['Todas as idades', 'Crianças, adultos e idosos'],
@@ -115,50 +115,41 @@ export function Marquee() {
   )
 }
 
-/** Painel escuro com o mostrador 24h. Com foto real (CONFIG.fotos.hero), a foto ocupa o painel. */
+/** Foto real do responsável técnico, com o mostrador 24h (momento de assinatura) sobreposto. */
 function HeroVisual() {
   const foto = CONFIG.fotos.hero
+  const rt = CONFIG.responsavelTecnico
   return (
-    <div className="on-dark grain relative isolate overflow-hidden rounded-[1.75rem] bg-forest text-white lg:h-full lg:min-h-[34rem]">
-      {foto ? (
-        <>
-          <img src={foto} alt={`Foto da clínica ${CONFIG.nome}`} className="absolute inset-0 -z-10 h-full w-full object-cover" fetchPriority="high" />
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-forest/85 via-forest/20 to-transparent" />
-        </>
-      ) : (
-        <svg aria-hidden="true" viewBox="0 0 400 400" className="absolute inset-0 -z-10 h-full w-full" preserveAspectRatio="xMidYMid slice">
-          <g fill="none" stroke="#fff" strokeOpacity=".08">
-            <circle cx="200" cy="200" r="120" />
-            <circle cx="200" cy="200" r="160" />
-            <circle cx="200" cy="200" r="200" />
-            <circle cx="200" cy="200" r="240" strokeDasharray="2 6" />
-          </g>
-          <path d="M200 40 A160 160 0 0 1 360 200" fill="none" stroke="#00a346" strokeOpacity=".55" strokeWidth="1.2" />
-          <circle cx="200" cy="200" r="150" fill="url(#hv)" />
-          <defs>
-            <radialGradient id="hv">
-              <stop offset="0" stopColor="#00a346" stopOpacity=".18" />
-              <stop offset="1" stopColor="#00a346" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-        </svg>
-      )}
+    <figure className="on-dark relative isolate m-0 overflow-hidden rounded-[1.75rem] bg-forest text-white aspect-[4/5] sm:aspect-[5/4] lg:aspect-auto lg:h-full lg:min-h-[34rem]">
+      <img
+        src={foto}
+        srcSet="/fotos/dr-antonio-480.webp 480w, /fotos/dr-antonio.webp 800w"
+        sizes="(min-width: 1024px) 40vw, (min-width: 640px) 90vw, 100vw"
+        alt={CONFIG.fotos.heroAlt}
+        width={800}
+        height={1203}
+        fetchPriority="high"
+        decoding="async"
+        className="absolute inset-0 -z-10 h-full w-full object-cover object-[50%_18%]"
+      />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-forest via-forest/35 via-45% to-transparent" />
 
-      <div className="flex h-full flex-col justify-between gap-6 p-5 sm:p-7">
-        <p className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-white/70">
-          <span className="pulse-dot !bg-[#3fd17a]" aria-hidden="true" />
-          Urgência odontológica
-        </p>
-        <div className={`flex ${foto ? 'justify-start' : 'justify-center'} py-2 lg:py-6`}>
-          <Dial24 dark className={foto ? 'w-36 sm:w-44' : 'w-44 sm:w-56 lg:w-[17rem]'} />
-        </div>
-        <div className="flex items-end justify-between gap-4 text-[0.66rem] font-bold uppercase tracking-[0.14em] text-white/50">
-          <p className="whitespace-nowrap">
-            {CONFIG.cidade} - {CONFIG.uf}
-          </p>
-          {!foto && <p className="text-right">Espaço para foto da clínica (substituir)</p>}
-        </div>
-      </div>
-    </div>
+      <p className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-forest/75 px-3 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-white/85 backdrop-blur-sm sm:left-5 sm:top-5">
+        <span className="pulse-dot !bg-[#3fd17a]" aria-hidden="true" />
+        Urgência odontológica
+      </p>
+
+      <figcaption className="absolute inset-x-0 bottom-0 flex items-end gap-4 p-4 sm:gap-5 sm:p-6">
+        <span className="flex-none rounded-full bg-forest/85 p-1 backdrop-blur-sm">
+          <Dial24 dark className="w-[6.5rem] sm:w-32 lg:w-36" />
+        </span>
+        <span className="pb-1 leading-snug">
+          <strong className="block font-display text-[1.05rem] font-semibold text-paper sm:text-lg">{rt.nome}</strong>
+          <span className="block text-[0.85rem] text-white/75">
+            Responsável técnico · <span className="whitespace-nowrap">CRO-{CONFIG.uf} {rt.cro}</span>
+          </span>
+        </span>
+      </figcaption>
+    </figure>
   )
 }
