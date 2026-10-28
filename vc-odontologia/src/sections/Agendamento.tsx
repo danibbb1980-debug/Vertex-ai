@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import { CONFIG } from '../config'
-import { horariosDoDia, lerData, montarMensagem, opcoesAtendimento, urlWhatsApp, validar, dataISO, type Erros, type Pedido } from '../lib/agenda'
+import { horariosDoDia, lerData, montarMensagem, opcoesAtendimento, proximosDias, rotuloDia, urlWhatsApp, validar, dataISO, type Erros, type Pedido } from '../lib/agenda'
 import { CabecalhoSecao, IconeConversa, IconeRelogio, IconeSeta, IconeWhatsApp, linkPrivacidade } from '../components/base'
 
 const VAZIO: Pedido = { nome: '', atendimento: '', data: '', horario: '', observacoes: '' }
@@ -38,10 +38,18 @@ export function Agendamento() {
   const [aviso, setAviso] = useState('')
   // A data mínima depende do relógio do visitante: calculada só no navegador.
   const [hoje, setHoje] = useState<string>()
+  const [agora, setAgora] = useState<Date>()
+  const [qtdDias, setQtdDias] = useState(12)
   const form = useRef<HTMLFormElement>(null)
   const confirmacao = useRef<HTMLHeadingElement>(null)
 
-  useEffect(() => setHoje(dataISO(new Date())), [])
+  useEffect(() => {
+    const n = new Date()
+    setAgora(n)
+    setHoje(dataISO(n))
+  }, [])
+  // Lista calculada só no navegador (depende do relógio do visitante)
+  const dias = agora ? proximosDias(agora, qtdDias) : []
   useEffect(() => {
     if (estado === 'pronto') confirmacao.current?.focus()
   }, [estado])
@@ -229,54 +237,105 @@ export function Agendamento() {
                   <Erro id={id('atendimento-erro')} texto={erros.atendimento} />
                 </div>
 
-                <div className="grid gap-6 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor={id('data')} className="rotulo-campo">
-                      Data preferida <span className="font-normal text-tinta-suave">(opcional)</span>
-                    </label>
-                    <input
-                      id={id('data')}
-                      name="data"
-                      type="date"
-                      min={hoje}
-                      value={p.data}
-                      onChange={(e) => mudar('data', e.target.value)}
-                      aria-invalid={!!erros.data}
-                      aria-describedby={descr('data', id('data-dica'))}
-                      className="campo"
-                    />
-                    <p id={id('data-dica')} className="mt-2 text-xs leading-relaxed text-tinta-suave">
-                      {resumoDias}.
-                    </p>
-                    <Erro id={id('data-erro')} texto={erros.data} />
-                  </div>
-                  <div>
-                    <label htmlFor={id('horario')} className="rotulo-campo">
-                      Horário preferido <span className="font-normal text-tinta-suave">(opcional)</span>
-                    </label>
-                    <select
-                      id={id('horario')}
-                      name="horario"
-                      value={p.horario}
-                      onChange={(e) => mudar('horario', e.target.value)}
-                      disabled={!horarios.length}
-                      aria-invalid={!!erros.horario}
-                      aria-describedby={descr('horario', id('horario-dica'))}
-                      className="campo campo-select"
+                {/* Data: só os próximos dias de atendimento (dias fechados e passados não aparecem) */}
+                <fieldset aria-describedby={descr('data', id('data-dica'))}>
+                  <legend className="rotulo-campo">
+                    Data preferida <span className="font-normal text-tinta-suave">(opcional)</span>
+                  </legend>
+                  <p id={id('data-dica')} className="-mt-1 mb-3 text-xs leading-relaxed text-tinta-suave">
+                    {resumoDias}. Domingo fechado.
+                  </p>
+                  {dias.length ? (
+                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                      <label className="chip col-span-3 sm:col-span-4">
+                        <input
+                          type="radio"
+                          name="data"
+                          value=""
+                          checked={!p.data}
+                          onChange={() => mudar('data', '')}
+                          className="sr-only"
+                        />
+                        Sem preferência de data
+                      </label>
+                      {dias.map((iso, i) => {
+                        const r = rotuloDia(iso)
+                        return (
+                          <label key={iso} className="chip flex-col !gap-0" title={r.longo}>
+                            <input
+                              id={i === 0 ? id('data') : undefined}
+                              type="radio"
+                              name="data"
+                              value={iso}
+                              checked={p.data === iso}
+                              onChange={() => mudar('data', iso)}
+                              aria-label={r.longo}
+                              className="sr-only"
+                            />
+                            <span aria-hidden="true" className="text-[0.6875rem] font-semibold uppercase tracking-[0.14em] opacity-75">
+                              {iso === hoje ? 'Hoje' : r.semana}
+                            </span>
+                            <span aria-hidden="true" className="text-base font-semibold tabular-nums">
+                              {r.data}
+                            </span>
+                          </label>
+                        )
+                      })}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-tinta-suave">Carregando as próximas datas…</p>
+                  )}
+                  {dias.length > 0 && qtdDias < 36 && (
+                    <button
+                      type="button"
+                      onClick={() => setQtdDias((n) => n + 12)}
+                      className="link-sublinhado mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-azul"
                     >
-                      <option value="">Escolha um horário</option>
-                      {horarios.map((h) => (
-                        <option key={h} value={h}>
-                          {h}
-                        </option>
-                      ))}
-                    </select>
-                    <p id={id('horario-dica')} className="mt-2 text-xs leading-relaxed text-tinta-suave">
-                      {horarios.length ? 'Horários sujeitos à confirmação da clínica.' : 'Escolha uma data com atendimento para ver os horários.'}
+                      Ver mais datas
+                    </button>
+                  )}
+                  <Erro id={id('data-erro')} texto={erros.data} />
+                </fieldset>
+
+                {/* Horário: aparece depois de escolher a data, em blocos de 1 hora */}
+                {d && horarios.length > 0 && (
+                  <fieldset aria-describedby={descr('horario', id('horario-dica'))}>
+                    <legend className="rotulo-campo">
+                      Horário preferido <span className="font-normal text-tinta-suave">(opcional)</span>
+                    </legend>
+                    <p id={id('horario-dica')} className="-mt-1 mb-3 text-xs leading-relaxed text-tinta-suave">
+                      {rotuloDia(p.data).longo}. Horários sujeitos à confirmação da clínica.
                     </p>
+                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
+                      <label className="chip col-span-3 sm:col-span-5">
+                        <input
+                          id={id('horario')}
+                          type="radio"
+                          name="horario"
+                          value=""
+                          checked={!p.horario}
+                          onChange={() => mudar('horario', '')}
+                          className="sr-only"
+                        />
+                        Sem preferência de horário
+                      </label>
+                      {horarios.map((h) => (
+                        <label key={h} className="chip tabular-nums">
+                          <input
+                            type="radio"
+                            name="horario"
+                            value={h}
+                            checked={p.horario === h}
+                            onChange={() => mudar('horario', h)}
+                            className="sr-only"
+                          />
+                          {h}
+                        </label>
+                      ))}
+                    </div>
                     <Erro id={id('horario-erro')} texto={erros.horario} />
-                  </div>
-                </div>
+                  </fieldset>
+                )}
 
                 <div>
                   <label htmlFor={id('observacoes')} className="rotulo-campo">

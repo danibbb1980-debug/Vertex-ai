@@ -37,8 +37,11 @@ Não guarda nem envia dados: monta a mensagem e abre `wa.me` em nova aba. Regras
 - `exigirAtendimento`: torna o campo "Atendimento desejado" obrigatório.
 - `intervaloAlmoco`: horários excluídos da lista (hoje `12:00–13:00`, **a confirmar**; `null` = sem intervalo).
 - `atendeUrgencia`: mostra o aviso "Está com dor ou urgência?" (desligado: a clínica não é pronto-socorro).
-- Dias e horários vêm de `CONFIG.horarios`: dias fechados e datas passadas são bloqueados;
-  os horários são blocos de 1 hora, sem o almoço e sem o horário de fechamento.
+- Data e horário são botões de toque (não o calendário nativo, que no iPhone deixava
+  escolher datas passadas). O site mostra os próximos 12 dias de atendimento ("Ver mais
+  datas" amplia até 36); dias fechados e datas passadas não aparecem.
+- Os horários vêm de `CONFIG.horarios`, em blocos de 1 hora, sem o almoço e sem o
+  horário de fechamento. Se a data for hoje, os horários que já passaram somem.
 
 ## Trocar fotos e logo
 

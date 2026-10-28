@@ -107,3 +107,31 @@ export const urlWhatsApp = (mensagem: string) => `https://wa.me/${CONFIG.whatsap
 export function opcoesAtendimento(): string[] {
   return [...CONFIG.atendimentos.map((a) => a.titulo), 'Primeira avaliação', 'Ainda não sei, quero conversar']
 }
+
+const DIAS_CURTOS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
+const DIAS_LONGOS = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado']
+const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
+
+/**
+ * Próximos dias com atendimento e com pelo menos um horário livre (a partir de
+ * hoje). Dias fechados e datas passadas nunca entram na lista.
+ */
+export function proximosDias(agora: Date, quantidade: number): string[] {
+  const dias: string[] = []
+  const d = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate())
+  for (let i = 0; dias.length < quantidade && i < 120; i++) {
+    if (horariosDoDia(d, agora).length) dias.push(dataISO(d))
+    d.setDate(d.getDate() + 1)
+  }
+  return dias
+}
+
+/** Rótulos de um dia: "Qui", "29/10" e "quinta-feira, 29 de outubro". */
+export function rotuloDia(iso: string) {
+  const d = lerData(iso)!
+  return {
+    semana: DIAS_CURTOS[d.getDay()],
+    data: `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`,
+    longo: `${DIAS_LONGOS[d.getDay()]}, ${d.getDate()} de ${MESES[d.getMonth()]}`,
+  }
+}
