@@ -33,7 +33,9 @@ await writeFile(path.join(dist, 'index.html'), home)
 
 // Páginas secundárias: mesmo CSS, sem JS.
 const semJs = (html) => html.replace(/<script type="module"[^>]*><\/script>\s*/g, '').replace(/<link rel="modulepreload"[^>]*>\s*/g, '')
-const comHead = (html, tags) => html.replace(/<title>[\s\S]*<\/script>\s*(?=<\/head>)|<title>[\s\S]*?(?=<\/head>)/, tags + '\n  ')
+// Troca só o bloco de SEO (do <title> até o JSON-LD); mantém o CSS embutido.
+const comHead = (html, tags) =>
+  html.replace(/<title>[\s\S]*?<script type="application\/ld\+json">[\s\S]*?<\/script>/, tags)
 
 const priv = comHead(
   template,
