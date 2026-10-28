@@ -30,21 +30,19 @@ versão curta, desligue por exemplo `areas`, `paraQuem` e `estrutura`.
 Cada atendimento também tem `mostrar: true/false`.
 
 ### Fotos e logo
-- Foto do doutor: `public/fotos/dr-gustavo.avif` e `.webp`. A atual foi
-  recortada de uma peça antiga do Instagram e tem baixa resolução
-  (292×640). Troque por uma foto original e ajuste `largura`/`altura` em
-  `CONFIG.fotos.doutor`.
+- Foto do doutor: `referencias/foto-dr-gustavo-consultorio.png` (print do
+  Instagram da clínica), em dois recortes em `public/fotos/`:
+  `dr-gustavo-consultorio` (hero) e `dr-gustavo-retrato` (bloco "O
+  profissional"), em AVIF e WebP. Para trocar, substitua os arquivos e
+  ajuste `largura`/`altura` em `CONFIG.fotos`. Uma foto original (não print)
+  deixaria tudo ainda mais nítido.
 - Foto do consultório: coloque em `public/fotos/` e preencha
   `CONFIG.fotos.consultorio` (`{ src, alt }`). Sem foto, aparece um bloco
   reservado "Foto do consultório (substituir)".
-- Logo: só o símbolo (dente + "GB" + traço), sem a assinatura. Foi
-  redesenhado em vetor a partir do JPG original de 96×96 px: o dente
-  preto foi traçado do original, o dente vazado redesenhado como linha e
-  o "GB" composto em Playfair Display Bold convertida em curvas. Fica em
-  `src/components/logo-paths.ts` (usado no site, herda a cor) e em
-  `public/marca/logo.svg`. Favicon, ícone do celular e `og.jpg` foram
-  gerados a partir dele. Se a clínica tiver o arquivo vetorial original,
-  vale substituir. O JPG original fica em `referencias/`.
+- Logo: só o símbolo (dente + "GB" + traço), sem a assinatura,
+  vetorizado a partir de `referencias/logo-dr-gustavo-alta.png`.
+  `public/marca/logo.svg` (escuro) e `logo-claro.svg` (fundo escuro).
+  Favicon, ícone do celular e `og.jpg` foram gerados a partir dele.
 - Imagem de compartilhamento: `public/og.jpg` (1200×630). Se o CRO ou a
   foto mudarem, gere de novo.
 
@@ -72,8 +70,7 @@ use `marcarPendencias: true` em `src/config.ts`.
 - Se oferece procedimentos estéticos orofaciais e em que termos.
 - Acessibilidade (entrada, banheiro e estacionamento para cadeirantes).
 - Formas de pagamento (crédito, débito, aproximação).
-- Fotos reais do consultório e uma foto do doutor em alta.
-- Se existe o arquivo vetorial original do logo.
+- Fotos do consultório e, se possível, as fotos originais (não prints).
 - Se pode mostrar a nota do Google (`mostrarNotaGoogle`, desligado).
 
 ## Como foi feito

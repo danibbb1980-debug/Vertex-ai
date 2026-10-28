@@ -4,7 +4,7 @@ import { IconArrow, IconInstagram } from './Icons'
 
 export function Profissional() {
   const p = CONFIG.profissional
-  const foto = CONFIG.fotos.doutor
+  const foto = CONFIG.fotos.retrato
   return (
     <section id="dr-gustavo" aria-labelledby="pro-titulo" className="py-24 md:py-32">
       <div className="shell">

@@ -27,7 +27,7 @@ export function Portrait() {
               alt={foto.alt}
               fetchPriority="high"
               decoding="async"
-              className="absolute inset-0 size-full object-cover object-[50%_12%]"
+              className="absolute inset-0 size-full object-cover object-center"
             />
           </picture>
         ) : (
@@ -36,12 +36,12 @@ export function Portrait() {
           </div>
         )}
       </div>
-      <figcaption className="absolute -bottom-6 -left-2 flex size-28 flex-col items-center justify-center rounded-full border border-line bg-paper text-center shadow-[0_1px_0_rgba(0,0,0,0.02)] md:-left-8 md:size-32">
+      <figcaption className="absolute -bottom-6 -left-2 flex size-[7.5rem] flex-col items-center justify-center rounded-full border border-line bg-paper text-center shadow-[0_1px_0_rgba(0,0,0,0.02)] md:-left-8 md:size-32">
         <span className="num text-[0.62rem] text-mute">Registro</span>
-        <span className="mt-1 font-display text-[1.05rem] leading-tight text-ink">
+        <span className="mt-1 whitespace-nowrap font-display text-[0.88rem] leading-tight text-ink md:text-[1.05rem]">
           <Confirmar tag={false}>{CONFIG.profissional.cro}</Confirmar>
         </span>
-        <span className="mt-1 text-[0.68rem] text-mute">Cirurgião-Dentista</span>
+        <span className="mt-1 whitespace-nowrap text-[0.66rem] text-mute md:text-[0.68rem]">Cirurgião-Dentista</span>
       </figcaption>
     </figure>
   )

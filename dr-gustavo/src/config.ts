@@ -141,16 +141,23 @@ export const CONFIG = {
 
   /* ------------------------------------------------------------------ */
   /* Fotos                                                               */
-  /* Foto do doutor recortada de uma peça antiga (baixa resolução).      */
-  /* Substituir por foto original em alta. Fotos do consultório: vazias. */
+  /* Foto do doutor no consultório (Instagram da clínica), em dois        */
+  /* recortes. Fotos só do consultório: vazias (bloco reservado).         */
   /* ------------------------------------------------------------------ */
   fotos: {
     doutor: {
-      avif: '/fotos/dr-gustavo.avif',
-      webp: '/fotos/dr-gustavo.webp',
-      largura: 292,
-      altura: 640,
-      alt: 'Dr. Gustavo Borges Andrade, de jaleco branco, sorrindo, em retrato no consultório',
+      avif: '/fotos/dr-gustavo-consultorio.avif',
+      webp: '/fotos/dr-gustavo-consultorio.webp',
+      largura: 680,
+      altura: 952,
+      alt: 'Dr. Gustavo Borges Andrade sentado à mesa do consultório, com as mãos entrelaçadas',
+    } as { avif: string; webp: string; largura: number; altura: number; alt: string } | null,
+    retrato: {
+      avif: '/fotos/dr-gustavo-retrato.avif',
+      webp: '/fotos/dr-gustavo-retrato.webp',
+      largura: 460,
+      altura: 613,
+      alt: 'Retrato do Dr. Gustavo Borges Andrade no consultório',
     } as { avif: string; webp: string; largura: number; altura: number; alt: string } | null,
     consultorio: null as { src: string; alt: string } | null,
   },
