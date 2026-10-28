@@ -1,0 +1,542 @@
+@import "tailwindcss";
+
+/* ---------- Fontes auto-hospedadas (sem requisição a terceiros), subset latin ---------- */
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-soft-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+@font-face {
+  font-family: "Fraunces";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-soft-italic.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 1000;
+  src: url("../node_modules/@fontsource-variable/nunito-sans/files/nunito-sans-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+
+/* ---------- Tokens ---------- */
+@theme {
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-round: "Nunito Sans", "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  /* base comum */
+  --color-marfim: #fbf6ee;
+  --color-marfim-2: #f5ede0;
+  --color-tinta: #1b2440;
+  --color-tinta-2: #454d66;
+  --color-ouro: #b48a4e;
+  --color-ouro-claro: #d9b97f;
+  --color-ouro-texto: #80602e;
+  --color-linha: #e6dccb;
+
+  /* Odonto Baixinhos — pastéis do castelo */
+  --color-ceu: #dceff7;
+  --color-ceu-forte: #a9d6ea;
+  --color-ceu-ink: #22617d;
+  --color-rosa: #f9e1e6;
+  --color-rosa-forte: #f0bccb;
+  --color-rosa-ink: #a3405f;
+  --color-menta: #dff2e6;
+  --color-menta-forte: #b5dfc5;
+  --color-menta-ink: #2f6b4c;
+  --color-pessego: #fbe6d5;
+  --color-pessego-forte: #f4c9a6;
+
+  /* Dra. Josiane — creme, madeira, dourado */
+  --color-creme: #f3e8d7;
+  --color-madeira: #c49a6c;
+  --color-caramelo: #8a5e33;
+  --color-noite: #141b33;
+
+  --radius-cartao: 1.5rem;
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 7.5rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    background: var(--color-marfim);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 420;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    text-wrap: balance;
+    font-variation-settings: "SOFT" 50;
+  }
+  h1 em,
+  h2 em,
+  h3 em {
+    font-style: italic;
+    font-weight: 380;
+    color: var(--acento, var(--color-ouro-texto));
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-ceu-ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--color-rosa-forte);
+    color: var(--color-tinta);
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ---------- Personalidades ---------- */
+.tema-baixinhos {
+  --acento: var(--color-rosa-ink);
+  font-family: var(--font-round);
+}
+.tema-baixinhos h2,
+.tema-baixinhos h3 {
+  font-variation-settings: "SOFT" 100;
+  font-weight: 450;
+}
+.tema-josiane {
+  --acento: var(--color-caramelo);
+}
+.tema-josiane h2,
+.tema-josiane h3 {
+  font-variation-settings: "SOFT" 0;
+  font-weight: 360;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Utilitários do projeto ---------- */
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ouro-texto);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.7;
+  }
+
+  .filete {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-ouro) 20%, var(--color-ouro) 80%, transparent);
+    opacity: 0.55;
+  }
+
+  /* Botões */
+  .btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      color 0.3s var(--ease-suave),
+      border-color 0.3s var(--ease-suave),
+      transform 0.3s var(--ease-suave);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--btn-varredura, rgba(255, 255, 255, 0.14));
+    transform: translateX(-101%);
+    transition: transform 0.5s var(--ease-suave);
+  }
+  @media (hover: hover) {
+    .btn:hover::after {
+      transform: translateX(0);
+    }
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-tinta {
+    background: var(--color-tinta);
+    color: var(--color-marfim);
+  }
+  .btn-contorno {
+    border: 1.5px solid color-mix(in srgb, var(--color-tinta) 30%, transparent);
+    color: var(--color-tinta);
+    --btn-varredura: color-mix(in srgb, var(--color-tinta) 7%, transparent);
+  }
+  .btn-ceu {
+    background: var(--color-ceu-forte);
+    color: var(--color-tinta);
+    --btn-varredura: rgba(255, 255, 255, 0.3);
+  }
+  .btn-ouro {
+    background: var(--color-ouro-claro);
+    color: var(--color-tinta);
+    --btn-varredura: rgba(255, 255, 255, 0.28);
+  }
+  .btn-marfim-contorno {
+    border: 1.5px solid color-mix(in srgb, var(--color-marfim) 40%, transparent);
+    color: var(--color-marfim);
+  }
+
+  /* Cartão com luz que segue o ponteiro (inspirado no "Spotlight" do 21st.dev) */
+  .cartao-luz {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .cartao-luz::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0;
+    background: radial-gradient(
+      22rem circle at var(--mx, 50%) var(--my, 50%),
+      var(--luz, rgba(255, 255, 255, 0.75)),
+      transparent 70%
+    );
+    transition: opacity 0.4s var(--ease-suave);
+  }
+  @media (hover: hover) {
+    .cartao-luz:hover::before {
+      opacity: 1;
+    }
+  }
+
+  /* Placeholder visível */
+  .confirmar {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ouro-texto);
+    border: 1px dashed var(--color-ouro);
+    border-radius: 999px;
+    padding: 0.1rem 0.55rem;
+    white-space: nowrap;
+  }
+}
+
+/* ---------- Revelação ao rolar ---------- */
+.js .revela {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s var(--ease-suave),
+    transform 0.9s var(--ease-suave);
+  transition-delay: var(--atraso, 0ms);
+}
+.js .revela.visivel {
+  opacity: 1;
+  transform: none;
+}
+
+/* Título palavra por palavra (inspirado no "Text Reveal" do 21st.dev) */
+.palavra {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.45em);
+  animation: palavra-sobe 1s var(--ease-suave) forwards;
+  animation-delay: calc(var(--i) * 70ms + 120ms);
+}
+@keyframes palavra-sobe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Linha dourada desenhada */
+.linha-desenha {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: desenha 2.2s var(--ease-suave) 0.6s forwards;
+}
+@keyframes desenha {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Marquee (inspirado no "Marquee" do 21st.dev: pausa no hover/foco e fora da tela) */
+.marquee-trilho {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+.marquee:hover .marquee-trilho,
+.marquee:focus-within .marquee-trilho,
+.marquee[data-pausado="true"] .marquee-trilho {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Abertura do conteúdo do FAQ */
+.abre {
+  animation: abre 0.45s var(--ease-suave);
+}
+@keyframes abre {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .js .revela,
+  .palavra {
+    opacity: 1;
+    transform: none;
+  }
+  .linha-desenha {
+    stroke-dashoffset: 0;
+  }
+  .marquee-trilho {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+  }
+  .marquee-trilho > [aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* ---------- Portas do hero ---------- */
+.porta {
+  --abre: 16deg;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 999px 999px 12px 12px;
+}
+.porta-moldura {
+  position: relative;
+  padding: 7%;
+  padding-bottom: 0;
+  aspect-ratio: 3 / 4.15;
+}
+.porta-vao {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 999px 999px 4px 4px;
+  perspective: 1100px;
+  background: var(--color-tinta);
+}
+.porta-foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  transform: scale(1.08);
+  transition: transform 1.2s var(--ease-suave);
+}
+.porta-sombra {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(20, 27, 51, 0.35), transparent 60%);
+  transition: opacity 0.9s var(--ease-suave);
+}
+.porta-folha {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  transform: rotateY(calc(var(--abre) * var(--sentido)));
+  transition: transform 1.1s var(--ease-suave);
+  will-change: transform;
+}
+.porta-macaneta {
+  position: absolute;
+  top: 56%;
+  width: 7%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, #f3dfb4, var(--color-ouro) 70%);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+@media (hover: hover) {
+  .porta:hover {
+    --abre: 64deg;
+  }
+  .porta:hover .porta-foto {
+    transform: scale(1);
+  }
+  .porta:hover .porta-sombra {
+    opacity: 0;
+  }
+}
+.porta:focus-visible {
+  --abre: 64deg;
+  outline-offset: 6px;
+}
+.porta:focus-visible .porta-sombra {
+  opacity: 0;
+}
+
+/* Odonto Baixinhos: torre pastel com ameias, folha pêssego com tábuas suaves */
+.porta-baixinhos .porta-moldura {
+  background: var(--color-ceu);
+  border-radius: 6px 6px 0 0;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ceu-forte) 70%, transparent);
+}
+.porta-baixinhos .porta-ameias {
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  top: -6%;
+  height: 7%;
+  width: 108%;
+  color: var(--color-menta-forte);
+}
+.porta-baixinhos .porta-vao {
+  box-shadow: 0 0 0 5px var(--color-rosa);
+}
+.porta-baixinhos .porta-folha {
+  --sentido: -1;
+  transform-origin: 0% 50%;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(25% - 1px), rgba(163, 64, 95, 0.12) calc(25% - 1px) 25%),
+    linear-gradient(180deg, #fde9da, var(--color-pessego-forte));
+}
+.porta-baixinhos .porta-macaneta {
+  right: 10%;
+}
+
+/* Dra. Josiane: arco de madeira, folha em tinta com treliça dourada (como o portão real) */
+.porta-josiane .porta-moldura {
+  background: linear-gradient(160deg, #d2ad80, var(--color-madeira) 45%, #a77c50);
+  border-radius: 999px 999px 0 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 240, 215, 0.35);
+}
+.porta-josiane .porta-brilho {
+  position: absolute;
+  top: -9%;
+  left: 50%;
+  width: 9%;
+  translate: -50% 0;
+  color: var(--color-ouro);
+}
+.porta-josiane .porta-vao {
+  box-shadow: 0 0 0 1.5px var(--color-ouro-claro);
+}
+.porta-josiane .porta-folha {
+  --sentido: 1;
+  transform-origin: 100% 50%;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 17px, rgba(217, 185, 127, 0.55) 17px 18px),
+    repeating-linear-gradient(-45deg, transparent 0 17px, rgba(217, 185, 127, 0.55) 17px 18px),
+    linear-gradient(180deg, #232d4f, var(--color-tinta));
+}
+.porta-josiane .porta-macaneta {
+  left: 10%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .porta,
+  .porta:hover,
+  .porta:focus-visible {
+    --abre: 22deg;
+  }
+}
+
+/* Etapas: o número ganha cor quando a etapa aparece */
+.etapa-marca {
+  transition:
+    background-color 0.8s var(--ease-suave),
+    color 0.8s var(--ease-suave);
+}
+.etapa.visivel .etapa-marca {
+  background: var(--color-tinta);
+  color: var(--color-ouro-claro);
+  transition-delay: 0.25s;
+}
