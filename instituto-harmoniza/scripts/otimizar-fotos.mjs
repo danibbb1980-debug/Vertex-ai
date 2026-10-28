@@ -31,9 +31,9 @@ for (const t of tarefas) {
   console.log("ok", t.para);
 }
 
-// Favicon e ícone a partir do símbolo do instituto (avatar do Instagram).
-await sharp("referencias/logo/simbolo-avatar-instagram.jpg").resize(64).png().toFile("public/marca/favicon.png");
-await sharp("referencias/logo/simbolo-avatar-instagram.jpg").resize(180).png().toFile("public/marca/apple-touch-icon.png");
+// Favicon e ícone a partir do símbolo do instituto (versão em fundo café).
+await sharp("referencias/logo/simbolo-fundo-cafe.jpg").resize(64).png().toFile("public/marca/favicon.png");
+await sharp("referencias/logo/simbolo-fundo-cafe.jpg").resize(180).png().toFile("public/marca/apple-touch-icon.png");
 console.log("ok favicon");
 
 // Imagem de compartilhamento (og:image) 1200×630: logo oficial sobre marfim e a curva da identidade.

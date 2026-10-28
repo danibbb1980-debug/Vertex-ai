@@ -100,15 +100,24 @@ export const CONFIG = {
   instagramUsuario: "@institutoharmoniza_",
   googleMaps: "https://maps.app.goo.gl/YA3mu7nT62MLJt897",
 
-  /** CONFIRMAR COM A CLÍNICA: cidade (o Instagram do Dr. João cita Alfenas - MG, mas não é o dado do instituto). */
-  cidade: { valor: "", confirmado: false } as Dado,
-  /** CONFIRMAR COM A CLÍNICA: endereço completo. */
-  endereco: { valor: "[ENDEREÇO A CONFIRMAR]", confirmado: false } as Dado,
+  /** Fonte: ficha do Google Maps do instituto. */
+  cidade: { valor: "Alfenas - MG", confirmado: true } as Dado,
+  /** Fonte: ficha do Google Maps do instituto. */
+  endereco: { valor: "Av. Gov. Valadares, 252 - Centro, Alfenas - MG, 37130-029", confirmado: true } as Dado,
+  /** Mesmo endereço em partes (exibição em duas linhas e dados estruturados para o Google). */
+  enderecoPartes: {
+    rua: "Av. Gov. Valadares, 252",
+    bairro: "Centro",
+    cidade: "Alfenas",
+    uf: "MG",
+    cep: "37130-029",
+  },
   /**
-   * URL de incorporação do Google Maps (Compartilhar > Incorporar um mapa > src).
-   * Deixe vazio até o endereço ser confirmado: aí aparece só o botão "Como chegar".
+   * URL de incorporação do Google Maps. O mapa só carrega quando o visitante clica
+   * (sem cookies do Google antes disso). Vazio = sem mapa, só o botão "Como chegar".
    */
-  mapaEmbedUrl: "",
+  mapaEmbedUrl:
+    "https://www.google.com/maps?q=Av.%20Gov.%20Valadares%2C%20252%20-%20Centro%2C%20Alfenas%20-%20MG%2C%2037130-029&output=embed",
 
   /** CONFIRMAR COM A CLÍNICA: horários da ficha do Google. */
   horarios: {

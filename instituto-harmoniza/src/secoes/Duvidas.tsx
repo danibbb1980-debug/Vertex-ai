@@ -57,7 +57,7 @@ function perguntas(): Pergunta[] {
       p: "Onde fica e quais são os horários?",
       r: (
         <>
-          {CONFIG.endereco.valor}
+          Na {CONFIG.endereco.valor}
           <Confirmar mostrar={!CONFIG.endereco.confirmado} valor={CONFIG.endereco.valor} />. Atendimento de segunda a sexta, das {semana.horas}, e aos
           sábados, das {sabado.horas}. {CONFIG.horarios.observacao}
           <Confirmar mostrar={!CONFIG.horarios.confirmado} />

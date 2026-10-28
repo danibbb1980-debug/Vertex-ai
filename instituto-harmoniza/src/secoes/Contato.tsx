@@ -7,27 +7,11 @@ import { Revelar } from "../components/Revelar";
 import { Botao } from "../components/Botao";
 import { IconeInstagram, IconeMapa, IconeWhatsApp } from "../components/Icones";
 import { Foto } from "../components/Foto";
-
-function MapaReservado() {
-  return (
-    <svg viewBox="0 0 600 480" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-hidden="true">
-      <rect width="600" height="480" fill="#ece3d5" />
-      <g fill="none" stroke="#7a5a2a" strokeOpacity="0.18" strokeWidth="1">
-        <path d="M-20 120 C 120 100, 220 160, 360 130 S 560 90, 640 110" />
-        <path d="M-20 300 C 140 280, 260 340, 400 300 S 560 260, 640 290" />
-        <path d="M150 -20 C 170 120, 130 260, 170 500" />
-        <path d="M420 -20 C 400 140, 450 300, 420 500" />
-        <path d="M-20 210 L 640 230" strokeOpacity="0.1" />
-        <path d="M280 -20 L 300 500" strokeOpacity="0.1" />
-      </g>
-      <circle cx="300" cy="225" r="42" fill="#b08a4a" fillOpacity="0.12" />
-      <circle cx="300" cy="225" r="7" fill="#1d1915" />
-    </svg>
-  );
-}
+import { MapaInterativo, MapaReservado } from "../components/Mapa";
 
 export function Contato() {
   const mostrarMapa = Boolean(CONFIG.mapaEmbedUrl && CONFIG.endereco.confirmado);
+  const e = CONFIG.enderecoPartes;
   return (
     <section id="contato" aria-labelledby="titulo-contato" className="relative z-10 pt-24 md:pt-36">
       <div className="contem">
@@ -47,8 +31,20 @@ export function Contato() {
             <div>
               <h3 className="rotulo text-bronze">Endereço</h3>
               <address className="mt-3 font-display text-[1.7rem] leading-snug not-italic">
-                {CONFIG.endereco.valor}
-                <Confirmar mostrar={!CONFIG.endereco.confirmado} valor={CONFIG.endereco.valor} />
+                {CONFIG.endereco.confirmado ? (
+                  <>
+                    {e.rua} · {e.bairro}
+                    <br />
+                    <span className="text-suave">
+                      {e.cidade} - {e.uf} · {e.cep}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    {CONFIG.endereco.valor}
+                    <Confirmar valor={CONFIG.endereco.valor} />
+                  </>
+                )}
               </address>
             </div>
 
@@ -87,15 +83,6 @@ export function Contato() {
           </Revelar>
 
           <Revelar atraso={120} className="relative min-h-[420px] overflow-hidden rounded-[28px] border border-linha lg:col-span-7">
-            {mostrarMapa ? (
-              <iframe
-                title={`Mapa: localização do ${CONFIG.nome}`}
-                src={CONFIG.mapaEmbedUrl}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 h-full w-full border-0"
-              />
-            ) : (
               <>
                 {CONFIG.fotos.contato ? (
                   <>
@@ -125,23 +112,23 @@ export function Contato() {
                     Como chegar
                   </Botao>
                   <p className={`max-w-[36ch] text-[0.82rem] ${CONFIG.fotos.contato ? "text-marfim/90" : "text-suave"}`}>
-                    Abre a localização no Google Maps. O mapa interativo entra aqui quando o endereço for confirmado.
+                    Abre a rota até o instituto no Google Maps.
                   </p>
                 </div>
               </>
-            )}
           </Revelar>
         </div>
+
+        {mostrarMapa && (
+          <Revelar className="mt-6">
+            <MapaInterativo />
+          </Revelar>
+        )}
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Botao href={linkWhatsApp()} externo icone="whatsapp">
             Agendar pelo WhatsApp
           </Botao>
-          {mostrarMapa && (
-            <Botao href={CONFIG.googleMaps} externo variante="secundario" icone={<IconeMapa tamanho={17} />}>
-              Como chegar
-            </Botao>
-          )}
         </div>
       </div>
 

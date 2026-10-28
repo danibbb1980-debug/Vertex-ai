@@ -24,7 +24,7 @@ Quase tudo fica em **`src/config.ts`** (fonte única de dados):
 | O quê | Campo |
 |---|---|
 | WhatsApp, telefone, Instagram, link do Maps | `whatsapp`, `telefoneExibicao`, `instagram`, `googleMaps` |
-| Endereço, cidade, mapa embutido | `endereco`, `cidade`, `mapaEmbedUrl` |
+| Endereço, cidade, mapa embutido | `endereco`, `enderecoPartes`, `cidade`, `mapaEmbedUrl` |
 | Horários | `horarios` |
 | Atendimentos (texto, mensagem de WhatsApp, liga/desliga) | `atendimentos` |
 | Profissionais (CRO, Instagram, foto) | `profissionais` |
@@ -54,7 +54,8 @@ instituto, em `src/secoes/Instituto.tsx`.
 
 Hoje:
 - **Logo:** recortado da arte oficial do instituto (sem redesenho), com fundo
-  transparente. Vale pedir o arquivo vetorial (SVG/PDF) para trocar.
+  transparente. O ícone da aba usa o símbolo em fundo café. Vale pedir o
+  arquivo vetorial (SVG/PDF) para trocar.
 - **Retratos:** fotos de perfil do Instagram (150 px). Pedir fotos em alta.
 - **Fotos do espaço:** recepção (hero), sala de espera ("Estrutura e conforto") e
   fachada ("Localização e contato"), recortadas de capturas da ficha do Google
@@ -90,10 +91,9 @@ avaliação" e fica fora do Google em três camadas: meta `robots`/`googlebot`,
 
 ## O que a clínica precisa confirmar
 
-- [ ] Endereço completo e cidade (e se pode embutir o mapa)
 - [ ] CRO da Dra. Poly Anderson (CRO-MG 48027?) e do Dr. João Ricardo
 - [ ] Responsável técnico e CRO do instituto (obrigatório no rodapé)
-- [ ] Horários (seg a sex 08h–19h, sáb 08h–12h, domingo fechado)
+- [ ] Horários (seg a sex 08h–19h, sáb 08h–12h, domingo fechado), conforme a ficha do Google
 - [ ] Atendimentos oferecidos: odontologia estética, atendimento pediátrico, sedação
 - [ ] Harmonização orofacial: se é oferecida pelo instituto e por quem
 - [ ] Sedação: como é feita e por quem, para revisar o texto

@@ -47,8 +47,18 @@ export function Rodape() {
               </a>
             </li>
             <li className="pt-1">
-              {CONFIG.endereco.valor}
-              <Confirmar mostrar={!CONFIG.endereco.confirmado} valor={CONFIG.endereco.valor} />
+              {CONFIG.endereco.confirmado ? (
+                <>
+                  {CONFIG.enderecoPartes.rua} - {CONFIG.enderecoPartes.bairro}
+                  <br />
+                  {CONFIG.enderecoPartes.cidade} - {CONFIG.enderecoPartes.uf}, {CONFIG.enderecoPartes.cep}
+                </>
+              ) : (
+                <>
+                  {CONFIG.endereco.valor}
+                  <Confirmar valor={CONFIG.endereco.valor} />
+                </>
+              )}
             </li>
           </ul>
         </div>

@@ -26,7 +26,17 @@ function metasDoConfig(): Plugin {
     logo: `${CONFIG.siteUrl}${CONFIG.logo}.png`,
   };
   if (og) ld.image = og;
-  if (CONFIG.endereco.confirmado) ld.address = CONFIG.endereco.valor;
+  if (CONFIG.endereco.confirmado) {
+    const e = CONFIG.enderecoPartes;
+    ld.address = {
+      "@type": "PostalAddress",
+      streetAddress: e.rua,
+      addressLocality: e.cidade,
+      addressRegion: e.uf,
+      postalCode: e.cep,
+      addressCountry: "BR",
+    };
+  }
 
   const robots = CONFIG.rascunho ? "noindex, nofollow" : "index, follow";
 
