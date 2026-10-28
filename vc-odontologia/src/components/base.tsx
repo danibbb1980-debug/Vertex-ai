@@ -1,5 +1,5 @@
 import type { ReactNode, SVGProps } from 'react'
-import { CONFIG, linkWhatsApp } from '../config'
+import { linkWhatsApp } from '../config'
 
 export const linkPrivacidade = '/privacidade.html'
 
@@ -151,33 +151,6 @@ export function Logo({ tamanho = 44, className = '' }: { tamanho?: number; class
       className={`rounded-full ${className}`}
     />
   )
-}
-
-/* ---------- Placeholders de dados a confirmar ---------- */
-
-/** Texto com placeholder visível: o que estiver entre colchetes vira marcação. */
-export function ComConfirmar({ texto }: { texto: string }) {
-  const partes = texto.split(/(\[[^\]]+\])/g)
-  return (
-    <>
-      {partes.map((p, i) =>
-        p.startsWith('[') ? (
-          // CONFIRMAR COM A CLÍNICA
-          <span key={i} className="confirmar" title="Informação a confirmar com a clínica">
-            {p}
-          </span>
-        ) : (
-          p
-        ),
-      )}
-    </>
-  )
-}
-
-/** Selo "a confirmar": só aparece no modo rascunho. */
-export function SeloConfirmar({ children = 'A confirmar com a clínica', className = '' }: { children?: ReactNode; className?: string }) {
-  if (!CONFIG.rascunho) return null
-  return <span className={`selo-confirmar ${className}`}>{children}</span>
 }
 
 /* ---------- Foto otimizada (AVIF + WebP) ---------- */

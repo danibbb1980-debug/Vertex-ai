@@ -4,18 +4,13 @@ import {
   Arco,
   BotaoWhatsApp,
   CabecalhoSecao,
-  ComConfirmar,
   Foto,
-  IconeAcesso,
-  IconeCarro,
-  IconeCartao,
   IconeInstagram,
   IconeLocal,
   IconeMais,
   IconeRelogio,
   IconeSeta,
   Logo,
-  SeloConfirmar,
 } from '../components/base'
 
 function Horarios({ claro = false }: { claro?: boolean }) {
@@ -34,13 +29,17 @@ function Horarios({ claro = false }: { claro?: boolean }) {
   )
 }
 
+const ESPACOS = [
+  { nome: 'recepcao', titulo: 'Recepção', alt: 'Recepção da clínica, com balcão de mármore, luminárias pendentes e o logo VC na parede' },
+  { nome: 'sala-de-espera', titulo: 'Sala de espera', alt: 'Sala de espera com poltronas claras, painel de madeira e janela ampla com persianas' },
+  { nome: 'consultorio', titulo: 'Consultório', alt: 'Consultório com cadeira odontológica, bancada clara e iluminação embutida no teto' },
+  { nome: 'sala-de-atendimento', titulo: 'Sala de atendimento', alt: 'Sala com mesa de madeira, cadeiras claras e computador' },
+]
+
 export function Estrutura() {
   const itens = [
-    { Icone: IconeLocal, titulo: 'Endereço', valor: <ComConfirmar texto={enderecoLinha()} /> },
+    { Icone: IconeLocal, titulo: 'Endereço', valor: enderecoLinha() },
     { Icone: IconeRelogio, titulo: 'Horários', valor: <Horarios /> },
-    { Icone: IconeCarro, titulo: 'Estacionamento', valor: <ComConfirmar texto={CONFIG.pendentes.estacionamento} /> },
-    { Icone: IconeAcesso, titulo: 'Acessibilidade', valor: <ComConfirmar texto={CONFIG.pendentes.acessibilidade} /> },
-    { Icone: IconeCartao, titulo: 'Formas de pagamento', valor: <ComConfirmar texto={CONFIG.pendentes.pagamento} /> },
   ]
   return (
     <section aria-labelledby="titulo-estrutura" className="bg-ivory py-24 sm:py-32">
@@ -54,11 +53,7 @@ export function Estrutura() {
                 Uma clínica <em>nova</em>, na Vila Formosa.
               </>
             }
-            intro={
-              CONFIG.rascunho
-                ? 'Um espaço novo, pensado para receber você com calma. Abaixo, o que já está confirmado e o que ainda vamos detalhar.'
-                : 'Um espaço novo, pensado para receber você com calma. Endereço, horários e informações práticas para a sua visita.'
-            }
+            intro="Um espaço novo, pensado para receber você com calma, do primeiro contato na recepção ao consultório."
           />
           <dl className="mt-12 divide-y divide-linho border-y border-linho">
             {itens.map(({ Icone, titulo, valor }) => (
@@ -86,21 +81,34 @@ export function Estrutura() {
               Fachada da clínica, em Alfenas.
             </figcaption>
           </figure>
-          {CONFIG.rascunho && (
-            <div className="grid grid-cols-2 gap-5">
-              {['Recepção', 'Consultório'].map((t) => (
-                <div
-                  key={t}
-                  className="relative flex aspect-[4/3] flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border border-dashed border-ouro/50 bg-linho/60 p-4 text-center text-sm text-tinta-suave"
-                >
-                  <Arco className="absolute -right-10 -top-10 h-32 w-32 text-ouro/25" />
-                  <span className="font-display text-xl italic text-tinta">{t}</span>
-                  Foto do espaço (substituir)
-                </div>
-              ))}
-            </div>
-          )}
         </div>
+      </div>
+
+      {/* O espaço por dentro: fotos reais da clínica */}
+      <div className="container-vc mt-20">
+        <p className="rotulo revela flex items-center gap-4 text-ouro">
+          <span className="filete filete-revela" />O espaço por dentro
+        </p>
+        <ul className="mt-8 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-4">
+          {ESPACOS.map((e, i) => (
+            <li key={e.nome} className="revela" style={{ ['--d' as string]: `${i * 0.08}s` }}>
+              <figure>
+                <div className={`overflow-hidden bg-linho ${i === 0 ? 'rounded-t-[999px] rounded-b-xl' : 'rounded-xl'}`}>
+                  <Foto
+                    nome={e.nome}
+                    larguras={[270, 405]}
+                    sizes="(min-width: 1024px) 17rem, 45vw"
+                    alt={e.alt}
+                    largura={405}
+                    altura={540}
+                    className="aspect-[3/4] h-auto w-full object-cover"
+                  />
+                </div>
+                <figcaption className="mt-3 font-display text-xl italic text-tinta">{e.titulo}</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )
@@ -154,10 +162,12 @@ const DUVIDAS: { p: string; r: string }[] = [
   },
   {
     p: 'Onde fica a clínica e quais os horários?',
-    r: `${enderecoLinha()}. Segunda a sexta, das 09h às 19h; sábado, das 08h às 12h; domingo, fechado. ${CONFIG.observacaoHorarios} [endereço e horários a confirmar]`,
+    r: `${enderecoLinha()}. Segunda a sexta, das 09h às 19h; sábado, das 08h às 12h; domingo, fechado. ${CONFIG.observacaoHorarios}`,
   },
-  { p: 'Quais são as formas de pagamento?', r: CONFIG.pendentes.pagamento },
-  { p: 'A clínica atende convênios?', r: CONFIG.pendentes.convenios },
+  {
+    p: 'O que acontece depois da avaliação?',
+    r: 'Você recebe a explicação das possibilidades para o seu caso e decide com calma. Se quiser seguir, combinamos juntos as etapas do planejamento.',
+  },
 ]
 
 export function Duvidas() {
@@ -189,9 +199,7 @@ export function Duvidas() {
                 </span>
               </summary>
               <div className="resposta pb-7 pl-12 pr-4 leading-relaxed text-tinta-suave sm:pr-16">
-                <p>
-                  <ComConfirmar texto={d.r} />
-                </p>
+                <p>{d.r}</p>
               </div>
             </details>
           ))}
@@ -246,17 +254,13 @@ export function Localizacao() {
             <div className="flex gap-4">
               <IconeLocal tamanho={22} className="mt-1 shrink-0 text-ouro" />
               <div>
-                <p className="text-lg text-tinta">
-                  <ComConfirmar texto={enderecoLinha()} />
-                </p>
-                <SeloConfirmar className="mt-3 text-ouro">Endereço a confirmar</SeloConfirmar>
+                <p className="text-lg text-tinta">{enderecoLinha()}</p>
               </div>
             </div>
             <div className="flex gap-4">
               <IconeRelogio tamanho={22} className="mt-1 shrink-0 text-ouro" />
               <div className="flex-1">
                 <Horarios />
-                <SeloConfirmar className="mt-3 text-ouro">Horários a confirmar</SeloConfirmar>
               </div>
             </div>
           </div>
@@ -338,11 +342,11 @@ export function Rodape() {
             <p className="mt-4 text-ivory">{CONFIG.otavio.nome}</p>
             <p>Responsável técnico</p>
             <p>
-              <ComConfirmar texto={CONFIG.otavio.cro} />
+              {CONFIG.otavio.cro}
             </p>
             <p className="mt-4 text-ivory">{CONFIG.tales.nome}</p>
             <p>
-              <ComConfirmar texto={CONFIG.tales.cro} />
+              {CONFIG.tales.cro}
             </p>
           </div>
           <div className="text-sm">
@@ -364,7 +368,7 @@ export function Rodape() {
                 </a>
               </li>
               <li className="pt-2">
-                <ComConfirmar texto={enderecoLinha()} />
+                {enderecoLinha()}
               </li>
             </ul>
           </div>

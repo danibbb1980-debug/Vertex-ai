@@ -17,8 +17,9 @@ Todos os dados ficam em **`src/config.ts`**: nome, WhatsApp, Instagram, Maps,
 endereço, horários, profissionais (CRO, áreas), atendimentos e mensagens do WhatsApp.
 Os textos das seções ficam em `src/sections/`.
 
-Texto entre colchetes, como `[formas de pagamento a confirmar]`, aparece no site
-como placeholder tracejado. Basta trocar pelo dado confirmado.
+O site não mostra marcações "a confirmar": o que ainda não foi confirmado
+(pagamento, convênios, estacionamento, acessibilidade) simplesmente não aparece.
+A lista de pendências fica abaixo e nos comentários `CONFIRMAR COM A CLÍNICA` do código.
 
 ## Ligar e desligar seções
 
@@ -67,12 +68,12 @@ Só depois de a clínica aprovar e confirmar os dados:
 
 ## O que a clínica precisa confirmar
 
-- [ ] **CRO do Dr. Otávio: 71566 ou 91566** (a arte e a bio dizem 71566; o texto de agendamento diz 91566)
+- [ ] **CRO do Dr. Otávio**: o site usa 71566 (arte e bio); o texto de agendamento diz 91566. Confirmar.
 - [ ] Nome completo do Dr. Otávio (Otávio de Carvalho Pereira?) e CRO do Dr. Tales (81321)
 - [ ] Atendimentos oferecidos (hoje: implantes, prótese protocolo, reabilitação oral, diagnóstico e planejamento) e áreas de atuação de cada um
 - [ ] História da clínica (texto da seção "Um novo capítulo") e compromissos de atendimento
 - [ ] Autorização de uso de imagem dos dois doutores
-- [ ] Fotos do espaço interno em alta resolução (recepção, consultório)
+- [ ] Fotos do espaço interno em alta resolução: as atuais (recepção, sala de espera, consultório, sala de atendimento) vêm do Google Maps, com ~200 px, ampliadas. A TV do consultório foi desfocada (mostrava uma radiografia)
 - [ ] Logo em alta qualidade (SVG ou PNG transparente, versões clara e escura)
 - [ ] Formas de pagamento e convênios
 - [ ] Estacionamento

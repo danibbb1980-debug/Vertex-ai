@@ -1,6 +1,6 @@
 import type { PointerEvent } from 'react'
 import { CONFIG, linkWhatsApp, type Atendimento } from '../config'
-import { CabecalhoSecao, ComConfirmar, IconeSeta, IconeWhatsApp, SeloConfirmar } from '../components/base'
+import { CabecalhoSecao, IconeSeta, IconeWhatsApp } from '../components/base'
 
 /** Luz suave que acompanha o ponteiro (movida por transform, sem repintar o cartão). */
 function moverLuz(e: PointerEvent<HTMLElement>) {
@@ -64,7 +64,6 @@ export function Atendimentos() {
               </>
             }
             intro="Implantes, próteses e reabilitação oral, sempre a partir de um diagnóstico cuidadoso. Conheça cada atendimento de forma geral; o que é indicado para você, só a avaliação mostra."
-            selo={<SeloConfirmar>Lista de atendimentos a confirmar</SeloConfirmar>}
           />
         </div>
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:gap-6">
@@ -72,12 +71,6 @@ export function Atendimentos() {
             <Cartao key={a.id} a={a} i={i} />
           ))}
         </div>
-        {CONFIG.rascunho && (
-          <p className="mt-6 text-sm text-tinta-suave">
-            {/* CONFIRMAR COM A CLÍNICA */}
-            <ComConfirmar texto={CONFIG.atendimentosExtras} />
-          </p>
-        )}
       </div>
     </section>
   )

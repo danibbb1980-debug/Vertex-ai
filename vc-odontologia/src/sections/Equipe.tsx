@@ -1,14 +1,12 @@
 import { CONFIG, type Profissional } from '../config'
 import {
   CabecalhoSecao,
-  ComConfirmar,
   Foto,
   IconeConversa,
   IconeInstagram,
   IconeLupa,
   IconeOuvir,
   IconePlano,
-  SeloConfirmar,
 } from '../components/base'
 
 const ETAPAS = [
@@ -104,7 +102,7 @@ function CartaoProfissional({ p, i }: { p: Profissional; i: number }) {
           {p.nome}
         </h3>
         <p className="mt-3 text-sm font-semibold tracking-[0.12em] text-tinta-suave">
-          <ComConfirmar texto={p.cro} />
+          {p.cro}
         </p>
         <p className="mt-7 text-sm text-tinta-suave">Áreas de atuação</p>
         <ul className="mt-3 flex flex-wrap gap-2" aria-label={`Áreas de atuação de ${p.nome}`}>
@@ -132,7 +130,6 @@ export function Profissionais() {
             </>
           }
           intro="Atuações que se complementam: de um lado, implantes, diagnóstico e planejamento; do outro, reabilitação oral e função mastigatória."
-          selo={<SeloConfirmar>CRO, áreas e imagens a confirmar</SeloConfirmar>}
         />
         <div className="relative mt-16 grid gap-16 md:grid-cols-2 md:gap-10 lg:gap-20">
           <span aria-hidden="true" className="absolute bottom-0 left-1/2 top-0 hidden w-px bg-gradient-to-b from-transparent via-ouro/40 to-transparent md:block" />
@@ -176,7 +173,6 @@ export function Compromissos() {
               O que guia cada <em>consulta</em>.
             </>
           }
-          selo={<SeloConfirmar>A validar com a clínica</SeloConfirmar>}
         />
         <ul className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {COMPROMISSOS.map(({ Icone, titulo, texto }, i) => (

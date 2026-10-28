@@ -69,6 +69,24 @@ salvar(dupla.crop((0, 260, 3024, 4032)), "dupla-recepcao", [480, 760, 1100])
 fachada = Image.open(REF / "instagram" / "story-fachada-dia.jpg")
 salvar(fachada.crop((0, 120, 720, 1080)), "fachada", [480, 720])
 
+# Fotos internas (Google Maps): originais pequenos (~200x270). Ampliadas 2x com
+# nitidez leve; peça à clínica as versões em alta resolução para substituir.
+from PIL import ImageFilter
+
+def interna(arquivo: str, nome: str, borrar: tuple[int, int, int, int] | None = None) -> None:
+    img = Image.open(REF / "maps" / arquivo).convert("RGB")
+    img = ImageOps.fit(img, (405, 540), Image.LANCZOS)
+    if borrar:  # desfoca uma área (ex.: tela com imagem clínica)
+        img.paste(img.crop(borrar).filter(ImageFilter.GaussianBlur(8)), borrar[:2])
+    img = img.filter(ImageFilter.UnsharpMask(radius=1.2, percent=55, threshold=2))
+    salvar(img, nome, [270, 405])
+
+interna("maps-03.jpg", "recepcao")
+interna("maps-04.jpg", "sala-de-espera")
+# A TV do consultório mostra o que parece uma radiografia: a tela é desfocada.
+interna("maps-09.jpg", "consultorio", borrar=(192, 204, 270, 262))
+interna("maps-07.jpg", "sala-de-atendimento")
+
 # Logo: usado exatamente como enviado (monograma dourado sobre azul-marinho)
 logo = Image.open(REF / "logo-vc-monograma-96px.jpg").convert("RGB")
 logo.save(MARCA / "logo-vc-96.webp", "WEBP", quality=95)

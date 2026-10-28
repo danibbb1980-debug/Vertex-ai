@@ -1,5 +1,5 @@
 import { CONFIG, type Profissional } from '../config'
-import { Arco, BotaoWhatsApp, ComConfirmar, Foto, IconeLocal, IconeSeta } from '../components/base'
+import { Arco, BotaoWhatsApp, Foto, IconeLocal, IconeSeta } from '../components/base'
 
 /** Quebra o título em palavras para a revelação palavra por palavra (CSS). */
 function Palavras({ texto, inicio = 0, italico = false }: { texto: string; inicio?: number; italico?: boolean }) {
@@ -57,7 +57,7 @@ export function Hero() {
           <p className="surge mt-10 flex items-start gap-3 text-sm text-ivory/70" style={{ ['--d' as string]: '1.05s' }}>
             <IconeLocal tamanho={18} className="mt-0.5 shrink-0 text-champagne" />
             <span>
-              <ComConfirmar texto={`${CONFIG.endereco.logradouro} · ${CONFIG.endereco.bairro} · ${CONFIG.endereco.cidade} - ${CONFIG.endereco.uf}`} />
+              {CONFIG.endereco.logradouro} · {CONFIG.endereco.bairro} · {CONFIG.endereco.cidade} - {CONFIG.endereco.uf}
             </span>
           </p>
         </div>
@@ -122,7 +122,7 @@ function Coluna({ prof, lado }: { prof: Profissional; lado: -1 | 1 }) {
         </span>
         <span className="mt-2 block font-display text-lg leading-tight text-ivory sm:text-xl">{prof.nome}</span>
         <span className="mt-1.5 block text-[0.6875rem] font-semibold tracking-[0.04em] text-ivory/70 sm:tracking-[0.08em] lg:whitespace-nowrap lg:text-[0.625rem] lg:tracking-[0.02em]">
-          <ComConfirmar texto={prof.cro} />
+          {prof.cro}
         </span>
       </figcaption>
     </figure>

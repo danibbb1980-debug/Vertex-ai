@@ -39,10 +39,10 @@ export type Atendimento = {
   mensagemWhatsApp: string
 }
 
-// CONFIRMAR COM A CLÍNICA: o CRO do Dr. Otávio aparece como 71566 na arte e
-// na bio, e como 91566 no texto de agendamento. Não escolher um até a clínica
-// confirmar.
-const CRO_OTAVIO = 'CRO-MG [CONFIRMAR: 71566 ou 91566]'
+// O CRO do Dr. Otávio aparece como 71566 na arte e na bio, e como 91566 no
+// texto de agendamento. Por decisão do responsável pelo projeto, o site usa
+// 71566 (arte + bio). CONFIRMAR COM A CLÍNICA antes da versão final.
+const CRO_OTAVIO = 'CRO-MG 71566'
 
 const otavio: Profissional = {
   id: 'otavio',
@@ -174,8 +174,6 @@ export const CONFIG = {
         'Olá! Vi o site da V&C Odontologia e gostaria de agendar uma avaliação para diagnóstico e planejamento.',
     },
   ] satisfies Atendimento[],
-  /** Placeholder visível para a lista de atendimentos. CONFIRMAR COM A CLÍNICA */
-  atendimentosExtras: '[outros atendimentos a confirmar]',
 
   // NÃO mostrar anos de experiência até a clínica comprovar, por profissional
   // e sem superlativo (regras de publicidade do CFO).
@@ -189,13 +187,8 @@ export const CONFIG = {
   mostrarAssinatura: false,
   assinatura: 'Sorrisos transformam o jeito de ver o mundo.',
 
-  // Itens sem informação ainda. CONFIRMAR COM A CLÍNICA
-  pendentes: {
-    pagamento: '[formas de pagamento a confirmar]',
-    convenios: '[convênios a confirmar]',
-    estacionamento: '[estacionamento a confirmar]',
-    acessibilidade: '[acessibilidade a confirmar]',
-  },
+  // Sem informação ainda (não aparecem no site): formas de pagamento, convênios,
+  // estacionamento e acessibilidade. CONFIRMAR COM A CLÍNICA e acrescentar aqui.
 
   /**
    * Formulário "Solicitar agendamento": só monta a mensagem e abre o WhatsApp.

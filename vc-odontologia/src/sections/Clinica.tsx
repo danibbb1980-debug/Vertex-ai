@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { CONFIG } from '../config'
-import { Arco, CabecalhoSecao, Foto, Losango, SeloConfirmar } from '../components/base'
+import { Arco, CabecalhoSecao, Foto, Losango } from '../components/base'
 
 export function Clinica() {
   return (
@@ -21,8 +21,7 @@ export function Clinica() {
             />
           </div>
           <figcaption className="mt-8 text-sm text-tinta-suave">
-            Dr. Tales Vilhena e Dr. Otávio Carvalho, na recepção da clínica.{' '}
-            <SeloConfirmar className="mt-2 text-ouro">Autorização de imagem a confirmar</SeloConfirmar>
+            Dr. Tales Vilhena e Dr. Otávio Carvalho, na recepção da clínica.
           </figcaption>
         </figure>
 
@@ -35,7 +34,6 @@ export function Clinica() {
                 Um novo <em>capítulo</em> em Alfenas.
               </>
             }
-            selo={<SeloConfirmar>História a confirmar com a clínica</SeloConfirmar>}
           />
           <div className="revela mt-8 space-y-5 text-lg leading-relaxed text-tinta-suave" style={{ ['--d' as string]: '0.1s' }}>
             <p>

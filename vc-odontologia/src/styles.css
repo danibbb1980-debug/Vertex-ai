@@ -131,33 +131,6 @@
     opacity: 0.9;
   }
 
-  /* Placeholder visível de dado a confirmar */
-  .confirmar {
-    display: inline;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-    padding: 0.05em 0.4em;
-    border: 1px dashed currentColor;
-    border-radius: 0.25rem;
-    font-size: 0.92em;
-    font-style: normal;
-    opacity: 0.92;
-    white-space: normal;
-  }
-  .selo-confirmar {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.2rem 0.6rem;
-    border: 1px dashed currentColor;
-    border-radius: 999px;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    line-height: 1.5;
-  }
-
   /* Botões */
   .botao {
     position: relative;
