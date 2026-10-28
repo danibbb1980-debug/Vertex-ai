@@ -250,14 +250,6 @@
     vertical-align: middle;
     white-space: nowrap;
   }
-  .placeholder-text {
-    font-weight: 800;
-    color: var(--color-coral-deep);
-    background: var(--color-peach-50);
-    border: 1px dashed var(--color-coral-deep);
-    border-radius: 0.4rem;
-    padding: 0.05rem 0.4rem;
-  }
 }
 
 /* ---------- Movimento ---------- */

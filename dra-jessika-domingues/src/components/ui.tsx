@@ -5,13 +5,8 @@ import { IconWhatsApp } from "./Icons";
 
 /** Marcador "a confirmar", visível só no modo rascunho. */
 export function Confirmar({ texto = "a confirmar" }: { texto?: string }) {
-  if (!CONFIG.rascunho) return null;
+  if (!CONFIG.rascunho || !CONFIG.mostrarMarcadores) return null;
   return <span className="confirmar">{texto}</span>;
-}
-
-/** Texto ainda não informado pela clínica. */
-export function Pendente({ children = "[A CONFIRMAR]" }: { children?: ReactNode }) {
-  return <span className="placeholder-text">{children}</span>;
 }
 
 /** Título de seção com uma palavra em ênfase: use *palavra* no texto. */

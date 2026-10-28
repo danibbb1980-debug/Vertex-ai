@@ -2,7 +2,7 @@ import { useRef, type ReactNode } from "react";
 import { CONFIG, whatsappLink, type Fase } from "../config";
 import { Onda } from "../components/Decor";
 import { IconWhatsApp } from "../components/Icons";
-import { CabecalhoSecao, Confirmar } from "../components/ui";
+import { CabecalhoSecao } from "../components/ui";
 
 /* Ilustrações originais de traço simples, uma por fase. */
 const traco = {
@@ -48,7 +48,7 @@ const IlustraMaxilares = () => (
   </svg>
 );
 
-type Cartao = { fase: Fase; titulo: string; idade: string; texto: string; Ilustra: () => ReactNode; nota?: boolean };
+type Cartao = { fase: Fase; titulo: string; idade: string; texto: string; Ilustra: () => ReactNode };
 
 const CARTOES: Cartao[] = [
   {
@@ -82,7 +82,6 @@ const CARTOES: Cartao[] = [
     texto:
       "A ortopedia funcional dos maxilares é uma área da odontologia que observa o crescimento dos ossos da face e a relação entre as arcadas. Se esse acompanhamento é indicado, e de que forma, é algo que só a avaliação define.",
     Ilustra: IlustraMaxilares,
-    nota: true,
   },
 ];
 
@@ -116,7 +115,6 @@ function CartaoFase({ c, i }: { c: Cartao; i: number }) {
           <p className="text-[0.74rem] font-extrabold tracking-[0.16em] text-sage-deep uppercase">{c.idade}</p>
           <h3 className="mt-2 text-[1.6rem] leading-[1.1] font-normal hyphens-auto md:text-[2rem]">
             {c.titulo}
-            {c.nota ? <Confirmar texto="confirmar se é oferecido" /> : null}
           </h3>
         </div>
         <div className="h-14 w-14 shrink-0 transition-transform duration-700 ease-[var(--ease-soft)] group-hover:rotate-[-6deg] md:h-20 md:w-20">

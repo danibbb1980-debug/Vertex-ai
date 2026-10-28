@@ -1,7 +1,6 @@
-import { CONFIG } from "../config";
 import { Sparkle } from "../components/Decor";
 import { IconChat, IconHeart, IconSprout } from "../components/Icons";
-import { CabecalhoSecao, Confirmar, Pendente } from "../components/ui";
+import { CabecalhoSecao, Confirmar } from "../components/ui";
 
 const PILARES = [
   {
@@ -31,11 +30,6 @@ export function Consultorio() {
             eyebrow="O consultório"
             titulo="Cada criança tem o seu *tempo*."
           />
-          {CONFIG.rascunho && !CONFIG.nomeConsultorio ? (
-            <p className="reveal mt-5 text-sm text-muted">
-              Nome do consultório: <Pendente />
-            </p>
-          ) : null}
         </div>
         <div className="reveal space-y-5 text-lg lg:col-span-6 lg:pt-10" style={{ ["--d" as string]: "120ms" }}>
           <p>

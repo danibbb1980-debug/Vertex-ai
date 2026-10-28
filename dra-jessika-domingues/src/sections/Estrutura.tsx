@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { CONFIG, enderecoCompleto } from "../config";
 import { Moon, Sparkle } from "../components/Decor";
-import { IconAccess, IconCalendar, IconCar, IconCard, IconClock, IconPin, IconShield } from "../components/Icons";
-import { CabecalhoSecao, Confirmar, Pendente } from "../components/ui";
+import { IconCalendar, IconClock, IconPin } from "../components/Icons";
+import { CabecalhoSecao, Confirmar } from "../components/ui";
 
 type Item = { Icone: (p: { size?: number }) => ReactNode; titulo: string; texto: ReactNode };
 
@@ -37,10 +37,6 @@ const ITENS: Item[] = [
       </>
     ),
   },
-  { Icone: IconAccess, titulo: "Acessibilidade", texto: <Pendente /> },
-  { Icone: IconCar, titulo: "Estacionamento", texto: <Pendente /> },
-  { Icone: IconCard, titulo: "Formas de pagamento", texto: <Pendente /> },
-  { Icone: IconShield, titulo: "Convênios", texto: <Pendente /> },
 ];
 
 function FotoReservada({ legenda, className = "" }: { legenda: string; className?: string }) {
@@ -70,7 +66,7 @@ export function Estrutura() {
               id="titulo-estrutura"
               eyebrow="Estrutura e conforto"
               titulo="O que você *encontra* aqui."
-              texto={<p>Informações práticas para a sua visita. Alguns itens ainda estão em confirmação com a clínica.</p>}
+              texto={<p>Informações práticas para a sua visita.</p>}
             />
             <div className="reveal mt-10 grid grid-cols-2 gap-4" style={{ ["--d" as string]: "120ms" }}>
               <FotoReservada legenda="Foto do consultório (substituir)" className="col-span-2 h-48 md:h-56" />
@@ -78,11 +74,11 @@ export function Estrutura() {
               <FotoReservada legenda="Sala (substituir)" className="h-36" />
             </div>
           </div>
-          <ul className="grid content-start gap-4 sm:grid-cols-2 lg:col-span-7">
+          <ul className="grid content-start gap-4 lg:col-span-7">
             {ITENS.map(({ Icone, titulo, texto }, i) => (
               <li
                 key={titulo}
-                className={`reveal card flex gap-4 p-6 ${i < 3 ? "sm:col-span-2" : ""}`}
+                className="reveal card flex gap-4 p-6"
                 style={{ ["--d" as string]: `${i * 60}ms` }}
               >
                 <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-paper text-sage-deep ring-1 ring-line">

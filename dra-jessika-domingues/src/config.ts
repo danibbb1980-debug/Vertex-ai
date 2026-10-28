@@ -7,6 +7,8 @@
 export const CONFIG = {
   /** Faixa "Rascunho" + marcadores "a confirmar" visíveis. */
   rascunho: true,
+  /** Selos "a confirmar" ao lado dos dados pendentes (desligados a pedido). */
+  mostrarMarcadores: false,
 
   /** URL final do site (sem barra no fim). Usada em canonical e og:url. */
   siteUrl: "https://dra-jessika-domingues-rascunho.vercel.app",

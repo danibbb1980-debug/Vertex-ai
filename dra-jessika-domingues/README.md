@@ -22,6 +22,9 @@ precisam de confirmação estão comentados com `CONFIRMAR COM A CLÍNICA`.
   comprovado o registro no CRO. Isso também troca "Odontologia infantil" por
   "Odontopediatria" no logo, no hero e no título da página.
 - **Nota do Google:** `CONFIG.mostrarNotaGoogle` + `CONFIG.notaGoogle`.
+- **Selos "a confirmar":** desligados a pedido (`CONFIG.mostrarMarcadores = false`).
+  Os itens sem informação (formação, acessibilidade, estacionamento, pagamento,
+  convênios, nome do consultório) foram retirados do site; ver a lista abaixo.
 
 ## Fotos e logo
 

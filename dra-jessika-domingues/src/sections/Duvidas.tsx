@@ -1,7 +1,7 @@
 import { useId, useState, type ReactNode } from "react";
 import { CONFIG, enderecoCompleto } from "../config";
 import { IconPlus } from "../components/Icons";
-import { CabecalhoSecao, Confirmar, Pendente } from "../components/ui";
+import { CabecalhoSecao, Confirmar } from "../components/ui";
 
 const PERGUNTAS: { p: string; r: ReactNode }[] = [
   {
@@ -84,7 +84,7 @@ const PERGUNTAS: { p: string; r: ReactNode }[] = [
     p: "Quais são as formas de pagamento? Atende convênio?",
     r: (
       <p>
-        <Pendente>[A CONFIRMAR]</Pendente> Enquanto essa informação não está no site, pergunte pelo WhatsApp.
+        Para saber as formas de pagamento e se há atendimento por convênio, fale com a clínica pelo WhatsApp.
       </p>
     ),
   },

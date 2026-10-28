@@ -1,7 +1,7 @@
 import { CONFIG } from "../config";
 import { Blob, Sparkle } from "../components/Decor";
 import { IconInstagram } from "../components/Icons";
-import { Confirmar, Foto, Pendente, Titulo } from "../components/ui";
+import { Confirmar, Foto, Titulo } from "../components/ui";
 
 export function Profissional() {
   return (
@@ -45,11 +45,6 @@ export function Profissional() {
               A Dra. Jessika Domingues atende bebês, crianças e adolescentes em Alfenas - MG, com atenção para acolher a
               criança e explicar cada etapa para a família.
             </p>
-            {CONFIG.rascunho ? (
-              <p className="text-base text-muted">
-                Formação e cursos: <Pendente />
-              </p>
-            ) : null}
           </div>
 
           <div className="reveal mt-8" style={{ ["--d" as string]: "180ms" }}>
