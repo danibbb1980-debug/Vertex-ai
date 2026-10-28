@@ -1,0 +1,5 @@
+# RASCUNHO: bloqueia toda indexação. Ao publicar a versão final, troque por:
+# User-agent: *
+# Allow: /
+User-agent: *
+Disallow: /
