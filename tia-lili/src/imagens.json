@@ -1,0 +1,46 @@
+{
+  "consultorio": {
+    "largura": 1170,
+    "altura": 1145,
+    "larguras": [
+      480,
+      800,
+      1170
+    ]
+  },
+  "doutora": {
+    "largura": 935,
+    "altura": 1709,
+    "larguras": [
+      480,
+      800
+    ]
+  },
+  "fachada": {
+    "largura": 1170,
+    "altura": 1535,
+    "larguras": [
+      480,
+      800,
+      1170
+    ]
+  },
+  "recepcao": {
+    "largura": 1170,
+    "altura": 1535,
+    "larguras": [
+      480,
+      800,
+      1170
+    ]
+  },
+  "logo": {
+    "largura": 813,
+    "altura": 919,
+    "larguras": [
+      100,
+      200,
+      400
+    ]
+  }
+}

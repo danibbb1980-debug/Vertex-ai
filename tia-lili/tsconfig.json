@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "types": [
+      "vite/client",
+      "node"
+    ],
+    "jsxImportSource": "preact",
+    "paths": {
+      "react": [
+        "./node_modules/preact/compat/"
+      ],
+      "react/jsx-runtime": [
+        "./node_modules/preact/jsx-runtime"
+      ],
+      "react-dom": [
+        "./node_modules/preact/compat/"
+      ],
+      "react-dom/*": [
+        "./node_modules/preact/compat/*"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "vite.config.ts",
+    "seo.ts"
+  ]
+}

@@ -1,0 +1,173 @@
+@import "@fontsource-variable/fraunces/soft.css";
+@import "@fontsource-variable/fraunces/soft-italic.css";
+@import "@fontsource-variable/nunito-sans/wght.css";
+@import "tailwindcss";
+
+/* Paleta derivada do logo: taupe da árvore e do "TiaLili", menta de "Odontopediatra",
+   rosa-malva, amarelo e azul das folhas (usados como acentos, em pouca quantidade). */
+@theme {
+  --color-creme: #fbf7f1;
+  --color-creme-2: #f5eee4;
+  --color-areia: #ebe1d4;
+  --color-cacau: #3a2e28;
+  --color-cacau-2: #4a3c34;
+  --color-taupe: #8a7a6e;
+  --color-taupe-texto: #6a5b50;
+  --color-menta: #9cc6b8;
+  --color-menta-claro: #e2efe9;
+  --color-menta-escuro: #2f6a59;
+  --color-menta-profundo: #24574a;
+  --color-rosa: #d89ca4;
+  --color-rosa-claro: #f7e6e4;
+  --color-malva: #a87884;
+  --color-manteiga: #f4d77a;
+  --color-manteiga-claro: #fbf1cf;
+  --color-ceu: #90a8cc;
+
+  --font-display: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Nunito Sans Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-xl2: 1.75rem;
+  --radius-xl3: 2.5rem;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--color-creme);
+    color: var(--color-cacau);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100;
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  em.enfase, .enfase {
+    font-style: italic;
+    font-weight: 380;
+    color: var(--color-menta-escuro);
+  }
+  .tema-escuro em.enfase, .tema-escuro .enfase { color: var(--color-menta); }
+  ::selection { background: var(--color-menta-claro); color: var(--color-cacau); }
+  :focus-visible {
+    outline: 3px solid var(--color-menta-escuro);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+  .tema-escuro :focus-visible { outline-color: var(--color-manteiga); }
+  img { max-width: 100%; height: auto; }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 75rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .container-site { padding-inline: 2rem; } }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-taupe-texto);
+  }
+
+  .titulo-secao {
+    font-size: clamp(2.1rem, 1.4rem + 3vw, 3.6rem);
+    font-weight: 500;
+  }
+
+  .placeholder-confirmar {
+    display: inline-block;
+    border: 1px dashed var(--color-malva);
+    background: color-mix(in oklab, var(--color-rosa-claro) 70%, white);
+    color: #7a4d58;
+    border-radius: 0.5rem;
+    padding: 0 0.4em;
+    font-size: 0.92em;
+    font-weight: 650;
+  }
+}
+
+/* ---------- Revelação ao rolar (só transform e opacity) ---------- */
+.js .revelar {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 0.8s var(--ease-suave), transform 0.8s var(--ease-suave);
+  transition-delay: var(--atraso, 0s);
+}
+.js .revelar.visivel { opacity: 1; transform: none; }
+
+/* ---------- Text Reveal (adaptado do 21st.dev, sem blur) ---------- */
+.tr-clip { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.12em; margin-bottom: -0.12em; padding-inline: 0.04em; margin-inline: -0.04em; }
+.tr-palavra { display: inline-block; animation: tr-subir 0.9s var(--ease-suave) both; animation-delay: var(--tr-atraso, 0s); }
+@keyframes tr-subir {
+  from { transform: translate3d(0, 105%, 0); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+/* Entrada simples (subtítulo e botões do hero) */
+.entrar { animation: tr-subir 0.9s var(--ease-suave) both; animation-delay: var(--atraso, 0s); }
+
+/* ---------- Elementos que flutuam no hero ---------- */
+.flutuar { animation: flutuar var(--dur, 9s) ease-in-out infinite alternate; animation-delay: var(--atraso, 0s); }
+@keyframes flutuar {
+  from { transform: translate3d(0, -6px, 0) rotate(-3deg); }
+  to { transform: translate3d(0, 8px, 0) rotate(4deg); }
+}
+.pausado .flutuar, .pausado .marquee-trilha { animation-play-state: paused; }
+
+/* ---------- Marquee discreto ---------- */
+.marquee-trilha { animation: marquee 48s linear infinite; }
+.marquee:hover .marquee-trilha, .marquee:focus-within .marquee-trilha { animation-play-state: paused; }
+@keyframes marquee { to { transform: translate3d(-50%, 0, 0); } }
+
+/* ---------- FAQ ---------- */
+.faq-resposta { animation: faq-abrir 0.45s var(--ease-suave) both; }
+@keyframes faq-abrir { from { opacity: 0; transform: translate3d(0, -6px, 0); } to { opacity: 1; transform: none; } }
+
+/* ---------- Cartão com luz que acompanha o cursor (inspirado no Spotlight do 21st.dev) ---------- */
+.cartao-luz { position: relative; isolation: isolate; }
+.cartao-luz::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in oklab, var(--luz, var(--color-menta)) 38%, transparent), transparent 62%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-suave);
+  z-index: -1;
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cartao-luz:hover::before { opacity: 1; }
+}
+
+/* ---------- Movimento reduzido: versão estática ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .revelar { opacity: 1; transform: none; transition: none; }
+  .tr-palavra, .entrar, .flutuar, .marquee-trilha, .faq-resposta { animation: none !important; }
+  .marquee-trilha { transform: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
