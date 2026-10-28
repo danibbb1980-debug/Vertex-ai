@@ -1,16 +1,22 @@
-import { CONFIG } from '../config'
+import { LOGO } from './logo-paths'
 
-/** Logo oficial (recortado do JPG original, sem redesenho). */
-export function Logo({ tone = 'dark', className = '', lazy = false }: { tone?: 'dark' | 'light'; className?: string; lazy?: boolean }) {
+/** Símbolo do logo em SVG (herda a cor do texto: escuro ou claro). */
+export function Logo({ tone = 'dark', className = '' }: { tone?: 'dark' | 'light'; className?: string }) {
   return (
-    <img
-      src={tone === 'dark' ? '/marca/logo-escuro.webp' : '/marca/logo-claro.webp'}
-      width={220}
-      height={140}
-      loading={lazy ? 'lazy' : undefined}
-      alt={`${CONFIG.profissional.assinatura}, Odontologia`}
-      className={`block h-auto ${className}`}
-      decoding="async"
-    />
+    <svg
+      viewBox={LOGO.viewBox}
+      role="img"
+      aria-label="GB, Gustavo Borges Andrade Odontologia"
+      fill="currentColor"
+      className={`block h-auto ${tone === 'dark' ? 'text-ink' : 'text-on-night'} ${className}`}
+    >
+      <path d={LOGO.tooth} />
+      <path d={LOGO.outline} fill="none" stroke="currentColor" strokeWidth={15} strokeLinecap="round" strokeLinejoin="round" />
+      <g stroke="currentColor" strokeWidth={7} strokeLinejoin="round">
+        <path d={LOGO.g} />
+        <path d={LOGO.b} />
+      </g>
+      <rect {...LOGO.bar} />
+    </svg>
   )
 }

@@ -54,7 +54,7 @@ export function Estrutura() {
                 </li>
               ))}
             </ul>
-            {CONFIG.rascunho ? <p className="mt-3"><span className="confirmar-tag !ml-0">a confirmar</span></p> : null}
+            {CONFIG.marcarPendencias ? <p className="mt-3"><span className="confirmar-tag !ml-0">a confirmar</span></p> : null}
           </div>
           <div className="card p-8" data-reveal style={{ ['--d' as string]: '160ms' }}>
             <div className="flex items-center gap-4">

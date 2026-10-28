@@ -64,7 +64,7 @@ export function Header() {
       </a>
       <div className="shell flex h-[var(--header-h)] items-center justify-between gap-6">
         <a href="#topo" className="flex min-h-12 shrink-0 items-center" aria-label="Dr. Gustavo Borges Andrade, início da página">
-          <Logo className="w-[5.5rem] md:w-[6.25rem]" />
+          <Logo className="w-[6.25rem] md:w-[7.25rem]" />
         </a>
 
         <nav aria-label="Principal" className="hidden lg:block">

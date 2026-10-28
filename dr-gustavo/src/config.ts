@@ -2,7 +2,7 @@
  * Todos os dados do site ficam aqui.
  * Itens com "CONFIRMAR COM A CLÍNICA" vieram da ficha do Google, do Instagram
  * ou de material antigo e precisam ser validados antes de o site ir ao ar.
- * Na tela, eles aparecem com a marcação "a confirmar" enquanto `rascunho` = true.
+ * Com `marcarPendencias: true`, eles aparecem na tela com a marcação "a confirmar".
  */
 
 export type SecaoId =
@@ -35,8 +35,10 @@ export const CONFIG = {
   /* ------------------------------------------------------------------ */
   /* Modo rascunho                                                       */
   /* ------------------------------------------------------------------ */
-  /** true: mostra a faixa de rascunho e as marcações "a confirmar". */
+  /** true: mostra a faixa de rascunho e aplica noindex. */
   rascunho: true,
+  /** true: marca na tela os dados que ainda precisam de confirmação ("a confirmar"). */
+  marcarPendencias: false,
   textoRascunho: 'Rascunho para avaliação. Informações sujeitas a confirmação.',
 
   /** URL absoluta usada em canonical, og:url e og:image. Nunca localhost. */

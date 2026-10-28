@@ -11,7 +11,7 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
     <footer className="border-t border-line bg-sand/60 pb-28 pt-16 text-[0.95rem] md:pb-24">
       <div className="shell grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5">
-          <Logo lazy={!minimal} className="w-32" />
+          <Logo className="w-32" />
           <p className="mt-6 font-display text-[1.3rem] text-ink">{p.nome}</p>
           <p className="text-ink-2">
             {p.titulo} · <Confirmar>{p.cro}</Confirmar>

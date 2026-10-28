@@ -37,21 +37,27 @@ Cada atendimento também tem `mostrar: true/false`.
 - Foto do consultório: coloque em `public/fotos/` e preencha
   `CONFIG.fotos.consultorio` (`{ src, alt }`). Sem foto, aparece um bloco
   reservado "Foto do consultório (substituir)".
-- Logo: `public/marca/logo-escuro.webp` (fundo claro) e `logo-claro.webp`
-  (fundo escuro). Foram recortados do JPG original de 96×96 px, sem
-  redesenho. **Um PNG ou SVG do logo com fundo transparente, em alta,
-  melhoraria bastante a nitidez.** Os originais ficam em `referencias/`.
+- Logo: só o símbolo (dente + "GB" + traço), sem a assinatura. Foi
+  redesenhado em vetor a partir do JPG original de 96×96 px: o dente
+  preto foi traçado do original, o dente vazado redesenhado como linha e
+  o "GB" composto em Playfair Display Bold convertida em curvas. Fica em
+  `src/components/logo-paths.ts` (usado no site, herda a cor) e em
+  `public/marca/logo.svg`. Favicon, ícone do celular e `og.jpg` foram
+  gerados a partir dele. Se a clínica tiver o arquivo vetorial original,
+  vale substituir. O JPG original fica em `referencias/`.
 - Imagem de compartilhamento: `public/og.jpg` (1200×630). Se o CRO ou a
   foto mudarem, gere de novo.
 
 ### Tirar do modo rascunho
-1. `src/config.ts`: `rascunho: false` (some a faixa, as marcações
-   "a confirmar" e as metas `noindex`).
+1. `src/config.ts`: `rascunho: false` (some a faixa e as metas `noindex`).
 2. Apague `public/robots.txt` (ou troque por `Allow: /`).
 3. Remova a linha `X-Robots-Tag` de `public/_headers` e de `vercel.json`.
 4. Ajuste `siteUrl` para o domínio final.
 
 ## O que a clínica precisa confirmar
+As marcações "a confirmar" estão desligadas na tela. Para revê-las,
+use `marcarPendencias: true` em `src/config.ts`.
+
 - Nome oficial do consultório ("Clínica Dr. Gustavo Odontologia" veio do
   Instagram; uma peça antiga usa "Clínica Odontológica RT Dr. Gustavo
   Borges Andrade").
@@ -67,7 +73,7 @@ Cada atendimento também tem `mostrar: true/false`.
 - Acessibilidade (entrada, banheiro e estacionamento para cadeirantes).
 - Formas de pagamento (crédito, débito, aproximação).
 - Fotos reais do consultório e uma foto do doutor em alta.
-- Logo em PNG/SVG com fundo transparente.
+- Se existe o arquivo vetorial original do logo.
 - Se pode mostrar a nota do Google (`mostrarNotaGoogle`, desligado).
 
 ## Como foi feito

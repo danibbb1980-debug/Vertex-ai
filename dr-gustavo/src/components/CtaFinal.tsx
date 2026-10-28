@@ -13,7 +13,7 @@ export function CtaFinal() {
         ))}
       </svg>
       <div className="shell relative flex flex-col items-center text-center">
-        <Logo tone="light" lazy className="w-28 opacity-90" />
+        <Logo tone="light" className="w-28 opacity-90" />
         <h2 id="cta-titulo" className="mt-10 max-w-[18ch] text-balance text-[clamp(2.4rem,1.5rem+4vw,4.75rem)] text-on-night" data-reveal>
           Seu próximo passo começa com uma <em className="font-[330] text-accent-night">avaliação</em>.
         </h2>

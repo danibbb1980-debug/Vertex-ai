@@ -78,7 +78,7 @@ export function Contato() {
 
             <div data-reveal>
               <h3 className="num text-mute">
-                Horários {CONFIG.rascunho ? <span className="confirmar-tag">a confirmar</span> : null}
+                Horários {CONFIG.marcarPendencias ? <span className="confirmar-tag">a confirmar</span> : null}
               </h3>
               <table className="mt-3 w-full text-[0.97rem]">
                 <caption className="sr-only">Horários de atendimento, com intervalo de almoço</caption>
