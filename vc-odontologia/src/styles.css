@@ -17,6 +17,7 @@
   --color-tinta: #0e1728;
   --color-tinta-suave: #475069;
   --color-azul: #2c4a85;
+  --color-erro: #9f2626;
 
   --font-display: 'Cormorant Garamond', 'Cormorant Fallback', Georgia, 'Times New Roman', serif;
   --font-sans: 'Manrope Variable', 'Manrope Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -231,6 +232,83 @@
     background: rgb(14 23 40 / 0.04);
   }
 
+  /* Formulário de agendamento */
+  .rotulo-campo {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-tinta);
+  }
+  .campo {
+    display: block;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid rgb(14 23 40 / 0.5);
+    border-radius: 0.75rem;
+    background: #fff;
+    color: var(--color-tinta);
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.4;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .campo::placeholder {
+    color: #6b7180;
+  }
+  .campo:hover {
+    border-color: rgb(14 23 40 / 0.75);
+  }
+  .campo:focus-visible {
+    outline: none;
+    border-color: var(--color-azul);
+    box-shadow: 0 0 0 3px rgb(44 74 133 / 0.28);
+  }
+  .campo[aria-invalid='true'] {
+    border-color: var(--color-erro);
+    box-shadow: 0 0 0 1px var(--color-erro);
+  }
+  .campo:disabled {
+    cursor: not-allowed;
+    background: #f3efe7;
+    color: #5b6170;
+    border-color: rgb(14 23 40 / 0.3);
+  }
+  .campo-select {
+    appearance: none;
+    padding-right: 2.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%230e1728' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+  }
+  .campo-select:disabled {
+    background-color: #f3efe7;
+  }
+  input[type='date'].campo {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .botao:disabled {
+    cursor: progress;
+    opacity: 0.85;
+  }
+  .carregando {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 999px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    animation: girar 0.8s linear infinite;
+  }
+  @keyframes girar {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   .link-sublinhado {
     text-decoration: underline;
     text-decoration-thickness: 1px;
@@ -376,6 +454,9 @@ details.duvida[open] .resposta {
   .botao .seta,
   details.duvida .mais {
     transition: none;
+  }
+  .carregando {
+    animation-duration: 2.4s;
   }
 }
 

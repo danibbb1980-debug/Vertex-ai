@@ -1,7 +1,8 @@
 # V&C Odontologia (Vilhena Carvalho) · site rascunho
 
 Site de página única da V&C Odontologia, em Alfenas - MG. Vite + React + TypeScript +
-Tailwind + motion, estático, sem backend. Contato só por WhatsApp.
+Tailwind + motion, estático, sem backend. Todo contato acontece pelo WhatsApp
+(inclusive o formulário de agendamento, que só monta a mensagem).
 
 ```bash
 npm install
@@ -26,6 +27,17 @@ Em `src/config.ts`, `CONFIG.secoes`. Para uma versão curta, deixe só `atendime
 
 - Nota do Google: `mostrarNotaGoogle: true` e preencha `notaGoogle` (só com avaliações reais).
 - Anos de experiência: `mostrarAnosDeExperiencia` fica `false` até a clínica comprovar.
+
+## Formulário "Solicitar agendamento" (#agendar)
+
+Não guarda nem envia dados: monta a mensagem e abre `wa.me` em nova aba. Regras em
+`src/lib/agenda.ts`; ajustes em `CONFIG.agendamento`:
+
+- `exigirAtendimento`: torna o campo "Atendimento desejado" obrigatório.
+- `intervaloAlmoco`: horários excluídos da lista (hoje `12:00–13:00`, **a confirmar**; `null` = sem intervalo).
+- `atendeUrgencia`: mostra o aviso "Está com dor ou urgência?" (desligado: a clínica não é pronto-socorro).
+- Dias e horários vêm de `CONFIG.horarios`: dias fechados e datas passadas são bloqueados;
+  os horários são blocos de 1 hora, sem o almoço e sem o horário de fechamento.
 
 ## Trocar fotos e logo
 
@@ -66,6 +78,7 @@ Só depois de a clínica aprovar e confirmar os dados:
 - [ ] Estacionamento
 - [ ] Acessibilidade
 - [ ] Endereço e horários, inclusive o horário de segunda-feira (a ficha do Google mostrou feriado)
+- [ ] Intervalo de almoço (o formulário exclui 12h–13h por padrão) e se o atendimento deve ser obrigatório no formulário
 - [ ] Se querem usar a assinatura "Sorrisos transformam o jeito de ver o mundo" (`mostrarAssinatura`)
 - [ ] Texto da página de privacidade
 

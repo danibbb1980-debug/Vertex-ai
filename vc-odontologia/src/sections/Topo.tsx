@@ -8,6 +8,7 @@ export const LINKS = [
   { href: '#profissionais', rotulo: 'Profissionais' },
   { href: '#como-funciona', rotulo: 'Como funciona' },
   { href: '#duvidas', rotulo: 'Dúvidas' },
+  { href: '#agendar', rotulo: 'Agendar' },
   { href: '#contato', rotulo: 'Contato' },
 ]
 
@@ -86,11 +87,11 @@ export function Cabecalho() {
           </span>
         </a>
 
-        <nav aria-label="Principal" className="hidden lg:block">
-          <ul className="flex items-center gap-7 text-sm text-ivory/85">
+        <nav aria-label="Principal" className="hidden xl:block">
+          <ul className="flex items-center gap-5 text-sm text-ivory/85">
             {LINKS.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className="relative py-3 transition-colors hover:text-champagne">
+                <a href={l.href} className="relative whitespace-nowrap py-3 transition-colors hover:text-champagne">
                   {l.rotulo}
                 </a>
               </li>
@@ -103,7 +104,7 @@ export function Cabecalho() {
             href={linkWhatsApp()}
             target="_blank"
             rel="noopener noreferrer"
-            className="botao botao-ouro hidden !min-h-11 !px-5 !py-2.5 text-sm sm:inline-flex"
+            className="botao botao-ouro hidden !min-h-11 whitespace-nowrap !px-5 !py-2.5 text-sm sm:inline-flex"
           >
             Agendar avaliação
             <IconeSeta tamanho={16} className="seta" />
@@ -111,7 +112,7 @@ export function Cabecalho() {
           <button
             ref={botaoMenu}
             type="button"
-            className="flex h-12 w-12 items-center justify-center rounded-full text-ivory lg:hidden"
+            className="flex h-12 w-12 items-center justify-center rounded-full text-ivory xl:hidden"
             aria-expanded={aberto}
             aria-controls="menu-celular"
             aria-label={aberto ? 'Fechar menu' : 'Abrir menu'}
@@ -126,7 +127,7 @@ export function Cabecalho() {
         id="menu-celular"
         ref={painel}
         hidden={!aberto}
-        className="h-[calc(100svh-4.5rem-2rem)] overflow-y-auto border-t border-champagne/15 bg-navy-900 lg:hidden"
+        className="h-[calc(100svh-4.5rem-2rem)] overflow-y-auto border-t border-champagne/15 bg-navy-900 xl:hidden"
       >
         <nav aria-label="Menu do celular" className="container-vc flex min-h-full flex-col py-8">
           <ul className="flex flex-col">

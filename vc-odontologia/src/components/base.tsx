@@ -1,6 +1,8 @@
 import type { ReactNode, SVGProps } from 'react'
 import { CONFIG, linkWhatsApp } from '../config'
 
+export const linkPrivacidade = '/privacidade.html'
+
 /* ---------- Ícones de traço fino ---------- */
 
 type IconeProps = SVGProps<SVGSVGElement> & { tamanho?: number }

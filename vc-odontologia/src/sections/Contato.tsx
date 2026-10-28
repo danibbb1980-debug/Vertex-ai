@@ -230,7 +230,7 @@ function Mapa() {
 
 export function Localizacao() {
   return (
-    <section id="contato" aria-labelledby="titulo-contato" className="bg-sand py-24 sm:py-32">
+    <section id="contato" aria-labelledby="titulo-contato" className="bg-ivory py-24 sm:py-32">
       <div className="container-vc grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
         <div>
           <CabecalhoSecao
@@ -302,6 +302,14 @@ export function CtaFinal() {
             Ver no Instagram
           </a>
         </div>
+        {CONFIG.secoes.agendamento && (
+          <p className="mt-8 text-sm text-ivory/75">
+            Prefere indicar dia e horário?{' '}
+            <a href="#agendar" className="link-sublinhado inline-flex min-h-11 items-center font-semibold text-champagne">
+              Solicitar agendamento
+            </a>
+          </p>
+        )}
       </div>
     </section>
   )

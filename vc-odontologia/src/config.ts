@@ -197,6 +197,21 @@ export const CONFIG = {
     acessibilidade: '[acessibilidade a confirmar]',
   },
 
+  /**
+   * Formulário "Solicitar agendamento": só monta a mensagem e abre o WhatsApp.
+   * Nada é guardado nem enviado a servidor algum.
+   */
+  agendamento: {
+    /** true = o campo "Atendimento desejado" passa a ser obrigatório */
+    exigirAtendimento: false,
+    // CONFIRMAR COM A CLÍNICA: intervalo de almoço (não consta na ficha do Google).
+    // Os horários são só preferências; use null se não houver intervalo.
+    intervaloAlmoco: { inicio: '12:00', fim: '13:00' } as null | { inicio: string; fim: string },
+    /** Só ligar se a clínica atender urgências: mostra o aviso "Está com dor ou urgência?" */
+    atendeUrgencia: false,
+    limiteObservacoes: 300,
+  },
+
   /** Liga/desliga cada seção. Para uma versão curta, desligue as do meio. */
   secoes: {
     clinica: true,
@@ -209,6 +224,7 @@ export const CONFIG = {
     estrutura: true,
     avaliacoes: true, // só aparece se mostrarNotaGoogle também for true
     duvidas: true,
+    agendamento: true,
     localizacao: true,
     ctaFinal: true,
   },

@@ -7,6 +7,7 @@ import { Atendimentos, ParaQuem } from './sections/Atendimentos'
 import { ComoFunciona, Compromissos, Profissionais } from './sections/Equipe'
 import { Avaliacoes, CtaFinal, Duvidas, Estrutura, Localizacao, Rodape } from './sections/Contato'
 import { WhatsAppFlutuante } from './sections/Flutuante'
+import { Agendamento } from './sections/Agendamento'
 
 /** Revela elementos .revela ao entrarem na tela (uma vez só). */
 function useRevelar() {
@@ -79,6 +80,7 @@ export function App() {
           {s.estrutura && <Estrutura />}
           {s.avaliacoes && <Avaliacoes />}
           {s.duvidas && <Duvidas />}
+          {s.agendamento && <Agendamento />}
           {s.localizacao && <Localizacao />}
           {s.ctaFinal && <CtaFinal />}
         </main>
