@@ -10,13 +10,12 @@ export function CartaoProfissional({ pro, className = "" }: { pro: Profissional;
         {pro.titulo}
         {baixinhos && CONFIG.mostrarEspecialidades ? ` · ${CONFIG.especialidadeAline}` : ""}
       </p>
-      <p className="mt-3 flex flex-wrap items-center gap-2 text-sm text-tinta-2">
-        {/* CONFIRMAR COM A CLÍNICA: número do CRO */}
-        <span className="confirmar">{pro.cro}</span>
-        {!baixinhos && CONFIG.mostrarAnosDeFormada ? (
-          <span>Cirurgiã-dentista desde {CONFIG.anoFormaturaJosiane}</span>
-        ) : null}
-      </p>
+      {pro.cro || (!baixinhos && CONFIG.mostrarAnosDeFormada) ? (
+        <p className="mt-3 flex flex-wrap items-center gap-2 text-sm text-tinta-2">
+          {pro.cro ? <span>{pro.cro}</span> : null}
+          {!baixinhos && CONFIG.mostrarAnosDeFormada ? <span>Cirurgiã-dentista desde {CONFIG.anoFormaturaJosiane}</span> : null}
+        </p>
+      ) : null}
       <div className="mt-5 flex flex-col gap-2 sm:flex-row">
         <a
           href={linkWhatsApp(pro.whatsapp, pro.mensagemWhatsApp)}

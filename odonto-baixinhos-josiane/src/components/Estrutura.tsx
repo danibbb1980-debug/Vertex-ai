@@ -48,12 +48,6 @@ export function Estrutura() {
               </li>
             ))}
           </ul>
-          {CONFIG.rascunho ? (
-            // CONFIRMAR COM A CLÍNICA: dados da ficha do Google
-            <p className="mt-5 text-xs text-tinta-2">
-              <span className="confirmar">fonte: ficha do Google, a confirmar</span>
-            </p>
-          ) : null}
         </div>
       </div>
     </section>

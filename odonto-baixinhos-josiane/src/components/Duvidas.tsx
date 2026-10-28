@@ -55,9 +55,8 @@ function grupos(): Grupo[] {
           p: "Quais atendimentos a Dra. Josiane realiza?",
           r: (
             <>
-              Odontologia geral, com cuidado individualizado. Para saber se o seu caso é atendido, fale pelo WhatsApp.{" "}
+              Odontologia geral, com cuidado individualizado. Para saber se o seu caso é atendido, fale pelo WhatsApp.
               {/* CONFIRMAR COM A CLÍNICA: lista de atendimentos */}
-              <span className="confirmar">lista a confirmar</span>
             </>
           ),
         },

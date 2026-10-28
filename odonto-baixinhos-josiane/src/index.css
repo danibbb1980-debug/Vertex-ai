@@ -394,7 +394,8 @@
 
 /* ---------- Portas do hero ---------- */
 .porta {
-  --abre: 16deg;
+  /* --abre-rolagem vem do Hero: as portas abrem conforme a página desce */
+  --abre: var(--abre-rolagem, 16deg);
   -webkit-tap-highlight-color: transparent;
   border-radius: 999px 999px 12px 12px;
 }
@@ -525,7 +526,7 @@
   .porta,
   .porta:hover,
   .porta:focus-visible {
-    --abre: 22deg;
+    --abre: 58deg;
   }
 }
 

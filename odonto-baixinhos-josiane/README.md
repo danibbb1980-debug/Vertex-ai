@@ -25,8 +25,8 @@ npm run preview    # serve o dist/ em http://localhost:4173
 | URL final (canonical, og:url, JSON-LD) | `siteUrl` |
 | Ligar/desligar uma profissional | `mostrarAline`, `mostrarJosiane` |
 | Ligar/desligar seções | `secoes` |
-| WhatsApp, Instagram, CRO, mensagens | `profissionais.aline` / `profissionais.josiane` |
-| Atendimentos da Dra. Josiane | `profissionais.josiane.atendimentos` (`confirmado: true` para entrar no site sem marcação e no formulário) |
+| WhatsApp, Instagram, CRO, mensagens | `profissionais.aline` / `profissionais.josiane` (CRO vazio = não aparece) |
+| Atendimentos da Dra. Josiane | `profissionais.josiane.atendimentos` (`confirmado: true` para entrar também no formulário) |
 | Horários (geram o quadro e os horários do formulário) | `horarios` |
 | Estrutura e formas de pagamento | `estrutura` |
 | Sedação consciente (desligada) | `sedacaoAline.mostrar` |
@@ -37,7 +37,7 @@ npm run preview    # serve o dist/ em http://localhost:4173
 
 Com `mostrarAline: false` **ou** `mostrarJosiane: false`, o site vira o site individual da outra:
 sem o split, sem a parceira no texto, no menu, no formulário, no JSON-LD e na foto da fachada
-(usa o recorte só do castelo ou só da porta escura). Para conferir sem editar o arquivo:
+(usa o recorte só do castelo ou só do consultório). Para conferir sem editar o arquivo:
 
 ```bash
 VITE_CENARIO=aline npm run build     # só Dra. Aline
@@ -55,7 +55,8 @@ Num site individual em produção, troque também `siteUrl` pelo domínio própr
 
 ## Fotos e logos
 
-- Originais em `referencias/` (fachada, retratos, recortes dos logos).
+- Originais em `referencias/` (fachada, retratos, recortes dos logos). A fachada (`referencias/fotos/fachada.jpg`)
+  veio do Google Maps em 202x270 px e é ampliada 3x no script: **uma foto original maior melhora bastante**.
 - `npm run imagens` gera AVIF + WebP em `public/img/` (`scripts/otimizar-imagens.mjs`).
 - Para trocar uma foto: substitua o arquivo em `referencias/fotos/` com o mesmo nome e rode `npm run imagens`.
 - Os logos foram **recortados de posts do Instagram** (não havia arquivo original) e tiveram só o fundo
@@ -79,16 +80,16 @@ cd dist && zip -r ../site-odonto-baixinhos-josiane.zip . -x "*.DS_Store"
 ## O que as clínicas precisam confirmar
 
 - [ ] Se as duas querem o site **em conjunto** ou **separado** (o código já faz os dois).
-- [ ] **CRO-MG** da Dra. Aline e da Dra. Josiane (hoje: placeholder visível).
+- [ ] **CRO-MG** da Dra. Aline e da Dra. Josiane (o CFO exige o CRO junto ao nome; hoje não aparece até ser preenchido).
 - [ ] **Horários por profissional** (hoje: ficha única do Google, seg–sex 9h–11h30 e 13h30–18h).
-- [ ] **Atendimentos da Dra. Josiane** (hoje: 4 exemplos marcados "a confirmar").
+- [ ] **Atendimentos da Dra. Josiane** (hoje: só "Odontologia geral" e "Avaliação e orientação").
 - [ ] **Faixa etária e público** da Dra. Aline (o texto cita até 12 anos; bebês, crianças, PNE, gestantes).
 - [ ] **Sedação consciente**: habilitação comprovada antes de ligar `sedacaoAline.mostrar`.
 - [ ] **Especialidade** registrada no CRO (Odontopediatria) antes de ligar `mostrarEspecialidades`.
 - [ ] "Cirurgiã-dentista desde 2013" (Dra. Josiane): se e como divulgar.
 - [ ] Se o fixo **(35) 3292-5761** recebe WhatsApp.
-- [ ] Como os pais acompanham a consulta infantil (placeholder em "Para os pais").
-- [ ] **Autorização de uso de imagem** das fotos (retratos e fachada com a Dra. Aline à porta).
+- [ ] Como os pais acompanham a consulta infantil (texto genérico em "Para os pais").
+- [ ] **Autorização de uso de imagem** das fotos (retratos).
 - [ ] Fotos novas, se quiserem (retratos em boa luz, fachada sem pessoas, ambientes sem pacientes).
 - [ ] **Logos em alta qualidade** (PNG transparente ou SVG).
 - [ ] **Formas de pagamento** e **acessibilidade** (ficha do Google: entrada, assento, banheiro e

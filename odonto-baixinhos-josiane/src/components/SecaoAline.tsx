@@ -47,9 +47,8 @@ export function SecaoAline() {
                       </p>
                       <p className="mt-4">
                         O atendimento vai dos primeiros dias de vida até a infância, incluindo crianças atípicas e com
-                        necessidades especiais, e também gestantes.{" "}
+                        necessidades especiais, e também gestantes.
                         {/* CONFIRMAR COM A CLÍNICA: faixa etária exata (o texto da doutora cita até 12 anos) */}
-                        <span className="confirmar align-middle">faixa etária a confirmar</span>
                       </p>
                     </>
                   }

@@ -1,7 +1,36 @@
+import { useEffect, useRef } from "react";
 import { CONFIG, linkWhatsApp, modoAtual, profissionaisAtivas, type Profissional } from "../config";
 import { IconeSeta, IconeWhatsApp } from "./Icones";
 import { Porta } from "./Porta";
 import { TituloRevelado } from "./Texto";
+
+/**
+ * Abre as portas conforme a página desce (celular e desktop): de entreabertas (16°)
+ * a abertas (66°) nos primeiros ~280px de rolagem. Só escreve uma variável CSS por quadro.
+ */
+function usePortasNaRolagem() {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let quadro = 0;
+    const atualizar = () => {
+      quadro = 0;
+      const p = Math.min(1, Math.max(0, window.scrollY / 280));
+      el.style.setProperty("--abre-rolagem", `${(16 + p * 50).toFixed(1)}deg`);
+    };
+    const onScroll = () => {
+      if (!quadro) quadro = requestAnimationFrame(atualizar);
+    };
+    atualizar();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(quadro);
+    };
+  }, []);
+  return ref;
+}
 
 const ancora = (p: Profissional) => (p.id === "aline" ? "#odonto-baixinhos" : "#dra-josiane");
 
@@ -60,8 +89,9 @@ function FundoSplit() {
 
 function HeroDuplo() {
   const [a, j] = profissionaisAtivas();
+  const ref = usePortasNaRolagem();
   return (
-    <section id="inicio" className="relative isolate overflow-hidden pb-16 pt-32 md:pb-24 md:pt-40 lg:pt-36">
+    <section ref={ref} id="inicio" className="relative isolate overflow-hidden pb-16 pt-32 md:pb-24 md:pt-40 lg:pt-36">
       <FundoSplit />
       <div className="container-site grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
         <div className="mx-auto max-w-3xl text-center lg:mx-0 lg:text-left">
@@ -77,7 +107,7 @@ function HeroDuplo() {
             Odontologia para crianças e para adultos, lado a lado, no centro de Alfenas.
           </p>
           <p className="revela mt-8 hidden text-sm text-tinta-2 lg:block" style={{ "--atraso": "650ms" } as React.CSSProperties}>
-            Passe o mouse em cada porta, ou{" "}
+            Passe o mouse ou role a página para abrir as portas, ou{" "}
             <a href="#agendar" className="font-bold text-tinta underline decoration-ouro underline-offset-4">
               solicite um horário
             </a>
@@ -89,14 +119,11 @@ function HeroDuplo() {
           <div className="relative grid grid-cols-2 gap-x-3 sm:gap-x-10 lg:gap-x-12">
             <Porta pro={a} href={ancora(a)} rotulo="Odonto Baixinhos, Dra. Aline Maciel: conhecer o atendimento de bebês e crianças" prioridade sizes="(min-width: 1024px) 260px, 45vw" />
             <Porta pro={j} href={ancora(j)} rotulo="Dra. Josiane Silva: conhecer o atendimento de adultos" prioridade sizes="(min-width: 1024px) 260px, 45vw" />
-            {/* soleira dourada: uma linha liga as duas portas, com o número que elas dividem */}
+            {/* soleira dourada: uma linha liga as duas portas, ligando as duas portas */}
             <div className="pointer-events-none absolute -inset-x-2 top-full sm:-inset-x-5" aria-hidden="true">
               <svg className="block h-3 w-full overflow-visible" viewBox="0 0 100 4" preserveAspectRatio="none">
                 <path d="M0 1 H100" fill="none" stroke="var(--color-ouro)" strokeWidth="1.3" vectorEffect="non-scaling-stroke" pathLength={1} className="linha-desenha" />
               </svg>
-              <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[45%] rounded-full border border-ouro/70 bg-marfim px-2.5 py-0.5 font-display text-[0.78rem] italic leading-tight text-ouro-texto sm:text-sm">
-                997
-              </span>
             </div>
           </div>
           <div className="mt-8 grid grid-cols-2 gap-x-3 sm:gap-x-10 lg:gap-x-12">
@@ -124,8 +151,9 @@ function HeroSolo({ pro }: { pro: Profissional }) {
         texto:
           "A Dra. Josiane Silva atende adultos com atenção individual às necessidades, aos medos e às expectativas de cada paciente, no centro de Alfenas.",
       };
+  const ref = usePortasNaRolagem();
   return (
-    <section id="inicio" className={`relative isolate overflow-hidden pb-16 pt-36 md:pb-24 md:pt-44 ${baixinhos ? "tema-baixinhos" : "tema-josiane"}`}>
+    <section ref={ref} id="inicio" className={`relative isolate overflow-hidden pb-16 pt-36 md:pb-24 md:pt-44 ${baixinhos ? "tema-baixinhos" : "tema-josiane"}`}>
       <div
         className="pointer-events-none absolute inset-0 -z-10"
         aria-hidden="true"
@@ -163,8 +191,12 @@ function HeroSolo({ pro }: { pro: Profissional }) {
           <Porta pro={pro} href={ancora(pro)} rotulo={`Conhecer o atendimento da ${pro.nome}`} prioridade sizes="(min-width: 768px) 360px, 80vw" />
           <p className="mt-5 text-center text-sm text-tinta-2">
             {pro.nome} · {pro.titulo}
-            <br />
-            <span className="text-xs">{pro.cro}</span>
+            {pro.cro ? (
+              <>
+                <br />
+                <span className="text-xs">{pro.cro}</span>
+              </>
+            ) : null}
           </p>
         </div>
       </div>

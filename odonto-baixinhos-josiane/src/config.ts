@@ -58,7 +58,7 @@ const aline: Profissional = {
   nomeCurto: "Dra. Aline",
   titulo: "Cirurgiã-Dentista",
   // CONFIRMAR COM A CLÍNICA: número do CRO-MG não informado
-  cro: "CRO-MG [A CONFIRMAR]",
+  cro: "", // ex.: "CRO-MG 12345" (vazio = não aparece no site)
   consultorio: "Odonto Baixinhos",
   apelido: "Tia Aline",
   instagram: "https://www.instagram.com/odontobaixinhos.tialine/",
@@ -115,7 +115,7 @@ const josiane: Profissional = {
   nomeCurto: "Dra. Josiane",
   titulo: "Cirurgiã-Dentista",
   // CONFIRMAR COM A CLÍNICA: número do CRO-MG não informado
-  cro: "CRO-MG [A CONFIRMAR]",
+  cro: "", // ex.: "CRO-MG 12345" (vazio = não aparece no site)
   consultorio: "Consultório Odontológico",
   instagram: "https://www.instagram.com/drajosianesilva/",
   instagramUser: "@drajosianesilva",
@@ -132,31 +132,19 @@ const josiane: Profissional = {
     proporcao: "4 / 5",
   },
   logo: { src: "/img/logo-dra-josiane.webp", alt: "Logotipo Dra. Josiane Silva, Cirurgiã-Dentista", largura: 360, altura: 180 },
-  // CONFIRMAR COM A CLÍNICA: atendimentos NÃO foram informados. Itens com confirmado:false
-  // aparecem marcados como exemplo e não entram no formulário de agendamento.
+  // CONFIRMAR COM A CLÍNICA: lista de atendimentos. Só descrições gerais por enquanto.
+  // confirmado:true = entra também no formulário de agendamento.
   atendimentos: [
     {
       id: "geral",
       titulo: "Odontologia geral",
-      descricao: "Cuidado individualizado, com avaliação e plano explicado em detalhes. [A CONFIRMAR COM A CLÍNICA]",
+      descricao: "Cuidado individualizado, com avaliação e plano explicado em detalhes.",
       confirmado: false,
     },
     {
-      id: "prevencao",
-      titulo: "Prevenção e acompanhamento",
-      descricao: "[A CONFIRMAR COM A CLÍNICA] Descrição do atendimento.",
-      confirmado: false,
-    },
-    {
-      id: "atendimento-3",
-      titulo: "[Atendimento 3]",
-      descricao: "[A CONFIRMAR COM A CLÍNICA] Descrição do atendimento.",
-      confirmado: false,
-    },
-    {
-      id: "atendimento-4",
-      titulo: "[Atendimento 4]",
-      descricao: "[A CONFIRMAR COM A CLÍNICA] Descrição do atendimento.",
+      id: "avaliacao",
+      titulo: "Avaliação e orientação",
+      descricao: "Uma conversa para entender suas necessidades e explicar com clareza as possibilidades para o seu caso.",
       confirmado: false,
     },
   ],

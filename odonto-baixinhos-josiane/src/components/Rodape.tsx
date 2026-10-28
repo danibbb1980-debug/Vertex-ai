@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Logos } from "./Header";
 import { CONFIG, enderecoCompleto, linkWhatsApp, modoAtual, profissionaisAtivas } from "../config";
 
 export function Rodape() {
@@ -6,21 +7,11 @@ export function Rodape() {
   const [ano, setAno] = useState(2026);
   useEffect(() => setAno(new Date().getFullYear()), []);
   return (
-    <footer className="border-t border-linha bg-marfim pb-28 pt-14 md:pb-14">
+    <footer className="border-t border-linha bg-marfim pb-28 pt-14">
       <div className="container-site grid gap-10 md:grid-cols-[1.2fr_2fr]">
         <div>
-          <p className="font-display text-2xl">
-            {ambas ? (
-              <>
-                Av. Afonso Pena, <em className="italic text-ouro-texto">997</em>
-              </>
-            ) : modoAtual() === "aline" ? (
-              "Odonto Baixinhos"
-            ) : (
-              "Dra. Josiane Silva"
-            )}
-          </p>
-          <p className="mt-2 text-sm text-tinta-2">{enderecoCompleto}</p>
+          <Logos altura={56} />
+          <p className="mt-5 text-sm text-tinta-2">{enderecoCompleto}</p>
           <p className="mt-6 max-w-xs text-sm text-tinta-2">
             Conteúdo informativo; a indicação de cada atendimento depende de avaliação individual.
           </p>
@@ -33,8 +24,8 @@ export function Rodape() {
               </p>
               <p className="mt-2 font-bold">{p.nome}</p>
               <p className="text-sm text-tinta-2">
-                {p.titulo} · {/* CONFIRMAR COM A CLÍNICA */}
-                <span className="confirmar">{p.cro}</span>
+                {p.titulo}
+                {p.cro ? ` · ${p.cro}` : ""}
               </p>
               <p className="mt-1 text-sm text-tinta-2">Responsável técnica</p>
               <ul className="mt-3 space-y-1 text-sm">

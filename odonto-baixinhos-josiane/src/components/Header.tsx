@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { CONFIG, modoAtual } from "../config";
+import { CONFIG, modoAtual, profissionaisAtivas } from "../config";
 import { IconeFechar, IconeMenu } from "./Icones";
 
 function links() {
@@ -15,30 +15,24 @@ function links() {
   return l;
 }
 
-function Assinatura() {
-  const modo = modoAtual();
-  if (modo === "aline")
-    return (
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-[1.3rem] font-medium [font-variation-settings:'SOFT'_100]">Odonto Baixinhos</span>
-        <span className="mt-1 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-ouro-texto">Dra. Aline Maciel</span>
-      </span>
-    );
-  if (modo === "josiane")
-    return (
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-[1.25rem] uppercase tracking-[0.08em] [font-variation-settings:'SOFT'_0]">Dra. Josiane Silva</span>
-        <span className="mt-1 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-ouro-texto">Cirurgiã-Dentista</span>
-      </span>
-    );
+/** Logos reais das profissionais ativas (no lugar de uma assinatura de texto). */
+export function Logos({ altura = 44, className = "" }: { altura?: number; className?: string }) {
+  const ativas = profissionaisAtivas();
   return (
-    <span className="flex items-center gap-3 leading-none">
-      <span className="font-display text-[1.9rem] font-light italic text-ouro-texto">997</span>
-      <span className="h-8 w-px bg-ouro/50" aria-hidden="true" />
-      <span className="flex flex-col">
-        <span className="text-[0.82rem] font-bold tracking-wide">Av. Afonso Pena, 997</span>
-        <span className="mt-1 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-tinta-2">Alfenas · MG</span>
-      </span>
+    <span className={`flex items-center gap-3 sm:gap-4 ${className}`}>
+      {ativas.map((p, i) => (
+        <span key={p.id} className="flex items-center gap-3 sm:gap-4">
+          {i > 0 ? <span className="h-8 w-px bg-ouro/50" aria-hidden="true" /> : null}
+          <img
+            src={p.logo.src}
+            alt={p.logo.alt}
+            width={p.logo.largura}
+            height={p.logo.altura}
+            decoding="async"
+            style={{ height: altura, width: "auto" }}
+          />
+        </span>
+      ))}
     </span>
   );
 }
@@ -78,12 +72,12 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 ${topo} z-50 transition-[background-color,box-shadow] duration-500 ${
-        solido || aberto ? "bg-marfim/97 shadow-[0_1px_0_var(--color-linha)]" : "bg-transparent"
+        solido || aberto ? "bg-marfim shadow-[0_1px_0_var(--color-linha)]" : "bg-transparent"
       }`}
     >
       <div className="container-site flex h-[4.5rem] items-center justify-between gap-4">
-        <a href="#inicio" className="shrink-0 rounded-md">
-          <Assinatura />
+        <a href="#inicio" className="shrink-0 rounded-md" aria-label="Início">
+          <Logos altura={46} />
         </a>
         <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex items-center gap-1">

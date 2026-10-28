@@ -20,7 +20,6 @@ const BLOCOS = [
     titulo: "Os pais por perto",
     texto:
       "Como os pais acompanham a consulta é combinado com a doutora, conforme a idade e a necessidade de cada criança.",
-    confirmar: true,
   },
 ];
 
@@ -50,12 +49,6 @@ export function ParaOsPais() {
               <span className="font-display text-4xl italic text-rosa-ink/80">{b.n}</span>
               <h3 className="mt-4 text-[1.5rem] leading-tight">{b.titulo}</h3>
               <p className="mt-3 leading-relaxed text-tinta-2">{b.texto}</p>
-              {b.confirmar ? (
-                // CONFIRMAR COM A CLÍNICA: rotina de acompanhamento dos pais
-                <p className="mt-4">
-                  <span className="confirmar">rotina a confirmar com a clínica</span>
-                </p>
-              ) : null}
             </li>
           ))}
         </ol>

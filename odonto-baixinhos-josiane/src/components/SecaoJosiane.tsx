@@ -97,24 +97,17 @@ export function SecaoJosiane() {
               Odontologia geral e cuidado individualizado. A indicação de cada atendimento depende de avaliação individual.
             </p>
           </div>
-          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className={`mt-10 grid gap-4 sm:grid-cols-2 ${pro.atendimentos.length > 2 ? "lg:grid-cols-4" : ""}`}>
             {pro.atendimentos.map((a, i) => (
               <li
                 key={a.id}
                 onPointerMove={moverLuz}
-                className={`cartao-luz revela flex flex-col rounded-[var(--radius-cartao)] bg-marfim p-6 ${
-                  a.confirmado ? "border border-linha" : "border border-dashed border-ouro/70"
-                }`}
+                className="cartao-luz revela flex flex-col rounded-[var(--radius-cartao)] border border-linha bg-marfim p-6"
                 style={{ "--atraso": `${i * 90}ms`, "--luz": "rgba(217,185,127,.22)" } as React.CSSProperties}
               >
                 <span className="font-display text-sm italic text-ouro-texto">{String(i + 1).padStart(2, "0")}</span>
                 <h4 className="mt-4 font-display text-[1.35rem] leading-tight [font-variation-settings:'SOFT'_0]">{a.titulo}</h4>
                 <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-tinta-2">{a.descricao}</p>
-                {!a.confirmado ? (
-                  <p className="mt-5">
-                    <span className="confirmar">a confirmar com a clínica</span>
-                  </p>
-                ) : null}
               </li>
             ))}
           </ul>
