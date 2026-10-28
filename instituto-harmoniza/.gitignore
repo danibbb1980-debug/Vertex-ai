@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.ssr/
+.vercel
+*.zip
+.DS_Store
+shots/

@@ -1,0 +1,289 @@
+@import "tailwindcss";
+
+/* Fallbacks calibrados (larguras medidas contra a Cormorant e a Manrope):
+   menos salto de layout quando a fonte final chega. */
+@font-face {
+  font-family: "Cormorant Fallback";
+  font-style: normal;
+  src: local("Times New Roman"), local("Liberation Serif"), local("TimesNewRomanPSMT");
+  size-adjust: 96.4%;
+  ascent-override: 96%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Cormorant Fallback";
+  font-style: italic;
+  src: local("Times New Roman Italic"), local("Liberation Serif Italic"), local("TimesNewRomanPS-ItalicMT");
+  size-adjust: 89.1%;
+  ascent-override: 104%;
+  descent-override: 32%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Manrope Fallback";
+  src: local("Arial"), local("Liberation Sans"), local("ArialMT");
+  size-adjust: 104.6%;
+  ascent-override: 102%;
+  descent-override: 29%;
+  line-gap-override: 0%;
+}
+
+@theme {
+  --color-marfim: #f6f1ea;
+  --color-branco: #fbf8f3;
+  --color-areia: #ece3d5;
+  --color-champanhe: #dcc8a3;
+  --color-ouro: #b08a4a; /* só decorativo: filetes, curva, ponto */
+  --color-bronze: #7a5a2a; /* texto de destaque (AA sobre marfim e areia) */
+  --color-vinho: #7a2e3b; /* microdestaques: selos "a confirmar" */
+  --color-tinta: #1d1915;
+  --color-suave: #4b433b;
+  --color-cinza: #695e54;
+  --color-noite: #181411;
+  --color-noite-2: #231d19;
+  --color-linha: rgb(29 25 21 / 0.12);
+
+  --font-display: "Cormorant Garamond", "Cormorant Fallback", serif;
+  --font-sans: "Manrope", "Manrope Fallback", sans-serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-mola: cubic-bezier(0.2, 0.9, 0.25, 1.06);
+}
+
+:root {
+  --faixa-h: 0px;
+  --header-h: 72px;
+  --topo: calc(var(--faixa-h) + var(--header-h));
+  color-scheme: light;
+}
+:root[data-rascunho="true"] {
+  --faixa-h: 30px;
+}
+
+html {
+  background: var(--color-marfim);
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+body {
+  @apply font-sans text-tinta antialiased;
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: clip;
+  /* espaço para a barra fixa de WhatsApp no celular */
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+}
+@media (min-width: 768px) {
+  body {
+    padding-bottom: 0;
+  }
+}
+
+/* Grão de papel, bem sutil, atrás do conteúdo. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.32;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .3 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-champanhe);
+  color: var(--color-tinta);
+}
+
+section[id],
+[data-ancora] {
+  scroll-margin-top: calc(var(--topo) + 12px);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-tinta);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.sobre-escuro :focus-visible {
+  outline-color: var(--color-marfim);
+}
+
+/* ───── Tipografia editorial ───── */
+.titulo-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.titulo-display em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-bronze);
+}
+.sobre-escuro .titulo-display em {
+  color: var(--color-champanhe);
+}
+.rotulo {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.texto-corrido {
+  text-wrap: pretty;
+}
+
+/* ───── Revelação ao rolar (só com JS e sem redução de movimento) ───── */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-revelar] {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 0.9s var(--ease-suave),
+      transform 0.9s var(--ease-suave);
+    transition-delay: calc(var(--atraso, 0) * 1ms);
+  }
+  .js [data-revelar].esta-visivel {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ───── Corte vertical do título do hero (adaptado do 21st.dev "Vertical Cut Reveal") ───── */
+.corte-palavra {
+  display: inline-flex;
+  overflow: hidden;
+  /* folga para descendentes e itálico não serem cortados */
+  padding: 0.04em 0.06em 0.12em;
+  margin: -0.04em -0.06em -0.12em;
+}
+.corte-palavra > span {
+  display: inline-block;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .corte-palavra > span {
+    transform: translate3d(0, 108%, 0);
+    animation: corte-sobe 1.15s var(--ease-mola) forwards;
+    animation-delay: calc(var(--i) * 75ms + 120ms);
+  }
+  .hero-entra {
+    opacity: 0;
+    animation: hero-entra 1s var(--ease-suave) forwards;
+    animation-delay: calc(var(--atraso, 0) * 1ms);
+  }
+}
+@keyframes corte-sobe {
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes hero-entra {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ───── Faixa de áreas (marquee) ───── */
+.marquee-trilho {
+  display: flex;
+  width: max-content;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-trilho {
+    animation: marquee 60s linear infinite;
+  }
+  .marquee:hover .marquee-trilho,
+  .marquee[data-pausado="true"] .marquee-trilho {
+    animation-play-state: paused;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ───── Curva de assinatura ───── */
+.curva-ponto {
+  will-change: transform;
+}
+
+/* Linha fina usada como filete editorial */
+.filete {
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-ouro), transparent);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
+@utility contem {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1240px;
+  padding-inline: 20px;
+  @media (min-width: 768px) {
+    padding-inline: 40px;
+  }
+}
+
+/* Lenis (rolagem suave) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Acordeão: conteúdo entra com opacity/transform */
+@media (prefers-reduced-motion: no-preference) {
+  .acordeao-painel:not([hidden]) > div {
+    animation: hero-entra 0.5s var(--ease-suave) both;
+  }
+}
+
+/* Halo da cor do fundo atrás do texto: a curva de assinatura passa "por trás"
+   das letras sem riscá-las. Cada superfície define o próprio --halo. */
+[data-area-curva] {
+  --halo: var(--color-marfim);
+}
+[data-area-curva] :where(h1, h2, h3, p, li, dt, dd, address, a, .rotulo) {
+  text-shadow:
+    0 0 2px var(--halo),
+    0 0 6px var(--halo),
+    0 0 12px var(--halo);
+}
+[data-area-curva] .bg-branco {
+  --halo: var(--color-branco);
+}
+[data-area-curva] .bg-areia {
+  --halo: var(--color-areia);
+}
+[data-area-curva] :is(.bg-noite, .bg-tinta) {
+  --halo: transparent;
+}
+@media (max-width: 767px) {
+  .curva-svg {
+    opacity: 0.7;
+  }
+}
