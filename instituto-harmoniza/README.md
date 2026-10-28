@@ -33,8 +33,12 @@ Quase tudo fica em **`src/config.ts`** (fonte única de dados):
 | Efeitos de movimento | `movimento` |
 | Nota do Google (só nota e link, sem depoimentos) | `mostrarNotaGoogle`, `notaGoogle`, `secoes.avaliacoesGoogle` |
 
-**Selo "a confirmar":** todo dado com `confirmado: false` aparece no site com um
-selo discreto. Quando a clínica confirmar, troque para `true` e o selo some.
+**Pendências ("a confirmar"):** ficam ocultas no site (`mostrarPendencias: false`).
+O dado que ainda é placeholder simplesmente não aparece: hoje, o CRO do Dr. João
+Ricardo e o responsável técnico. Para revisar com a clínica, troque para `true`:
+cada dado com `confirmado: false` ganha um selo "a confirmar". Antes da versão
+final, o responsável técnico e o CRO de cada profissional precisam estar no site
+(regra do CFO).
 
 **Seções:** em `secoes`, troque `true` por `false` para esconder uma seção. A
 numeração (01, 02…) e o menu se ajustam sozinhos. Para uma versão mais curta,

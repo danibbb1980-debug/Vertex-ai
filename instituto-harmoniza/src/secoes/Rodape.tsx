@@ -1,7 +1,7 @@
 import { CONFIG } from "../config";
 import { linkWhatsApp } from "../lib/whatsapp";
 import { Logo } from "../components/Logo";
-import { Confirmar } from "../components/Confirmar";
+import { Confirmar, exibir } from "../components/Confirmar";
 import { LINKS_NAV } from "../components/Header";
 
 export function Rodape() {
@@ -64,15 +64,23 @@ export function Rodape() {
         </div>
 
         <div className="md:col-span-3">
-          <h2 className="rotulo text-bronze">Responsável técnico</h2>
-          <p className="mt-4">
-            {rt.nome.valor}
-            <Confirmar mostrar={!rt.nome.confirmado} valor={rt.nome.valor} />
-          </p>
-          <p className="mt-1 tabular-nums">
-            {rt.cro.valor}
-            <Confirmar mostrar={!rt.cro.confirmado} valor={rt.cro.valor} />
-          </p>
+          {exibir(rt.nome.valor) ? (
+            <>
+              <h2 className="rotulo text-bronze">Responsável técnico</h2>
+              <p className="mt-4">
+                {rt.nome.valor}
+                <Confirmar mostrar={!rt.nome.confirmado} valor={rt.nome.valor} />
+              </p>
+              {exibir(rt.cro.valor) && (
+                <p className="mt-1 tabular-nums">
+                  {rt.cro.valor}
+                  <Confirmar mostrar={!rt.cro.confirmado} valor={rt.cro.valor} />
+                </p>
+              )}
+            </>
+          ) : (
+            <h2 className="rotulo text-bronze">Informações</h2>
+          )}
           <p className="mt-5">
             <a href="/privacidade.html" className="underline decoration-ouro underline-offset-4 hover:text-tinta">
               Política de privacidade

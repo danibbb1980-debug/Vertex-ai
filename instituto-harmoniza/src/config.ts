@@ -59,6 +59,13 @@ export const CONFIG = {
   /** Faixa "Rascunho para avaliação" no topo + aviso no build. */
   rascunho: true,
 
+  /**
+   * Selos "a confirmar" e textos provisórios ("[... A CONFIRMAR]").
+   * false = escondidos: o dado pendente simplesmente não aparece
+   * (ex.: CRO sem número e responsável técnico ficam ocultos).
+   */
+  mostrarPendencias: false,
+
   /** URL pública final (sem barra no fim). Usada em canonical, og:url, og:image e JSON-LD. */
   siteUrl: "https://instituto-harmoniza-rascunho.vercel.app",
 

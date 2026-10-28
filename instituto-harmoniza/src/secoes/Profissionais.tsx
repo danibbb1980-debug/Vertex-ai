@@ -1,7 +1,7 @@
 import { CONFIG, type Profissional } from "../config";
 import { numeroDaSecao } from "../lib/secoes";
 import { CabecalhoSecao } from "../components/CabecalhoSecao";
-import { Confirmar } from "../components/Confirmar";
+import { Confirmar, exibir } from "../components/Confirmar";
 import { Revelar } from "../components/Revelar";
 import { IconeInstagram, IconeSetaDiagonal } from "../components/Icones";
 
@@ -54,11 +54,15 @@ export function Profissionais() {
                   <h3 className="font-display text-[2.2rem] leading-none font-medium md:text-[2.5rem]">{p.nome}</h3>
                   <p className="mt-4 text-[0.95rem] text-suave">
                     {p.titulo}
-                    <span aria-hidden="true" className="mx-2 text-ouro">
-                      ·
-                    </span>
-                    <span className="tabular-nums">{p.cro.valor}</span>
-                    <Confirmar mostrar={!p.cro.confirmado} valor={p.cro.valor} />
+                    {exibir(p.cro.valor) && (
+                      <>
+                        <span aria-hidden="true" className="mx-2 text-ouro">
+                          ·
+                        </span>
+                        <span className="tabular-nums">{p.cro.valor}</span>
+                        <Confirmar mostrar={!p.cro.confirmado} valor={p.cro.valor} />
+                      </>
+                    )}
                   </p>
                   {p.atuacao && <p className="mt-2 text-[0.95rem] text-suave">{p.atuacao}</p>}
                   {p.formacao && (
