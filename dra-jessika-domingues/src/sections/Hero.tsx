@@ -97,15 +97,15 @@ export function Hero() {
           <div aria-hidden className="absolute -inset-6 -z-0">
             <Blob variant="b" className="h-full w-full text-sage-100" />
           </div>
-          <div className="relative overflow-hidden rounded-t-[999px] rounded-b-[2.5rem] bg-[#c9c3cb] shadow-[0_30px_60px_-35px_rgba(29,42,71,0.55)]">
+          <div className="relative overflow-hidden rounded-t-[999px] rounded-b-[2.5rem] bg-[#dcd9d8] shadow-[0_30px_60px_-35px_rgba(29,42,71,0.55)]">
             <Foto
               {...CONFIG.fotos.hero}
               sizes="(min-width: 768px) 36vw, (min-width: 640px) 26rem, 90vw"
               prioridade
-              className="aspect-[650/810] h-auto w-full object-cover"
+              className="aspect-[933/1166] h-auto w-full object-cover"
             />
           </div>
-          <div className="absolute -bottom-5 -left-3 rounded-2xl border border-line bg-paper px-4 py-3 shadow-[0_18px_40px_-24px_rgba(29,42,71,0.5)] sm:-left-8">
+          <div className="absolute -right-3 -bottom-5 rounded-2xl border border-line bg-paper px-4 py-3 shadow-[0_18px_40px_-24px_rgba(29,42,71,0.5)] sm:-right-8">
             <p className="text-[0.7rem] font-extrabold tracking-[0.16em] text-sage-deep uppercase">Registro</p>
             <p className="font-display text-lg text-ink">
               {CONFIG.cro}

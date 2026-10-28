@@ -84,11 +84,11 @@ export const CONFIG = {
 
   fotos: {
     hero: {
-      base: "/fotos/dra-jessika-retrato",
-      larguras: [420, 650],
-      largura: 650,
-      altura: 810,
-      alt: "Dra. Jessika Domingues sorrindo, de camisa e calça brancas, sentada em um banco claro",
+      base: "/fotos/dra-jessika-hero",
+      larguras: [420, 933],
+      largura: 933,
+      altura: 1166,
+      alt: "Dra. Jessika Domingues sorrindo, de touca e jaqueta vermelhas, segurando uma escova e um tubo de pasta de pelúcia, apoiada em um modelo de boca de pelúcia",
     },
     perfil: {
       base: "/fotos/dra-jessika-perfil",
