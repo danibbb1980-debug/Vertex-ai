@@ -1,0 +1,369 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/fraunces-soft.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "Fraunces";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/fraunces-soft-italic.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+  src: url("/fonts/nunito-sans.woff2") format("woff2-variations");
+}
+/* Fallbacks com métricas próximas, para reduzir o salto de layout */
+@font-face {
+  font-family: "Fraunces Fallback";
+  src: local("Georgia");
+  size-adjust: 104%;
+  ascent-override: 92%;
+  descent-override: 24%;
+}
+@font-face {
+  font-family: "Nunito Sans Fallback";
+  src: local("Arial");
+  size-adjust: 101%;
+  ascent-override: 100%;
+  descent-override: 35%;
+}
+
+@theme {
+  --color-cream: #fbf6ee;
+  --color-cream-2: #f4ecdf;
+  --color-paper: #fffdf9;
+  --color-ink: #1d2a47;
+  --color-ink-2: #2b3a5c;
+  --color-body: #45506a;
+  --color-muted: #5f6880;
+  --color-line: #e7dccb;
+  --color-sage-50: #eef4ef;
+  --color-sage-100: #dbe8de;
+  --color-sage: #a7c6b2;
+  --color-sage-500: #7ea690;
+  --color-sage-deep: #3b6a56;
+  --color-peach-50: #fdf0e8;
+  --color-peach: #f4c2a8;
+  --color-coral: #e8957d;
+  --color-coral-deep: #a3462c;
+  --color-butter: #f6df92;
+  --color-butter-50: #fcf5dc;
+
+  --font-display: "Fraunces", "Fraunces Fallback", Georgia, serif;
+  --font-sans: "Nunito Sans", "Nunito Sans Fallback", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 2.5rem;
+
+  --ease-soft: cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6.5rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    background: var(--color-cream);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-variation-settings: "SOFT" 100, "WONK" 0;
+    color: var(--color-ink);
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  em.enfase {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-sage-deep);
+  }
+  .on-dark em.enfase {
+    color: var(--color-butter);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-butter);
+  }
+  ::selection {
+    background: var(--color-butter);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-sage-deep);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.6rem;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+      background-color 0.25s var(--ease-soft),
+      color 0.25s var(--ease-soft),
+      border-color 0.25s var(--ease-soft),
+      box-shadow 0.25s var(--ease-soft);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    box-shadow: 0 10px 24px -14px rgb(29 42 71 / 0.7);
+  }
+  .btn-primary:hover {
+    background: var(--color-ink-2);
+  }
+  .btn-sage {
+    background: var(--color-sage-deep);
+    color: #fff;
+  }
+  .btn-sage:hover {
+    background: #2f5948;
+  }
+  .btn-ghost {
+    border: 1.5px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
+    color: var(--color-ink);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-ink);
+    background: var(--color-paper);
+  }
+  .btn-light {
+    background: var(--color-cream);
+    color: var(--color-ink);
+  }
+  .btn-light:hover {
+    background: #fff;
+  }
+  .btn-outline-light {
+    border: 1.5px solid rgb(251 246 238 / 0.4);
+    color: var(--color-cream);
+  }
+  .btn-outline-light:hover {
+    border-color: var(--color-cream);
+    background: rgb(251 246 238 / 0.06);
+  }
+
+  .card {
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-2xl);
+  }
+
+  .link-underline {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 4px;
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+    transition: text-decoration-color 0.2s;
+  }
+  .link-underline:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* Marcador de informação pendente (só aparece no modo rascunho) */
+  .confirmar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-left: 0.35rem;
+    padding: 0.05rem 0.5rem;
+    border: 1px dashed var(--color-coral-deep);
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 800;
+    font-style: normal;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-coral-deep);
+    background: var(--color-peach-50);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .placeholder-text {
+    font-weight: 800;
+    color: var(--color-coral-deep);
+    background: var(--color-peach-50);
+    border: 1px dashed var(--color-coral-deep);
+    border-radius: 0.4rem;
+    padding: 0.05rem 0.4rem;
+  }
+}
+
+/* ---------- Movimento ---------- */
+@keyframes palavra {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.45em, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes flutuar {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) rotate(3deg);
+  }
+}
+@keyframes flutuar-lento {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(10px, -10px, 0) scale(1.03);
+  }
+}
+@keyframes cintilar {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.palavra {
+  display: inline-block;
+}
+.flutuar {
+  animation: flutuar 9s ease-in-out infinite;
+}
+.flutuar-lento {
+  animation: flutuar-lento 14s ease-in-out infinite;
+}
+.cintilar {
+  animation: cintilar 4.5s ease-in-out infinite;
+}
+.marquee-track {
+  animation: marquee 48s linear infinite;
+}
+.pausado,
+.pausado * {
+  animation-play-state: paused !important;
+}
+.surgir {
+  animation: surgir 0.45s var(--ease-soft) both;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .palavra {
+    animation: palavra 0.7s var(--ease-soft) both;
+    animation-delay: calc(var(--i, 0) * 45ms);
+  }
+  .js .reveal {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition:
+      opacity 0.8s var(--ease-soft),
+      transform 0.8s var(--ease-soft);
+    transition-delay: var(--d, 0ms);
+  }
+  .js .reveal.visivel {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flutuar,
+  .flutuar-lento,
+  .cintilar,
+  .marquee-track,
+  .surgir {
+    animation: none !important;
+  }
+}
