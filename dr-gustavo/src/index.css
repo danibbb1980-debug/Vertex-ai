@@ -1,0 +1,436 @@
+@import 'tailwindcss';
+
+/* Fontes de fallback com métricas ajustadas às web fonts: a troca de fonte
+   não desloca o layout (CLS). Valores calibrados no navegador (Times/Liberation Serif e Arial/Liberation Sans). */
+@font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Times New Roman'), local('Liberation Serif'), local('Tinos');
+  size-adjust: 115.23%;
+  ascent-override: 84.88%;
+  descent-override: 22.13%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Fraunces Fallback';
+  font-style: italic;
+  src: local('Times New Roman Italic'), local('TimesNewRomanPS-ItalicMT'), local('Liberation Serif Italic'), local('Tinos Italic');
+  size-adjust: 106.51%;
+  ascent-override: 91.83%;
+  descent-override: 23.94%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Manrope Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Arimo');
+  size-adjust: 101.57%;
+  ascent-override: 104.95%;
+  descent-override: 29.54%;
+  line-gap-override: 0%;
+}
+
+@theme {
+  --color-ivory: #f6f2ea;
+  --color-paper: #fbf9f4;
+  --color-sand: #ece5d8;
+  --color-ink: #1c1b19;
+  --color-ink-2: #45413b;
+  --color-mute: #6a6359;
+  --color-line: #d9d0c1;
+  --color-accent: #1f4c57;
+  --color-accent-deep: #163a43;
+  --color-accent-tint: #e2eaea;
+  --color-night: #1c1b19;
+  --color-night-2: #262421;
+  --color-on-night: #efeae0;
+  --color-on-night-mute: #b0a99c;
+  --color-accent-night: #9cc4c9;
+
+  --font-display: 'Fraunces Variable', 'Fraunces Fallback', Georgia, serif;
+  --font-sans: 'Manrope Variable', 'Manrope Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Pinyon Script', 'Snell Roundhand', cursive;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius-soft: 1.25rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    --banner-h: 0px;
+    --header-h: 4.5rem;
+    color-scheme: light;
+  }
+  :root[data-rascunho='true'] {
+    --banner-h: 2rem;
+  }
+  html {
+    scroll-padding-top: calc(var(--banner-h) + var(--header-h) + 0.75rem);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  body {
+    background: var(--color-ivory);
+    color: var(--color-ink-2);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 380;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    font-optical-sizing: auto;
+  }
+  em {
+    font-style: italic;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-paper);
+  }
+  a,
+  button,
+  summary {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 0.375rem;
+  }
+  .on-night :focus-visible {
+    outline-color: var(--color-accent-night);
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  /* itens de grid podem encolher (evita rolagem horizontal no celular) */
+  .grid > * {
+    min-width: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Componentes                                                         */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-mute);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+  .on-night .confirmar-tag {
+    color: var(--color-on-night-mute);
+  }
+  .on-night .eyebrow {
+    color: var(--color-on-night-mute);
+  }
+
+  .num {
+    font-family: var(--font-sans);
+    font-feature-settings: 'tnum' 1, 'lnum' 1;
+    letter-spacing: 0.14em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .h-section {
+    font-size: clamp(2.1rem, 1.4rem + 3vw, 3.75rem);
+  }
+  .h-section em,
+  .hero-title em {
+    font-style: italic;
+    font-weight: 330;
+    color: var(--color-accent);
+  }
+  .on-night .h-section em {
+    color: var(--color-accent-night);
+  }
+
+  .lead {
+    font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+    line-height: 1.7;
+    color: var(--color-ink-2);
+  }
+
+  /* Botões */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+      background-color 0.25s var(--ease-out-soft),
+      color 0.25s var(--ease-out-soft),
+      border-color 0.25s var(--ease-out-soft),
+      transform 0.25s var(--ease-out-soft);
+    cursor: pointer;
+    text-align: center;
+  }
+  @media (min-width: 640px) {
+    .btn {
+      white-space: nowrap;
+    }
+  }
+  .btn svg {
+    flex: none;
+    transition: transform 0.3s var(--ease-out-soft);
+  }
+  .btn:hover svg.arrow {
+    transform: translateX(3px);
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--color-accent-deep);
+  }
+  .btn-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .btn-ink:hover {
+    background: #000;
+  }
+  .btn-ghost {
+    border: 1px solid color-mix(in oklab, var(--color-ink) 28%, transparent);
+    color: var(--color-ink);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-ink);
+    background: color-mix(in oklab, var(--color-ink) 4%, transparent);
+  }
+  .btn-light {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  .btn-light:hover {
+    background: #fff;
+  }
+  .btn-ghost-night {
+    border: 1px solid color-mix(in oklab, var(--color-on-night) 35%, transparent);
+    color: var(--color-on-night);
+  }
+  .btn-ghost-night:hover {
+    border-color: var(--color-on-night);
+  }
+
+  .link-line {
+    position: relative;
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s var(--ease-out-soft);
+  }
+  .link-line:hover {
+    background-size: 100% 1px;
+  }
+
+  /* Marcação de dado a confirmar (some quando rascunho = false) */
+  .confirmar {
+    text-decoration: underline dotted color-mix(in oklab, currentColor 55%, transparent);
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+  .confirmar-tag {
+    display: inline-block;
+    margin-left: 0.4em;
+    padding: 0.05em 0.45em 0.1em;
+    border: 1px dashed currentColor;
+    border-radius: 0.35rem;
+    font-family: var(--font-sans);
+    font-size: 0.62rem;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+    vertical-align: 0.2em;
+    color: #5b544b;
+    white-space: nowrap;
+  }
+
+  /* Grade fina de fundo */
+  .grid-lines {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--color-line) 55%, transparent) 1px, transparent 1px);
+    background-size: calc(100% / 6) 100%;
+  }
+
+  .card {
+    background: var(--color-paper);
+    border: 1px solid color-mix(in oklab, var(--color-line) 80%, transparent);
+    border-radius: var(--radius-soft);
+  }
+
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Movimento                                                           */
+/* ------------------------------------------------------------------ */
+
+/* Revelação do título do hero (palavra por palavra, só transform/opacity) */
+.cut {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.cut > span {
+  display: inline-block;
+  transform: translateY(105%);
+  animation: cut-in 0.9s var(--ease-out-soft) forwards;
+  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+@keyframes cut-in {
+  to {
+    transform: translateY(0);
+  }
+}
+.fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fade-in 0.9s var(--ease-out-soft) forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes fade-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Revelação ao rolar (ativada por JS; sem JS tudo fica visível) */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s var(--ease-out-soft),
+    transform 0.9s var(--ease-out-soft);
+  transition-delay: var(--d, 0ms);
+}
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Marquee discreto das áreas de atuação */
+.marquee {
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+.marquee[data-paused='true'] .marquee-track,
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cut > span,
+  .fade-in {
+    transform: none;
+    opacity: 1;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+  }
+  .marquee {
+    mask-image: none;
+  }
+  .marquee-dup {
+    display: none;
+  }
+}
