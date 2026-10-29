@@ -1,0 +1,20 @@
+@font-face{font-family:'Fraunces';src:url('/fonts/fraunces-latin-wght-normal.woff2') format('woff2-variations');font-weight:100 900;font-display:swap}
+@font-face{font-family:'Fraunces';src:url('/fonts/fraunces-latin-wght-italic.woff2') format('woff2-variations');font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:'DM Sans';src:url('/fonts/dm-sans-latin-wght-normal.woff2') format('woff2-variations');font-weight:100 1000;font-display:swap}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#f7f3ec;color:#1b2422;font-family:'DM Sans',system-ui,sans-serif;font-size:1.0625rem;line-height:1.65;-webkit-font-smoothing:antialiased}
+.faixa{background:#0f2d28;color:rgba(247,243,236,.85);font-size:12.5px;text-align:center;padding:7px 16px}
+main{max-width:760px;margin:0 auto;padding:56px 20px 96px}
+a{color:#0f2d28;text-underline-offset:.2em}
+a:focus-visible{outline:3px solid #2c6b5a;outline-offset:3px;border-radius:6px}
+.topo{display:inline-flex;align-items:center;min-height:48px;margin-bottom:40px}
+.topo img{height:40px;width:auto;mix-blend-mode:multiply}
+.eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#2c6b5a;margin:0}
+h1{font-family:'Fraunces',Georgia,serif;font-weight:380;letter-spacing:-.02em;line-height:1.05;font-size:clamp(2.4rem,7vw,4rem);margin:.4em 0 .5em;color:#0f2d28}
+h1 em{color:#2c6b5a;font-weight:330}
+h2{font-family:'Fraunces',Georgia,serif;font-weight:420;font-size:1.5rem;margin:2.2em 0 .4em;color:#0f2d28}
+p,li{color:#3d4a46}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:.85rem 1.5rem;border-radius:999px;background:#0f2d28;color:#f7f3ec;font-weight:600;text-decoration:none;margin-top:24px}
+.btn:hover{background:#22534a}
+.nota{margin-top:48px;padding-top:20px;border-top:1px solid #d9cfbd;font-size:.9rem}

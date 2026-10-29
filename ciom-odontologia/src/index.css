@@ -1,0 +1,417 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-latin-wght-italic.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/dm-sans-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* derivada do logo CIOM (#6CAB94) */
+  --color-ink: #0f2d28;
+  --color-ink-2: #173f38;
+  --color-ink-3: #22534a;
+  --color-sage: #6cab94;
+  --color-sage-soft: #a9d0c1;
+  --color-sage-deep: #2c6b5a;
+  --color-ivory: #f7f3ec;
+  --color-paper: #fbf9f5;
+  --color-sand: #ece3d4;
+  --color-sand-2: #e2d6c2;
+  --color-shell: #f2ece1;
+  --color-text: #1b2422;
+  --color-muted: #4b5955;
+  --color-line: #d9cfbd;
+  --color-danger: #a3342b;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 96px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background: var(--color-ivory);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    font-weight: 380;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  em {
+    font-style: italic;
+  }
+  ::selection {
+    background: var(--color-sage-soft);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-sage-deep);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-sage-soft);
+  }
+}
+
+@layer components {
+  /* container comum: a "linha de planejamento" passa sempre a 20px da borda externa */
+  .wrap {
+    --pad: 20px;
+    position: relative;
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: var(--pad);
+  }
+  @media (min-width: 768px) {
+    .wrap {
+      --pad: 60px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .wrap {
+      --pad: 76px;
+    }
+  }
+
+  .sec {
+    --sec-pt: 5.5rem;
+    position: relative;
+    padding-block: var(--sec-pt);
+  }
+  @media (min-width: 768px) {
+    .sec {
+      --sec-pt: 8rem;
+    }
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .h2 {
+    font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+  }
+  .h2 em,
+  .h1 em {
+    font-weight: 330;
+    color: var(--color-sage-deep);
+  }
+  .on-dark .h2 em,
+  .on-dark .h1 em {
+    color: var(--color-sage-soft);
+  }
+
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 52px;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-decoration: none;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      transform 0.25s var(--ease-out-soft),
+      background-color 0.25s,
+      color 0.25s,
+      border-color 0.25s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  /* brilho que atravessa o botão no hover (só transform) */
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.22) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s var(--ease-out-soft);
+  }
+  @media (hover: hover) {
+    .btn:hover::after {
+      transform: translateX(120%);
+    }
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-ivory);
+  }
+  .btn-primary:hover {
+    background: var(--color-ink-3);
+  }
+  .btn-light {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+  }
+  .btn-light:hover {
+    background: #fff;
+  }
+  .btn-ghost {
+    border: 1px solid currentColor;
+    color: var(--color-ink);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    background: rgb(15 45 40 / 0.06);
+  }
+  .on-dark .btn-ghost {
+    color: var(--color-ivory);
+    border-color: rgb(247 243 236 / 0.45);
+  }
+  .on-dark .btn-ghost:hover {
+    background: rgb(247 243 236 / 0.08);
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+    transition: text-decoration-color 0.2s;
+  }
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* grid fino de "projeto" */
+  .blueprint {
+    background-image:
+      linear-gradient(to right, rgb(15 45 40 / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(15 45 40 / 0.055) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .blueprint-dark {
+    background-image:
+      linear-gradient(to right, rgb(169 208 193 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(169 208 193 / 0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* cantos de mira, como num desenho técnico */
+  .crosshair {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    pointer-events: none;
+  }
+  .crosshair::before,
+  .crosshair::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+  }
+  .crosshair::before {
+    left: 5px;
+    top: 0;
+    width: 1px;
+    height: 11px;
+  }
+  .crosshair::after {
+    top: 5px;
+    left: 0;
+    height: 1px;
+    width: 11px;
+  }
+
+  .field {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.8rem 1rem;
+    border-radius: 14px;
+    border: 1px solid var(--color-line);
+    background: var(--color-paper);
+    color: var(--color-text);
+    font: inherit;
+    font-size: 1rem;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .field::placeholder {
+    color: #6b7773;
+  }
+  .field:hover {
+    border-color: #b9ad97;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-sage-deep);
+    box-shadow: 0 0 0 3px rgb(44 107 90 / 0.25);
+  }
+  .field[aria-invalid='true'] {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px rgb(163 52 43 / 0.14);
+  }
+  select.field {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%230f2d28' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 5.5 7 9.5l4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.6rem;
+  }
+
+  .marquee-track {
+    animation: marquee 48s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee[data-paused='true'] .marquee-track {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -100px;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: var(--color-ink);
+  color: var(--color-ivory);
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+.faq-in {
+  animation: faq-in 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes faq-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-in {
+    animation: none;
+  }
+}
+
+/* ---------- animações do hero (CSS puro, funcionam no HTML pré-renderizado) ---------- */
+.hero-word {
+  animation: hero-word 1.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-up {
+  animation: hero-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-fade {
+  animation: hero-fade 0.8s ease both;
+}
+.hero-draw {
+  stroke-dasharray: 1 1;
+  animation: hero-draw 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hero-word {
+  from {
+    transform: translateY(108%);
+  }
+}
+@keyframes hero-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes hero-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- movimento reduzido: tudo aparece no estado final, sem deslocamento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero-word,
+  .hero-up,
+  .hero-fade,
+  .hero-draw {
+    animation: none !important;
+  }
+  .hero-draw {
+    stroke-dasharray: none;
+  }
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  [data-anim-hide] {
+    display: none !important;
+  }
+}
