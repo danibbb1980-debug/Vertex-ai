@@ -1,6 +1,8 @@
 @import "tailwindcss";
 /* vip-shape/ é outro app (site de cliente), com o próprio build. */
 @source not "../vip-shape";
+/* dr-vitor-marinho/ também é um app separado (Vite), com build próprio. */
+@source not "../dr-vitor-marinho";
 
 /*
   Vertex Web Studios — design tokens.
