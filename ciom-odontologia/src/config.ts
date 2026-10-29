@@ -143,7 +143,10 @@ export const CONFIG = {
       { src: '/fotos/sala-atendimento.webp', alt: 'Sala de atendimento com cadeira odontológica', legenda: 'Sala de atendimento', largura: 203, altura: 409 },
       { src: '/fotos/consultorio.webp', alt: 'Consultório com mesa e poltronas para a conversa inicial', legenda: 'Consultório', largura: 202, altura: 270 },
       { src: '/fotos/sala-de-espera.webp', alt: 'Sala de espera no mezanino, com guarda-corpo de vidro', legenda: 'Sala de espera', largura: 203, altura: 409 },
+      { src: '/fotos/equipe-1.webp', alt: 'Dentista da CIOM Odontologia à mesa do consultório', legenda: 'Conversa inicial', largura: 203, altura: 304 },
     ] as Foto[],
+    /** foto ao lado do formulário de agendamento */
+    agendar: { src: '/fotos/equipe-3.webp', alt: 'Equipe da CIOM Odontologia à mesa, pronta para receber o paciente', largura: 202, altura: 135 } as Foto | null,
     fachada: { src: '/fotos/fachada.webp', alt: 'Fachada da CIOM Odontologia, com rampa de acesso', legenda: 'Fachada', largura: 224, altura: 298 } as Foto | null,
   },
 

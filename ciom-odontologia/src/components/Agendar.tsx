@@ -152,6 +152,21 @@ export function Agendar() {
               </li>
             </ul>
           </Reveal>
+          {CONFIG.fotos.agendar && (
+            <Reveal delay={0.2} className="mt-10 max-w-[360px]">
+              <figure className="rounded-[20px] bg-paper p-2 shadow-[0_24px_50px_-30px_rgb(15_45_40/0.5)] ring-1 ring-line">
+                <img
+                  src={CONFIG.fotos.agendar.src}
+                  alt={CONFIG.fotos.agendar.alt}
+                  width={CONFIG.fotos.agendar.largura}
+                  height={CONFIG.fotos.agendar.altura}
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[3/2] w-full rounded-[14px] object-cover"
+                />
+              </figure>
+            </Reveal>
+          )}
         </div>
 
         <Reveal delay={0.08} className="lg:col-span-7">
