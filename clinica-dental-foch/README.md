@@ -24,7 +24,8 @@ Ao preencher, ela aparece sozinha, sem mexer em componentes.
 | Listar atendimentos | `atendimentos: [{ titulo, descricao }]` | A seção "Como cuidamos" vira cartões de atendimento, com "depende de avaliação individual" e botão de WhatsApp. O select do formulário passa a listar os itens. |
 | Mostrar profissionais | `profissionais: [{ nome, cro, formacao?, foto? }]` | Aparece a seção "Equipe". |
 | Responsável técnico | `responsavelTecnico` e `cro` | Aparecem no rodapé e no JSON-LD. |
-| Fotos da clínica | `fotos: [{ src: '/fotos/recepcao.webp', alt: '…' }]` (arquivos em `public/fotos/`) | Aparece a galeria "Ambiente". |
+| Fotos da clínica | `fotos: [{ src, srcset?, alt, legenda?, largura, altura }]` (arquivos em `public/fotos/`) | Galeria "Ambiente" em mosaico. Hoje: consultório, recepção e equipe. |
+| Foto da fachada | `unidades[n].fachada` | Miniatura no cartão de endereço. |
 | Nova unidade | adicione um objeto em `unidades` | Aparecem o seletor de unidade (faixa no topo), a seção "Unidades" e o campo "Unidade" no formulário. WhatsApp, mapa e horários seguem a unidade escolhida. |
 | Mudar horários | `unidades[n].horarios` (`null` = fechado; `almoco: ['12:00','13:00']` opcional) | Atualiza contato, FAQ, JSON-LD, os dias bloqueados e os horários do formulário. |
 | Ligar/desligar seções | `secoes` | `false` remove a seção e o link do menu. |
@@ -48,8 +49,9 @@ Também tire a faixa e o `noindex` de `public/privacidade.html`.
 - [ ] **Conferir o WhatsApp.** O dado recebido foi "55 35 9929-8789" (faltava um dígito). O site usa **(35) 99929-8789**,
       número que também aparece na fachada da clínica (foto do Google Maps). Confirme com a clínica.
 - [ ] Lista de atendimentos confirmados pela clínica (só procedimentos que ela realmente oferece).
-- [ ] Profissionais (nome, CRO, formação) e, se a clínica quiser, fotos.
-- [ ] Fotos reais do ambiente, **sem textos por cima** (as do Instagram têm arte aplicada) e sem pacientes.
+- [ ] Profissionais (nome, CRO, formação). A foto da equipe já está na galeria, sem nomes.
+- [ ] Fotos em resolução original: as atuais vieram do Instagram e do Google Maps, foram recortadas para tirar
+      os textos aplicados e quem estava na sala de espera. A da fachada tem só 203 × 434 px.
 - [ ] Logo em alta qualidade (SVG ou PNG transparente). O arquivo atual tem 150 × 150 px.
 - [ ] Domínio final em `siteUrl` e saída do modo rascunho (acima).
 

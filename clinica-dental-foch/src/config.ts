@@ -38,6 +38,8 @@ export interface Unidade {
   mapsUrl: string
   horarios: Horarios
   observacaoHorarios: string
+  /** Foto da fachada, para reconhecer o local (opcional). */
+  fachada?: Foto
 }
 
 export interface Atendimento {
@@ -53,8 +55,14 @@ export interface Profissional {
 }
 
 export interface Foto {
+  /** Arquivo principal (em /public). */
   src: string
+  /** Versões em outros tamanhos, no formato do atributo srcset (opcional). */
+  srcset?: string
   alt: string
+  legenda?: string
+  largura: number
+  altura: number
 }
 
 const horariosFoch: Horarios = {
@@ -113,6 +121,12 @@ export const CONFIG = {
       mapsUrl: 'https://maps.app.goo.gl/Z4YYAnGNd3zr9gsP9',
       horarios: horariosFoch,
       observacaoHorarios: 'Horários podem variar em feriados.',
+      fachada: {
+        src: '/fotos/fachada-203.webp',
+        alt: 'Fachada da Clínica Dental em verde-azulado, com letreiro e bandeira na calçada',
+        largura: 203,
+        altura: 434,
+      },
     },
   ] as Unidade[],
 
@@ -127,7 +141,31 @@ export const CONFIG = {
   cro: '',
 
   /** Fotos reais da clínica (coloque os arquivos em /public/fotos). Vazio = sem galeria. */
-  fotos: [] as Foto[],
+  fotos: [
+    {
+      src: '/fotos/consultorio-1200.webp',
+      srcset: '/fotos/consultorio-640.webp 640w, /fotos/consultorio-1200.webp 1088w',
+      alt: 'Consultório com cadeira odontológica azul, bancada e janela com persiana',
+      legenda: 'Consultório',
+      largura: 1088,
+      altura: 836,
+    },
+    {
+      src: '/fotos/recepcao-640.webp',
+      alt: 'Recepção com balcão de madeira clara e parede cinza com o letreiro Clínica Dental',
+      legenda: 'Recepção',
+      largura: 598,
+      altura: 680,
+    },
+    {
+      src: '/fotos/equipe-1200.webp',
+      srcset: '/fotos/equipe-640.webp 640w, /fotos/equipe-1200.webp 944w',
+      alt: 'Três integrantes da equipe sorrindo em frente ao letreiro Clínica Dental',
+      legenda: 'Equipe',
+      largura: 944,
+      altura: 898,
+    },
+  ] as Foto[],
 
   estrutura: {
     acessibilidade: ['Entrada acessível para cadeirantes', 'Banheiro acessível para cadeirantes'],

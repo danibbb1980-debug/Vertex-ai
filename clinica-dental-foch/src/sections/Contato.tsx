@@ -65,6 +65,20 @@ export function Contato() {
                   CEP {unidade.endereco.cep}
                 </address>
               </div>
+              {unidade.fachada && (
+                <figure className="ml-auto hidden shrink-0 sm:block">
+                  <img
+                    src={unidade.fachada.src}
+                    alt={unidade.fachada.alt}
+                    width={unidade.fachada.largura}
+                    height={unidade.fachada.altura}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-36 w-auto rounded-2xl object-cover shadow-[0_0_0_1px_rgb(27_77_82/0.1)]"
+                  />
+                  <figcaption className="mt-1.5 text-center text-xs text-ink-soft">Fachada</figcaption>
+                </figure>
+              )}
             </div>
             <div className="flex items-start gap-4">
               <span className="icone-circulo">

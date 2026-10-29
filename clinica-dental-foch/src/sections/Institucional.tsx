@@ -327,14 +327,42 @@ export function Equipe() {
 export function Galeria() {
   const fotos = CONFIG.fotos
   if (!fotos.length) return null
+  // Mosaico: a primeira foto ocupa a coluna maior; as demais se empilham ao lado.
+  const layout = (i: number) => {
+    if (fotos.length === 1) return 'lg:col-span-12 lg:h-[34rem]'
+    if (i === 0) return 'lg:col-span-7 lg:row-span-2 lg:h-full'
+    return 'lg:col-span-5 lg:h-[17rem]'
+  }
   return (
-    <section id="galeria" aria-labelledby="titulo-galeria" className="bg-ice py-20 sm:py-28">
+    <section id="galeria" aria-labelledby="titulo-galeria" className="bg-ice pb-20 pt-6 sm:pb-28 sm:pt-10">
       <div className="container-site">
-        <Cabecalho id="titulo-galeria" rotulo="Ambiente" titulo="Conheça o *espaço*." />
-        <ul className="mt-14 grid grid-cols-2 gap-4 lg:grid-cols-3">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <Cabecalho id="titulo-galeria" rotulo="Ambiente" titulo="Conheça o *espaço*." />
+          <p className="reveal text-lg text-ink-soft" style={atraso(160)}>
+            Recepção, consultório e a equipe que recebe você na {CONFIG.unidades[0].rotulo}.
+          </p>
+        </div>
+        <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:grid-rows-2">
           {fotos.map((f, i) => (
-            <li key={f.src} className={`reveal overflow-hidden rounded-[var(--radius-soft)] ${i === 0 ? 'col-span-2 row-span-2' : ''}`} style={atraso((i % 3) * 90)}>
-              <img src={f.src} alt={f.alt} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+            <li key={f.src} className={`reveal ${i === 0 && fotos.length > 2 ? 'sm:col-span-2' : ''} ${layout(i)}`} style={atraso((i % 3) * 110)}>
+              <figure className="group relative h-full overflow-hidden rounded-[var(--radius-card)] bg-aqua-100">
+                <img
+                  src={f.src}
+                  srcSet={f.srcset}
+                  sizes={i === 0 ? '(min-width: 1024px) 58vw, 100vw' : '(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw'}
+                  alt={f.alt}
+                  width={f.largura}
+                  height={f.altura}
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/3] h-full w-full object-cover transition-transform duration-[1.2s] ease-[var(--ease-calm)] group-hover:scale-[1.03] lg:aspect-auto"
+                />
+                {f.legenda && (
+                  <figcaption className="absolute bottom-4 left-4 rounded-full bg-white/90 px-4 py-1.5 text-sm font-semibold text-teal-900 backdrop-blur-sm">
+                    {f.legenda}
+                  </figcaption>
+                )}
+              </figure>
             </li>
           ))}
         </ul>
