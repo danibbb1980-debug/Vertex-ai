@@ -139,13 +139,15 @@ export const CONFIG = {
       { src: '/fotos/equipe-4.webp', alt: 'Equipe da CIOM Odontologia no consultório', largura: 720, altura: 478 },
     ] as Foto[],
     espaco: [
+      { src: '/fotos/hall.webp', alt: 'Hall de entrada com escada e parede de pedra', legenda: 'Hall de entrada', largura: 720, altura: 1052 },
       { src: '/fotos/recepcao.webp', alt: 'Recepção da clínica, com balcão curvo', legenda: 'Recepção', largura: 720, altura: 1052 },
+      { src: '/fotos/sala-de-espera.webp', alt: 'Sala de espera no mezanino, com guarda-corpo de vidro', legenda: 'Sala de espera', largura: 720, altura: 1079 },
+      { src: '/fotos/consultorio.webp', alt: 'Consultório com mesa e poltronas para a conversa inicial', legenda: 'Consultório', largura: 720, altura: 943 },
+      { src: '/fotos/bancada.webp', alt: 'Bancada e pia do consultório', legenda: 'Bancada do consultório', largura: 720, altura: 943 },
       { src: '/fotos/sala-atendimento.webp', alt: 'Sala de atendimento com cadeira odontológica', legenda: 'Sala de atendimento', largura: 720, altura: 1085 },
-      { src: '/fotos/consultorio.webp', alt: 'Consultório com mesa e poltronas para a conversa inicial', legenda: 'Consultório', largura: 202, altura: 270 },
-      { src: '/fotos/sala-de-espera.webp', alt: 'Sala de espera no mezanino, com guarda-corpo de vidro', legenda: 'Sala de espera', largura: 203, altura: 409 },
     ] as Foto[],
     /** foto ao lado do formulário de agendamento */
-    agendar: { src: '/fotos/equipe-2.webp', alt: 'Dentista da CIOM Odontologia na sala de atendimento', largura: 202, altura: 135 } as Foto | null,
+    agendar: { src: '/fotos/equipe-2.webp', alt: 'Dentista da CIOM Odontologia na sala de atendimento', largura: 720, altura: 478 } as Foto | null,
     fachada: { src: '/fotos/fachada.webp', alt: 'Fachada da CIOM Odontologia, com rampa de acesso', legenda: 'Fachada', largura: 720, altura: 943 } as Foto | null,
   },
 

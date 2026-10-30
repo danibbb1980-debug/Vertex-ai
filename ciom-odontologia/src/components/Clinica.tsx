@@ -135,7 +135,7 @@ export function Clinica() {
             </h3>
             <p className="max-w-sm text-muted">Ambientes pensados para receber você com conforto, da recepção à sala de atendimento.</p>
           </div>
-          <ul className={`mt-8 grid grid-cols-2 gap-3 md:gap-4 ${CONFIG.fotos.espaco.length >= 5 ? 'md:grid-cols-3 lg:grid-cols-5' : CONFIG.fotos.espaco.length === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+          <ul className={`mt-8 grid grid-cols-2 gap-3 md:gap-4 ${CONFIG.fotos.espaco.length === 5 ? 'md:grid-cols-3 lg:grid-cols-5' : CONFIG.fotos.espaco.length === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
             {CONFIG.fotos.espaco.map((f, i) => (
               <Reveal as="li" key={f.src} delay={i * 0.07} className={i % 2 === 1 ? 'md:mt-10' : ''}>
                 <figure className="group">
