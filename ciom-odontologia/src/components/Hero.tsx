@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react'
 import { CONFIG } from '../config'
 import { faixaHorario, waLink } from '../lib/util'
 import { IconArrow, IconChat } from './Icons'
@@ -27,6 +27,80 @@ function TituloRevelado() {
         </span>
       ))}
     </h1>
+  )
+}
+
+/**
+ * Cena 3D do hero: o diagrama fica ao fundo e o implante flutua à frente.
+ * O conjunto inclina conforme o mouse (só em telas com mouse e sem movimento reduzido).
+ */
+function Cena3D({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(pointer: fine)').matches) return
+    let tx = 0
+    let ty = 0
+    let cx = 0
+    let cy = 0
+    let raf = 0
+    let visivel = true
+    const io = new IntersectionObserver(([e]) => (visivel = e.isIntersecting))
+    io.observe(el)
+    const tick = () => {
+      cx += (tx - cx) * 0.07
+      cy += (ty - cy) * 0.07
+      el.style.setProperty('--rx', `${(-cy * 9).toFixed(2)}deg`)
+      el.style.setProperty('--ry', `${(cx * 13).toFixed(2)}deg`)
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.002 ? requestAnimationFrame(tick) : 0
+    }
+    const onMove = (e: PointerEvent) => {
+      if (!visivel) return
+      const r = el.getBoundingClientRect()
+      tx = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (innerWidth / 2)))
+      ty = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (innerHeight / 2)))
+      if (!raf) raf = requestAnimationFrame(tick)
+    }
+    addEventListener('pointermove', onMove, { passive: true })
+    return () => {
+      removeEventListener('pointermove', onMove)
+      cancelAnimationFrame(raf)
+      io.disconnect()
+    }
+  }, [])
+  return (
+    <div className="cena-3d">
+      <div ref={ref} className="cena-3d-palco">
+        {children}
+      </div>
+    </div>
+  )
+}
+
+function Implante() {
+  return (
+    <>
+      {/* sombra no "chão" do diagrama */}
+      <div aria-hidden="true" className="implante-camada hero-fade" style={{ ...delay(1.1), ['--z' as string]: '10px', left: '50%', top: '84%', width: '30%' }}>
+        <div className="implante-sombra" />
+      </div>
+      <div className="implante-camada" style={{ ['--z' as string]: '90px', left: '51%', top: '52%', width: '33%' }}>
+        <div className="hero-up" style={delay(0.55)}>
+          <div className="implante-flutua">
+            <img
+              src="/img/implante.webp"
+              width={463}
+              height={807}
+              alt="Implante dentário com coroa, em ilustração 3D"
+              className="implante-img h-auto w-full"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -80,6 +154,7 @@ function DiagramaArcada() {
           rx={t.h / 2.4}
           transform={`rotate(${-t.rot} ${t.x} ${t.y})`}
           {...S}
+          strokeOpacity={0.45}
           strokeWidth={1.2}
           className="hero-fade"
           style={delay(0.9 + i * 0.05)}
@@ -98,8 +173,8 @@ function DiagramaArcada() {
       {/* anotações das etapas */}
       {[
         { x: teeth[2].x, y: teeth[2].y, lx: 14, ly: 372, t: '01  AVALIAÇÃO', a: 'start' },
-        { x: teeth[7].x, y: teeth[7].y, lx: 318, ly: 40, t: '02  PLANO', a: 'start' },
-        { x: teeth[11].x, y: teeth[11].y, lx: 516, ly: 126, t: '03  ACOMPANHAMENTO', a: 'end' },
+        { x: teeth[10].x, y: teeth[10].y, lx: 318, ly: 40, t: '02  PLANO', a: 'start' },
+        { x: teeth[12].x, y: teeth[12].y, lx: 516, ly: 126, t: '03  ACOMPANHAMENTO', a: 'end' },
       ].map((n, i) => (
         <g key={i} {...fade(1.7 + i * 0.18)}>
           <path d={`M${n.x} ${n.y}L${n.a === 'end' ? n.lx - 8 : n.lx + 8} ${n.ly + 10}`} {...S} strokeWidth={1} opacity={0.5} />
@@ -187,11 +262,13 @@ export function Hero() {
         </div>
 
         <div className="relative mx-auto mt-2 w-full max-w-[440px] lg:col-span-5 lg:mt-0 lg:max-w-none">
+          <Cena3D>
           <DiagramaArcada />
+          <Implante />
           {fotoHero && (
             <figure
               className="hero-up absolute left-0 top-0 w-[29%] max-w-[150px]"
-              style={delay(1.2)}
+              style={{ ...delay(1.2), transform: 'translateZ(45px)' }}
             >
               <div className="relative rounded-[18px] bg-paper p-2 shadow-[0_24px_50px_-28px_rgb(15_45_40/0.55)] ring-1 ring-line">
                 <img
@@ -208,6 +285,7 @@ export function Hero() {
               </figcaption>
             </figure>
           )}
+          </Cena3D>
         </div>
       </div>
     </section>

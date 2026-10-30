@@ -415,3 +415,64 @@
     display: none !important;
   }
 }
+
+/* ---------- implante 3D do hero ---------- */
+.cena-3d {
+  perspective: 1100px;
+  perspective-origin: 50% 45%;
+}
+.cena-3d-palco {
+  --rx: 0deg;
+  --ry: 0deg;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  will-change: transform;
+}
+.implante-camada {
+  position: absolute;
+  transform: translate(-50%, -50%) translateZ(var(--z, 0));
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.implante-flutua {
+  animation: implante-flutua 6.5s ease-in-out infinite;
+}
+.implante-img {
+  filter: drop-shadow(0 26px 22px rgb(15 45 40 / 0.22)) drop-shadow(0 6px 6px rgb(15 45 40 / 0.12));
+}
+.implante-sombra {
+  aspect-ratio: 5 / 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(15 45 40 / 0.35), transparent);
+  animation: implante-sombra 6.5s ease-in-out infinite;
+}
+@keyframes implante-flutua {
+  0%,
+  100% {
+    transform: translateY(-7px) rotate(-1.2deg);
+  }
+  50% {
+    transform: translateY(9px) rotate(1.4deg);
+  }
+}
+@keyframes implante-sombra {
+  0%,
+  100% {
+    transform: scale(0.86);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.85;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .implante-flutua,
+  .implante-sombra {
+    animation: none;
+  }
+  .cena-3d-palco {
+    transform: none;
+  }
+}
