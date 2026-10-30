@@ -9,7 +9,7 @@ main{max-width:760px;margin:0 auto;padding:56px 20px 96px}
 a{color:#0f2d28;text-underline-offset:.2em}
 a:focus-visible{outline:3px solid #2c6b5a;outline-offset:3px;border-radius:6px}
 .topo{display:inline-flex;align-items:center;min-height:48px;margin-bottom:40px}
-.topo img{height:40px;width:auto;mix-blend-mode:multiply}
+.topo img{height:44px;width:auto;border-radius:8px}
 .eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#2c6b5a;margin:0}
 h1{font-family:'Fraunces',Georgia,serif;font-weight:380;letter-spacing:-.02em;line-height:1.05;font-size:clamp(2.4rem,7vw,4rem);margin:.4em 0 .5em;color:#0f2d28}
 h1 em{color:#2c6b5a;font-weight:330}

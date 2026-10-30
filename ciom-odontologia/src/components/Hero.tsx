@@ -52,8 +52,8 @@ function DiagramaArcada() {
     <svg viewBox="0 0 520 540" className="h-auto w-full text-ink" aria-hidden="true" focusable="false">
       <defs>
         <radialGradient id="glow" cx="50%" cy="58%" r="55%">
-          <stop offset="0%" stopColor="#6cab94" stopOpacity="0.22" />
-          <stop offset="100%" stopColor="#6cab94" stopOpacity="0" />
+          <stop offset="0%" stopColor="#53b792" stopOpacity="0.22" />
+          <stop offset="100%" stopColor="#53b792" stopOpacity="0" />
         </radialGradient>
       </defs>
       <ellipse cx={cx} cy={300} rx={250} ry={240} fill="url(#glow)" />

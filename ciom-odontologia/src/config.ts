@@ -37,8 +37,8 @@ export const CONFIG = {
   siteUrl: 'https://ciom-odontologia-rascunho.vercel.app',
 
   nome: 'CIOM Odontologia',
-  /** logo enviado pela clínica (referencias/logo-ciom.jpg), só com o branco das bordas recortado */
-  logo: { src: '/img/logo-ciom.png', largura: 95, altura: 39 },
+  /** logo enviado pela clínica (referencias/logo-ciom-novo.png), recortado do perfil do Instagram */
+  logo: { src: '/img/logo-ciom.webp', largura: 572, altura: 238 },
 
   /** recebido como "+55 35 8856-8104"; o 9 inicial foi acrescentado. CONFERIR antes de publicar. */
   whatsapp: '5535988568104',
@@ -135,19 +135,18 @@ export const CONFIG = {
 
   fotos: {
     equipe: [
-      { src: '/fotos/equipe-4.webp', alt: 'Equipe da CIOM Odontologia no consultório', largura: 224, altura: 298 },
-      { src: '/fotos/equipe-2.webp', alt: 'Dentista da CIOM Odontologia na sala de atendimento', largura: 202, altura: 135 },
+      { src: '/fotos/equipe-1.webp', alt: 'Dentista da CIOM Odontologia à mesa do consultório', largura: 720, altura: 994 },
+      { src: '/fotos/equipe-4.webp', alt: 'Equipe da CIOM Odontologia no consultório', largura: 720, altura: 478 },
     ] as Foto[],
     espaco: [
-      { src: '/fotos/recepcao.webp', alt: 'Recepção da clínica, com balcão curvo', legenda: 'Recepção', largura: 203, altura: 434 },
-      { src: '/fotos/sala-atendimento.webp', alt: 'Sala de atendimento com cadeira odontológica', legenda: 'Sala de atendimento', largura: 203, altura: 409 },
+      { src: '/fotos/recepcao.webp', alt: 'Recepção da clínica, com balcão curvo', legenda: 'Recepção', largura: 720, altura: 1052 },
+      { src: '/fotos/sala-atendimento.webp', alt: 'Sala de atendimento com cadeira odontológica', legenda: 'Sala de atendimento', largura: 720, altura: 1085 },
       { src: '/fotos/consultorio.webp', alt: 'Consultório com mesa e poltronas para a conversa inicial', legenda: 'Consultório', largura: 202, altura: 270 },
       { src: '/fotos/sala-de-espera.webp', alt: 'Sala de espera no mezanino, com guarda-corpo de vidro', legenda: 'Sala de espera', largura: 203, altura: 409 },
-      { src: '/fotos/equipe-1.webp', alt: 'Dentista da CIOM Odontologia à mesa do consultório', legenda: 'Conversa inicial', largura: 203, altura: 304 },
     ] as Foto[],
     /** foto ao lado do formulário de agendamento */
-    agendar: { src: '/fotos/equipe-3.webp', alt: 'Equipe da CIOM Odontologia à mesa, pronta para receber o paciente', largura: 202, altura: 135 } as Foto | null,
-    fachada: { src: '/fotos/fachada.webp', alt: 'Fachada da CIOM Odontologia, com rampa de acesso', legenda: 'Fachada', largura: 224, altura: 298 } as Foto | null,
+    agendar: { src: '/fotos/equipe-2.webp', alt: 'Dentista da CIOM Odontologia na sala de atendimento', largura: 202, altura: 135 } as Foto | null,
+    fachada: { src: '/fotos/fachada.webp', alt: 'Fachada da CIOM Odontologia, com rampa de acesso', legenda: 'Fachada', largura: 720, altura: 943 } as Foto | null,
   },
 
   agendamento: {

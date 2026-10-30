@@ -40,7 +40,7 @@ export function Logo({ className = '' }: { className?: string }) {
       width={CONFIG.logo.largura}
       height={CONFIG.logo.altura}
       alt="CIOM Odontologia"
-      className={`h-10 w-auto mix-blend-multiply ${className}`}
+      className={`h-11 w-auto rounded-[8px] ${className}`}
       decoding="async"
     />
   )
