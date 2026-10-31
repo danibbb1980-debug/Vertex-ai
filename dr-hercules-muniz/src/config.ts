@@ -36,6 +36,8 @@ export interface Foto {
   largura: number
   altura: number
   alt: string
+  /** Legenda curta exibida na galeria (opcional). */
+  legenda?: string
 }
 
 export interface Pergunta {
@@ -108,8 +110,50 @@ export const CONFIG = {
       altura: 840,
       alt: 'Retrato do Dr. Hércules Muniz, cirurgião-dentista, de jaleco cinza, com a mão apoiada no queixo.',
     } as Foto | null,
-    /** Fotos do consultório (alta resolução). Vazio = não aparece. */
-    consultorio: [] as Foto[],
+    /** Fotos do consultório. Vazio = a galeria não aparece.
+     *  Retratos ocupam duas linhas; a primeira foto horizontal fica em destaque. */
+    consultorio: [
+      {
+        webp: '/fotos/recepcao-800.webp',
+        jpg: '/fotos/recepcao-800.jpg',
+        largura: 800,
+        altura: 1279,
+        legenda: 'Recepção',
+        alt: 'Balcão de recepção branco com um quadro em tons terrosos na parede.',
+      },
+      {
+        webp: '/fotos/fachada-800.webp',
+        jpg: '/fotos/fachada-800.jpg',
+        largura: 800,
+        altura: 663,
+        legenda: 'Fachada',
+        alt: 'Fachada do consultório odontológico, com muro amarelo, portão preto e placa na entrada.',
+      },
+      {
+        webp: '/fotos/area-interna-800.webp',
+        jpg: '/fotos/area-interna-800.jpg',
+        largura: 800,
+        altura: 1279,
+        legenda: 'Área interna e banheiro',
+        alt: 'Área interna com bebedouro na parede e porta aberta para o banheiro.',
+      },
+      {
+        webp: '/fotos/consultorio-1-800.webp',
+        jpg: '/fotos/consultorio-1-800.jpg',
+        largura: 800,
+        altura: 522,
+        legenda: 'Consultório',
+        alt: 'Consultório com cadeira odontológica vinho e branca, armários brancos e um quadro de paisagem na parede.',
+      },
+      {
+        webp: '/fotos/consultorio-2-800.webp',
+        jpg: '/fotos/consultorio-2-800.jpg',
+        largura: 800,
+        altura: 524,
+        legenda: 'Consultório',
+        alt: 'Cadeira odontológica vinho reclinada, ao lado de bancada com pia e janela.',
+      },
+    ] as Foto[],
   },
 
   atendimentos: [
@@ -273,6 +317,7 @@ export const CONFIG = {
     atendimentos: true,
     quandoProcurar: true,
     comoFunciona: true,
+    consultorio: true,
     estrutura: true,
     faq: true,
     contato: true,
@@ -353,6 +398,8 @@ export function secaoAtiva(nome: keyof typeof CONFIG.secoes): boolean {
       return CONFIG.etapas.length > 0
     case 'faq':
       return CONFIG.faq.length > 0
+    case 'consultorio':
+      return CONFIG.fotos.consultorio.length > 0
     case 'estrutura':
       return Object.values(CONFIG.estrutura).some((l) => l.length > 0)
     default:

@@ -28,7 +28,7 @@ npm run preview   # serve o dist/ em http://localhost:4173
 
 ### Fotos
 - **Dentista:** já está em `public/fotos/` (recorte da foto enviada, em WebP 480/600/720 + JPG). Para trocar, substitua os arquivos e ajuste `fotos.dentista`. `null` = composição tipográfica com o anel dourado.
-- **Consultório:** `fotos.consultorio` está vazio. As fotos recebidas tinham cerca de 200 px de largura, pequenas demais para usar.
+- **Consultório:** 5 fotos em `fotos.consultorio`, recortadas de capturas de tela do Google (originais em `referencias/fotos/consultorio/`). Fotos retrato ocupam duas linhas na grade e a primeira foto horizontal fica em destaque. Fotos originais em alta resolução melhorariam a nitidez.
 - Originais em `referencias/fotos/`.
 
 ### Especialidades (regra do CFO)
@@ -51,7 +51,7 @@ Sem o número preenchido, a especialidade continua escondida, também no JSON-LD
 - Número do **registro de especialidade** (para poder citar implantes/ortodontia como especialidade).
 - **Logo** em PNG ou SVG com fundo transparente. O arquivo não veio no material, então o site usa uma assinatura tipográfica.
 - Definição sobre o **"& Associados"** do logo: há outros profissionais para listar (`equipe`)?
-- **Fotos do consultório** em alta resolução (mínimo 1600 px de largura).
+- **Fotos do consultório** originais em alta resolução (as atuais vêm de capturas de tela, com cerca de 1000 px).
 - Confirmar a foto do dentista. O recorte escolhido deixa de fora o bordado do jaleco ("Implantod…"), que poderia ser lido como anúncio de especialidade.
 - Confirmar horários, formas de pagamento e acessibilidade (dados vindos do Google).
 

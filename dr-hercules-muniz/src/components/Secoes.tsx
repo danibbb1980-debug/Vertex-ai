@@ -321,3 +321,67 @@ export function Estrutura() {
   )
 }
 
+
+/* ============================== O CONSULTÓRIO (galeria) ============================== */
+
+/** Galeria em grade (sem carrossel): retratos ocupam duas linhas, a primeira foto horizontal fica em destaque. */
+export function Consultorio() {
+  const fotos = CONFIG.fotos.consultorio
+  if (!fotos.length) return null
+  const destaque = fotos.findIndex((f) => f.largura > f.altura)
+  return (
+    <section id="consultorio" aria-labelledby="t-consultorio" className="bg-ivory py-24 sm:py-32">
+      <div className="container-site">
+        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <Reveal>
+            <Titulo id="t-consultorio" rotulo="O consultório" texto="Conheça o *espaço*." />
+          </Reveal>
+          <Reveal delay={0.1} className="max-w-md">
+            <p className="text-[1.05rem] text-muted">
+              {CONFIG.endereco.rua}, no {CONFIG.endereco.bairro}. Um ambiente simples e organizado, com atendimento
+              com hora marcada.
+            </p>
+          </Reveal>
+        </div>
+        <ul className="mt-14 grid grid-flow-dense gap-4 sm:grid-cols-2 lg:auto-rows-[17rem] lg:grid-cols-4 lg:gap-5">
+          {fotos.map((f, i) => {
+            const retrato = f.altura > f.largura
+            const forma = retrato
+              ? 'aspect-[4/5] lg:row-span-2'
+              : i === destaque
+                ? 'aspect-[4/3] sm:col-span-2 sm:aspect-[16/9] lg:col-span-2'
+                : 'aspect-[4/3]'
+            return (
+              <Reveal as="li" key={f.webp} delay={(i % 4) * 0.06} className={`${forma} lg:aspect-auto`}>
+                <figure className="group relative h-full overflow-hidden rounded-[1.25rem] border border-line bg-sand">
+                  <picture>
+                    <source
+                      type="image/webp"
+                      srcSet={`${f.webp.replace('-800', '-480')} 480w, ${f.webp} 800w`}
+                      sizes="(min-width: 1024px) 560px, (min-width: 640px) 50vw, 92vw"
+                    />
+                    <img
+                      src={f.jpg}
+                      alt={f.alt}
+                      width={f.largura}
+                      height={f.altura}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out-soft group-hover:scale-[1.03]"
+                    />
+                  </picture>
+                  {f.legenda && (
+                    <figcaption className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full bg-ink/85 px-3.5 py-1.5 text-[0.8rem] font-semibold text-ivory backdrop-blur-sm">
+                      <span aria-hidden className="size-1.5 rounded-full bg-gold" />
+                      {f.legenda}
+                    </figcaption>
+                  )}
+                </figure>
+              </Reveal>
+            )
+          })}
+        </ul>
+      </div>
+    </section>
+  )
+}

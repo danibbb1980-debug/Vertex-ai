@@ -3,7 +3,7 @@ import { iniciarEfeitos } from './efeitos'
 import { secaoAtiva } from './config'
 import { FaixaRascunho, Header } from './components/Topo'
 import { Faixa, Hero } from './components/Hero'
-import { Atendimentos, ComoFunciona, Dentista, Estrutura, QuandoProcurar } from './components/Secoes'
+import { Atendimentos, ComoFunciona, Consultorio, Dentista, Estrutura, QuandoProcurar } from './components/Secoes'
 import { Contato, CtaFinal, Faq, Rodape, WhatsFixo } from './components/Contato'
 import { Agendar } from './components/Agendar'
 
@@ -26,6 +26,7 @@ export default function App() {
           {secaoAtiva('atendimentos') && <Atendimentos />}
           {secaoAtiva('quandoProcurar') && <QuandoProcurar />}
           {secaoAtiva('comoFunciona') && <ComoFunciona />}
+          {secaoAtiva('consultorio') && <Consultorio />}
           {secaoAtiva('estrutura') && <Estrutura />}
           {secaoAtiva('faq') && <Faq />}
           {secaoAtiva('contato') && <Contato />}
