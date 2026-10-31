@@ -1,0 +1,198 @@
+@import '@fontsource-variable/fraunces/opsz.css';
+@import '@fontsource-variable/fraunces/opsz-italic.css';
+@import '@fontsource-variable/manrope/index.css';
+@import 'tailwindcss';
+
+/* Paleta derivada do medalhão preto e dourado do logo */
+@theme {
+  --color-ink: #0f0e0c; /* preto profundo */
+  --color-ink-2: #171613; /* grafite */
+  --color-ink-3: #22201c;
+  --color-ivory: #f8f4ec; /* marfim, fundo de leitura */
+  --color-sand: #efe7d8; /* areia */
+  --color-sand-2: #e4d8c3;
+  --color-gold: #c3a46b; /* dourado envelhecido (sobre escuro) */
+  --color-gold-soft: #d9c39a; /* texto dourado sobre escuro */
+  --color-gold-deep: #7a5b2a; /* dourado para texto sobre claro, AA */
+  --color-text: #1d1a16;
+  --color-muted: #5d554a; /* cinza quente */
+  --color-muted-dark: #b3aa9b; /* texto secundário sobre escuro */
+  --color-line: #d8ccb6;
+  --color-error: #9b2c1f;
+
+  --font-serif: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6.5rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    background: var(--color-ivory);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-weight: 380;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  em {
+    font-style: italic;
+  }
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold-deep);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-gold-soft);
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .container-site {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2.5rem;
+    }
+  }
+  /* Grade fina de fundo */
+  .grid-fina {
+    background-image:
+      linear-gradient(to right, rgb(195 164 107 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(195 164 107 / 0.07) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+  .filete {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  }
+}
+
+/* Marquee discreto: só CSS transform, pausa no hover e com movimento reduzido */
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-track {
+  animation: marquee 48s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee[data-paused='true'] .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+@keyframes faq-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* ---------- Movimento (só transform/opacity; ver src/efeitos.ts) ----------
+   A classe .js é aplicada por um script inline no <head>. Sem JS, tudo aparece pronto. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal]:not([data-reveal='anel']) {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition:
+      opacity 0.8s var(--ease-out-soft) var(--d, 0s),
+      transform 0.8s var(--ease-out-soft) var(--d, 0s);
+  }
+  .js [data-reveal].is-in:not([data-reveal='anel']) {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Anel dourado do medalhão: se desenha ao entrar na tela */
+  .js .anel .anel-traco {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset var(--dur, 2.2s) var(--ease-out-soft) var(--d, 0s);
+  }
+  .js .anel .anel-traco-2 {
+    transition-duration: calc(var(--dur, 2.2s) * 1.15);
+    transition-delay: calc(var(--d, 0s) + 0.35s);
+  }
+  .js .anel.is-in .anel-traco {
+    stroke-dashoffset: 0;
+  }
+  .js .anel .anel-ponto {
+    opacity: 0;
+    transition: opacity 0.6s ease calc(var(--d, 0s) + var(--dur, 2.2s) * 0.85);
+  }
+  .js .anel.is-in .anel-ponto {
+    opacity: 1;
+  }
+
+  /* Título do hero: corte vertical palavra por palavra */
+  .palavra {
+    animation: subir 0.9s var(--ease-out-soft) both;
+    animation-delay: calc(0.1s + var(--i, 0) * 0.07s);
+  }
+  .dente-entrada {
+    animation: surgir 1.4s var(--ease-out-soft) 1s both;
+  }
+
+  /* Linha da "Como funciona" começa vazia e preenche com a rolagem */
+  .js [data-progresso] {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes subir {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+}
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
