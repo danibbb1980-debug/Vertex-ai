@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/* Paleta amostrada do logo da Unidade 3 */
+@theme {
+  --color-navy-950: #010f19;
+  --color-navy-900: #021826;
+  --color-navy-800: #052a40;
+  --color-navy-700: #0b3b57;
+  --color-navy-600: #164b69;
+  --color-teal-200: #c4ebee;
+  --color-teal-300: #93d8dd;
+  --color-teal-400: #60a0a5;
+  --color-teal-600: #2a7276;
+  --color-teal-700: #1f5f63;
+  --color-gold-300: #e3cc9c;
+  --color-gold-400: #c9a96e;
+  --color-gold-500: #bd9d69;
+  --color-gold-700: #8a6d3e;
+  --color-ice: #f5f7f6;
+  --color-sand: #efe9df;
+  --color-sand-200: #f6f2ec;
+  --color-ink: #1b2a36;
+  --color-ink-soft: #485967;
+  --color-line: #dcd6cb;
+  --color-erro: #a3362b;
+
+  --font-serif: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+  }
+  body {
+    @apply bg-ice font-sans text-ink antialiased;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif;
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-teal-400);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .escuro :focus-visible {
+    outline-color: var(--color-gold-300);
+  }
+  ::selection {
+    background: var(--color-teal-200);
+    color: var(--color-navy-900);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  .rotulo {
+    @apply text-[0.75rem] font-semibold uppercase;
+    letter-spacing: 0.24em;
+  }
+  .container-site {
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8;
+  }
+  .enfase {
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: "SOFT" 100, "WONK" 0;
+  }
+  .filete {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-gold-400), transparent);
+  }
+}
+
+/* Entradas do hero em CSS: rodam já no HTML pré-renderizado */
+@keyframes revelar-palavra {
+  from {
+    transform: translate3d(0, 112%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+.revelar-palavra {
+  animation: revelar-palavra 0.95s var(--ease-suave) both;
+}
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.surgir {
+  animation: surgir 0.8s var(--ease-suave) both;
+}
+@keyframes desenhar {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.desenhar {
+  stroke-dasharray: 1;
+  animation: desenhar 2.2s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Ondas do hero: deslocamento horizontal contínuo (só transform) */
+@keyframes onda {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.onda {
+  animation: onda var(--dur, 24s) linear infinite;
+  will-change: transform;
+}
+.pausado .onda,
+.pausado .marquee-trilho {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-trilho {
+  animation: marquee 48s linear infinite;
+}
+
+/* Brilho do botão principal */
+.btn-brilho {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-brilho::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.8s var(--ease-suave);
+}
+.btn-brilho:hover::after,
+.btn-brilho:focus-visible::after {
+  transform: translateX(120%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onda,
+  .marquee-trilho {
+    animation: none;
+  }
+}
