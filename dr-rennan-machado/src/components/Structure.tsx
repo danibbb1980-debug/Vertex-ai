@@ -58,22 +58,19 @@ export function Structure() {
         {fotos.length > 0 && (
           <div className="mt-16">
             <h3 className="sr-only">Fotos do consultório</h3>
-            <ul className={`grid gap-4 ${fotos.length >= 3 ? 'grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]' : 'grid-cols-2'}`}>
+            <ul className="grid gap-4 sm:grid-cols-2">
               {fotos.map((f, i) => (
-                <Reveal
-                  as="li"
-                  key={f.src}
-                  delay={i * 90}
-                  className={`overflow-hidden rounded-[1.5rem] bg-cream-sand ${i === 0 && fotos.length >= 3 ? 'col-span-2 lg:col-span-1' : ''}`}
-                >
+                <Reveal as="li" key={f.src} delay={i * 90} className="overflow-hidden rounded-[1.5rem] bg-cream-sand">
                   <img
                     src={f.src}
+                    srcSet={f.srcSet}
+                    sizes="(min-width: 1216px) 600px, (min-width: 640px) 50vw, 100vw"
                     width={f.width}
                     height={f.height}
                     alt={f.alt}
                     loading="lazy"
                     decoding="async"
-                    className={`h-full w-full object-cover ${i === 0 ? 'aspect-[3/2]' : 'aspect-[3/4]'} lg:aspect-auto lg:h-[300px]`}
+                    className="aspect-[3/2] h-full w-full object-cover"
                   />
                 </Reveal>
               ))}

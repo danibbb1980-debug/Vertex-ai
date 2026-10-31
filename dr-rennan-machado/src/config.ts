@@ -65,9 +65,20 @@ export const CONFIG = {
 
   /** Fotos do consultório. Lista vazia = a galeria não aparece. */
   fotosConsultorio: [
-    { src: '/img/consultorio-sala.webp', alt: 'Sala de atendimento com cadeira odontológica, bancada branca e espelhos redondos', width: 446, height: 298 },
-    { src: '/img/recepcao-poltronas.webp', alt: 'Recepção com duas poltronas claras diante de um painel de madeira com o logotipo', width: 224, height: 298 },
-    { src: '/img/recepcao-sofa.webp', alt: 'Sala de espera com sofá claro e painel de madeira ripada', width: 203, height: 271 },
+    {
+      src: '/img/recepcao.webp',
+      srcSet: '/img/recepcao-640.webp 640w, /img/recepcao.webp 1170w',
+      alt: 'Recepção com balcão de madeira clara, poltronas e painel de madeira ripada com o logotipo',
+      width: 1170,
+      height: 774,
+    },
+    {
+      src: '/img/sala-procedimentos.webp',
+      srcSet: '/img/sala-procedimentos-640.webp 640w, /img/sala-procedimentos.webp 1170w',
+      alt: 'Sala clara com maca, bancada branca, espelho e armários organizados',
+      width: 1170,
+      height: 774,
+    },
   ] as Foto[],
 
   /** Formação e currículo. Lista vazia = não aparece. */

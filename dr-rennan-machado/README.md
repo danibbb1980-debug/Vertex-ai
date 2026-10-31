@@ -61,7 +61,7 @@ O que ainda falta confirmar com o dentista:
 - Horário de segunda-feira (o Google mostrou "fechado" só por causa do feriado).
 - Intervalo de almoço, se houver.
 - Logo em alta qualidade (PNG/SVG com fundo transparente). O atual tem só 150 × 150 px.
-- Fotos em resolução maior do consultório (as atuais têm até 446 px de largura).
+- Fotos originais do consultório em alta resolução (as atuais foram recortadas de capturas de tela do Google Maps).
 - Informações de acessibilidade do espaço, se existirem (hoje nada é dito).
 - Formação/currículo, se ele quiser exibir.
 
