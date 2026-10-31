@@ -28,7 +28,7 @@ export type Profissional = {
   foto?: string; // caminho em /public, ex.: "/img/equipe/nome.webp"
 };
 
-export type Foto = { src: string; alt: string; largura: number; altura: number };
+export type Foto = { src: string; alt: string; largura: number; altura: number; srcAlternativo?: string };
 
 export type Unidade = {
   id: string;
@@ -55,6 +55,7 @@ export type Unidade = {
   responsavelTecnico: { nome: string; cro: string };
   profissionais: Profissional[];
   fotos: Foto[];
+  fachada: Foto | null; // foto da fachada, mostrada em "Localização e contato"
   inauguracao: string; // texto livre; vazio = não renderiza
   prontoSocorro: boolean;
 };
@@ -95,7 +96,7 @@ export const CONFIG = {
     titulo: "Clínica Dental Unidade 3 | Dentista em Pouso Alegre - MG",
     descricao:
       "Clínico geral, implantes, ortodontia e estética com hora marcada em Pouso Alegre - MG. Agende sua avaliação pelo WhatsApp.",
-    ogImagem: "", // vazio = sem og:image (só use uma imagem real, 1200×630)
+    ogImagem: "/img/fotos/fachada-unidade3.jpg", // vazio = sem og:image (ideal: 1200×630)
   },
 
   secoes: {
@@ -188,6 +189,13 @@ export const CONFIG = {
       responsavelTecnico: { nome: "", cro: "" },
       profissionais: [],
       fotos: [],
+      fachada: {
+        src: "/img/fotos/fachada-unidade3.webp",
+        srcAlternativo: "/img/fotos/fachada-unidade3.jpg",
+        alt: "Fachada da Clínica Dental Unidade 3, com letreiro turquesa: clínico geral, implantes, ortodontia e estética",
+        largura: 408,
+        altura: 306,
+      },
       inauguracao: "",
       prontoSocorro: false,
     },

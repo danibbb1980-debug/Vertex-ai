@@ -24,6 +24,7 @@ O build pré-renderiza a página (`scripts/prerender.mjs`): o texto aparece ante
 | Horários (bloqueiam dias e geram os horários do formulário) | `unidades[0].horarios` (`almoco` opcional) |
 | Profissionais (a seção "Equipe" aparece sozinha) | `unidades[0].profissionais` |
 | Fotos aprovadas (a seção "O espaço" aparece sozinha) | coloque em `public/img/fotos/` e liste em `unidades[0].fotos` |
+| Foto da fachada (em "Localização e contato") | `unidades[0].fachada` (`null` = não aparece) |
 | Responsável técnico e CRO (rodapé e JSON-LD) | `unidades[0].responsavelTecnico` |
 | Faixa de inauguração no hero | `unidades[0].inauguracao` (texto; vazio = não aparece) |
 | Aviso de urgência acima do formulário | `unidades[0].prontoSocorro` |
@@ -46,8 +47,11 @@ O build pré-renderiza a página (`scripts/prerender.mjs`): o texto aparece ante
 - [ ] **Responsável técnico com CRO** (exigência do CFO para publicidade odontológica). Hoje não aparece por falta de dado.
 - [ ] **Bairro e número do endereço.** O Google mostra a praça sem número e no bairro "Saúde"; a arte da clínica mostra o nº 80 e o bairro "Santo Antônio". Por isso o site exibe "Praça Vereador José Custódio Ferreira, 80, Pouso Alegre - MG", sem bairro. "Santo Antônio" aparece só como parte da marca (como no logo). Confirmar.
 - [ ] **Inauguração.** A arte da fachada diz "Inauguração em breve", mas o Google já mostra horários. Se a unidade ainda não abriu, defina o texto e a data em `inauguracao` antes de publicar.
-- [ ] **Logo em alta qualidade.** O arquivo atual tem 150×150 px, com fundo. Um PNG/SVG com fundo transparente melhora a nitidez (header, hero, rodapé) e permite gerar uma og:image.
-- [ ] **Fotos aprovadas** da clínica e da equipe (sem pacientes; pessoas só identificadas).
+- [ ] **Logo em alta qualidade.** O arquivo atual tem 150×150 px, com fundo. Um PNG/SVG com fundo transparente melhora a nitidez (header, hero, rodapé).
+- [ ] **Foto da fachada em resolução maior.** A atual (do Google) tem 408×306 px e também é usada como imagem de compartilhamento (og:image); o ideal seria 1200×630.
+- [ ] **Fotos aprovadas** do interior e da equipe (sem pacientes; pessoas só identificadas).
+
+Imagens do material recebido que ficaram de fora de propósito: a arte "Vem aí... algo especial" (pessoa não identificada e texto de inauguração) e os posts de prótese protocolo e limpeza (antes e depois, imagens de pacientes e frases como "saúde garantida", vetados pelo CFO e pelo briefing).
 - [ ] **Profissionais** (nome, função, CRO).
 - [ ] **Acessibilidade do local**, se existir (o Google não informa; o site não afirma nada).
 - [ ] **URL final** em `siteUrl` (o valor atual, `clinica-dental-unidade3-rascunho.vercel.app`, é o endereço esperado do projeto na Vercel e precisa ser confirmado após o deploy).

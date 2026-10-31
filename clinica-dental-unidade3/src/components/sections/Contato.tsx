@@ -67,6 +67,26 @@ export function Contato() {
         <div className="mt-12 grid overflow-hidden rounded-[2rem] border border-line bg-white lg:grid-cols-[1fr_1.1fr]">
           <Revelar className="p-6 sm:p-12">
             <div className="space-y-9">
+              {unidade.fachada && (
+                <figure>
+                  <picture>
+                    <source srcSet={unidade.fachada.src} type="image/webp" />
+                    <img
+                      src={unidade.fachada.srcAlternativo ?? unidade.fachada.src}
+                      alt={unidade.fachada.alt}
+                      width={unidade.fachada.largura}
+                      height={unidade.fachada.altura}
+                      loading="lazy"
+                      decoding="async"
+                      className="aspect-[4/3] w-full max-w-[460px] rounded-2xl object-cover ring-1 ring-line"
+                    />
+                  </picture>
+                  <figcaption className="mt-3 flex items-center gap-2 text-sm text-ink-soft">
+                    <span aria-hidden="true" className="h-px w-6 bg-gold-500" />
+                    Fachada da {unidade.nomeCurto}: procure o letreiro turquesa.
+                  </figcaption>
+                </figure>
+              )}
               <div className="flex gap-4">
                 <IconePino tamanho={22} className="mt-1 shrink-0 text-teal-700" />
                 <div>
