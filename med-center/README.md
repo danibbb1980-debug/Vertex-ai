@@ -60,8 +60,14 @@ Para publicar de verdade: `CONFIG.rascunho = false`, remova as metas `robots`/`g
 2. Informar qual área atende em qual andar (`andar` em cada área).
 3. Registro da Dra. Júlia Figueiredo e um registro válido do Dr. Eliandro.
 4. Confirmar o uso dos títulos "Psiquiatria", "Cardiologia" e "Ginecologia e obstetrícia" como áreas, já que só o Dr. Eduardo tem RQE visível.
-5. Fotos em boa qualidade (rosto separado, sem arte de rede social), se quiserem fotos nos cartões.
+5. Foto própria e atual da fachada (ver acima) e fotos em boa qualidade (rosto separado, sem arte de rede social), se quiserem fotos nos cartões.
 6. Logo em alta qualidade (PNG ou SVG com fundo transparente). O arquivo atual tem só 150 × 150 px.
 7. Desligar o modo rascunho (ver acima).
 
-A foto da fachada em `referencias/fachada.jpg` não é usada: o briefing pede que não haja fotos do centro sem aprovação.
+## Foto da fachada
+
+Aparece em "Venha nos visitar" e é a imagem de compartilhamento (og:image). Configuração em `CONFIG.fachada` (deixe `src` vazio para esconder).
+Arquivos em `public/img/` (a placa do carro foi desfocada).
+
+A foto atual veio de uma captura de tela de uma publicação de terceiro (perfil "Henrique_", de cerca de 8 anos atrás) e mostra uma faixa de "LOCAÇÃO" na entrada.
+Antes da versão definitiva, troque por uma foto própria e atual da clínica, ou confirme a autorização de uso. Para trocar, substitua `public/img/fachada-1170.webp`, `fachada-720.webp` e `fachada-1170.jpg` mantendo os nomes, ou altere os caminhos e as medidas em `CONFIG.fachada`.

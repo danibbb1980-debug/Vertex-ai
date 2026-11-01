@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { CONFIG, waLink } from "../config";
+import { CONFIG, temTexto, waLink } from "../config";
 import { ArrowIcon, ClockIcon, InstaIcon, PhoneIcon, PinIcon, WhatsIcon } from "./Icons";
 import { Reveal } from "./Reveal";
 
@@ -23,7 +23,7 @@ function LazyMap() {
     return () => io.disconnect();
   }, []);
   return (
-    <div ref={ref} className="relative aspect-[4/3] w-full overflow-hidden rounded-mod bg-mist lg:aspect-auto lg:h-full lg:min-h-[420px]">
+    <div ref={ref} className="relative aspect-[4/3] w-full overflow-hidden rounded-mod bg-mist lg:aspect-auto lg:h-full lg:min-h-[280px]">
       <div className="grid-mod absolute inset-0" aria-hidden />
       {show && (
         <iframe
@@ -119,9 +119,32 @@ export function Contato() {
               </div>
             </Reveal>
           </div>
-          <Reveal delay={0.1} className="h-full">
-            <LazyMap />
-          </Reveal>
+          <div className="grid gap-4 lg:grid-rows-[auto_1fr]">
+            {temTexto(CONFIG.fachada.src) && (
+              <Reveal delay={0.05}>
+                <figure className="card overflow-hidden">
+                  <img
+                    src={CONFIG.fachada.src}
+                    srcSet={`${CONFIG.fachada.srcPequena} 720w, ${CONFIG.fachada.src} ${CONFIG.fachada.largura}w`}
+                    sizes="(min-width: 1024px) 560px, 100vw"
+                    width={CONFIG.fachada.largura}
+                    height={CONFIG.fachada.altura}
+                    alt={CONFIG.fachada.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-[16/10] w-full object-cover object-[50%_45%]"
+                  />
+                  <figcaption className="flex items-center gap-2 px-5 py-3.5 text-sm text-graphite-soft">
+                    <PinIcon width={16} height={16} className="shrink-0 text-brand-ink" />
+                    {CONFIG.fachada.legenda}
+                  </figcaption>
+                </figure>
+              </Reveal>
+            )}
+            <Reveal delay={0.1} className="h-full">
+              <LazyMap />
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

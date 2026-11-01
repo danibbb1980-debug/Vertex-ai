@@ -49,6 +49,15 @@ export const CONFIG = {
     cep: "37553-438",
   },
   mapsUrl: "https://maps.app.goo.gl/8o7AtpSGkH5vdrZi9",
+  /** Foto da fachada. Deixe src vazio para não exibir. */
+  fachada: {
+    src: "/img/fachada-1170.webp",
+    srcPequena: "/img/fachada-720.webp",
+    largura: 1170,
+    altura: 1137,
+    alt: "Fachada do Med Center Vital Brazil: prédio branco de três andares com o nome na parede e brises escuros nas janelas, na Av. Alberto de Barros Cobra, 460.",
+    legenda: "Prédio do nº 460 da Av. Alberto de Barros Cobra.",
+  },
   mapsEmbed:
     "https://www.google.com/maps?q=Av.+Alberto+de+Barros+Cobra,+460+-+Nova+Pouso+Alegre,+Pouso+Alegre+-+MG,+37553-438&output=embed",
 
