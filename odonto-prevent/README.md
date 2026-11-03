@@ -51,7 +51,7 @@ O `noindex` está em quatro lugares. Ao publicar a versão definitiva:
 - [ ] **Horário de domingo**, se houver. Hoje o domingo não aparece e fica bloqueado no formulário.
 - [ ] **Dentistas, CRO e atendimentos** confirmados, se a clínica quiser exibi-los.
 - [ ] **Fotos** do espaço (opcional).
-- [ ] **Logo em alta qualidade.** O arquivo recebido tem 195×195 px, com o logo ocupando cerca de 92 px de largura. A versão usada no site foi recortada e teve o fundo removido (`public/brand/logo-prevent.png`), mas fica levemente suave. Um PNG com fundo transparente ou um SVG resolve.
+- [ ] **Logo completo em alta qualidade.** A versão atual (`referencias/logo-prevent-v2.png`, 195×139 px) está nítida, mas vem cortada nas bordas (parte do dente, o "t" de Prevent e o último "A"). Um PNG transparente ou SVG do logo inteiro resolve.
 - [ ] Atualizar `siteUrl` para o domínio definitivo.
 
 ## Regras de conteúdo (CFO)

@@ -67,7 +67,7 @@ export function Cabecalho() {
       </a>
       <div className="container-site flex h-[4.5rem] items-center justify-between gap-6">
         <a href="#inicio" className="shrink-0 rounded-md" aria-label={`${CONFIG.nome}, voltar ao início`}>
-          <img src="/brand/logo-prevent-192.webp" srcSet="/brand/logo-prevent-192.webp 192w, /brand/logo-prevent.webp 384w" sizes="123px" alt="" width={192} height={75} className="h-11 w-auto sm:h-12" />
+          <img src="/brand/logo-prevent-240.webp" srcSet="/brand/logo-prevent-240.webp 240w, /brand/logo-prevent.webp 583w" sizes="120px" alt="" width={240} height={104} className="h-12 w-auto sm:h-[3.25rem]" />
         </a>
 
         <nav aria-label="Principal" className="hidden lg:block">

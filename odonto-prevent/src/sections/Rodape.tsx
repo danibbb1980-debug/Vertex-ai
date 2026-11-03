@@ -9,7 +9,7 @@ export function Rodape() {
     <footer className="border-t border-white/8 bg-grafite-950 pb-28 pt-16 text-sm text-grafite-300 lg:pb-12">
       <div className="container-site grid gap-10 md:grid-cols-[1.2fr_1fr_1fr]">
         <div>
-          <img src="/brand/logo-prevent.webp" alt={CONFIG.nome} width={384} height={150} loading="lazy" className="h-14 w-auto" />
+          <img src="/brand/logo-prevent.webp" alt={CONFIG.nome} width={583} height={253} loading="lazy" className="h-16 w-auto" />
           <p className="mt-5 max-w-xs leading-relaxed">{enderecoCompleto()}</p>
           {rt.nome && rt.cro && (
             <p className="mt-4 text-grafite-200">
