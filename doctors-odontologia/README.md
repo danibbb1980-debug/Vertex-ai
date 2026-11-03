@@ -40,7 +40,7 @@ Preencha `responsavelTecnico.nome` e `responsavelTecnico.cro`. Eles aparecem no 
 
 ### Fotos
 Coloque o arquivo em `public/fotos/` com duas versões (`nome.webp` e `nome.jpg`) e adicione em `fotos.ambiente` com `src: '/fotos/nome'` (sem extensão), `alt`, `legenda`, `largura` e `altura`.
-As fotos atuais vieram do Google Maps (em `referencias/fotos/`) e são de baixa resolução (224 px de largura); foram ampliadas 2x. Fotos novas, com pelo menos 1200 px, vão melhorar bastante o resultado.
+As fotos atuais (recepção, consultório, sala e fachada) foram recortadas de capturas de tela do celular; os originais recortados estão em `referencias/fotos/`. A fachada fica em `fotos.fachada` e aparece na seção de contato. Fotos tiradas direto da câmera, com pelo menos 1600 px, vão deixar o resultado mais nítido.
 
 ### Desligar o rascunho (publicação definitiva)
 1. `rascunho: false` em `src/config.ts` (tira a faixa e muda as metas para `index, follow`).
@@ -57,7 +57,7 @@ As fotos atuais vieram do Google Maps (em `referencias/fotos/`) e são de baixa 
 
 ## Arquivos de referência
 - `referencias/logo-doctors.jpg`: logo original enviado.
-- `referencias/fotos/`: fotos do espaço (Google Maps).
+- `referencias/fotos/`: fotos do espaço usadas no site (recortes sem a interface do celular).
 - `referencias/instagram-equipe/`: artes do Instagram com a equipe. **Não usadas no site**: são artes de campanha com selos de "especialistas" e títulos de especialidade sem registro informado, e o briefing pede para não copiar artes do Instagram. Serviram só para preencher os nomes em `equipe`.
 
 ## Privacidade
