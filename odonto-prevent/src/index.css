@@ -1,0 +1,221 @@
+@import 'tailwindcss';
+@source not '../referencias';
+
+@theme {
+  /* Paleta derivada do logo: grafite #606062 e verde-água #75CEBE */
+  --color-grafite-950: #17181a;
+  --color-grafite-900: #232427;
+  --color-grafite-800: #2e2f33;
+  --color-grafite-700: #3b3c40;
+  --color-grafite-500: #606062; /* cor do fundo do logo */
+  --color-grafite-300: #a9aaad;
+  --color-grafite-200: #c9cacb;
+
+  --color-menta: #75cebe; /* verde-água do logo (sobre fundo escuro) */
+  --color-menta-claro: #a6e2d7;
+  --color-menta-suave: #e3f4f0;
+  --color-menta-texto: #1b6b5f; /* verde-água escurecido para texto sobre claro (AA) */
+
+  --color-gelo: #f6f7f5;
+  --color-perola: #ecedea;
+  --color-linha: #dcddd9;
+
+  --color-areia: #d8c6a3;
+  --color-areia-texto: #7c6440;
+
+  --color-tinta: #232427;
+  --color-tinta-suave: #4f5054;
+
+  --font-display: 'Outfit Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter Tight Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6.5rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    background: var(--color-gelo);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--color-menta);
+    color: var(--color-grafite-950);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-menta);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .sobre-claro :focus-visible,
+  .sobre-claro:focus-visible {
+    outline-color: var(--color-menta-texto);
+  }
+}
+
+@layer components {
+  /* Palavra em ênfase dos títulos */
+  .enfase {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--color-menta);
+  }
+  .sobre-claro .enfase {
+    color: var(--color-menta-texto);
+  }
+
+  /* Rótulo em caixa-alta espaçada, como no logo */
+  .rotulo {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .container-site {
+    width: 100%;
+    max-width: 75rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Linhas de calendário no fundo */
+  .grade-calendario {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+  .grade-calendario-clara {
+    background-image:
+      linear-gradient(to right, rgb(35 36 39 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(35 36 39 / 0.05) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  /* Campos do formulário */
+  .campo {
+    width: 100%;
+    min-height: 3.25rem;
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-linha);
+    background: #fff;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: var(--color-tinta);
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+    appearance: none;
+  }
+  .campo::placeholder {
+    color: #76777b;
+  }
+  .campo:hover {
+    border-color: var(--color-grafite-300);
+  }
+  .campo:focus-visible {
+    outline: none;
+    border-color: var(--color-menta-texto);
+    box-shadow: 0 0 0 3px rgb(27 107 95 / 0.25);
+  }
+  .campo[aria-invalid='true'] {
+    border-color: #a3392b;
+    box-shadow: 0 0 0 3px rgb(163 57 43 / 0.15);
+  }
+  .campo:disabled {
+    background: var(--color-perola);
+    color: var(--color-tinta-suave);
+    cursor: not-allowed;
+  }
+  select.campo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23232427' stroke-width='1.6' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.75rem;
+  }
+}
+
+/* Marquee: anima só transform; pausa fora da tela e com movimento reduzido */
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-trilho {
+  animation: marquee 60s linear infinite;
+  animation-play-state: paused;
+}
+.marquee-trilho[data-ativo='true'] {
+  animation-play-state: running;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-trilho {
+    animation: none;
+  }
+}
+
+/* Entrada do hero em CSS: começa na primeira pintura, sem esperar o JavaScript */
+@keyframes sobe-palavra {
+  from {
+    transform: translate3d(0, 105%, 0);
+    opacity: 0;
+  }
+}
+@keyframes entra {
+  from {
+    transform: translate3d(0, 18px, 0);
+    opacity: 0;
+  }
+}
+@keyframes aparece {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .revela-palavra {
+    animation: sobe-palavra 0.75s var(--ease-suave) both;
+  }
+  .entrada {
+    animation: entra 0.9s var(--ease-suave) both;
+  }
+  .painel-aparece {
+    animation: aparece 0.35s ease-out;
+  }
+}

@@ -1,0 +1,17 @@
+:root{--g9:#232427;--g2:#c9cacb;--m:#75cebe;--mt:#1b6b5f;--gelo:#f6f7f5;--t:#232427;--ts:#4f5054}
+*{box-sizing:border-box}
+body{margin:0;background:var(--gelo);color:var(--t);font:17px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.faixa{background:#d8c6a3;color:#17181a;text-align:center;font-size:12px;font-weight:500;padding:7px 16px}
+header{background:var(--g9);padding:16px 20px}
+header a{display:inline-block}
+header img{height:44px;width:auto;display:block}
+main{max-width:720px;margin:0 auto;padding:56px 20px 80px}
+.rotulo{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--mt);font-weight:600;margin:0 0 16px}
+h1{font-weight:500;letter-spacing:-.02em;line-height:1.1;font-size:clamp(32px,6vw,48px);margin:0 0 24px}
+h2{font-size:21px;font-weight:600;margin:40px 0 8px}
+p,li{color:var(--ts)}
+a{color:var(--mt);text-underline-offset:3px}
+a:focus-visible{outline:3px solid var(--mt);outline-offset:3px;border-radius:4px}
+.botao{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;background:var(--g9);color:#fff;text-decoration:none;font-weight:500;margin-top:24px}
+.botao:hover{background:#3b3c40}
+footer{border-top:1px solid #dcddd9;padding:24px 20px;text-align:center;font-size:13px;color:var(--ts)}
