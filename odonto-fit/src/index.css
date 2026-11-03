@@ -1,0 +1,171 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/bricolage-grotesque/opsz.css';
+@import '@fontsource-variable/dm-sans/wght.css';
+
+@source not '../referencias';
+
+/* Paleta amostrada do logo: azul-marinho #23224F e verde-água #55A9B3. */
+@theme {
+  --color-navy: #23224f;
+  --color-navy-deep: #1b1a40;
+  --color-ink: #4a4b6a;
+  --color-muted: #5b5c78;
+  --color-aqua: #55a9b3;
+  --color-aqua-ink: #2a6f78;
+  --color-aqua-soft: #dcefF1;
+  --color-ice: #f7f6f2;
+  --color-mist: #eef2f4;
+  --color-line: #dce3e8;
+  --color-sand: #f1e4d3;
+  --color-peach: #e8b796;
+
+  --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'DM Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.5rem;
+  --shadow-soft: 0 1px 2px rgb(35 34 79 / 0.04), 0 8px 24px -12px rgb(35 34 79 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(35 34 79 / 0.05), 0 22px 40px -20px rgb(35 34 79 / 0.32);
+
+  --animate-marquee: marquee 48s linear infinite;
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6.5rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    @apply bg-ice text-ink font-sans antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-navy;
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-aqua-ink);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-aqua);
+  }
+  ::selection {
+    background: var(--color-aqua-soft);
+    color: var(--color-navy);
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-[76rem] px-4 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply font-sans text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-aqua-ink;
+  }
+  .btn {
+    @apply relative inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[0.98rem] font-semibold
+      transition-[transform,background-color,color,box-shadow] duration-200 ease-out select-none;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-primary {
+    @apply bg-navy text-white shadow-soft hover:bg-navy-deep;
+  }
+  .btn-aqua {
+    @apply bg-aqua-ink text-white shadow-soft hover:bg-[#235f67];
+  }
+  .btn-ghost {
+    @apply bg-white/70 text-navy ring-1 ring-line ring-inset hover:bg-white hover:ring-navy/30;
+  }
+  .btn-light {
+    @apply bg-aqua text-navy hover:bg-[#6fbac3];
+  }
+  .btn-outline-light {
+    @apply text-white ring-1 ring-white/35 ring-inset hover:bg-white/10;
+  }
+  /* Ícone da seta desliza de leve no hover. */
+  .btn .seta {
+    transition: transform 200ms ease-out;
+  }
+  .btn:hover .seta {
+    transform: translate(2px, -2px);
+  }
+
+  .card {
+    @apply rounded-[var(--radius-card)] bg-white ring-1 ring-line/80 shadow-soft;
+  }
+
+  /* Cartão com luz que segue o ponteiro (adaptado de "Feature Grid Spotlight Cards"). */
+  .spot {
+    position: relative;
+    isolation: isolate;
+  }
+  .spot::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(22rem circle at var(--x, 50%) var(--y, 0%), rgb(85 169 179 / 0.16), transparent 60%);
+    opacity: 0;
+    transition: opacity 300ms ease-out;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .spot:hover::before,
+  .spot:focus-within::before {
+    opacity: 1;
+  }
+
+  .field {
+    @apply block min-h-12 w-full rounded-2xl border border-line bg-ice/60 px-4 py-3 text-[1rem] text-navy
+      transition-[border-color,box-shadow,background-color] duration-200 placeholder:text-muted/80
+      hover:border-navy/30 focus:border-aqua-ink focus:bg-white focus:outline-none focus:ring-4 focus:ring-aqua/25;
+  }
+  .field[aria-invalid='true'] {
+    @apply border-[#b42318] ring-4 ring-[#b42318]/10;
+  }
+  .field:disabled {
+    @apply cursor-not-allowed opacity-60;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .anim-draw {
+    opacity: 1 !important;
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
