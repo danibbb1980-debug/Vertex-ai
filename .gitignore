@@ -12,3 +12,7 @@ yarn-error.log*
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# cache do Python (scripts das skills)
+__pycache__/
+*.pyc
