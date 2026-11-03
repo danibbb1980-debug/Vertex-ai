@@ -79,13 +79,12 @@ export function Clinica() {
               <p className="rotulo text-ouro-escuro">O espaço</p>
               <p className="hidden text-sm text-pedra sm:block">{CONFIG.endereco.rua}, {CONFIG.endereco.bairro}</p>
             </Revelar>
-            <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3">
+            <ul className={`mt-6 grid gap-4 sm:gap-6 ${fotos.length === 1 ? '' : fotos.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 md:grid-cols-3'}`}>
               {fotos.map((f, i) => (
                 <Revelar
                   como="li"
                   key={f.src}
                   atraso={i * 0.08}
-                  className={i === 0 ? 'col-span-2 md:col-span-1' : ''}
                 >
                   <figure className="group">
                     <div className={`overflow-hidden bg-areia ${i === 0 ? 'rounded-tr-[120px] md:rounded-tr-[160px]' : ''}`}>
@@ -95,7 +94,7 @@ export function Clinica() {
                         largura={f.largura}
                         altura={f.altura}
                         className={`w-full object-cover transition-transform duration-700 ease-[var(--ease-suave)] group-hover:scale-[1.03] ${
-                          i === 0 ? 'aspect-[4/3] md:aspect-[3/4]' : 'aspect-[3/4]'
+                          fotos.length === 1 ? 'aspect-[16/9]' : 'aspect-[4/5] md:aspect-[4/3]'
                         }`}
                       />
                     </div>
@@ -130,7 +129,7 @@ export function Atendimentos() {
           Várias áreas, um mesmo <em className="enfase">cuidado</em>.
         </TituloSecao>
 
-        <ul className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-linha bg-linha sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-14 grid overflow-hidden rounded-2xl border-l border-t border-linha sm:grid-cols-2 lg:grid-cols-3">
           {lista.map((a, i) => {
             const Icone = iconeAtendimento[a.icone]
             return (
@@ -138,7 +137,7 @@ export function Atendimentos() {
                 como="li"
                 key={a.id}
                 atraso={(i % 3) * 0.06}
-                className={`group relative flex flex-col bg-marfim p-7 transition-colors duration-500 hover:bg-white md:p-8 ${
+                className={`group relative flex flex-col border-b border-r border-linha bg-marfim p-7 transition-colors duration-500 hover:bg-white md:p-8 ${
                   i === lista.length - 1 && lista.length % 3 === 1 ? 'lg:col-span-3 lg:flex-row lg:items-center lg:gap-10' : ''
                 } ${i === lista.length - 1 && lista.length % 2 === 1 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
               >
@@ -329,10 +328,10 @@ function RelogioHorario() {
             strokeWidth="3"
             strokeLinecap="round"
             transform="rotate(-90 120 120)"
-            initial={reduzir ? false : { pathLength: 0 }}
+            initial={{ pathLength: 0 }}
             whileInView={{ pathLength: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.8, ease: [0.65, 0, 0.35, 1] }}
+            transition={reduzir ? { duration: 0 } : { duration: 1.8, ease: [0.65, 0, 0.35, 1] }}
           />
           <line x1="120" y1="120" x2="120" y2="62" stroke="var(--color-creme)" strokeWidth="2.5" strokeLinecap="round" transform="rotate(240 120 120)" />
           <line x1="120" y1="120" x2="120" y2="42" stroke="var(--color-creme)" strokeWidth="1.5" strokeLinecap="round" />

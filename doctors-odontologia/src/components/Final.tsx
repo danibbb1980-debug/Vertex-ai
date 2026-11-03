@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { AnimatePresence, m, useInView, useReducedMotion } from 'motion/react'
 import { CONFIG, enderecoLinha, waLink } from '../config'
-import { BotaoLink, Revelar, TituloSecao } from './ui'
+import { BotaoLink, Foto, Revelar, TituloSecao } from './ui'
 import { Logo } from './Topo'
 import { IconeInstagram, IconeMais, IconePin, IconeRelogio, IconeSetaDiagonal, IconeWhatsApp } from './Icones'
 
@@ -125,7 +125,11 @@ function Mapa() {
   const [carregar, setCarregar] = useState(false)
   const q = encodeURIComponent(`${CONFIG.nome}, ${enderecoLinha()}`)
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-linha bg-areia lg:aspect-auto lg:h-full lg:min-h-[420px]">
+    <div
+      className={`relative overflow-hidden rounded-2xl border border-linha bg-areia ${
+        CONFIG.fotos.fachada ? 'aspect-[16/9]' : 'aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[420px]'
+      }`}
+    >
       {carregar ? (
         <iframe
           title={`Mapa com a localização da ${CONFIG.nome}`}
@@ -220,7 +224,7 @@ export function Contato() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <BotaoLink href={waLink()} whatsapp>
                 WhatsApp {CONFIG.telefoneExibicao}
               </BotaoLink>
@@ -232,7 +236,24 @@ export function Contato() {
             </div>
           </Revelar>
         </div>
-        <Revelar className="lg:col-span-6 lg:col-start-7">
+        <Revelar className="flex flex-col gap-5 lg:col-span-6 lg:col-start-7">
+          {CONFIG.fotos.fachada && (
+            <figure>
+              <div className="overflow-hidden rounded-2xl rounded-tr-[96px] bg-areia">
+                <Foto
+                  src={CONFIG.fotos.fachada.src}
+                  alt={CONFIG.fotos.fachada.alt}
+                  largura={CONFIG.fotos.fachada.largura}
+                  altura={CONFIG.fotos.fachada.altura}
+                  className="aspect-[3/2] w-full object-cover"
+                />
+              </div>
+              <figcaption className="mt-3 flex items-center gap-2 text-sm text-pedra">
+                <span aria-hidden className="inline-block h-3 w-[2px] bg-ouro" />
+                {CONFIG.fotos.fachada.legenda}
+              </figcaption>
+            </figure>
+          )}
           <Mapa />
         </Revelar>
       </div>
@@ -261,18 +282,18 @@ export function CtaFinal() {
               height="220"
               fill="var(--color-ouro)"
               style={{ transformOrigin: 'top', transformBox: 'fill-box' }}
-              initial={reduzir ? false : { scaleY: 0 }}
+              initial={{ scaleY: 0 }}
               animate={desenhar ? { scaleY: 1 } : undefined}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              transition={reduzir ? { duration: 0 } : { duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             />
             <m.path
               d="M40 10 H62 C118 10 150 52 150 110 C150 168 118 210 62 210 H40"
               fill="none"
               stroke="var(--color-creme)"
               strokeWidth="14"
-              initial={reduzir ? false : { pathLength: 0 }}
+              initial={{ pathLength: 0 }}
               animate={desenhar ? { pathLength: 1 } : undefined}
-              transition={{ duration: 1.3, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
+              transition={reduzir ? { duration: 0 } : { duration: 1.3, delay: 0.5, ease: [0.65, 0, 0.35, 1] }}
             />
           </svg>
           <div className="text-center md:text-left">
@@ -283,7 +304,7 @@ export function CtaFinal() {
             <p className="mx-auto mt-5 max-w-xl text-lg text-ouro-claro md:mx-0">
               Conte o que você procura. A equipe conversa com você pelo WhatsApp e combina o horário.
             </p>
-            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row md:justify-start">
+            <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row sm:flex-wrap md:justify-start">
               <BotaoLink href={waLink()} variante="claro" whatsapp>
                 Agendar pelo WhatsApp
               </BotaoLink>

@@ -135,38 +135,38 @@ export const CONFIG = {
     pagamentos: ['Cartão de crédito', 'Cartão de débito', 'Pagamento por aproximação (NFC)'],
   },
 
-  /** Fotos do espaço (fonte: Google Maps). Lista vazia = galeria some. */
+  /** Fotos do espaço. Campo null ou lista vazia = o bloco some. */
   fotos: {
     destaque: {
       src: '/fotos/recepcao',
-      alt: 'Recepção da clínica, com o nome Doctors em letras na parede e o balcão de madeira',
+      alt: 'Recepção da clínica, com o nome Doctors em letras na parede, balcão de madeira e consultório ao fundo',
       legenda: 'Recepção',
-      largura: 448,
-      altura: 596,
+      largura: 900,
+      altura: 1191,
     } as Foto | null,
     ambiente: [
       {
-        src: '/fotos/consultorio-1',
-        alt: 'Consultório claro com cadeira odontológica, bancada e janela',
+        src: '/fotos/consultorio',
+        alt: 'Consultório claro com cadeira odontológica, bancada com pia e janela',
         legenda: 'Consultório',
-        largura: 448,
-        altura: 596,
-      },
-      {
-        src: '/fotos/consultorio-2',
-        alt: 'Outro consultório com cadeira odontológica e armários brancos',
-        legenda: 'Consultório',
-        largura: 390,
-        altura: 520,
+        largura: 900,
+        altura: 1132,
       },
       {
         src: '/fotos/sala',
-        alt: 'Sala de atendimento com mesa de madeira, cadeiras e maca',
+        alt: 'Sala de atendimento com mesa de madeira, poltronas, maca e armários',
         legenda: 'Sala de atendimento',
-        largura: 404,
-        altura: 538,
+        largura: 900,
+        altura: 1191,
       },
     ] as Foto[],
+    fachada: {
+      src: '/fotos/fachada',
+      alt: 'Fachada do número 103 da Rua Afonso Pena, com o letreiro Doctors Odontologia e Saúde',
+      legenda: 'Fachada · R. Afonso Pena, 103',
+      largura: 900,
+      altura: 601,
+    } as Foto | null,
   },
 
   /**

@@ -14,16 +14,17 @@ export function Revelar({
   className?: string
   como?: 'div' | 'li' | 'article'
 }) {
+  // Mesma marcação no servidor e no navegador (o HTML é pré-renderizado).
+  // Com movimento reduzido, o conteúdo aparece na hora, sem animação.
   const reduzir = useReducedMotion()
   const Comp = m[como]
-  if (reduzir) return <Comp className={className}>{children}</Comp>
   return (
     <Comp
       className={className}
-      initial={{ opacity: 0, y: 22 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '0px 0px -12% 0px' }}
-      transition={{ duration: 0.7, delay: atraso, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0, margin: '0px 0px -40px 0px' }}
+      transition={reduzir ? { duration: 0 } : { duration: 0.55, delay: Math.min(atraso, 0.15), ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </Comp>
@@ -95,7 +96,7 @@ export function BotaoLink({
       href={href}
       aria-label={ariaLabel}
       {...(novaAba ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className={`group relative inline-flex min-h-12 items-center justify-center gap-2.5 overflow-hidden rounded-full px-6 py-3 text-[0.95rem] font-medium tracking-[0.01em] transition-[background-color,border-color,color,transform] duration-300 ease-[var(--ease-suave)] active:scale-[.98] ${estilos[variante]} ${className}`}
+      className={`group relative inline-flex min-h-12 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-full px-6 py-3 text-[0.95rem] font-medium tracking-[0.01em] transition-[background-color,border-color,color,transform] duration-300 ease-[var(--ease-suave)] active:scale-[.98] ${estilos[variante]} ${className}`}
     >
       {whatsapp && <IconeWhatsApp tamanho={18} className="shrink-0" />}
       <span className="relative">{children}</span>
