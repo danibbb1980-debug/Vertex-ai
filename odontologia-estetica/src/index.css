@@ -1,0 +1,249 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-taupe-950: #2f2b27;
+  --color-taupe-900: #3d3833;
+  --color-taupe-800: #4a4540;
+  --color-taupe-700: #57514b; /* amostrado do logo */
+  --color-taupe-500: #736c65;
+  --color-taupe-300: #bdb6ad;
+  --color-gelo: #faf9f6;
+  --color-pedra-50: #f4f1ec;
+  --color-pedra-100: #ece7df;
+  --color-pedra-200: #ddd6cb;
+  --color-terracota: #9c5235;
+  --color-terracota-claro: #d9a48c;
+  --color-musgo: #56634a;
+  --color-musgo-claro: #b7c2a6;
+
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-sans: 'DM Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-encaixe: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply bg-gelo font-sans text-taupe-900 antialiased;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-variation-settings: 'opsz' 96, 'SOFT' 30;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-terracota);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .escuro :focus-visible {
+    outline-color: var(--color-terracota-claro);
+  }
+  ::selection {
+    background: var(--color-musgo-claro);
+    color: var(--color-taupe-950);
+  }
+}
+
+@layer components {
+  .rotulo {
+    @apply text-[0.75rem] font-medium tracking-[0.22em] uppercase;
+  }
+  .enfase {
+    font-style: italic;
+    font-weight: 380;
+    color: var(--color-terracota);
+  }
+  .escuro .enfase {
+    color: var(--color-terracota-claro);
+  }
+  .grade-fina {
+    background-image:
+      linear-gradient(to right, rgb(87 81 75 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(87 81 75 / 0.07) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .escuro .grade-fina,
+  .grade-fina-clara {
+    background-image:
+      linear-gradient(to right, rgb(250 249 246 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(250 249 246 / 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .container-site {
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8;
+  }
+}
+
+/* marquee: pausa com reduced-motion e fora da tela (classe aplicada via JS) */
+@keyframes deslizar {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-trilha {
+  animation: deslizar 48s linear infinite;
+}
+.marquee-pausado .marquee-trilha {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-trilha {
+    animation: none;
+  }
+}
+
+/* ---------- revelações (só com JS ativo e sem reduced-motion) ---------- */
+.palavra {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  vertical-align: bottom;
+}
+.palavra > span {
+  display: inline-block;
+}
+@keyframes subir {
+  from {
+    transform: translateY(105%);
+    opacity: 0;
+  }
+}
+@keyframes surgir {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+@keyframes encaixe-a {
+  from {
+    transform: translate(-44px, -44px);
+    opacity: 0;
+  }
+}
+@keyframes encaixe-b {
+  from {
+    transform: translate(44px, 44px);
+    opacity: 0;
+  }
+}
+@keyframes miolo {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+.encaixe-miolo {
+  transform-origin: 100px 100px;
+  opacity: 0.9;
+}
+.encaixe-px-a {
+  transform: translate(calc(var(--rolagem, 0) * -36px), calc(var(--rolagem, 0) * -36px));
+}
+.encaixe-px-b {
+  transform: translate(calc(var(--rolagem, 0) * 36px), calc(var(--rolagem, 0) * 36px));
+}
+.linha-progresso {
+  transform: scaleY(1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* no carregamento (hero): CSS puro, não depende do JavaScript */
+  [data-revela-carga] .palavra > span {
+    animation: subir 0.8s var(--ease-encaixe) both;
+    animation-delay: calc(var(--atraso, 0s) + var(--i, 0) * 55ms);
+  }
+  [data-surge-carga] {
+    animation: surgir 0.8s var(--ease-encaixe) both;
+    animation-delay: var(--atraso, 0s);
+  }
+  [data-encaixe-carga] .encaixe-a {
+    animation: encaixe-a 1.4s var(--ease-encaixe) 0.2s both;
+  }
+  [data-encaixe-carga] .encaixe-b {
+    animation: encaixe-b 1.4s var(--ease-encaixe) 0.2s both;
+  }
+  [data-encaixe-carga] .encaixe-miolo {
+    animation: miolo 0.6s var(--ease-encaixe) 1.2s both;
+  }
+
+  /* ao rolar: oculto até receber .visivel */
+  .js [data-revela] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s var(--ease-encaixe),
+      transform 0.7s var(--ease-encaixe);
+    transition-delay: var(--atraso, 0s);
+  }
+  .js [data-revela].visivel {
+    opacity: 1;
+    transform: none;
+  }
+  .js .encaixe[data-revela] {
+    transform: none;
+  }
+  .js .encaixe[data-revela] .encaixe-a,
+  .js .encaixe[data-revela] .encaixe-b,
+  .js .encaixe[data-revela] .encaixe-miolo {
+    opacity: 0;
+    transition:
+      opacity 1.2s var(--ease-encaixe),
+      transform 1.4s var(--ease-encaixe);
+  }
+  .js .encaixe[data-revela] .encaixe-a {
+    transform: translate(-44px, -44px);
+  }
+  .js .encaixe[data-revela] .encaixe-b {
+    transform: translate(44px, 44px);
+  }
+  .js .encaixe[data-revela] .encaixe-miolo {
+    transform: scale(0.6);
+    transition-delay: 1.1s;
+  }
+  .js .encaixe[data-revela].visivel .encaixe-a,
+  .js .encaixe[data-revela].visivel .encaixe-b {
+    opacity: 1;
+    transform: none;
+  }
+  .js .encaixe[data-revela].visivel .encaixe-miolo {
+    opacity: 0.9;
+    transform: none;
+  }
+
+  .js [data-revela-palavras] .palavra > span {
+    transform: translateY(105%);
+    opacity: 0;
+    transition:
+      transform 0.7s var(--ease-encaixe),
+      opacity 0.7s var(--ease-encaixe);
+    transition-delay: calc(var(--atraso, 0s) + var(--i, 0) * 55ms);
+  }
+  .js [data-revela-palavras].visivel .palavra > span {
+    transform: none;
+    opacity: 1;
+  }
+  .js .linha-progresso {
+    transform: scaleY(0);
+    transition: transform 0.15s linear;
+  }
+}
