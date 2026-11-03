@@ -24,7 +24,7 @@ export type HorarioDia = { abre: string; fecha: string; almoco?: { inicio: strin
 
 export const CONFIG = {
   rascunho: true,
-  siteUrl: 'https://odontologia-estetica-andre-douglas-rascunho.vercel.app',
+  siteUrl: 'https://odontologia-estetica-andre-douglas.vercel.app',
 
   nome: 'Odontologia Estética',
   dentistasLinha: 'Dr. André Totti & Dr. Douglas Barbosa',
