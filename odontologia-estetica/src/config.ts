@@ -172,17 +172,14 @@ export const CONFIG = {
   fotosConsultorio: [
     { src: '/img/recepcao.webp', alt: 'Recepção com balcão de madeira, pendentes de luz e o símbolo da Odontologia Estética na parede', largura: 755, altura: 1000 },
     { src: '/img/consultorio.webp', alt: 'Consultório com cadeira odontológica, bancada, painel ripado e janela com persianas', largura: 1000, altura: 744 },
-    { src: '/img/sala-de-espera.webp', alt: 'Sala de espera com poltrona, bancos estofados e jardim vertical', largura: 404, altura: 540 },
-    { src: '/img/consultorio-2.webp', alt: 'Segundo consultório, com cadeira odontológica, mesa e painel ripado', largura: 1000, altura: 744 },
-    { src: '/img/recepcao-2.webp', alt: 'Recepção vista de lado, com pendentes de luz e balcão', largura: 404, altura: 540 },
     { src: '/img/corredor.webp', alt: 'Entrada coberta com poltrona, bancos estofados, jardim vertical e porta de vidro', largura: 755, altura: 1000 },
+    { src: '/img/consultorio-2.webp', alt: 'Segundo consultório, com cadeira odontológica, mesa e painel ripado', largura: 1000, altura: 744 },
   ] as Foto[],
   fotoFachada: { src: '/img/fachada.webp', alt: 'Fachada do consultório na Av. Ver. Antônio da Costa Rios, com a placa Odontologia Estética', largura: 448, altura: 596 } as Foto | null,
 
   // Fotos dos dentistas sem nome associado, pois não se confirmou quem é quem.
   fotosEquipe: [
     { src: '/img/equipe-1.webp', alt: 'Dentista da Odontologia Estética de jaleco, à mesa do consultório', largura: 1000, altura: 660 },
-    { src: '/img/equipe-2.webp', alt: 'Dentista da Odontologia Estética sentado no consultório', largura: 390, altura: 278 },
     { src: '/img/equipe-3.webp', alt: 'Dentista da Odontologia Estética à mesa, com notebook', largura: 1000, altura: 421 },
   ] as Foto[],
 

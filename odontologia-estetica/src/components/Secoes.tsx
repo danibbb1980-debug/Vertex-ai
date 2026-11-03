@@ -169,20 +169,17 @@ export function Clinica() {
             }
           />
           {equipe.length > 0 && (
-            <Surge className="grid grid-cols-6 grid-rows-[auto_auto] gap-3 self-end">
-              <div className="col-span-6 overflow-hidden bg-pedra-100 sm:col-span-4">
-                <Imagem f={equipe[0]} className="aspect-[3/2]" />
-              </div>
-              {equipe[1] && (
-                <div className="col-span-3 overflow-hidden rounded-tl-[999px] bg-pedra-100 sm:col-span-2 sm:row-span-2 sm:rounded-tl-[160px]">
-                  <Imagem f={equipe[1]} className="aspect-[3/4] object-[28%_center] sm:aspect-auto" />
+            <Surge className="grid grid-cols-6 gap-3 self-end">
+              {equipe.map((f, i) => (
+                <div
+                  key={f.src}
+                  className={`overflow-hidden bg-pedra-100 ${
+                    i === 0 ? 'col-span-6 sm:col-span-5' : 'col-span-6 rounded-tl-[120px] sm:col-span-5 sm:col-start-2 sm:rounded-tl-[180px]'
+                  }`}
+                >
+                  <Imagem f={f} className={i === 0 ? 'aspect-[3/2]' : 'aspect-[12/5]'} />
                 </div>
-              )}
-              {equipe[2] && (
-                <div className="col-span-3 overflow-hidden bg-pedra-100 sm:col-span-4">
-                  <Imagem f={equipe[2]} className="aspect-[3/4] sm:aspect-[3/1.4]" />
-                </div>
-              )}
+              ))}
             </Surge>
           )}
         </div>
@@ -229,7 +226,7 @@ export function Galeria() {
   if (!fotos.length) return null
   // mosaico arquitetônico: cantos retos com um arco
   // mosaico arquitetônico (5 x 2 no desktop, 2 colunas no celular): cantos retos com um arco
-  const formatos = ['col-span-2 sm:row-span-2', '', 'row-span-2 rounded-tr-[999px]', '', '', '']
+  const formatos = ['col-span-2 sm:row-span-2', '', 'row-span-2 rounded-tr-[999px]', '']
   return (
     <section aria-labelledby="titulo-galeria" className="bg-pedra-50 py-24 sm:py-28">
       <div className="container-site">
@@ -242,7 +239,7 @@ export function Galeria() {
           </div>
           <p className="max-w-sm text-taupe-800">Recepção, sala de espera e consultórios na Av. Ver. Antônio da Costa Rios, em Pouso Alegre.</p>
         </div>
-        <ul className="mt-12 grid grid-flow-dense auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[190px] sm:grid-cols-5 lg:auto-rows-[210px]">
+        <ul className="mt-12 grid grid-flow-dense auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[210px] sm:grid-cols-4 lg:auto-rows-[240px]">
           {fotos.map((f, i) => (
             <li key={f.src} className={`overflow-hidden bg-pedra-100 ${formatos[i % formatos.length]}`}>
               <Surge atraso={i * 0.05} className="h-full">
