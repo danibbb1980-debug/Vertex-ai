@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-latin-500-italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/dm-sans-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+/* Fallbacks com métricas próximas para reduzir CLS na troca de fonte */
+@font-face {
+  font-family: "Fraunces Fallback";
+  src: local("Georgia");
+  size-adjust: 104%;
+  ascent-override: 92%;
+}
+@font-face {
+  font-family: "DM Sans Fallback";
+  src: local("Arial");
+  size-adjust: 96%;
+}
+
+@theme {
+  /* Paleta "clínica de casa, padrão de centro" */
+  --color-petroleo-950: #0a2a2f;
+  --color-petroleo-900: #0f3a40;
+  --color-petroleo-800: #164a51;
+  --color-petroleo-700: #1e5c64;
+  --color-petroleo-100: #dbe6e4;
+  --color-linho: #f4eee4;
+  --color-areia: #eae1d2;
+  --color-papel: #faf7f1;
+  --color-mel: #c98a3b;
+  --color-mel-claro: #e0a458;
+  --color-mel-texto: #8a5a1c;
+  --color-salvia: #8fa898;
+  --color-salvia-escura: #4e6b5c;
+  --color-tinta: #1d2a2c;
+  --color-tinta-suave: #4a5856;
+  --color-erro: #a1361f;
+
+  --font-serif: "Fraunces", "Fraunces Fallback", Georgia, serif;
+  --font-sans: "DM Sans", "DM Sans Fallback", system-ui, sans-serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-papel font-sans text-tinta antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif text-petroleo-900;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  em {
+    font-style: italic;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-mel);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--color-mel-claro);
+    color: var(--color-petroleo-950);
+  }
+}
+
+@layer components {
+  .rotulo {
+    @apply font-sans text-[0.75rem] font-semibold uppercase;
+    letter-spacing: 0.22em;
+  }
+  .container-site {
+    @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-10;
+  }
+  .btn {
+    @apply relative inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-6 text-[0.98rem] font-medium transition-[background-color,color,box-shadow,transform] duration-200 ease-(--ease-suave);
+  }
+  .btn-primario {
+    @apply bg-petroleo-900 text-linho shadow-[0_6px_20px_-10px_rgba(15,58,64,0.7)] hover:bg-petroleo-800;
+  }
+  .btn-mel {
+    @apply bg-mel-claro text-petroleo-950 hover:bg-[#e8b26c];
+  }
+  .btn-contorno {
+    @apply border border-petroleo-900/25 text-petroleo-900 hover:border-petroleo-900/60 hover:bg-petroleo-900/[0.04];
+  }
+  .btn-contorno-claro {
+    @apply border border-linho/30 text-linho hover:border-linho/70 hover:bg-linho/[0.06];
+  }
+  .filete {
+    @apply h-px w-full bg-petroleo-900/12;
+  }
+}
+
+/* Entrada do hero (CSS puro: roda já no HTML pré-renderizado) */
+@keyframes subir-palavra {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+}
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+}
+.palavra {
+  animation: subir-palavra 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.surgir {
+  animation: surgir 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Marquee discreto: pausa fora da tela, no hover e com movimento reduzido */
+@keyframes deslizar {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee-trilho {
+  animation: deslizar 60s linear infinite;
+}
+.marquee[data-pausado="true"] .marquee-trilho,
+.marquee:hover .marquee-trilho {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-trilho {
+    animation: none;
+    transform: none;
+  }
+}
