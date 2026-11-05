@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { m as motion } from 'motion/react'
 import {
   CONFIG,
-  areasVisiveis,
   enderecoCompleto,
   mapsDirectionsUrl,
   mapsEmbedUrl,
   whatsappUrl,
 } from './config'
 import { DraftBanner, Header } from './components/Header'
+import { AreasList } from './components/Areas'
 import { Accordion, ArrowIcon, MagneticLink, Reveal, SectionLabel, WhatsAppIcon, type FaqItem } from './components/ui'
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -16,24 +16,24 @@ const AVISO = 'Este site tem caráter exclusivamente informativo e não constitu
 
 /* ---------- Hero ---------- */
 
-function Portrait({ className = '' }: { className?: string }) {
-  if (!CONFIG.foto.src) {
-    return (
-      <div className={`grid aspect-square place-items-center border border-dashed border-bronze/50 bg-night-2 text-center ${className}`}>
-        <span className="label px-4 text-mist">Foto do advogado (substituir)</span>
-      </div>
-    )
-  }
+function Portrait({ className = '', sizes }: { className?: string; sizes: string }) {
+  const f = CONFIG.foto
+  if (!f.base) return null
+  const set = (ext: string) => f.larguras.map((w) => `${f.base}-${w}.${ext} ${w}w`).join(', ')
   return (
-    <img
-      src={CONFIG.foto.src}
-      srcSet={`${CONFIG.foto.src} 1x, ${CONFIG.foto.src2x} 2x`}
-      alt={CONFIG.foto.alt}
-      width={150}
-      height={150}
-      decoding="async"
-      className={`aspect-square object-cover [filter:saturate(.72)_contrast(1.04)] ${className}`}
-    />
+    <picture>
+      <source type="image/avif" srcSet={set('avif')} sizes={sizes} />
+      <source type="image/webp" srcSet={set('webp')} sizes={sizes} />
+      <img
+        src={`${f.base}-800.webp`}
+        alt={f.alt}
+        width={f.largura}
+        height={f.altura}
+        fetchPriority="high"
+        decoding="async"
+        className={className}
+      />
+    </picture>
   )
 }
 
@@ -85,13 +85,10 @@ function Hero() {
             ))}
           </h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.75, ease: EASE }}
-          >
+          <div>
             <p className="mt-8 max-w-[34rem] text-[1.05rem] leading-relaxed text-mist md:text-[1.12rem]">
-              Atuação em Direito Penal e Processo Penal, com atenção individual a cada caso e sigilo profissional.
+              Atuação em Direito Penal e Processo Penal, da investigação policial à execução da pena, com atenção individual
+              a cada caso e sigilo profissional.
             </p>
 
             <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
@@ -108,52 +105,36 @@ function Hero() {
                 <ArrowIcon className="h-4 w-4 text-bronze transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </div>
-          </motion.div>
+
+            <p className="mt-12 inline-flex items-center gap-4 border border-line-dark px-4 py-2.5 text-[0.8rem] tracking-wide text-mist">
+              <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-bronze" />
+              Inscrição <span className="font-medium text-ivory">{CONFIG.oab}</span>
+            </p>
+          </div>
         </div>
 
-        {/* Placa de identificação com retrato */}
-        <motion.aside
-          aria-label="Identificação profissional"
-          className="md:col-span-5 md:justify-self-end lg:col-span-4 lg:col-start-9"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.5, ease: EASE }}
-        >
-          <div className="relative w-full max-w-[22rem] border border-line-dark bg-ink/60 p-7 md:p-8">
-            <span aria-hidden="true" className="absolute -top-px left-7 h-px w-16 bg-bronze" />
-            <img
-              src={CONFIG.logo.completa}
-              alt={`${CONFIG.nome} · ${CONFIG.profissao}`}
-              width={640}
-              height={329}
-              fetchPriority="high"
-              className="mx-auto h-auto w-full max-w-[17rem]"
-            />
-            <span aria-hidden="true" className="mt-7 block h-px w-full bg-line-dark" />
-            <div className="mt-7 flex items-end gap-5">
-              <div className="relative shrink-0 p-1.5 ring-1 ring-bronze/40">
-                <Portrait className="h-[6.5rem] w-[6.5rem]" />
-              </div>
-              <p className="label pb-1 text-[0.62rem] leading-relaxed text-mist">
-                Escritório em
-                <br />
-                <span className="text-ivory">
-                  {CONFIG.endereco.cidade} · {CONFIG.endereco.uf}
+        {/* Retrato */}
+        {CONFIG.foto.base && (
+          <motion.figure
+            className="md:col-span-5 md:justify-self-end lg:col-span-4 lg:col-start-9"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.6, delay: 0.45, ease: EASE }}
+          >
+            <div className="relative w-full max-w-[24rem] overflow-hidden border border-line-dark bg-[radial-gradient(90%_70%_at_50%_35%,#2a3a55_0%,#1a2433_45%,#10151d_100%)]">
+              <span aria-hidden="true" className="absolute top-0 left-7 z-10 h-px w-16 bg-bronze" />
+              <Portrait sizes="(min-width: 1024px) 384px, (min-width: 768px) 40vw, 92vw" className="relative block h-auto w-full" />
+              <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink via-ink/70 to-transparent" />
+              <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6">
+                <span>
+                  <span className="display block text-[1.7rem] leading-none text-ivory">{CONFIG.nome}</span>
+                  <span className="label mt-2 block text-[0.6rem] text-mist">{CONFIG.profissao}</span>
                 </span>
-              </p>
+                <span className="label shrink-0 text-[0.6rem] text-bronze">{CONFIG.oab}</span>
+              </figcaption>
             </div>
-            <dl className="mt-6 divide-y divide-line-dark border-y border-line-dark text-[0.86rem]">
-              <div className="flex justify-between gap-4 py-3">
-                <dt className="text-mist">Inscrição</dt>
-                <dd className="font-medium tracking-wide text-ivory">{CONFIG.oab}</dd>
-              </div>
-              <div className="flex justify-between gap-4 py-3">
-                <dt className="text-mist">Atuação</dt>
-                <dd className="text-right text-ivory">Penal e Processo Penal</dd>
-              </div>
-            </dl>
-          </div>
-        </motion.aside>
+          </motion.figure>
+        )}
       </div>
     </section>
   )
@@ -164,7 +145,7 @@ function Hero() {
 function Sobre() {
   return (
     <section id="sobre" aria-labelledby="sobre-title" className="bg-ivory py-24 md:py-36">
-      <div className="wrap grid gap-12 md:grid-cols-12 md:gap-8">
+      <div className="wrap grid gap-12 md:grid-cols-12 md:gap-x-8 md:gap-y-16">
         <div className="md:col-span-5">
           <SectionLabel n="01">Sobre</SectionLabel>
           <Reveal>
@@ -173,32 +154,59 @@ function Sobre() {
             </h2>
           </Reveal>
         </div>
-        <div className="md:col-span-6 md:col-start-7 md:pt-14">
-          <Reveal delay={0.1}>
-            <div className="space-y-5 text-[1.05rem] text-muted">
-              <p>
-                <span className="text-text">{CONFIG.nome}</span> é advogado criminalista, inscrito na Ordem dos Advogados do
-                Brasil, Seção de São Paulo, sob o nº 220.810, com escritório em {CONFIG.endereco.cidade}.
-              </p>
-              <p>
-                Sua atuação se concentra em Direito Penal e Processo Penal. O trabalho parte da análise cuidadosa de cada
-                situação e de uma comunicação clara sobre o que a lei prevê, sempre sob sigilo profissional.
-              </p>
-              {CONFIG.mostrarProfessor && <p>É também professor universitário.</p>}
-              {CONFIG.mostrarCargoOAB && <p>{CONFIG.cargoOAB}.</p>}
-            </div>
-            <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-6 text-[0.88rem]">
-              <li className="flex items-center gap-3">
-                <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-bronze-deep" />
-                {CONFIG.oab}
-              </li>
-              <li className="flex items-center gap-3">
-                <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-bronze-deep" />
-                {CONFIG.mostrarEspecialista ? CONFIG.especialidade : 'Direito Penal e Processo Penal'}
-              </li>
-            </ul>
+
+        <Reveal delay={0.1} className="md:col-span-6 md:col-start-7 md:pt-14">
+          <div className="space-y-5 text-[1.05rem] text-muted">
+            <p>
+              <span className="text-text">{CONFIG.nome}</span> é advogado criminalista, inscrito na {CONFIG.oabSeccional} sob
+              o nº {CONFIG.oabNumero}
+              {CONFIG.mostrarTempoAtuacao ? `, com ${CONFIG.tempoAtuacao}` : ''}. Atua em Direito Penal e Direito Processual
+              Penal, com escritório em {CONFIG.endereco.cidade}.
+            </p>
+            <p>
+              Atua em todas as fases da persecução penal, desde a investigação policial até os Tribunais Superiores e a
+              execução da pena.
+            </p>
+            {CONFIG.mostrarProfessor && <p>É também professor universitário.</p>}
+            {CONFIG.mostrarCargoOAB && <p>{CONFIG.cargoOAB}.</p>}
+          </div>
+        </Reveal>
+
+        {CONFIG.formacao.length > 0 && (
+          <Reveal className="md:col-span-5">
+            <h3 className="label text-bronze-deep">Formação</h3>
+            <ol className="relative mt-6 space-y-5 border-l border-line pl-7">
+              {CONFIG.formacao.map((item) => (
+                <li key={item} className="relative text-[0.98rem] text-text">
+                  <span aria-hidden="true" className="absolute top-[0.6rem] -left-[calc(1.75rem+3px)] h-1.5 w-1.5 rotate-45 bg-bronze-deep" />
+                  {item}
+                </li>
+              ))}
+            </ol>
           </Reveal>
-        </div>
+        )}
+
+        <Reveal delay={0.1} className="md:col-span-6 md:col-start-7">
+          <blockquote className="border-t border-line pt-8">
+            <p className="display text-[1.55rem] leading-snug text-text italic md:text-[1.75rem]">{CONFIG.fechamentoInstitucional}</p>
+          </blockquote>
+          <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-6 text-[0.88rem]">
+            <li className="flex items-center gap-3">
+              <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-bronze-deep" />
+              {CONFIG.oab}
+            </li>
+            {CONFIG.mostrarTempoAtuacao && (
+              <li className="flex items-center gap-3">
+                <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-bronze-deep" />
+                <span className="first-letter:uppercase">{CONFIG.tempoAtuacao}</span>
+              </li>
+            )}
+            <li className="flex items-center gap-3">
+              <span aria-hidden="true" className="h-1 w-1 rotate-45 bg-bronze-deep" />
+              Direito Penal e Processo Penal
+            </li>
+          </ul>
+        </Reveal>
       </div>
     </section>
   )
@@ -221,27 +229,15 @@ function Atuacao() {
           </div>
           <Reveal delay={0.1} className="md:col-span-5 md:col-start-8 md:self-end">
             <p className="text-muted">
-              Informações gerais sobre o campo de trabalho do escritório. O conteúdo é educativo e não substitui a análise
-              de um caso concreto.
+              Atuação em todas as fases da persecução penal, da investigação policial aos Tribunais Superiores e à execução
+              da pena. Conteúdo informativo, que não dispensa a análise de um caso concreto.
             </p>
           </Reveal>
         </div>
 
-        <ul className="mt-16 grid gap-px border border-line bg-line md:grid-cols-2">
-          {areasVisiveis.map((area, i) => (
-            <li key={area.titulo} className="group relative bg-paper transition-colors duration-500 hover:bg-ivory">
-              <span
-                aria-hidden="true"
-                className="absolute top-0 left-0 h-px w-12 bg-bronze-deep transition-[width] duration-700 ease-[cubic-bezier(.22,1,.36,1)] group-hover:w-full"
-              />
-              <article className="flex h-full flex-col p-8 md:p-12">
-                <span className="label tabular-nums text-bronze-deep">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="display mt-10 text-[2.1rem] md:text-[2.5rem]">{area.titulo}</h3>
-                <p className="mt-5 max-w-md text-muted">{area.descricao}</p>
-              </article>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-16">
+          <AreasList />
+        </div>
 
         <p className="mt-8 flex items-center gap-3 text-[0.9rem] text-muted">
           <span aria-hidden="true" className="h-px w-6 bg-bronze-deep/60" />
@@ -394,11 +390,31 @@ const FAQ: FaqItem[] = [
     ),
   },
   {
-    q: 'O advogado pode acompanhar um depoimento?',
+    q: 'O que é o Tribunal do Júri?',
     a: (
       <p>
-        Em regra, a pessoa ouvida em procedimentos de investigação ou no processo pode estar acompanhada de advogado. As
-        particularidades de cada situação devem ser avaliadas individualmente. {RESSALVA}
+        De forma geral, o Tribunal do Júri é o órgão do Poder Judiciário que julga os crimes dolosos contra a vida, como
+        prevê a Constituição Federal. O julgamento em plenário é feito por jurados, cidadãos sorteados, depois de uma fase
+        inicial conduzida pelo juiz. Esta é uma explicação geral e educativa. {RESSALVA}
+      </p>
+    ),
+  },
+  {
+    q: 'O que é habeas corpus?',
+    a: (
+      <p>
+        É uma ação prevista na Constituição Federal para proteger a liberdade de locomoção de quem sofre, ou está ameaçado
+        de sofrer, constrangimento ilegal. Pode ser apresentado em diferentes instâncias, conforme a autoridade apontada
+        como responsável. {RESSALVA}
+      </p>
+    ),
+  },
+  {
+    q: 'O que é a execução penal?',
+    a: (
+      <p>
+        É a fase que se inicia depois da condenação e trata do cumprimento da pena. Nela são analisados temas previstos na
+        Lei de Execução Penal, como progressão de regime, livramento condicional e remição. {RESSALVA}
       </p>
     ),
   },
@@ -594,16 +610,16 @@ function Footer() {
           </div>
           <div className="text-[0.9rem] md:col-span-3">
             <p className="label mb-3 text-ivory">Contato</p>
-            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="block hover:text-ivory">
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="block py-1.5 hover:text-ivory">
               WhatsApp {CONFIG.whatsappExibicao}
             </a>
             {CONFIG.telefoneFixo && (
-              <a href={`tel:${CONFIG.telefoneFixoLink}`} className="block hover:text-ivory">
+              <a href={`tel:${CONFIG.telefoneFixoLink}`} className="block py-1.5 hover:text-ivory">
                 Telefone {CONFIG.telefoneFixo}
               </a>
             )}
             {CONFIG.mostrarInstagram && (
-              <a href={CONFIG.instagram} target="_blank" rel="noopener noreferrer" className="block hover:text-ivory">
+              <a href={CONFIG.instagram} target="_blank" rel="noopener noreferrer" className="block py-1.5 hover:text-ivory">
                 Instagram
               </a>
             )}

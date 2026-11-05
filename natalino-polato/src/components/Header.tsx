@@ -64,7 +64,7 @@ export function Header() {
   return (
     <header className={`fixed inset-x-0 z-50 border-b transition-colors duration-500 ${bg}`} style={{ top: 'var(--banner-h, 0px)' }}>
       <div className="wrap flex h-[4.5rem] items-center justify-between gap-6">
-        <a href="#inicio" className="shrink-0" aria-label={`${CONFIG.nome}, ${CONFIG.profissao}. Ir para o início`}>
+        <a href="#inicio" className="shrink-0">
           <Signature />
         </a>
 

@@ -5,7 +5,8 @@ import { CONFIG, enderecoCompleto } from './src/config'
 import { paginaPrivacidade, pagina404 } from './src/static-pages'
 
 const TITLE = `${CONFIG.nome} | Advogado Criminalista em ${CONFIG.endereco.cidade} - ${CONFIG.endereco.uf}`
-const DESCRIPTION = `${CONFIG.nome}, advogado criminalista (${CONFIG.oab}). Atuação em Direito Penal e Processo Penal em ${CONFIG.endereco.cidade} - ${CONFIG.endereco.uf}. Contato pelo WhatsApp.`
+const DESCRIPTION = `${CONFIG.nome}, advogado criminalista (${CONFIG.oab}) em ${CONFIG.endereco.cidade} - ${CONFIG.endereco.uf}. Direito Penal e Processo Penal: inquéritos, ações penais, Tribunal do Júri, recursos, habeas corpus e execução penal.`
+const areas = CONFIG.areas.filter((a) => a.confirmado).map((a) => a.titulo)
 
 function esc(s: string) {
   return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
@@ -20,11 +21,14 @@ function siteMeta(): Plugin {
     '@context': 'https://schema.org',
     '@type': ['Attorney', 'LegalService'],
     name: CONFIG.nome,
-    description: 'Advogado criminalista. Atuação em Direito Penal e Processo Penal.',
+    description: `Advogado criminalista. Atuação em Direito Penal e Processo Penal, da investigação policial à execução da pena.`,
+    jobTitle: 'Advogado criminalista',
+    identifier: { '@type': 'PropertyValue', propertyID: CONFIG.oabSeccional, value: CONFIG.oabNumero },
+    knowsAbout: ['Direito Penal', 'Direito Processual Penal', ...areas],
     url: url + '/',
     telephone: CONFIG.telefoneFixoLink,
     logo: url + CONFIG.logo.completa,
-    ...(CONFIG.foto.src ? { image: url + CONFIG.foto.src2x } : {}),
+    ...(CONFIG.foto.base ? { image: `${url}${CONFIG.foto.base}-800.webp` } : {}),
     address: {
       '@type': 'PostalAddress',
       streetAddress: CONFIG.endereco.rua,

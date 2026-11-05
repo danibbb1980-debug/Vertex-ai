@@ -9,18 +9,15 @@ const base = (title: string, robots: string, body: string) => `<!doctype html>
 <meta name="robots" content="${robots}" />
 <meta name="googlebot" content="${robots}" />
 <link rel="icon" href="/favicon.png" type="image/png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Manrope:wght@400;500;600&display=swap" />
 <style>
   :root { color-scheme: light; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: #f5f0e6; color: #1b1d22; font: 400 1rem/1.7 Manrope, system-ui, sans-serif; }
+  body { margin: 0; background: #f5f0e6; color: #1b1d22; font: 400 1rem/1.7 system-ui, -apple-system, 'Segoe UI', sans-serif; }
   main { max-width: 42rem; margin: 0 auto; padding: 4.5rem 1.25rem 5rem; }
   .label { font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: #6f5230; font-weight: 600; }
-  h1 { font: 500 clamp(2.2rem, 6vw, 3.2rem)/1.1 'Cormorant Garamond', Georgia, serif; margin: .6rem 0 1.5rem; }
+  h1 { font: 500 clamp(2.2rem, 6vw, 3.2rem)/1.1 'Iowan Old Style', Georgia, serif; margin: .6rem 0 1.5rem; }
   h1 em { font-style: italic; color: #6f5230; }
-  h2 { font: 600 1.35rem/1.3 'Cormorant Garamond', Georgia, serif; margin: 2.2rem 0 .4rem; }
+  h2 { font: 600 1.35rem/1.3 'Iowan Old Style', Georgia, serif; margin: 2.2rem 0 .4rem; }
   p, li { color: #4d4840; }
   hr { border: 0; border-top: 1px solid #d6cbb6; margin: 2.5rem 0; }
   a { color: #1b1d22; text-underline-offset: 3px; }
@@ -48,7 +45,7 @@ export const paginaPrivacidade = (robots: string) =>
 <h2>Dados que você nos envia</h2>
 <p>O contato é feito pelo WhatsApp, por iniciativa do próprio visitante. As mensagens trocadas por esse canal estão sujeitas às políticas do aplicativo e são tratadas com sigilo profissional, nos termos do Estatuto da Advocacia.</p>
 <h2>Serviços de terceiros</h2>
-<p>A página inicial exibe um mapa do Google Maps e carrega fontes do Google Fonts. Esses serviços podem registrar dados técnicos de acesso, como o endereço IP, conforme as políticas do Google.</p>
+<p>A página inicial exibe um mapa do Google Maps, que pode registrar dados técnicos de acesso, como o endereço IP, conforme as políticas do Google. As fontes tipográficas são servidas pelo próprio site.</p>
 <h2>Seus direitos</h2>
 <p>Nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018), você pode solicitar informações, correção ou exclusão de dados pessoais pelo WhatsApp ${CONFIG.whatsappExibicao}.</p>`,
   )
