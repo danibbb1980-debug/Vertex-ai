@@ -1,7 +1,8 @@
 import { CONFIG, CONTEUDOS, FAQ, METODO, mostraFundadora } from "../config";
 import { Relief, Wave } from "./Ornaments";
-import { useState } from "react";
-import { IconPlus, Reveal, Rich, SectionLabel } from "./ui";
+import { useRef, useState } from "react";
+import { m, useScroll, useTransform } from "motion/react";
+import { IconPlus, Reveal, Rich, SectionLabel, useReducedMotion } from "./ui";
 
 export function Sobre() {
   return (
@@ -40,6 +41,8 @@ export function Sobre() {
             </figure>
           </Reveal>
         </div>
+
+        <FotoEscritorio />
 
         <ul className="mt-20 grid border-t border-[var(--line)] md:mt-28 md:grid-cols-2 lg:grid-cols-4">
           {METODO.map((m, i) => (
@@ -170,5 +173,36 @@ export function Faq() {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Foto do escritório: entra com leve zoom de saída conforme a rolagem (só transform). */
+function FotoEscritorio() {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const scale = useTransform(scrollYProgress, [0, 0.6], [1.12, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
+  return (
+    <figure ref={ref} className="mt-20 md:mt-28">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-[6px] md:aspect-[16/9]">
+        <m.img
+          src="/escritorio-1200.webp"
+          srcSet="/escritorio-768.webp 768w, /escritorio-1200.webp 1200w, /escritorio-1600.webp 1600w"
+          sizes="(min-width: 1320px) 1192px, (min-width: 768px) calc(100vw - 80px), calc(100vw - 40px)"
+          width={1600}
+          height={1200}
+          loading="lazy"
+          decoding="async"
+          alt="Escritório da MSC Advocacia: ambiente de trabalho amplo, com piso de madeira, parede de plantas, copa e janelas com vista para a cidade e as montanhas de Poços de Caldas."
+          className="absolute inset-0 h-full w-full object-cover"
+          style={reduce ? undefined : { scale, y }}
+        />
+      </div>
+      <figcaption className="mt-4 flex flex-wrap items-baseline justify-between gap-2 text-[0.875rem]">
+        <span className="muted">O escritório, no Centro de {CONFIG.endereco.cidade}.</span>
+        <span className="eyebrow !text-[0.6875rem]">Atendimento presencial</span>
+      </figcaption>
+    </figure>
   );
 }

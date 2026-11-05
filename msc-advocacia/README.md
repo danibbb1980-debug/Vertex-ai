@@ -27,6 +27,7 @@ Regra: dado não confirmado não entra no site. Deixe o campo vazio, sem placeho
 
 - Todos os textos informativos: descrições das áreas, planejamento, etapas, os 3 cartões de "Conteúdo útil" e o FAQ. Foram escritos de forma geral, sem prazos, valores ou regras do INSS, mas precisam de revisão técnica.
 - Conformidade com o Provimento 205/2021 da OAB (o texto evita promessa de resultado, "especialista", preços e comparações).
+- Foto do escritório (`public/escritorio-*.webp`, original em `referencias/foto-escritorio.jpg`): aparecem pessoas trabalhando. Antes de publicar, o escritório precisa ter a autorização de uso de imagem de cada uma (LGPD).
 - Endereço: veio do site atual (R. Pref. Chagas, 305, sala 301, Centro, 37701-734). Confirmar.
 
 ## O que falta para publicar
