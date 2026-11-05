@@ -17,6 +17,7 @@ npm run build    # gera dist/
 - **"Especialista" removido** de todo o site, SEO e JSON-LD (`mostrarEspecialista: false`): a pós-graduação informada é em Direito Processual Civil.
 - **Dúvidas**: novas perguntas gerais sobre Tribunal do Júri, habeas corpus e execução penal.
 - **SEO**: nova meta description; JSON-LD com inscrição na OAB e `knowsAbout` com as áreas.
+- **Docência** (`mostrarProfessor: true`): frase na seção Sobre e último item da linha do tempo ("Formação e docência"): professor de Processo Penal e Prática Penal na Faculdade Unimogi. Só na seção Sobre; fora do topo, do CTA e do título.
 
 ## Editar dados
 

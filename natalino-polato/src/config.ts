@@ -47,8 +47,14 @@ export const CONFIG = {
   fechamentoInstitucional:
     'Uma advocacia pautada pela independência profissional, pelo rigor técnico e pelo compromisso com o direito de defesa, o devido processo legal e as garantias constitucionais.',
 
-  // Desligados a pedido: docência e cargo na OAB ficam fora do site.
-  mostrarProfessor: false,
+  /** Docência informada pelo advogado (só na seção Sobre). */
+  mostrarProfessor: true,
+  docencia: {
+    frase: 'É professor universitário nas disciplinas de Processo Penal e Prática Penal, na Faculdade Unimogi.',
+    itemFormacao: 'Docência em Processo Penal e Prática Penal, Faculdade Unimogi',
+  },
+
+  // Desligado a pedido: o cargo na OAB fica fora do site.
   mostrarCargoOAB: false,
   cargoOAB: 'Presidente da OAB Mogi Guaçu/SP (gestão 2025/2027)',
 

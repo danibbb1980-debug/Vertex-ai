@@ -167,16 +167,16 @@ function Sobre() {
               Atua em todas as fases da persecução penal, desde a investigação policial até os Tribunais Superiores e a
               execução da pena.
             </p>
-            {CONFIG.mostrarProfessor && <p>É também professor universitário.</p>}
+            {CONFIG.mostrarProfessor && <p>{CONFIG.docencia.frase}</p>}
             {CONFIG.mostrarCargoOAB && <p>{CONFIG.cargoOAB}.</p>}
           </div>
         </Reveal>
 
         {CONFIG.formacao.length > 0 && (
           <Reveal className="md:col-span-5">
-            <h3 className="label text-bronze-deep">Formação</h3>
+            <h3 className="label text-bronze-deep">{CONFIG.mostrarProfessor ? 'Formação e docência' : 'Formação'}</h3>
             <ol className="relative mt-6 space-y-5 border-l border-line pl-7">
-              {CONFIG.formacao.map((item) => (
+              {[...CONFIG.formacao, ...(CONFIG.mostrarProfessor ? [CONFIG.docencia.itemFormacao] : [])].map((item) => (
                 <li key={item} className="relative text-[0.98rem] text-text">
                   <span aria-hidden="true" className="absolute top-[0.6rem] -left-[calc(1.75rem+3px)] h-1.5 w-1.5 rotate-45 bg-bronze-deep" />
                   {item}
