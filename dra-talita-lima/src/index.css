@@ -1,0 +1,407 @@
+@import '@fontsource/cormorant-garamond/latin-300.css';
+@import '@fontsource/cormorant-garamond/latin-400.css';
+@import '@fontsource/cormorant-garamond/latin-500-italic.css';
+@import '@fontsource-variable/jost/wght.css';
+@import 'tailwindcss';
+
+/* Fontes de reserva com largura ajustada (medida) para evitar saltos de layout enquanto as fontes carregam */
+@font-face {
+  font-family: 'Cormorant Fb';
+  src: local('Times New Roman'), local('Times'), local('Liberation Serif');
+  size-adjust: 96%;
+}
+@font-face {
+  font-family: 'Cormorant Fb Noto';
+  src: local('Noto Serif'), local('Droid Serif');
+  size-adjust: 80%;
+}
+@font-face {
+  font-family: 'Jost Fb';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 96%;
+}
+@font-face {
+  font-family: 'Jost Fb Roboto';
+  src: local('Roboto');
+  size-adjust: 98%;
+}
+
+/* Paleta amostrada do logo: vinho #94283F, marinho #373955, pêssego #F0DECC */
+@theme {
+  --color-marfim: #fbf7f2;
+  --color-marfim-2: #f6efe7;
+  --color-pessego: #f0decc;
+  --color-pessego-2: #e8cbb3;
+  --color-pessego-3: #d9ad8d;
+  --color-vinho: #8e2640;
+  --color-vinho-2: #741d33;
+  --color-vinho-claro: #e9b9c2;
+  --color-marinho: #252a45;
+  --color-marinho-2: #1b1f36;
+  --color-tinta: #545870;
+  --color-linha: #e6d9cc;
+
+  --font-serif: 'Cormorant Garamond', 'Cormorant Fb', 'Cormorant Fb Noto', Georgia, serif;
+  --font-sans: 'Jost Variable', 'Jost Fb', 'Jost Fb Roboto', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-flui: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background: var(--color-marfim);
+    color: var(--color-marinho);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  em.enfase {
+    font-style: italic;
+    color: var(--color-vinho);
+    font-weight: 500;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-vinho);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .sobre-escuro :focus-visible {
+    outline-color: var(--color-pessego);
+  }
+  ::selection {
+    background: var(--color-pessego);
+    color: var(--color-marinho);
+  }
+}
+
+@layer components {
+  .rotulo {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-vinho);
+  }
+  .container-site {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2.5rem;
+    }
+  }
+  .titulo-secao {
+    font-size: clamp(2.25rem, 5.2vw, 3.6rem);
+  }
+
+  /* Botões */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      transform 0.35s var(--ease-flui),
+      background-color 0.3s,
+      color 0.3s,
+      border-color 0.3s,
+      box-shadow 0.35s;
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-primario {
+    background: var(--color-vinho);
+    color: #fff;
+    box-shadow: 0 10px 24px -14px rgb(142 38 64 / 0.7);
+  }
+  .btn-primario:hover {
+    background: var(--color-vinho-2);
+    box-shadow: 0 14px 30px -14px rgb(142 38 64 / 0.75);
+  }
+  /* brilho sutil que atravessa o botão no hover (inspirado no "Shining Button" do 21st.dev) */
+  .btn-primario::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.22) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.8s var(--ease-flui);
+  }
+  .btn-primario:hover::after {
+    transform: translateX(120%);
+  }
+  .btn-secundario {
+    background: transparent;
+    color: var(--color-marinho);
+    border: 1px solid rgb(37 42 69 / 0.28);
+  }
+  .btn-secundario:hover {
+    border-color: var(--color-vinho);
+    color: var(--color-vinho);
+    background: rgb(255 255 255 / 0.6);
+  }
+  .btn-claro {
+    background: var(--color-marfim);
+    color: var(--color-marinho);
+  }
+  .btn-claro:hover {
+    background: #fff;
+  }
+  .btn-contorno-claro {
+    border: 1px solid rgb(251 247 242 / 0.4);
+    color: var(--color-marfim);
+  }
+  .btn-contorno-claro:hover {
+    border-color: var(--color-marfim);
+    background: rgb(251 247 242 / 0.08);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn::after {
+      transition: none;
+    }
+  }
+
+  .link-sublinhado {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    text-decoration-color: rgb(142 38 64 / 0.45);
+    transition: text-decoration-color 0.3s;
+  }
+  .link-sublinhado:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* Revelação ao rolar: só esconde quando o JS está ativo (classe .js no <html>) */
+  .js .revela {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition:
+      opacity 0.9s var(--ease-flui),
+      transform 0.9s var(--ease-flui);
+    transition-delay: var(--atraso, 0ms);
+  }
+  .js .revela.visivel {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Revelação do título do hero, palavra por palavra (inspirado no "Soft Blur In"/"Text Reveal" do 21st.dev,
+     adaptado para animar só transform, sem blur, para não atrasar o LCP) */
+  .palavra {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+  .palavra > span {
+    display: inline-block;
+  }
+  .js .palavra > span {
+    animation: sobe 1.1s var(--ease-flui) both;
+    animation-delay: calc(var(--i) * 70ms + 80ms);
+  }
+  @keyframes sobe {
+    from {
+      transform: translate3d(0, 105%, 0);
+    }
+    to {
+      transform: none;
+    }
+  }
+  .js .surge {
+    animation: surge 1s var(--ease-flui) both;
+    animation-delay: var(--atraso, 0ms);
+  }
+  @keyframes surge {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 14px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .revela {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .js .palavra > span,
+    .js .surge {
+      animation: none;
+    }
+  }
+
+  /* Marquee discreto (inspirado no "Infinite Text Marquee" do 21st.dev): CSS puro, pausa fora da tela */
+  .marquee-trilho {
+    display: flex;
+    width: max-content;
+    animation: marquee 60s linear infinite;
+  }
+  .marquee[data-pausado='true'] .marquee-trilho,
+  .marquee:hover .marquee-trilho {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-trilho {
+      animation: none;
+    }
+  }
+
+  /* Cartão com luz que segue o ponteiro (inspirado no "Spotlight Card" do 21st.dev): só opacity/transform */
+  .cartao-luz {
+    position: relative;
+    isolation: isolate;
+  }
+  .cartao-luz::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 0%),
+      rgb(240 222 204 / 0.85),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .cartao-luz:hover::before,
+  .cartao-luz:focus-within::before {
+    opacity: 1;
+  }
+
+  /* Campos do formulário */
+  .campo {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.9rem;
+    border: 1px solid #cdbdae;
+    background: #fff;
+    color: var(--color-marinho);
+    font: inherit;
+    font-size: 1rem;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+    appearance: none;
+  }
+  .campo::placeholder {
+    color: #7d7f90;
+  }
+  .campo:hover {
+    border-color: #a8907c;
+  }
+  .campo:focus-visible {
+    outline: none;
+    border-color: var(--color-vinho);
+    box-shadow: 0 0 0 3px rgb(142 38 64 / 0.18);
+  }
+  .campo[aria-invalid='true'] {
+    border-color: #b42318;
+    box-shadow: 0 0 0 3px rgb(180 35 24 / 0.12);
+  }
+  select.campo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%238e2640' stroke-width='1.6' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.75rem;
+  }
+  input[type='date'].campo {
+    display: flex;
+    align-items: center;
+  }
+  input[type='date'].campo::-webkit-calendar-picker-indicator {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+}
+
+/* Fim da linha de fluxo: mancha de aquarela que envolve o botão de agendar */
+@layer components {
+  [data-fluxo='fim'] {
+    isolation: isolate;
+  }
+  .mancha-fim {
+    opacity: 0;
+    transform: scale(0.75);
+    transform-origin: 15% 50%;
+    transition:
+      opacity 1.2s var(--ease-flui),
+      transform 1.4s var(--ease-flui);
+  }
+  html:not(.js) .mancha-fim,
+  [data-chegou='true'] > .mancha-fim {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mancha-fim {
+      transition: none;
+    }
+  }
+
+  .faq-resposta {
+    animation: surge 0.6s var(--ease-flui) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-resposta {
+      animation: none;
+    }
+  }
+}
