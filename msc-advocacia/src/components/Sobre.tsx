@@ -194,7 +194,7 @@ function FotoEscritorio() {
           height={1200}
           loading="lazy"
           decoding="async"
-          alt="Escritório da MSC Advocacia: ambiente de trabalho amplo, com piso de madeira, parede de plantas, copa e janelas com vista para a cidade e as montanhas de Poços de Caldas."
+          alt="Escritório da MSC Advocacia visto entre as folhas da parede verde: balcão da copa, mesas de trabalho, luminárias pendentes e janelas amplas com vista para a cidade de Poços de Caldas."
           className="absolute inset-0 h-full w-full object-cover"
           style={reduce ? undefined : { scale, y }}
         />
