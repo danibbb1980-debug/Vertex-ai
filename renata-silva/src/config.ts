@@ -167,27 +167,27 @@ export const CONFIG = {
   fotosClinica: [
     {
       arquivo: "sala-de-atendimento",
-      alt: "Sala de atendimento com maca branca, cortina clara, painel de madeira ripada e mesa de apoio",
+      alt: "Sala de atendimento com maca branca, persiana clara, aparelho de estética, mesa e painel de madeira ripada",
       legenda: "Sala de atendimento",
-      largura: 224,
-      altura: 298,
+      largura: 960,
+      altura: 1260,
     },
     {
       arquivo: "consultorio",
-      alt: "Consultório com mesa branca, painel de madeira ripada, quadros na parede e bancada",
+      alt: "Consultório com mesa branca, painéis de madeira ripada, quadros, parede com papel florido e bancada com pia",
       legenda: "Consultório",
-      largura: 202,
-      altura: 270,
+      largura: 960,
+      altura: 1260,
     },
   ] as Foto[],
 
   /** Foto do bloco de contato (ambiente, sem pessoas). null = não aparece. */
   fotoContato: {
     arquivo: "recepcao",
-    alt: "Recepção da clínica com balcão de madeira ripada, prateleiras com objetos decorativos e banco de madeira",
+    alt: "Recepção da clínica com paredes rosadas, viga de madeira escura, balcão de madeira ripada, cristaleira com produtos e banco de madeira",
     legenda: "Recepção",
-    largura: 195,
-    altura: 325,
+    largura: 960,
+    altura: 1260,
   } as Foto | null,
 
   /** Formulário "Solicitar agendamento" (só monta a mensagem e abre o WhatsApp). */

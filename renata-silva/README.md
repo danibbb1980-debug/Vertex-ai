@@ -27,7 +27,7 @@ Todos os dados ficam em `src/config.ts`. Regra: campo vazio não aparece. A seç
 ### Fotos
 
 1. Coloque as fotos do ambiente em `referencias/fotos/` (sem pessoas, sem procedimentos, sem corpos).
-2. Rode `npm run assets`: gera AVIF e WebP com o tratamento de cor em `public/img/`.
+2. Rode `npm run assets`: gera AVIF e WebP (480 e 960 px) com o tratamento de cor em `public/img/`.
 3. Liste a foto em `CONFIG.fotosClinica` (galeria "O espaço") ou em `CONFIG.fotoContato`, com `alt`, `largura` e `altura`.
 
 Foto da profissional: só aparece com o registro preenchido (abaixo), em `CONFIG.profissional.foto`.
@@ -59,7 +59,7 @@ Revise as descrições com a profissional antes. Com `false`, esses nomes nem en
 ## O que falta para publicar de forma definitiva
 
 - Conselho profissional e número de registro da profissional (sem isso, não há título nem procedimentos do grupo B).
-- Foto profissional (opcional) e fotos do ambiente em resolução maior (as atuais têm cerca de 200 x 300 px).
+- Foto profissional (opcional). As fotos do ambiente vieram de capturas de tela do Instagram; os arquivos originais ficariam ainda melhores.
 - Logo em alta resolução (PNG transparente ou SVG). O atual tem 203 x 203 px e foi recortado e ampliado.
 - Confirmação da lista de atendimentos, das descrições e dos horários (inclusive intervalo de almoço e feriados).
 - Detalhes dos cursos, se forem divulgados.

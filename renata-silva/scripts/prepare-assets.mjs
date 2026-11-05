@@ -68,8 +68,7 @@ await sharp({ create: { width: 1200, height: 630, channels: 3, background: { r: 
   .jpeg({ quality: 88 })
   .toFile(join(OUT, "og-renata-silva.jpg"));
 
-// Fotos do consultório: tom azul-marinho/rosê discreto, AVIF + WebP no tamanho
-// nativo (os arquivos de origem são pequenos; não vale ampliar).
+// Fotos do consultório: tom azul-marinho/rosê discreto, AVIF + WebP em 480 e 960 px.
 const FOTOS = join(REF, "fotos");
 if (existsSync(FOTOS)) {
   for (const file of readdirSync(FOTOS).filter((f) => /\.(jpe?g|png|webp)$/i.test(f))) {
@@ -82,8 +81,13 @@ if (existsSync(FOTOS)) {
         `</linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>`,
     );
     const base = src.clone().modulate({ saturation: 0.85, brightness: 0.98 }).composite([{ input: tone, blend: "soft-light" }]);
-    await base.clone().avif({ quality: 60 }).toFile(join(OUT, `${name}.avif`));
-    await base.clone().webp({ quality: 80 }).toFile(join(OUT, `${name}.webp`));
+    // Dois tamanhos para o srcset (nunca maiores que o original)
+    const buf = await base.clone().toBuffer();
+    for (const w of [480, 960]) {
+      const r = sharp(buf).resize({ width: Math.min(w, width), withoutEnlargement: true });
+      await r.clone().avif({ quality: 55 }).toFile(join(OUT, `${name}-${w}.avif`));
+      await r.clone().webp({ quality: 78 }).toFile(join(OUT, `${name}-${w}.webp`));
+    }
     console.log(`foto ${name}: ${width}x${height}`);
   }
 }

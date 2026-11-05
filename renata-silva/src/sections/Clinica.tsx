@@ -45,27 +45,34 @@ export function Clinica() {
         </ol>
 
         {fotos.length > 0 && (
-          <div className="mt-24">
-            <div className="mb-8 flex items-end justify-between gap-6">
+          <div className={`mt-24 ${fotos.length === 2 ? "grid gap-8 md:grid-cols-[1fr_2fr] md:gap-14" : ""}`}>
+            <div className={fotos.length === 2 ? "md:pt-16" : "mb-8 flex items-end justify-between gap-6"}>
               <h3 className="title text-[2rem] text-ink md:text-[2.4rem]">
                 O <em>espaço</em>
               </h3>
-              <div className="filete hidden flex-1 md:block" aria-hidden="true" />
+              {fotos.length === 2 ? (
+                <>
+                  <div className="filete my-6 w-24" aria-hidden="true" />
+                  <p className="max-w-[18rem] text-ink-soft">Ambientes preparados para receber você com calma e hora marcada.</p>
+                </>
+              ) : (
+                <div className="filete hidden flex-1 md:block" aria-hidden="true" />
+              )}
             </div>
-            <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-8">
+            <ul className={`grid grid-cols-2 gap-4 md:gap-8 ${fotos.length === 2 ? "" : fotos.length >= 3 ? "sm:grid-cols-3" : "max-w-sm grid-cols-1"}`}>
               {fotos.map((f, i) => (
                 <FadeIn
                   as="li"
                   key={f.arquivo}
                   delay={i * 0.1}
-                  className={`${i === 0 ? "col-span-2 sm:col-span-1" : ""} ${i === 1 ? "sm:translate-y-10" : ""}`}
+                  className={`${fotos.length >= 3 && i === 0 ? "col-span-2 sm:col-span-1" : ""} ${i === 1 ? "translate-y-6 sm:translate-y-10" : ""}`}
                 >
                   <figure>
                     <div className="overflow-hidden rounded-t-[999px] rounded-b-2xl bg-blush">
                       <Picture
                         foto={f}
-                        sizes="(min-width: 640px) 33vw, 50vw"
-                        className={`block w-full object-cover ${i === 0 ? "aspect-[4/3] sm:aspect-[3/4]" : "aspect-[3/4]"}`}
+                        sizes="(min-width: 768px) 384px, 50vw"
+                        className={`block w-full object-cover ${fotos.length >= 3 && i === 0 ? "aspect-[4/3] sm:aspect-[3/4]" : "aspect-[3/4]"}`}
                       />
                     </div>
                     <figcaption className="eyebrow mt-4 text-ink-soft">{f.legenda}</figcaption>

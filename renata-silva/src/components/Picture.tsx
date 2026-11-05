@@ -1,12 +1,14 @@
 import type { Foto } from "../config";
 
-export function Picture({ foto, className = "", sizes }: { foto: Foto; className?: string; sizes?: string }) {
+/** Foto do ambiente em AVIF/WebP, 480 e 960 px de largura (gerados por npm run assets). */
+export function Picture({ foto, className = "", sizes = "100vw" }: { foto: Foto; className?: string; sizes?: string }) {
+  const set = (ext: string) => `/img/${foto.arquivo}-480.${ext} 480w, /img/${foto.arquivo}-960.${ext} 960w`;
   return (
     <picture>
-      <source type="image/avif" srcSet={`/img/${foto.arquivo}.avif ${foto.largura}w`} sizes={sizes} />
-      <source type="image/webp" srcSet={`/img/${foto.arquivo}.webp ${foto.largura}w`} sizes={sizes} />
+      <source type="image/avif" srcSet={set("avif")} sizes={sizes} />
+      <source type="image/webp" srcSet={set("webp")} sizes={sizes} />
       <img
-        src={`/img/${foto.arquivo}.webp`}
+        src={`/img/${foto.arquivo}-960.webp`}
         alt={foto.alt}
         width={foto.largura}
         height={foto.altura}
