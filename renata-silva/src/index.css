@@ -1,0 +1,328 @@
+@import "@fontsource/cormorant-garamond/latin-400.css";
+@import "@fontsource/cormorant-garamond/latin-500.css";
+@import "@fontsource/cormorant-garamond/latin-500-italic.css";
+@import "@fontsource-variable/jost/wght.css";
+@import "@fontsource-variable/manrope/wght.css";
+@import "tailwindcss";
+
+@theme {
+  --color-navy-950: #141b21;
+  --color-navy-900: #1e272e; /* fundo do logo */
+  --color-navy-850: #222c34;
+  --color-navy-800: #2a3540;
+  --color-navy-700: #3a4855;
+  --color-pearl: #f3ece8;
+  --color-mist: #b9b2b4;
+  --color-ivory: #faf6f3;
+  --color-blush: #f4e8e4;
+  --color-blush-200: #ead7d2;
+  --color-rose-200: #f4cdd0;
+  --color-rose-300: #efb1b6;
+  --color-rose-400: #e48d9d;
+  --color-rose-700: #94404f; /* rosa para texto sobre claro (AA) */
+  --color-ink: #1e272e;
+  --color-ink-soft: #4a5560;
+
+  --font-serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --font-label: "Jost Variable", "Jost", system-ui, sans-serif;
+  --font-sans: "Manrope Variable", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  :root {
+    --banner-h: 0px;
+    --header-h: 72px;
+    color-scheme: light;
+  }
+  :root[data-rascunho] {
+    --banner-h: 40px;
+  }
+  @media (min-width: 640px) {
+    :root[data-rascunho] {
+      --banner-h: 30px;
+    }
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--banner-h) + var(--header-h) + 8px);
+    -webkit-text-size-adjust: 100%;
+    background: var(--color-navy-900);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-ink);
+    background: var(--color-ivory);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-rose-300);
+    color: var(--color-navy-900);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-rose-400);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-light :focus-visible {
+    outline-color: var(--color-rose-700);
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer components {
+  .container-site {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 40px;
+    }
+  }
+
+  /* Rótulo em caixa-alta espaçada, na linha de "ESTÉTICA AVANÇADA" do logo */
+  .eyebrow {
+    font-family: var(--font-label);
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  .title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .title em {
+    font-style: italic;
+    font-weight: 500;
+  }
+  .on-dark .title em {
+    background: linear-gradient(100deg, #f4cdd0 0%, #efb1b6 40%, #e48d9d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-right: 0.06em;
+  }
+  .on-light .title em {
+    color: var(--color-rose-700);
+  }
+
+  .filete {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-rose-400), transparent);
+  }
+
+  /* Botões */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 52px;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    font-family: var(--font-label);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color 0.3s var(--ease-soft),
+      color 0.3s var(--ease-soft),
+      border-color 0.3s var(--ease-soft),
+      box-shadow 0.3s var(--ease-soft);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-primary {
+    color: var(--color-navy-900);
+    background: linear-gradient(110deg, #f4cdd0 0%, #efb1b6 45%, #e48d9d 100%);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.35) inset,
+      0 10px 30px -12px rgba(228, 141, 157, 0.55);
+  }
+  .btn-primary:hover {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.35) inset,
+      0 14px 36px -12px rgba(228, 141, 157, 0.75);
+  }
+  .btn-ghost {
+    color: var(--color-pearl);
+    border: 1px solid rgba(239, 177, 182, 0.45);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-rose-300);
+    background: rgba(239, 177, 182, 0.08);
+  }
+  .btn-dark {
+    color: var(--color-pearl);
+    background: var(--color-navy-900);
+  }
+  .btn-dark:hover {
+    background: var(--color-navy-800);
+  }
+  .btn-outline-dark {
+    color: var(--color-navy-900);
+    border: 1px solid rgba(30, 39, 46, 0.25);
+  }
+  .btn-outline-dark:hover {
+    border-color: var(--color-rose-700);
+    color: var(--color-rose-700);
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s var(--ease-soft);
+    text-decoration: none;
+  }
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
+
+  /* Textura de grade fina no azul-marinho */
+  .grid-fine {
+    background-image:
+      linear-gradient(rgba(239, 177, 182, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239, 177, 182, 0.045) 1px, transparent 1px);
+    background-size: 88px 88px;
+  }
+
+  /* Campos do formulário */
+  .field {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.8rem 1rem;
+    border-radius: 14px;
+    border: 1px solid #d9c7c2;
+    background: #fffdfc;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 1rem;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+    appearance: none;
+  }
+  .field:hover {
+    border-color: #c4a9a3;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-rose-700);
+    box-shadow: 0 0 0 3px rgba(148, 64, 79, 0.18);
+  }
+  .field[aria-invalid="true"] {
+    border-color: #b42318;
+    box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.12);
+  }
+  .field:disabled {
+    background: #f3ebe8;
+    color: #6b7178;
+    cursor: not-allowed;
+  }
+  select.field {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%2394404F' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.6rem;
+  }
+  input[type="date"].field {
+    min-height: 52px;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+  /* Marquee */
+  .marquee-track {
+    animation: marquee 60s linear infinite;
+  }
+  .marquee[data-paused="true"] .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Entrada do hero (CSS puro, roda antes do JavaScript) */
+  .hero-word {
+    animation: rise 1s var(--ease-soft) both;
+  }
+  .hero-in {
+    animation: fade-up 0.9s var(--ease-soft) both;
+  }
+
+  /* Desenho do glifo no hero */
+  .glyph-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 2.6s 0.3s var(--ease-soft) forwards;
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translate3d(0, 105%, 0);
+    opacity: 0;
+  }
+}
+@keyframes fade-up {
+  from {
+    transform: translate3d(0, 14px, 0);
+    opacity: 0;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  .glyph-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .hero-word,
+  .hero-in {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

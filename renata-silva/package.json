@@ -1,0 +1,33 @@
+{
+  "name": "renata-silva-estetica",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit -p . && vite build && node scripts/prerender.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p .",
+    "assets": "node scripts/prepare-assets.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/jost": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "lucide-react": "^1.69.0",
+    "motion": "^14.9.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.4",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.4",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.6"
+  }
+}
