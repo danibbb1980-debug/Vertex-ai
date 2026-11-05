@@ -30,7 +30,7 @@ Todos os dados ficam em `src/config.ts`. Regra: campo vazio não aparece. A seç
 2. Rode `npm run assets`: gera AVIF e WebP (480 e 960 px) com o tratamento de cor em `public/img/`.
 3. Liste a foto em `CONFIG.fotosClinica` (galeria "O espaço") ou em `CONFIG.fotoContato`, com `alt`, `largura` e `altura`.
 
-Foto da profissional: só aparece com o registro preenchido (abaixo), em `CONFIG.profissional.foto`.
+Foto da profissional: arquivo em `referencias/profissional/`, `npm run assets` e `CONFIG.profissional.foto`. Sem registro, aparece só com o nome, sem título.
 
 ### Título, registro e formação da profissional
 

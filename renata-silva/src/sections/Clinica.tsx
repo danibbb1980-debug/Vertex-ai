@@ -12,7 +12,8 @@ export function Clinica() {
   if (!CONFIG.secoes.clinica) return null;
   const p = CONFIG.profissional;
   const fotos = CONFIG.fotosClinica;
-  const mostrarProfissional = Boolean(p.registro && p.titulo);
+  const comRegistro = Boolean(p.registro && p.titulo);
+  const mostrarProfissional = Boolean(p.foto || comRegistro);
 
   return (
     <section id="clinica" data-line="right" aria-labelledby="clinica-titulo" className="on-light relative bg-ivory py-24 md:py-36">
@@ -43,6 +44,35 @@ export function Clinica() {
             </FadeIn>
           ))}
         </ol>
+
+        {mostrarProfissional && (
+          <div className="mt-24 grid items-center gap-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-20">
+            {p.foto && (
+              <FadeIn className="relative mx-auto w-full max-w-[24rem] md:mx-0">
+                <div aria-hidden="true" className="absolute -inset-3 rounded-t-[999px] rounded-b-[2rem] border border-rose-700/25" />
+                <div className="relative overflow-hidden rounded-t-[999px] rounded-b-3xl bg-navy-900 shadow-[0_40px_80px_-50px_rgba(30,39,46,0.6)]">
+                  <Picture foto={p.foto} sizes="(min-width: 768px) 384px, 90vw" className="block aspect-[3/4] w-full object-cover" />
+                </div>
+              </FadeIn>
+            )}
+            <FadeIn delay={0.1}>
+              <p className="eyebrow text-rose-700">{comRegistro ? "A profissional" : "À frente da clínica"}</p>
+              <h3 className="title mt-4 text-[2.8rem] text-ink md:text-[3.6rem]">
+                Renata <em>Silva</em>
+              </h3>
+              {comRegistro && (
+                <p className="mt-3 font-label text-sm tracking-[0.14em] text-ink">
+                  {p.titulo} · {p.registro}
+                </p>
+              )}
+              <div className="filete my-7 w-28" aria-hidden="true" />
+              {comRegistro && p.formacao && <p className="mb-4 text-ink-soft">{p.formacao}</p>}
+              <p className="max-w-[30rem] text-[1.05rem] text-ink-soft">
+                {p.bio || "Cada atendimento começa por uma conversa, com tempo para ouvir e explicar cada etapa antes de qualquer indicação."}
+              </p>
+            </FadeIn>
+          </div>
+        )}
 
         {fotos.length > 0 && (
           <div className={`mt-24 ${fotos.length === 2 ? "grid gap-8 md:grid-cols-[1fr_2fr] md:gap-14" : ""}`}>
@@ -83,24 +113,6 @@ export function Clinica() {
           </div>
         )}
 
-        {mostrarProfissional && (
-          <FadeIn className="mt-24 grid items-center gap-10 rounded-3xl bg-blush p-8 md:grid-cols-[auto_1fr] md:p-12">
-            {p.foto && (
-              <div className="w-44 overflow-hidden rounded-t-[999px] rounded-b-2xl">
-                <Picture foto={p.foto} className="block aspect-[3/4] w-full object-cover" />
-              </div>
-            )}
-            <div>
-              <p className="eyebrow text-rose-700">A profissional</p>
-              <h3 className="title mt-3 text-[2.2rem] text-ink">{p.nome}</h3>
-              <p className="mt-2 font-label text-sm tracking-[0.12em] text-ink">
-                {p.titulo} · {p.registro}
-              </p>
-              {p.formacao && <p className="mt-4 text-ink-soft">{p.formacao}</p>}
-              {p.bio && <p className="mt-4 text-ink-soft">{p.bio}</p>}
-            </div>
-          </FadeIn>
-        )}
       </div>
     </section>
   );

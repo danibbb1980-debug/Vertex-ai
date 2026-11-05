@@ -84,7 +84,7 @@ export const CONFIG = {
   avisoHorarios: "Horários podem variar em feriados.",
 
   /**
-   * Profissional. Título e formação SÓ aparecem com o registro preenchido
+   * Profissional. Foto e nome aparecem sempre que houver foto. Título e formação SÓ aparecem com o registro preenchido
    * (ex.: registro: "CRM-MG 00000"). Sem registro, o site apresenta só a clínica.
    */
   profissional: {
@@ -93,7 +93,14 @@ export const CONFIG = {
     registro: "",
     formacao: "",
     bio: "",
-    foto: null as Foto | null,
+    /** Retrato da profissional (aparece mesmo sem registro, só com o nome, sem título). */
+    foto: {
+      arquivo: "renata-silva",
+      alt: "Renata Silva sorrindo, de blazer rosa e blusa escura, em fundo azul-marinho",
+      legenda: "Renata Silva",
+      largura: 960,
+      altura: 1280,
+    } as Foto | null,
   },
 
   mostrarProcedimentosMedicos: MOSTRAR_PROCEDIMENTOS_MEDICOS,

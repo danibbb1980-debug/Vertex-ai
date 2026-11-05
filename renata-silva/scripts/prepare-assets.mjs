@@ -91,4 +91,17 @@ if (existsSync(FOTOS)) {
     console.log(`foto ${name}: ${width}x${height}`);
   }
 }
+// Retrato da profissional: sem tingimento, só os tamanhos do srcset
+const PROF = join(REF, "profissional");
+if (existsSync(PROF)) {
+  for (const file of readdirSync(PROF).filter((f) => /\.(jpe?g|png|webp)$/i.test(f))) {
+    const { name } = parse(file);
+    for (const w of [480, 960]) {
+      const r = sharp(join(PROF, file)).resize({ width: w, withoutEnlargement: true });
+      await r.clone().avif({ quality: 58 }).toFile(join(OUT, `${name}-${w}.avif`));
+      await r.clone().webp({ quality: 80 }).toFile(join(OUT, `${name}-${w}.webp`));
+    }
+    console.log(`profissional ${name}`);
+  }
+}
 console.log("ok");
