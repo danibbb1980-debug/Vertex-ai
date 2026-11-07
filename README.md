@@ -8,6 +8,10 @@ Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · pronto para Vercel.
 > A pasta `vip-shape/` é outro app: o site da VIP Shape Academia, cliente da
 > Vertex, com build próprio. Ver `vip-shape/README.md`. Ela fica fora do
 > `tsconfig.json` e das fontes do Tailwind deste site.
+>
+> A pasta `silvia-marcondes/` é o rascunho do site da Silvia Marcondes Estética
+> (Vite + React), também com build próprio e também fora do `tsconfig.json` e do
+> Tailwind deste site. Ver `silvia-marcondes/README.md`.
 
 ---
 

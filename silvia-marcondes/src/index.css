@@ -1,0 +1,196 @@
+@import "@fontsource-variable/fraunces/soft.css";
+@import "@fontsource-variable/fraunces/soft-italic.css";
+@import "@fontsource-variable/figtree/wght.css";
+@import "tailwindcss";
+
+@theme {
+  --color-porcelana: #faf7f4;
+  --color-porcelana-2: #f4efea;
+  --color-nevoa: #e7deec;
+  --color-nevoa-2: #f1ebf4;
+  --color-ameixa: #4a3459;
+  --color-ameixa-2: #6b5a78;
+  --color-salvia: #8a9a86;
+  --color-salvia-texto: #56664f;
+  --color-grafite: #221c26;
+  --color-grafite-2: #2e2533;
+  --color-pessego: #f2d8cb;
+  --color-tinta-suave: #5c5363;
+  --color-linha: #e3d9e2;
+
+  --font-serif: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Figtree Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-xl2: 1.25rem;
+  --radius-xl3: 1.75rem;
+
+  --shadow-suave: 0 1px 2px rgb(34 28 38 / 0.04), 0 8px 24px -12px rgb(74 52 89 / 0.18);
+  --shadow-cartao: 0 1px 2px rgb(34 28 38 / 0.04), 0 24px 48px -28px rgb(74 52 89 / 0.35);
+
+  --ease-suave: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+:root {
+  --faixa-h: 0px;
+  color-scheme: light;
+}
+:root[data-rascunho="true"] {
+  --faixa-h: 2rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--faixa-h) + 5rem);
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-porcelana);
+  color: var(--color-grafite);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+.font-serif {
+  font-variation-settings: "SOFT" 100;
+  font-optical-sizing: auto;
+}
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* Palavra em ênfase nos títulos */
+.enfase {
+  font-style: italic;
+  font-weight: 380;
+  color: var(--color-ameixa);
+}
+.escuro .enfase {
+  color: var(--color-pessego);
+}
+
+/* Rótulos em caixa-alta espaçada */
+.rotulo {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-salvia-texto);
+}
+.escuro .rotulo {
+  color: #c9d3c6;
+}
+
+/* Foco visível em tudo que é interativo */
+:focus-visible {
+  outline: 2.5px solid var(--color-ameixa);
+  outline-offset: 3px;
+  border-radius: 0.6rem;
+}
+.escuro :focus-visible {
+  outline-color: var(--color-pessego);
+}
+
+/* Botão com brilho que atravessa no hover (inspirado em shimmer button) */
+.btn-brilho {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-brilho::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.28) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.8s var(--ease-suave);
+}
+.btn-brilho:hover::after,
+.btn-brilho:focus-visible::after {
+  transform: translateX(120%);
+}
+
+/* Marquee discreto: pausa fora da tela e com movimento reduzido */
+.marquee-trilho {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+.marquee[data-visivel="false"] .marquee-trilho,
+.marquee:hover .marquee-trilho {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Brilho suave (luz) usado em fundos */
+.luz {
+  background:
+    radial-gradient(60% 50% at 70% 20%, rgb(242 216 203 / 0.55), transparent 70%),
+    radial-gradient(50% 45% at 15% 60%, rgb(231 222 236 / 0.9), transparent 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .marquee-trilho {
+    animation: none;
+  }
+}
+
+/* Inputs de data/seleção com a mesma identidade */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.6;
+  cursor: pointer;
+}
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%234A3459' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.75rem;
+}
+
+@keyframes abrir {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Gota ao fim do traço de assinatura */
+.gota-fim-interna {
+  opacity: 0;
+  transform: scale(0.3) translateY(6px);
+  transition:
+    opacity 0.6s var(--ease-suave),
+    transform 0.9s var(--ease-suave);
+}
+.gota-fim[data-on="true"] .gota-fim-interna {
+  opacity: 1;
+  transform: none;
+}
