@@ -15,10 +15,8 @@ export const CONFIG = {
   submarca: "Advocacia & Consultoria Jurídica",
 
   /** Número exibido e usado em todos os botões (só dígitos, com 55 + DDD). */
-  whatsapp: "5535998215278",
-  whatsappExibicao: "(35) 99821-5278",
-  /** Número do link da bio do Instagram. NÃO é exibido. Confirmar qual é o do escritório. */
-  whatsappAlternativo: "5535998569709",
+  whatsapp: "5535998569709",
+  whatsappExibicao: "(35) 99856-9709",
 
   instagram: {
     usuario: "@diego_silva_advocacia",
@@ -42,17 +40,42 @@ export const CONFIG = {
 
   /**
    * Bloco "O advogado": só aparece com `oab` preenchido no formato "OAB/UF número".
-   * Dados tirados do post do Instagram enviado como referência (referencias/print-instagram-post.png).
+   * OAB e formação confirmadas pelo advogado.
    */
   advogado: {
     nome: "Diego Silva",
     oab: "OAB/MG 210.925",
     formacao: [
-      "Formação em Direito pela PUC/MG",
-      "Pós-graduação em Direito e Processo do Trabalho (PUC/RS)",
-      "Pós-graduação em Direito Civil (ESA)",
+      "Bacharel em Direito, PUC/MG",
+      "Pós-graduação em Direito e Processo do Trabalho, PUC/RS",
+      "Pós-graduação em Advocacia Cível, ESA",
     ] as string[],
     trajetoria: "",
+  },
+
+  /**
+   * Texto "Sobre o escritório", fornecido pelo advogado (já ajustado ao Provimento 205/2021).
+   * Com `mostrarTempoEscritorio: false`, o primeiro parágrafo começa sem o "Há cinco anos".
+   */
+  mostrarTempoEscritorio: true,
+  tempoEscritorio: "Há cinco anos",
+  sobre: {
+    titulo: { antes: "Uma advocacia técnica e", destaque: "humana" },
+    abertura:
+      "nascemos com um propósito claro: transformar a relação entre o cliente e a justiça por meio de uma advocacia técnica e, acima de tudo, humana.",
+    paragrafos: [
+      "Fundado pelo Dr. Diego Silva, bacharel em Direito pela PUC/MG, com pós-graduação em Direito e Processo do Trabalho pela PUC/RS e em Advocacia Cível pela ESA, o escritório foi construído sobre uma base de conhecimento técnico e de respeito por quem nos procura.",
+      "Sediados em Poços de Caldas/MG, atuamos em todo o território nacional, independentemente de onde você esteja.",
+      "Acreditamos que cada cliente traz uma história única, e é com escuta atenta, acolhimento e humanização que conduzimos cada caso.",
+    ],
+    fecho: "Aqui, você não é um número de processo.",
+    valores: [
+      "Ética em cada passo",
+      "Transparência na comunicação",
+      "Compromisso com cada caso",
+      "Empatia no atendimento",
+      "Sigilo e confiança acima de tudo",
+    ],
   },
 
   /** Retrato (pasta public/). Vazio = composição tipográfica com o emblema. */
@@ -190,7 +213,7 @@ export const FAQ = [
   },
   {
     p: "Como falo com o escritório?",
-    r: "Pelo WhatsApp (35) 99821-5278 ou pelo Instagram @diego_silva_advocacia. O atendimento é de segunda a sexta, das 09h às 18h.",
+    r: `Pelo WhatsApp ${CONFIG.whatsappExibicao} ou pelo Instagram @diego_silva_advocacia. O atendimento é de segunda a sexta, das 09h às 18h.`,
   },
 ];
 

@@ -71,7 +71,7 @@ export function Process({ num }: { num: string }) {
                     <p className={`font-serif text-lg italic transition-colors duration-500 ${on ? "text-wine" : "text-ink-soft"}`}>
                       Etapa {e.num}
                     </p>
-                    <h3 className="mt-2 text-[1.85rem] md:text-[2.4rem]">{e.titulo}</h3>
+                    <h3 className="mt-2 text-[1.85rem] md:text-[1.75rem] lg:text-[2.4rem]">{e.titulo}</h3>
                     <p className="mt-4 max-w-lg text-ink-soft">{e.texto}</p>
                   </li>
                 );
@@ -88,7 +88,7 @@ export function Process({ num }: { num: string }) {
                 />
                 <span className={`h-2 w-2 rounded-full bg-wine transition-transform duration-500 ${all || done ? "scale-100" : "scale-0"}`} />
               </span>
-              <MagneticLink href={waLink()} external>
+              <MagneticLink href={waLink()} external className="min-w-0 py-3 text-left leading-snug">
                 Começar pelo primeiro contato
               </MagneticLink>
             </div>
