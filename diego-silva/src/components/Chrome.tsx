@@ -1,6 +1,6 @@
 import { m, useScroll, useSpring } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { CONFIG, temAdvogado } from "../config";
+import { CONFIG } from "../config";
 import { Emblem } from "./Emblem";
 import { waLink } from "../lib/whatsapp";
 
@@ -34,7 +34,7 @@ export function ScrollProgress() {
 const links = [
   { href: "#areas", label: "Áreas" },
   { href: "#como-funciona", label: "Como funciona" },
-  ...(temAdvogado ? [{ href: "#sobre", label: "Sobre" }] : []),
+  { href: "#sobre", label: "Sobre" },
   { href: "#duvidas", label: "Dúvidas" },
   { href: "#contato", label: "Contato" },
   { href: "#agendar", label: "Pré-atendimento" },

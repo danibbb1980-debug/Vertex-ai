@@ -43,31 +43,34 @@ export const CONFIG = {
    * OAB e formação confirmadas pelo advogado.
    */
   advogado: {
+    /** Usado no rodapé ("Diego Silva · OAB"). No bloco do advogado aparece com o tratamento. */
     nome: "Diego Silva",
+    tratamento: "Dr.",
     oab: "OAB/MG 210.925",
     formacao: [
       "Bacharel em Direito, PUC/MG",
       "Pós-graduação em Direito e Processo do Trabalho, PUC/RS",
       "Pós-graduação em Advocacia Cível, ESA",
     ] as string[],
-    trajetoria: "",
+    /** Parágrafo do subbloco "O advogado" (texto fornecido pelo advogado). */
+    texto:
+      "Fundado pelo Dr. Diego Silva, bacharel em Direito pela PUC/MG, com pós-graduação em Direito e Processo do Trabalho pela PUC/RS e em Advocacia Cível pela ESA, o escritório foi construído sobre uma base de conhecimento técnico e de respeito por quem nos procura.",
   },
 
   /**
-   * Texto "Sobre o escritório", fornecido pelo advogado (já ajustado ao Provimento 205/2021).
-   * Com `mostrarTempoEscritorio: false`, o primeiro parágrafo começa sem o "Há cinco anos".
+   * Seção "O escritório" (menu: "Sobre"), texto fornecido pelo advogado (ajustado ao Provimento 205/2021).
+   * Com `mostrarTempoEscritorio: false`, a abertura começa sem o "Há cinco anos".
    */
   mostrarTempoEscritorio: true,
   tempoEscritorio: "Há cinco anos",
   sobre: {
-    titulo: { antes: "Uma advocacia técnica e", destaque: "humana" },
     abertura:
       "nascemos com um propósito claro: transformar a relação entre o cliente e a justiça por meio de uma advocacia técnica e, acima de tudo, humana.",
     paragrafos: [
-      "Fundado pelo Dr. Diego Silva, bacharel em Direito pela PUC/MG, com pós-graduação em Direito e Processo do Trabalho pela PUC/RS e em Advocacia Cível pela ESA, o escritório foi construído sobre uma base de conhecimento técnico e de respeito por quem nos procura.",
       "Sediados em Poços de Caldas/MG, atuamos em todo o território nacional, independentemente de onde você esteja.",
       "Acreditamos que cada cliente traz uma história única, e é com escuta atenta, acolhimento e humanização que conduzimos cada caso.",
     ],
+    /** Fecha o último parágrafo, com leve destaque. */
     fecho: "Aqui, você não é um número de processo.",
     valores: [
       "Ética em cada passo",

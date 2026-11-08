@@ -1,5 +1,4 @@
 import { LazyMotion, domAnimation, MotionConfig } from "motion/react";
-import { temAdvogado } from "./config";
 import { DraftBanner, Header, ScrollProgress } from "./components/Chrome";
 import { DeferredExtras } from "./components/DeferredExtras";
 import { Hero } from "./sections/Hero";
@@ -32,7 +31,7 @@ export default function App() {
           <Areas num={next()} />
           <Online num={next()} />
           <Process num={next()} />
-          {temAdvogado ? <Lawyer num={next()} /> : null}
+          <Lawyer num={next()} />
           <Guides num={next()} />
           <Faq num={next()} />
           <Contact num={next()} />
