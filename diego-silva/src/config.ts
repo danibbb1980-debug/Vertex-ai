@@ -59,10 +59,10 @@ export const CONFIG = {
 
   /**
    * Seção "O escritório" (menu: "Sobre"), texto fornecido pelo advogado (ajustado ao Provimento 205/2021).
-   * Com `mostrarTempoEscritorio: false`, a abertura começa sem o "Há cinco anos".
+   * Com `mostrarTempoEscritorio: false`, a abertura começa sem a frase do tempo.
    */
   mostrarTempoEscritorio: true,
-  tempoEscritorio: "Há cinco anos",
+  tempoEscritorio: "Há mais de meia década",
   sobre: {
     abertura:
       "nascemos com um propósito claro: transformar a relação entre o cliente e a justiça por meio de uma advocacia técnica e, acima de tudo, humana.",

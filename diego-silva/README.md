@@ -18,7 +18,7 @@ Campo vazio faz o bloco sumir do site. Nunca use "[A CONFIRMAR]" ou textos provi
 
 ### Seção "Sobre" (menu) = "O escritório" + "O advogado"
 - **O escritório** (sempre aparece): título "O escritório", nome do escritório, abertura, parágrafos, `fecho` (frase final em destaque) e `valores`. Tudo em `CONFIG.sobre`.
-- `CONFIG.mostrarTempoEscritorio` (`true`) + `CONFIG.tempoEscritorio` (`"Há cinco anos"`): com `false`, a abertura começa em "Nascemos com um propósito claro...". **Atualizar a frase a cada ano.** Não usar "mais de", "vasta" ou "ampla".
+- `CONFIG.mostrarTempoEscritorio` (`true`) + `CONFIG.tempoEscritorio` (`"Há mais de meia década"`, a pedido do advogado): com `false`, a abertura começa em "Nascemos com um propósito claro...". Revisar a frase com o tempo. Não usar "vasta" ou "ampla".
 - **O advogado** (subbloco ligado ao escritório): só aparece com `CONFIG.advogado.oab` no formato `"OAB/UF número"` (hoje **OAB/MG 210.925**). Mostra foto, "Dr. Diego Silva, OAB", `advogado.texto` e `advogado.formacao` (`"Curso, Instituição"`, sem anos). Com a OAB vazia, o subbloco e a OAB do rodapé somem.
 - Textos fornecidos pelo advogado e ajustados ao Provimento 205/2021: sem promessas nem autoelogio ("ágil", "de qualidade", "resultados" etc.).
 
@@ -52,5 +52,6 @@ O logo completo (`referencias/logo-selo-completo.jpg`) traz uma legenda que o Pr
 - `og.jpg` (1200×630) e ícones em `public/`.
 
 ## Histórico de alterações
+- **Atualização 4:** frase do tempo do escritório passa a ser "Há mais de meia década".
 - **Atualização 3:** seção "Sobre" reorganizada: primeiro "O escritório" (texto, valores e nome do escritório), depois o subbloco "O advogado" (foto, OAB, texto de fundação e formação).
 - **Atualização 2:** WhatsApp trocado para (35) 99856-9709 em todo o site; texto "Sobre o escritório" e valores fornecidos pelo advogado; formação atualizada (bacharel PUC/MG, pós em Direito e Processo do Trabalho PUC/RS, pós em Advocacia Cível ESA); opção `mostrarTempoEscritorio`.
