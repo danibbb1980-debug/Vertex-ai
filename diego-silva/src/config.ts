@@ -23,7 +23,11 @@ export const CONFIG = {
     url: "https://www.instagram.com/diego_silva_advocacia",
   },
 
+  /** Ficha do Google (botão "Como chegar"). */
   mapsUrl: "https://share.google/5prBE9a1NKuZ65fjH",
+  /** Busca do endereço no Google Maps (link "Ver no Google Maps"). Sem notas ou avaliações no site. */
+  maps: "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent("R. Vinte de Janeiro, 7, Jardim América, Poços de Caldas - MG, 37704-365"),
   endereco: {
     rua: "R. Vinte de Janeiro, 7",
     bairro: "Jardim América",

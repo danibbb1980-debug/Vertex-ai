@@ -21,8 +21,8 @@ export function Contact({ num }: { num: string }) {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-14 md:mt-20 md:grid-cols-12">
-          <div className="md:col-span-6">
+        <div className="mt-14 grid gap-14 md:mt-20 lg:grid-cols-12">
+          <div className="lg:col-span-6">
             <Reveal>
               <p className="eyebrow text-ink-soft">WhatsApp</p>
               <a
@@ -76,19 +76,29 @@ export function Contact({ num }: { num: string }) {
               </Reveal>
             </dl>
 
-            <div className="mt-12 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-12 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <MagneticLink href={waLink()} external>
                 Falar pelo WhatsApp
               </MagneticLink>
               <MagneticLink href={CONFIG.mapsUrl} external variant="outline" ariaLabel="Como chegar (abre o Google Maps em nova aba)">
                 Como chegar
               </MagneticLink>
+              <a
+                href={CONFIG.maps}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Ver no Google Maps: ${enderecoCompleto} (abre em nova aba)`}
+                className="group inline-flex min-h-12 items-center justify-center gap-2 px-2 font-medium text-wine sm:justify-start"
+              >
+                <span className="ulink ulink-static">Ver no Google Maps</span>
+                <span aria-hidden className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
+              </a>
             </div>
           </div>
 
-          <div className="md:col-span-5 md:col-start-8">
+          <div className="lg:col-span-5 lg:col-start-8">
             <Reveal>
-              <div className="relative aspect-[4/5] overflow-hidden border border-ink/15 bg-paper md:aspect-[4/5]">
+              <div className="relative aspect-[4/5] overflow-hidden border border-ink/15 bg-paper md:aspect-[16/9] lg:aspect-[4/5]">
                 {map ? (
                   <iframe
                     title={`Mapa: ${enderecoCompleto}`}
