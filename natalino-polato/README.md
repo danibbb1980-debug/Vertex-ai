@@ -1,4 +1,6 @@
-# Natalino Polato · Advogado Criminalista (rascunho)
+# Natalino Polato · Advogado Criminalista
+
+Versão final, publicada em **https://natalinoadvcriminal.com** (`rascunho: false`, indexação liberada, `sitemap.xml` e `robots.txt` com Allow).
 
 Site institucional e informativo. Vite + React + TypeScript + Tailwind 4 + motion. Estático, sem backend, sem analytics, sem formulário (contato só por WhatsApp). Fontes servidas pelo próprio site (@fontsource), sem Google Fonts.
 
@@ -41,5 +43,6 @@ Tudo fica em **`src/config.ts`**: nome, OAB, currículo, formação, áreas, Wha
 
 ## Publicação
 
-- **Vercel:** projeto `natalino-polato-rascunho`, *Root Directory* `natalino-polato` (o `vercel.json` define build e cabeçalhos).
-- **Netlify Drop:** `cd dist && zip -r ../site-natalino-polato.zip . -x "*.DS_Store"` e arraste o zip.
+- **Netlify:** `netlify.toml` nesta pasta (build `npm run build`, publish `dist`, cabeçalhos de segurança). Para envio manual, arraste `site-natalino-polato-final.zip` (gerado com `cd dist && zip -r ../site-natalino-polato-final.zip . -x "*.DS_Store"`).
+- **Vercel:** `vercel.json` com os mesmos cabeçalhos (Root Directory `natalino-polato`).
+- **Domínio:** `siteUrl` em `src/config.ts` e as URLs de `public/robots.txt` e `public/sitemap.xml` usam https://natalinoadvcriminal.com. Ao alterar o conteúdo, atualize a data em `sitemap.xml`.

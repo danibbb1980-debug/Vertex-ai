@@ -15,10 +15,10 @@ export type Area = {
 
 export const CONFIG = {
   /** Faixa "Rascunho para avaliação" no topo. Mude para false após a aprovação. */
-  rascunho: true,
+  rascunho: false,
 
   /** URL pública do site (canonical, og:url, og:image). Nunca localhost. */
-  siteUrl: 'https://natalino-polato-rascunho.vercel.app',
+  siteUrl: 'https://natalinoadvcriminal.com',
 
   // Pendente: nome completo como consta na OAB.
   nome: 'Natalino Polato',
