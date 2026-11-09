@@ -9,11 +9,6 @@ export function Sobre() {
     <section id="sobre" className="secao" aria-labelledby="titulo-sobre">
       <div className="container-site grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
         <div className="order-2 lg:order-1 lg:col-span-5" data-revelar>
-          {CONFIG.foto ? (
-            <figure className="overflow-hidden rounded-t-full rounded-b-[2rem] shadow-cartao">
-              <img src={CONFIG.foto} alt={CONFIG.fotoAlt} width={800} height={1000} loading="lazy" decoding="async" className="aspect-[4/5] h-full w-full object-cover" />
-            </figure>
-          ) : (
             <div className="relative overflow-hidden rounded-[2rem] border border-filete bg-pedra-50 px-8 pb-10 pt-14 shadow-leve">
               <OrquideaTraco className="pointer-events-none absolute -right-14 -top-10 w-72 text-rose" espessura={0.8} />
               <Logo variante="empilhado" className="relative mx-auto h-auto w-full max-w-[22rem]" />
@@ -29,7 +24,6 @@ export function Sobre() {
                 </div>
               </dl>
             </div>
-          )}
         </div>
 
         <div className="order-1 lg:order-2 lg:col-span-7" data-revelar>

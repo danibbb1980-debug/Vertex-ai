@@ -20,7 +20,7 @@ npm run preview    # serve o dist/ em http://localhost:4173
 | **Sala 33 x Conj. 204** | O Google mostra "Sala 33"; a arte da médica mostra "Conj. 204". O site usa "Conj. 204". | Confirmar o complemento correto em `endereco.complemento`. |
 | **Domingo e almoço** | Sem informação. Domingo não aparece na tabela e fica bloqueado no formulário; não há pausa de almoço. | Se houver, incluir em `horarios` (dia `0`) e em `agendamento.pausa`. |
 | **Logo** | O site usa uma **reprodução em SVG** do logo existente (orquídea, "Centro de Dermatologia", nome em caligrafia e traço), feita a partir da arte de referência. | Substituir pelos arquivos originais (ver abaixo). |
-| **Fotos** | Nenhuma foto limpa foi enviada. O post do Instagram em `referencias/` tem texto sobre a imagem e não foi usado. | Ver "Adicionar foto". |
+| **Foto** | A foto do topo foi recortada do post do Instagram (`referencias/post-instagram-estria.jpg`), ampliada e com o fundo removido. A resolução de origem é baixa (cerca de 600 px de largura). | Trocar por um arquivo original em alta resolução quando possível (ver "Trocar a foto"). |
 | **Formação, procedimentos, aparelhos, convênios** | Não informados, por isso não aparecem. | Incluir quando forem informados (com cuidado com as regras do CFM). |
 | **URL do site** | `siteUrl` aponta para `https://luciana-leao-rascunho.vercel.app` (nome esperado do projeto na Vercel). | Ajustar para a URL real depois do deploy e gerar o build de novo. A página `public/privacidade.html` também tem essa URL no `canonical`. |
 
@@ -40,13 +40,16 @@ site; nunca escreva textos provisórios como "a confirmar".
 - **Horários:** `CONFIG.horarios` (dia `0` = domingo ... `6` = sábado). O formulário usa blocos de 1 hora até
   `agendamento.ultimoHorario` (17:00) e bloqueia os dias ausentes ou fechados.
 
-## Adicionar foto
+## Trocar a foto
 
-1. Coloque a foto (real, limpa, só da médica ou do consultório) em `public/fotos/`, de preferência em WebP,
-   com cerca de 800 x 1000 px.
-2. Em `src/config.ts`, preencha `foto: '/fotos/nome-do-arquivo.webp'`.
-3. A foto aparece no bloco "Sobre", no lugar da composição com o logo. Nunca use fotos de pacientes, de pele,
-   de procedimentos ou de banco de imagens.
+A foto aparece no arco do topo, sem fundo. Para trocar:
+
+1. Salve a nova foto, já sem fundo (PNG com transparência), em `referencias/fotos/dra-luciana-sem-fundo.png`.
+   Enquadramento: da cabeça até a cintura, com o corte do ombro na borda direita.
+2. Rode `npm run gerar:foto` (gera AVIF e WebP em 480, 720 e 1000 px em `public/fotos/`).
+3. Para tirar a foto do site, deixe `foto: ''` em `src/config.ts`: o arco volta a mostrar só a orquídea.
+
+Nunca use fotos de pacientes, de pele, de procedimentos ou de banco de imagens.
 
 ## Trocar a reprodução do logo pelo original
 

@@ -6,6 +6,9 @@ import { IconeSetaBaixo, IconeWhatsApp } from '../components/Icones'
 import { TextReveal } from '../components/TextReveal'
 import { linkWhatsApp, registro, temWhatsApp } from '../lib/dados'
 
+const TAMANHOS = '(min-width: 1024px) 30vw, (min-width: 640px) 21rem, 17rem'
+const fotoSrcSet = (base: string, ext: string) => [480, 720, 1000].map((w) => `${base}-${w}.${ext} ${w}w`).join(', ')
+
 export function Hero() {
   const temAtendimentos = CONFIG.secoes.atendimentos && CONFIG.atendimentos.length > 0
   return (
@@ -55,8 +58,30 @@ export function Hero() {
               <path d="M40 500V200a160 160 0 0 1 320 0v300" vectorEffect="non-scaling-stroke" />
               <path d="M80 500V210a120 120 0 0 1 240 0v290" vectorEffect="non-scaling-stroke" />
             </svg>
-            <OrquideaTraco desenhar className="absolute left-1/2 top-[44%] w-[82%] -translate-x-1/2 -translate-y-1/2 text-vinho" espessura={0.85} atraso={0.5} />
-            <p className="absolute inset-x-0 bottom-7 text-center font-serif text-sm italic text-vinho/80">Centro de Dermatologia</p>
+            {CONFIG.foto ? (
+              <>
+                <OrquideaTraco desenhar className="absolute left-1/2 top-[30%] w-[96%] -translate-x-1/2 -translate-y-1/2 text-vinho/40" espessura={0.7} atraso={0.3} />
+                <picture>
+                  <source type="image/avif" srcSet={fotoSrcSet(CONFIG.foto, 'avif')} sizes={TAMANHOS} />
+                  <img
+                    src={`${CONFIG.foto}-720.webp`}
+                    srcSet={fotoSrcSet(CONFIG.foto, 'webp')}
+                    sizes={TAMANHOS}
+                    alt={CONFIG.fotoAlt}
+                    width={1220}
+                    height={1560}
+                    fetchPriority="high"
+                    decoding="async"
+                    className="absolute bottom-0 right-0 h-auto w-[86%]"
+                  />
+                </picture>
+              </>
+            ) : (
+              <>
+                <OrquideaTraco desenhar className="absolute left-1/2 top-[44%] w-[82%] -translate-x-1/2 -translate-y-1/2 text-vinho" espessura={0.85} atraso={0.5} />
+                <p className="absolute inset-x-0 bottom-7 text-center font-serif text-sm italic text-vinho/80">Centro de Dermatologia</p>
+              </>
+            )}
           </div>
           <div aria-hidden="true" className="absolute -bottom-6 -left-6 h-24 w-24 rounded-full border border-lilas/60" />
           <div aria-hidden="true" className="absolute -right-3 top-10 h-3 w-3 rounded-full bg-lilas" />

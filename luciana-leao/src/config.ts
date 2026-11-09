@@ -34,7 +34,10 @@ export interface Config {
     uf: string
     rqe: string
   }
-  /** Caminho de uma foto real da médica em /public (ex.: "/fotos/dra-luciana.webp"). Vazio = não exibe. */
+  /**
+   * Prefixo da foto real da médica (sem fundo) em /public. O site usa {foto}-480/-720/-1000 em .avif e .webp
+   * (gerados por `npm run gerar:foto`). Aparece no arco do topo. Vazio = arco só com a orquídea.
+   */
   foto: string
   fotoAlt: string
   /** Somente dígitos, com DDI e DDD. Vazio = botões e formulário de WhatsApp não aparecem. */
@@ -93,7 +96,7 @@ export const CONFIG: Config = {
     rqe: '32476',
   },
 
-  foto: '',
+  foto: '/fotos/dra-luciana',
   fotoAlt: 'Dra. Luciana Leão, dermatologista',
 
   whatsapp: '5535988535585', // NÚMERO NÃO VERIFICADO: testar antes de enviar o site
