@@ -1,0 +1,18 @@
+:root{--marfim:#fbf7f1;--marfim2:#f5eee7;--ameixa:#4b3045;--lilas:#7a587c;--salvia:#84bba2;--salviat:#3f6e5a;--tinta:#4a4044;--tinta2:#6b5e63}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--marfim);color:var(--tinta);font:17px/1.7 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.faixa{background:#3a2436;color:var(--marfim);text-align:center;font-size:12px;padding:8px 12px}
+header,main,footer{max-width:46rem;margin:0 auto;padding:0 20px}
+header{padding-top:28px}
+header img{height:56px;width:auto}
+h1,h2{font-family:Georgia,"Iowan Old Style",serif;color:var(--ameixa);font-weight:400;line-height:1.15;letter-spacing:-.01em}
+h1{font-size:2.4rem;margin:48px 0 8px}
+h1 em{color:var(--lilas)}
+h2{font-size:1.45rem;margin:40px 0 8px}
+.onda{display:block;margin:20px 0 8px}
+a{color:var(--ameixa);font-weight:600;text-underline-offset:4px}
+a:focus-visible{outline:2.5px solid var(--salviat);outline-offset:3px;border-radius:6px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:12px 24px;border-radius:999px;background:var(--ameixa);color:var(--marfim);text-decoration:none;margin:8px 8px 0 0}
+.btn.sec{background:transparent;color:var(--ameixa);box-shadow:inset 0 0 0 1px rgba(75,48,69,.3)}
+footer{margin-top:64px;padding-bottom:48px;font-size:14px;color:var(--tinta2);border-top:1px solid rgba(75,48,69,.12);padding-top:24px}

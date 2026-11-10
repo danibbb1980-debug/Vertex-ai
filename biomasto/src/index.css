@@ -1,0 +1,119 @@
+@import '@fontsource-variable/fraunces/soft.css';
+@import '@fontsource-variable/fraunces/soft-italic.css';
+@import '@fontsource-variable/figtree/wght.css';
+@import 'tailwindcss';
+
+@theme {
+  --color-marfim: #fbf7f1;
+  --color-marfim-2: #f5eee7;
+  --color-areia: #ece2da;
+  --color-ameixa: #4b3045;
+  --color-ameixa-2: #3a2436;
+  --color-lilas: #c3a6c6;
+  --color-lilas-suave: #f1e7f0;
+  --color-lilas-tinta: #7a587c;
+  --color-salvia: #84bba2;
+  --color-salvia-suave: #e4efe8;
+  --color-salvia-tinta: #3f6e5a;
+  --color-tinta: #4a4044;
+  --color-tinta-2: #6b5e63;
+
+  --font-serif: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  body {
+    background: var(--color-marfim);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-variation-settings: 'SOFT' 100;
+    color: var(--color-ameixa);
+    font-weight: 380;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  em.enfase {
+    font-style: italic;
+    color: var(--color-lilas-tinta);
+    font-weight: 340;
+  }
+  .escuro em.enfase { color: var(--color-lilas); }
+  :focus-visible {
+    outline: 2.5px solid var(--color-salvia-tinta);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .escuro :focus-visible { outline-color: var(--color-salvia); }
+  ::selection { background: var(--color-lilas-suave); color: var(--color-ameixa); }
+}
+
+@layer components {
+  .rotulo {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-salvia-tinta);
+  }
+  .escuro .rotulo { color: var(--color-salvia); }
+  .container-site {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) { .container-site { padding-inline: 2rem; } }
+  .filete {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-ameixa) 22%, transparent), transparent);
+  }
+  .sombra-suave { box-shadow: 0 1px 2px rgb(75 48 69 / 0.04), 0 12px 32px -12px rgb(75 48 69 / 0.14); }
+}
+
+/* Marquee movido pela rolagem: só transform. */
+.marquee-faixa { will-change: transform; }
+
+/* Acordeão: o conteúdo aparece com opacidade e deslocamento. */
+.faq-resposta[data-aberto='true'] > div { animation: aparece 0.35s var(--ease-suave) both; }
+@keyframes aparece { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* Revelação do título do hero (CSS, roda antes do JavaScript). */
+.revela-palavra { animation: sobe 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes sobe { from { transform: translateY(108%); } to { transform: none; } }
+.surge { animation: surge 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes surge { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.desenha { stroke-dasharray: 1; stroke-dashoffset: 1; animation: desenha 2.2s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+@keyframes desenha { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .revela-palavra, .surge { animation: none; }
+  .desenha { animation: none; stroke-dashoffset: 0; }
+}
