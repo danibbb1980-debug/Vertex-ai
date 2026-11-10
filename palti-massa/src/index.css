@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/* Fontes locais (sem requisição a terceiros), font-display: swap */
+@import "@fontsource/barlow-semi-condensed/latin-500.css";
+@import "@fontsource/barlow-semi-condensed/latin-600.css";
+@import "@fontsource/figtree/latin-400.css";
+@import "@fontsource/figtree/latin-500.css";
+@import "@fontsource/figtree/latin-600.css";
+
+/* Paleta amostrada do logo: petróleo #578C9C → verde-água #89BEB4, cinza #737373 */
+@theme {
+  --color-gelo: #f5f8f8;
+  --color-nevoa: #eaf1f1;
+  --color-linha: #d3e0e0;
+  --color-petroleo-950: #0f2c36;
+  --color-petroleo-900: #143843;
+  --color-petroleo-800: #1b4a57;
+  --color-petroleo-700: #255e6c;
+  --color-petroleo-500: #578c9c;
+  --color-agua-300: #b7dcd5;
+  --color-agua-400: #89beb4;
+  --color-agua-600: #3f8a80;
+  --color-agua-700: #2c6b65; /* texto pequeno sobre branco: AA */
+  --color-grafite: #26343a;
+  --color-cinza: #4f5f66;
+  --color-cinza-logo: #737373;
+  --color-erro: #a63a2b;
+
+  --font-display: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-sans: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-card: 1.25rem;
+  --shadow-suave: 0 1px 2px rgb(15 44 54 / 0.05), 0 8px 24px -12px rgb(15 44 54 / 0.18);
+  --shadow-alta: 0 2px 4px rgb(15 44 54 / 0.06), 0 22px 48px -20px rgb(15 44 54 / 0.32);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-gelo font-sans text-grafite antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    overflow-x: clip;
+  }
+  h1, h2, h3 {
+    @apply font-display text-petroleo-900;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid var(--color-agua-600);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible { outline-color: var(--color-agua-300); }
+  ::selection { background: var(--color-agua-300); color: var(--color-petroleo-950); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@layer components {
+  .container-site { @apply mx-auto w-full max-w-[1200px] px-5 sm:px-8; }
+
+  .rotulo {
+    @apply font-sans text-[0.8125rem] font-semibold uppercase text-agua-700;
+    letter-spacing: 0.16em;
+  }
+  .on-dark .rotulo { @apply text-agua-300; }
+
+  /* Uma palavra em ênfase por título, em degradê petróleo → verde-água */
+  .enfase {
+    background: linear-gradient(100deg, #255e6c 0%, #3f8a80 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding-right: 0.04em;
+  }
+  .on-dark .enfase { background-image: linear-gradient(100deg, #a9d3dd 0%, #b7dcd5 90%); }
+
+  .btn {
+    @apply relative inline-flex min-h-12 items-center justify-center gap-2.5 overflow-hidden rounded-full px-6 font-sans text-[1rem] font-semibold transition-[transform,box-shadow,background-color,color] duration-200 ease-out;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primario {
+    @apply text-white shadow-suave;
+    background: linear-gradient(110deg, #1b4a57 0%, #2c6b65 100%);
+  }
+  .btn-primario:hover { @apply shadow-alta; }
+  /* brilho sutil que atravessa o botão no hover (adaptado do "Shining Button") */
+  .btn-primario::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.22) 50%, transparent 65%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+    pointer-events: none;
+  }
+  .btn-primario:hover::after { transform: translateX(120%); }
+  .btn-secundario {
+    @apply border border-petroleo-700/25 bg-white/70 text-petroleo-800 backdrop-blur-sm;
+  }
+  .btn-secundario:hover { @apply border-petroleo-700/50 bg-white; }
+  .on-dark .btn-secundario { @apply border-white/30 bg-white/5 text-white; }
+  .on-dark .btn-secundario:hover { @apply border-white/60 bg-white/10; }
+  .on-dark .btn-primario {
+    background: linear-gradient(110deg, #89beb4 0%, #b7dcd5 100%);
+    color: var(--color-petroleo-950);
+  }
+
+  .card {
+    @apply rounded-[var(--radius-card)] border border-linha/80 bg-white shadow-suave;
+  }
+
+  .link-sub {
+    @apply underline decoration-agua-600/40 decoration-2 underline-offset-4 transition-colors hover:decoration-agua-600;
+  }
+
+  .campo {
+    @apply block min-h-12 w-full rounded-xl border border-linha bg-white px-4 py-3 text-[1rem] text-grafite transition-[border-color,box-shadow] duration-150 placeholder:text-cinza/80;
+  }
+  .campo:hover { @apply border-petroleo-500/60; }
+  .campo:focus { @apply border-agua-600 outline-none; box-shadow: 0 0 0 4px rgb(63 138 128 / 0.22); }
+  .campo[aria-invalid="true"] { @apply border-erro; box-shadow: 0 0 0 3px rgb(166 58 43 / 0.14); }
+}
+
+/* Marquee discreto: só transform, pausa fora da tela e no hover */
+@keyframes marquee {
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-track { animation: marquee 48s linear infinite; }
+.marquee-track[data-paused="true"], .marquee:hover .marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+@keyframes pulso {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.6); opacity: 0.25; }
+}
+
+@keyframes faq-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
