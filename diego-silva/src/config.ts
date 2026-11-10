@@ -4,11 +4,8 @@
  */
 
 export const CONFIG = {
-  /** Faixa "Rascunho para avaliação" + noindex. Ver README para desligar tudo. */
-  rascunho: true,
-
   /** URL pública, sem barra no final. Usada em canonical, og:url e JSON-LD. */
-  siteUrl: "https://diego-silva-advocacia-rascunho.vercel.app",
+  siteUrl: "https://diegosilvaadv.com.br",
 
   nomeEscritorio: "Diego Silva Advocacia & Consultoria Jurídica",
   marca: "Diego Silva",

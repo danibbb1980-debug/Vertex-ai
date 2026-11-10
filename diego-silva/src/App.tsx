@@ -1,5 +1,5 @@
 import { LazyMotion, domAnimation, MotionConfig } from "motion/react";
-import { DraftBanner, Header, ScrollProgress } from "./components/Chrome";
+import { Header, ScrollProgress } from "./components/Chrome";
 import { DeferredExtras } from "./components/DeferredExtras";
 import { Hero } from "./sections/Hero";
 import { Manifesto } from "./sections/Manifesto";
@@ -22,7 +22,6 @@ export default function App() {
         <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-12 focus:z-[90] focus:rounded focus:bg-ink focus:px-4 focus:py-3 focus:text-paper">
           Pular para o conteúdo
         </a>
-        <DraftBanner />
         <ScrollProgress />
         <Header />
         <main id="conteudo">

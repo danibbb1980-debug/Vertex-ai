@@ -1,8 +1,11 @@
-# Diego Silva Advocacia & Consultoria Jurídica (rascunho)
+# Diego Silva Advocacia & Consultoria Jurídica
 
-Rascunho de site proposto pela Lumivo Web. Página única + `privacidade.html` + `404.html`.
+Site do escritório, criado pela Lumivo Web. Página única + `privacidade.html` + `404.html`.
 Vite + React + TypeScript + Tailwind 4 + motion + Lenis. Estático, sem backend, sem cookies, sem analytics.
 O HTML é pré-renderizado no build (o conteúdo aparece antes do JavaScript carregar).
+
+- **Domínio:** https://diegosilvaadv.com.br (o `www` redireciona para ele).
+- **Hospedagem:** Netlify (plano Free).
 
 ```bash
 npm install
@@ -10,6 +13,13 @@ npm run dev      # desenvolvimento
 npm run build    # gera dist/ (index.html pré-renderizado)
 npm run preview  # serve o dist/
 ```
+
+## Publicar no Netlify
+- **Arrastar e soltar (Netlify Drop):** rode `npm run build` e envie o conteúdo de `dist/` (ou o `site-diego-silva-final.zip`, que já tem o `index.html` na raiz).
+- **Pelo repositório:** o `netlify.toml` já define `npm run build`, a pasta `dist` e Node 22.
+- **Domínio:** em Domain management, adicione `diegosilvaadv.com.br` como principal e `www.diegosilvaadv.com.br` como alias. O redirecionamento 301 do www está no `netlify.toml`.
+- Cabeçalhos de segurança e cache ficam em `public/_headers`.
+- SEO: `public/robots.txt`, `public/sitemap.xml` (atualize `<lastmod>` ao mudar o conteúdo), canonical e Open Graph a partir de `CONFIG.siteUrl`.
 
 ## Onde editar
 
@@ -31,18 +41,12 @@ Campo vazio faz o bloco sumir do site. Nunca use "[A CONFIRMAR]" ou textos provi
 - Número do escritório, confirmado pelo advogado: **(35) 99856-9709** → `CONFIG.whatsapp = "5535998569709"` e `CONFIG.whatsappExibicao`.
 - Todos os botões, o formulário de pré-atendimento, o FAQ e o JSON-LD leem do config. Só `public/privacidade.html` e `public/404.html` têm o número escrito à mão: ao trocar, atualize esses dois também.
 
-## O que o advogado deve revisar
-- Descrições das 4 áreas (`AREAS`), os 3 conteúdos informativos (`CONTEUDOS`) e o FAQ: revisão técnica. Os textos são gerais, sem prazos, valores ou regras específicas, de propósito.
+## Conteúdo
+- Conteúdo aprovado pelo cliente. Descrições das áreas (`AREAS`), conteúdos informativos (`CONTEUDOS`) e FAQ são gerais, sem prazos, valores ou regras específicas, de propósito.
+- Sem depoimentos, notas, avaliações, números de clientes ou promessas de resultado (Provimento 205/2021 da OAB).
 
 ## Logo
 O logo completo (`referencias/logo-selo-completo.jpg`) traz uma legenda que o Provimento 205/2021 da OAB só permite com título comprovado. Por isso o site usa **apenas o emblema** (hexágono vinho, coluna dourada e balança), redesenhado em vetor (`src/components/Emblem.tsx`, `public/favicon.svg`), junto do nome "Diego Silva Advocacia & Consultoria Jurídica" em tipografia. Sugestão: ter uma versão do logo sem a legenda.
-
-## Desligar o modo rascunho (quando for publicar de verdade)
-1. `src/config.ts`: `rascunho: false` (some a faixa e a meta robots passa a `index, follow`).
-2. `public/robots.txt`: trocar por `User-agent: *` + `Allow: /`.
-3. `public/_headers` e `vercel.json`: remover a linha `X-Robots-Tag: noindex, nofollow`.
-4. `public/privacidade.html` e `public/404.html`: remover a meta `noindex` e a faixa de rascunho da privacidade.
-5. Atualizar `CONFIG.siteUrl` com o domínio final.
 
 ## Detalhes técnicos
 - Fontes self-hosted e recortadas (Newsreader e Inter Tight, ~124 KB no total) em `src/fonts/`.
@@ -52,6 +56,7 @@ O logo completo (`referencias/logo-selo-completo.jpg`) traz uma legenda que o Pr
 - `og.jpg` (1200×630) e ícones em `public/`.
 
 ## Histórico de alterações
+- **Versão final (produção):** domínio diegosilvaadv.com.br, site indexável (robots, sitemap, canonical e Open Graph no domínio final), hospedagem no Netlify (`netlify.toml`, `public/_headers`), sem faixa de aviso.
 - **Atualização 4:** frase do tempo do escritório passa a ser "Há mais de meia década".
 - **Atualização 3:** seção "Sobre" reorganizada: primeiro "O escritório" (texto, valores e nome do escritório), depois o subbloco "O advogado" (foto, OAB, texto de fundação e formação).
 - **Atualização 2:** WhatsApp trocado para (35) 99856-9709 em todo o site; texto "Sobre o escritório" e valores fornecidos pelo advogado; formação atualizada (bacharel PUC/MG, pós em Direito e Processo do Trabalho PUC/RS, pós em Advocacia Cível ESA); opção `mostrarTempoEscritorio`.

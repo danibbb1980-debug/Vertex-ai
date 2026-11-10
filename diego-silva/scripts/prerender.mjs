@@ -14,9 +14,7 @@ const app = ssr.render();
 const site = CONFIG.siteUrl.replace(/\/$/, "");
 if (/localhost|127\.0\.0\.1/.test(site)) throw new Error("CONFIG.siteUrl não pode ser localhost");
 
-const robots = CONFIG.rascunho
-  ? '<meta name="robots" content="noindex, nofollow" />\n    <meta name="googlebot" content="noindex, nofollow" />'
-  : '<meta name="robots" content="index, follow" />';
+const robots = '<meta name="robots" content="index, follow" />';
 
 const e = CONFIG.endereco;
 const jsonld = {
@@ -53,7 +51,7 @@ const preload = fonts
   .join("\n    ");
 
 const og = existsSync(resolve(dist, "og.jpg"))
-  ? `<meta property="og:image" content="${site}/og.jpg" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />\n    <meta name="twitter:card" content="summary_large_image" />`
+  ? `<meta property="og:image" content="${site}/og.jpg" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:image" content="${site}/og.jpg" />\n    <meta property="og:image:alt" content="Diego Silva Advocacia & Consultoria Jurídica, Poços de Caldas/MG" />`
   : "";
 
 html = html

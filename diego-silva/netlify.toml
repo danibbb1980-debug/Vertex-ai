@@ -1,0 +1,13 @@
+# Site de página única (sem rotas no cliente): só o redirecionamento do www.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[redirects]]
+  from = "https://www.diegosilvaadv.com.br/*"
+  to = "https://diegosilvaadv.com.br/:splat"
+  status = 301
+  force = true

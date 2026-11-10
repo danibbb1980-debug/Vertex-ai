@@ -19,7 +19,7 @@ export function Hero() {
     <section
       id="inicio"
       ref={ref}
-      className={`relative overflow-hidden ${CONFIG.rascunho ? "pt-[8.5rem] md:pt-40" : "pt-28 md:pt-32"}`}
+      className="relative overflow-hidden pt-28 md:pt-32"
       aria-labelledby="hero-titulo"
     >
       {/* Emblema em linhas finas, com parallax leve */}

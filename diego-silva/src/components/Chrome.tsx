@@ -6,26 +6,13 @@ import { waLink } from "../lib/whatsapp";
 
 import { getLenis } from "../lib/lenisStore";
 
-export function DraftBanner() {
-  if (!CONFIG.rascunho) return null;
-  return (
-    <div
-      role="note"
-      className="fixed inset-x-0 top-0 z-[60] flex h-8 items-center justify-center bg-ink px-3 text-center text-[0.72rem] tracking-[0.02em] text-paper/85 sm:text-[0.78rem]"
-    >
-      <span className="mr-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-gold-light" aria-hidden />
-      Rascunho para avaliação. Informações sujeitas a confirmação.
-    </div>
-  );
-}
-
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
   return (
     <m.div
       aria-hidden
-      style={{ scaleX, top: CONFIG.rascunho ? "2rem" : 0 }}
+      style={{ scaleX, top: 0 }}
       className="fixed inset-x-0 z-[61] h-[2px] origin-left bg-wine"
     />
   );
@@ -64,7 +51,7 @@ export function Header() {
   useEffect(() => {
     const on = () => {
       setScrolled(window.scrollY > 24);
-      const probe = CONFIG.rascunho ? 72 : 40;
+      const probe = 40;
       setOverDark(
         Array.from(document.querySelectorAll("[data-dark]")).some((el) => {
           const r = el.getBoundingClientRect();
@@ -109,9 +96,8 @@ export function Header() {
     };
   }, [open]);
 
-  const top = CONFIG.rascunho ? "top-8" : "top-0";
   return (
-    <header className={`fixed inset-x-0 ${top} z-50`}>
+    <header className="fixed inset-x-0 top-0 z-50">
       <div
         className={`transition-[background-color,box-shadow,backdrop-filter] duration-500 ${
           open
