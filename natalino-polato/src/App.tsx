@@ -7,7 +7,7 @@ import {
   mapsEmbedUrl,
   whatsappUrl,
 } from './config'
-import { DraftBanner, Header } from './components/Header'
+import { Header } from './components/Header'
 import { AreasList } from './components/Areas'
 import { Accordion, ArrowIcon, MagneticLink, Reveal, SectionLabel, WhatsAppIcon, type FaqItem } from './components/ui'
 
@@ -50,7 +50,7 @@ function Hero() {
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_85%_10%,#1f2b3d_0%,transparent_55%),linear-gradient(180deg,#131b27_0%,#0f1217_100%)]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-line-dark" />
 
-      <div className="wrap relative grid min-h-[100svh] items-center gap-14 pt-[calc(var(--banner-h,0px)+7rem)] pb-20 md:grid-cols-12 md:gap-8 md:pb-24">
+      <div className="wrap relative grid min-h-[100svh] items-center gap-14 pt-28 pb-20 md:grid-cols-12 md:gap-8 md:pb-24">
         <div className="md:col-span-7 lg:col-span-7">
           <motion.p
             className="label flex items-center gap-4 text-bronze"
@@ -422,7 +422,7 @@ const FAQ: FaqItem[] = [
     q: 'Onde fica o escritório?',
     a: (
       <p>
-        {enderecoCompleto}. Atendimento de segunda a sexta, das 09h00 às 17h30.
+        {enderecoCompleto}. Atendimento de {CONFIG.horarios[0].dias.toLowerCase()}, das {CONFIG.horarios[0].horas}.
       </p>
     ),
   },
@@ -686,7 +686,6 @@ export default function App() {
       >
         Pular para o conteúdo
       </a>
-      <DraftBanner />
       <Header />
       <main id="conteudo">
         <Hero />

@@ -73,7 +73,7 @@ export function AreasList() {
         </ol>
 
         <div className="lg:col-span-4 lg:col-start-9">
-          <div id={`${base}-painel`} aria-live="polite" className="sticky top-[calc(var(--banner-h,0px)+7rem)] border-t border-bronze-deep/60 pt-8">
+          <div id={`${base}-painel`} aria-live="polite" className="sticky top-28 border-t border-bronze-deep/60 pt-8">
             <motion.div
               key={ativa}
               initial={{ opacity: 0, y: 10 }}

@@ -14,9 +14,6 @@ export type Area = {
 }
 
 export const CONFIG = {
-  /** Faixa "Rascunho para avaliação" no topo. Mude para false após a aprovação. */
-  rascunho: false,
-
   /** URL pública do site (canonical, og:url, og:image). Nunca localhost. */
   siteUrl: 'https://natalinoadvcriminal.com',
 

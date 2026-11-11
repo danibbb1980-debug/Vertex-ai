@@ -21,8 +21,7 @@ function siteMeta(): Plugin {
     '@context': 'https://schema.org',
     '@type': ['Attorney', 'LegalService'],
     name: CONFIG.nome,
-    description: `Advogado criminalista. Atuação em Direito Penal e Processo Penal, da investigação policial à execução da pena.`,
-    jobTitle: 'Advogado criminalista',
+    description: `${CONFIG.profissao}. ${CONFIG.oab}.`,
     identifier: { '@type': 'PropertyValue', propertyID: CONFIG.oabSeccional, value: CONFIG.oabNumero },
     knowsAbout: ['Direito Penal', 'Direito Processual Penal', ...areas],
     url: url + '/',
@@ -41,28 +40,53 @@ function siteMeta(): Plugin {
     areaServed: `${CONFIG.endereco.cidade} - ${CONFIG.endereco.uf}`,
   }
 
-  const robots = CONFIG.rascunho ? 'noindex, nofollow' : 'index, follow'
 
   return {
     name: 'site-meta',
+    apply: (_, env) => !env.isSsrBuild,
     transformIndexHtml(html) {
       return html
-        .replace('<html lang="pt-BR">', `<html lang="pt-BR" style="--banner-h:${CONFIG.rascunho ? '2rem' : '0px'}">`)
         .replace(/%TITLE%/g, esc(TITLE))
         .replace(/%DESCRIPTION%/g, esc(DESCRIPTION))
-        .replace(/%ROBOTS%/g, robots)
         .replace(/%URL%/g, url + '/')
         .replace('%OG_IMAGE%', CONFIG.ogImage ? `<meta property="og:image" content="${url}${CONFIG.ogImage}" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />\n    <meta property="og:image:alt" content="${esc(CONFIG.nome + ' · ' + CONFIG.profissao)}" />` : '')
+        .replace('%TW_IMAGE%', CONFIG.ogImage ? `<meta name="twitter:image" content="${url}${CONFIG.ogImage}" />` : '')
         .replace('%JSONLD%', JSON.stringify(jsonLd))
         .replace('%ENDERECO%', esc(enderecoCompleto))
     },
     generateBundle() {
-      this.emitFile({ type: 'asset', fileName: 'privacidade.html', source: paginaPrivacidade(robots) })
-      this.emitFile({ type: 'asset', fileName: '404.html', source: pagina404(robots) })
+      this.emitFile({ type: 'asset', fileName: 'privacidade.html', source: paginaPrivacidade() })
+      this.emitFile({ type: 'asset', fileName: '404.html', source: pagina404() })
+    },
+  }
+}
+
+/**
+ * Embute o CSS no HTML para eliminar a requisição que bloqueia a renderização.
+ * As URLs relativas do CSS (fontes) passam a ser absolutas a partir da raiz.
+ */
+function inlineCss(): Plugin {
+  return {
+    name: 'inline-css',
+    apply: (_, env) => env.command === 'build' && !env.isSsrBuild,
+    enforce: 'post',
+    generateBundle(_, bundle) {
+      const html = bundle['index.html']
+      if (!html || html.type !== 'asset') return
+      let out = String(html.source)
+      for (const [name, file] of Object.entries(bundle)) {
+        if (file.type !== 'asset' || !name.endsWith('.css')) continue
+        const tag = new RegExp(`<link rel="stylesheet"[^>]*href="/${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"[^>]*>`)
+        if (!tag.test(out)) continue
+        const css = String(file.source).replace(/url\(\/?assets\//g, 'url(/assets/')
+        out = out.replace(tag, `<style>${css}</style>`)
+        delete bundle[name]
+      }
+      html.source = out
     },
   }
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), siteMeta()],
+  plugins: [react(), tailwindcss(), siteMeta(), inlineCss()],
 })

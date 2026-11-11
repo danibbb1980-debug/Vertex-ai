@@ -1,14 +1,12 @@
 import { CONFIG, enderecoCompleto } from './config'
 
-const base = (title: string, robots: string, body: string) => `<!doctype html>
+const base = (title: string, body: string, canonical?: string) => `<!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${title}</title>
-<meta name="robots" content="${robots}" />
-<meta name="googlebot" content="${robots}" />
-<link rel="icon" href="/favicon.png" type="image/png" />
+${canonical ? `<meta name="robots" content="index, follow" />\n<link rel="canonical" href="${canonical}" />\n` : ''}<link rel="icon" href="/favicon.png" type="image/png" />
 <style>
   :root { color-scheme: light; }
   * { box-sizing: border-box; }
@@ -35,10 +33,9 @@ ${body}
 </body>
 </html>`
 
-export const paginaPrivacidade = (robots: string) =>
+export const paginaPrivacidade = () =>
   base(
     `Privacidade | ${CONFIG.nome}`,
-    robots,
     `<p class="label">Privacidade</p>
 <h1>Política de <em>privacidade</em></h1>
 <p>Este site tem caráter exclusivamente informativo. Ele não possui formulários, não cria contas de usuário e não utiliza ferramentas de análise de audiência, pixels de publicidade ou cookies de rastreamento.</p>
@@ -48,12 +45,12 @@ export const paginaPrivacidade = (robots: string) =>
 <p>A página inicial exibe um mapa do Google Maps, que pode registrar dados técnicos de acesso, como o endereço IP, conforme as políticas do Google. As fontes tipográficas são servidas pelo próprio site.</p>
 <h2>Seus direitos</h2>
 <p>Nos termos da Lei Geral de Proteção de Dados (Lei 13.709/2018), você pode solicitar informações, correção ou exclusão de dados pessoais pelo WhatsApp ${CONFIG.whatsappExibicao}.</p>`,
+    `${CONFIG.siteUrl.replace(/\/$/, '')}/privacidade.html`,
   )
 
-export const pagina404 = (robots: string) =>
+export const pagina404 = () =>
   base(
     `Página não encontrada | ${CONFIG.nome}`,
-    robots,
     `<p class="label">Erro 404</p>
 <h1>Página <em>não encontrada</em></h1>
 <p>O endereço acessado não existe ou foi alterado.</p>`,

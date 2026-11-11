@@ -1,7 +1,5 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { LazyMotion, MotionConfig, domAnimation } from 'motion/react'
-import App from './App'
+import { createRoot, hydrateRoot } from 'react-dom/client'
+import { Root } from './Root'
 import '@fontsource/cormorant-garamond/latin-500.css'
 import '@fontsource/cormorant-garamond/latin-600.css'
 import '@fontsource/cormorant-garamond/latin-500-italic.css'
@@ -11,12 +9,8 @@ import '@fontsource/manrope/latin-500.css'
 import '@fontsource/manrope/latin-600.css'
 import './index.css'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <LazyMotion features={domAnimation} strict>
-      <MotionConfig reducedMotion="user">
-        <App />
-      </MotionConfig>
-    </LazyMotion>
-  </StrictMode>,
-)
+const el = document.getElementById('root')!
+
+// O HTML vem pré-renderizado no build; em desenvolvimento a raiz chega vazia.
+if (el.hasChildNodes()) hydrateRoot(el, <Root />)
+else createRoot(el).render(<Root />)

@@ -42,7 +42,7 @@
     border-radius: 2px;
   }
   section[id] {
-    scroll-margin-top: calc(var(--banner-h, 0px) + 4.5rem);
+    scroll-margin-top: 4.5rem;
   }
 }
 

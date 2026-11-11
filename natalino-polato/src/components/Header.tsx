@@ -23,18 +23,6 @@ export function Signature({ className = '' }: { className?: string }) {
   )
 }
 
-export function DraftBanner() {
-  if (!CONFIG.rascunho) return null
-  return (
-    <div
-      role="note"
-      className="fixed inset-x-0 top-0 z-[60] flex h-8 items-center justify-center bg-bronze px-4 whitespace-nowrap text-center text-[0.64rem] font-medium text-ink sm:text-[0.72rem] sm:tracking-wide"
-    >
-      Rascunho para avaliação. Informações sujeitas a confirmação.
-    </div>
-  )
-}
-
 export function Header() {
   const [solid, setSolid] = useState(false)
   const [open, setOpen] = useState(false)
@@ -62,7 +50,7 @@ export function Header() {
   const bg = solid || open ? 'bg-ink/95 backdrop-blur-md border-line-dark' : 'bg-transparent border-transparent'
 
   return (
-    <header className={`fixed inset-x-0 z-50 border-b transition-colors duration-500 ${bg}`} style={{ top: 'var(--banner-h, 0px)' }}>
+    <header className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-500 ${bg}`}>
       <div className="wrap flex h-[4.5rem] items-center justify-between gap-6">
         <a href="#inicio" className="shrink-0">
           <Signature />
@@ -111,7 +99,7 @@ export function Header() {
       <div
         id="menu-movel"
         hidden={!open}
-        className="h-[calc(100dvh-4.5rem-var(--banner-h,0px))] overflow-y-auto border-t border-line-dark bg-ink lg:hidden"
+        className="h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-line-dark bg-ink lg:hidden"
       >
         <nav aria-label="Menu" className="wrap py-8">
           <ul>
