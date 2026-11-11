@@ -32,7 +32,7 @@ as $$
      );
 $$;
 
-revoke all on function public.is_allowed() from public;
+revoke all on function public.is_allowed() from public, anon;
 grant execute on function public.is_allowed() to authenticated;
 
 -- -----------------------------------------------------------------------------
