@@ -325,3 +325,7 @@ skill sugeriu paleta clara com dourado para o padrão "Trust & Authority"; a
 identidade da marca pede preto profundo com gradiente violeta/índigo. Foram
 mantidos o padrão estrutural (*Pricing-Focused Landing*: CTA fixo, FAQ,
 tratamento de objeções) e a tipografia **Space Grotesk / Inter**.
+
+> A pasta `solusono/` é outro app: o rascunho do site da SoluSono, com build
+> próprio (Vite). Ver `solusono/README.md`. Também fica fora do `tsconfig.json`
+> e das fontes do Tailwind deste site.
