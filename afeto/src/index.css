@@ -1,0 +1,205 @@
+@import '@fontsource/bellefair/400.css';
+@import '@fontsource/hanken-grotesk/400.css';
+@import '@fontsource/hanken-grotesk/500.css';
+@import '@fontsource/hanken-grotesk/600.css';
+@import 'tailwindcss';
+
+/* Cores amostradas do logo: creme #f2efe5, sálvia #a6d2b3, âmbar #f5a64c, terracota #b74b17 */
+@theme {
+  --color-creme: #f2efe5;
+  --color-creme-claro: #f9f7f1;
+  --color-papel: #fbf8f1;
+  --color-salvia: #a6d2b3;
+  --color-salvia-clara: #dfece2;
+  --color-ambar: #f5a64c;
+  --color-ambar-claro: #fbe3c4;
+  --color-terracota: #b74b17;
+  /* terracota escurecida para texto pequeno (AA em creme e sálvia clara) */
+  --color-terracota-texto: #94390c;
+  --color-terracota-escuro: #6c290b;
+  --color-tinta: #3a2a22; /* marrom-grafite quente */
+  --color-tinta-suave: #5e4a3f;
+  --color-fio: #d9cfbf;
+
+  --font-display: 'Bellefair', 'Times New Roman', serif;
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-creme);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-feature-settings: 'kern', 'liga', 'calt';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  h1, h2, h3, .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 2px solid var(--color-tinta);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .no-escuro :focus-visible { outline-color: var(--color-papel); }
+  ::selection { background: var(--color-ambar); color: var(--color-tinta); }
+}
+
+@layer components {
+  .rotulo {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+  .num {
+    font-family: var(--font-display);
+    font-feature-settings: 'lnum', 'tnum';
+    line-height: 0.8;
+  }
+  /* Palavra em ênfase: terracota com o traço curvo do logo por baixo */
+  .enfase {
+    color: var(--color-terracota);
+    position: relative;
+    white-space: nowrap;
+  }
+  .enfase-traco {
+    position: absolute;
+    left: 2%;
+    right: -2%;
+    bottom: -0.12em;
+    height: 0.22em;
+    width: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .no-escuro .enfase { color: var(--color-ambar); }
+
+  /* Botão com varredura de cor (adaptado do "Fill Button" do 21st.dev) */
+  .botao {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: color 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .botao::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    transform: translateY(101%);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .botao:hover::before,
+  .botao:focus-visible::before { transform: translateY(0); }
+
+  .botao-primario { background: var(--color-terracota-texto); color: var(--color-papel); }
+  .botao-primario::before { background: var(--color-tinta); }
+
+  .botao-secundario {
+    border: 1.5px solid var(--color-tinta);
+    color: var(--color-tinta);
+    background: transparent;
+  }
+  .botao-secundario::before { background: var(--color-salvia); }
+  .botao-secundario:hover { border-color: var(--color-salvia); }
+
+  .botao-claro { background: var(--color-papel); color: var(--color-terracota-escuro); }
+  .botao-claro::before { background: var(--color-ambar); }
+  .botao-claro:hover { color: var(--color-tinta); }
+
+  .botao-contorno-claro { border: 1.5px solid var(--color-papel); color: var(--color-papel); }
+  .botao-contorno-claro::before { background: var(--color-papel); }
+  .botao-contorno-claro:hover { color: var(--color-terracota-escuro); }
+
+  .link-fio {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    text-decoration-color: currentColor;
+    transition: text-decoration-color 0.2s, text-underline-offset 0.2s;
+  }
+  .link-fio:hover { text-underline-offset: 0.45em; text-decoration-thickness: 2px; }
+
+  .campo {
+    width: 100%;
+    min-height: 3.25rem;
+    border-radius: 14px;
+    border: 1.5px solid #b8aa96;
+    background: var(--color-papel);
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    color: var(--color-tinta);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+  .campo::placeholder { color: #7a685c; opacity: 1; }
+  .campo:hover { border-color: var(--color-tinta-suave); }
+  .campo:focus-visible {
+    outline: none;
+    border-color: var(--color-tinta);
+    box-shadow: 0 0 0 3px var(--color-ambar);
+  }
+  .campo[aria-invalid='true'] { border-color: #a3261b; }
+  select.campo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1.5 7 7.5l6-6' fill='none' stroke='%233a2a22' stroke-width='1.6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.75rem;
+  }
+}
+
+/* Revelação do título (adaptado do "Vertical Cut Reveal" do 21st.dev, em CSS puro) */
+.corte-palavra { display: inline-flex; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; vertical-align: top; }
+.corte-palavra > span { display: inline-block; animation: corte 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--i) * 70ms + 80ms); }
+@keyframes corte { from { transform: translateY(105%); } to { transform: translateY(0); } }
+
+/* Faixa de áreas (marquee discreto) */
+.faixa-trilho { display: flex; width: max-content; animation: faixa 60s linear infinite; }
+.faixa:hover .faixa-trilho, .faixa[data-pausada='true'] .faixa-trilho { animation-play-state: paused; }
+@keyframes faixa { to { transform: translateX(-50%); } }
+
+/* Acordeão */
+.resposta { animation: aparece 0.35s ease both; }
+@keyframes aparece { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .faixa-trilho { animation: none; flex-wrap: wrap; width: auto; }
+  .faixa-trilho > [aria-hidden='true'] { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peca { transform: none !important; }
+}
