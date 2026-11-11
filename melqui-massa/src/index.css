@@ -1,0 +1,287 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+  --font-serif: "Newsreader", "Iowan Old Style", Georgia, serif;
+
+  /* Paleta amostrada do logo */
+  --color-paper: #f7f6f2;
+  --color-paper-2: #efede7;
+  --color-ink: #1e1e1c;
+  --color-graphite: #3e3e3e;
+  --color-stone: #5a5954;
+  --color-rule: #d6d3ca;
+  --color-emerald: #147c5c;
+  --color-emerald-deep: #0e6049;
+  --color-night: #0f201a;
+  --color-night-2: #16302a;
+  --color-mist: #e6ece8;
+  --color-leaf: #6fcaa4;
+  --color-alert: #a3321f;
+}
+
+@layer base {
+:root {
+  --chamfer: 10px;
+  --header-h: 72px;
+  --bar-h: 0px;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 24px);
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--color-paper);
+  /* papel: grão muito leve, um único data-URI */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.12 0 0 0 0 0.1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-feature-settings: "kern", "liga", "onum";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+.font-display {
+  font-feature-settings: "kern", "liga", "lnum";
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--color-emerald);
+  color: var(--color-paper);
+}
+
+}
+
+@layer components {
+/* Rótulo: caixa-alta espaçada, como a legenda do logo */
+.label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* Cantos chanfrados a 45°, a mesma quina do cérebro */
+.chamfer {
+  clip-path: polygon(
+    var(--chamfer) 0,
+    100% 0,
+    100% calc(100% - var(--chamfer)),
+    calc(100% - var(--chamfer)) 100%,
+    0 100%,
+    0 var(--chamfer)
+  );
+}
+
+.btn {
+  --chamfer: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 52px;
+  padding: 0 1.4rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+.btn-primary {
+  background: var(--color-emerald-deep);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--color-ink);
+}
+/* Contorno de 1px que acompanha a quina chanfrada (box-shadow seria cortado pelo clip-path) */
+.ol {
+  --ol: var(--color-ink);
+  --ol-fill: var(--color-paper);
+  position: relative;
+  isolation: isolate;
+  background: var(--ol);
+}
+.ol::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  background: var(--ol-fill);
+  transition: background-color 0.35s ease;
+  clip-path: polygon(
+    calc(var(--chamfer) - 0.6px) 0,
+    100% 0,
+    100% calc(100% - var(--chamfer) + 0.6px),
+    calc(100% - var(--chamfer) + 0.6px) 100%,
+    0 100%,
+    0 calc(var(--chamfer) - 0.6px)
+  );
+}
+.btn-ghost {
+  color: var(--color-ink);
+}
+.btn-ghost:hover {
+  --ol-fill: var(--color-ink);
+  color: var(--color-paper);
+}
+.btn-light {
+  background: var(--color-paper);
+  color: var(--color-night);
+}
+.btn-light:hover {
+  background: var(--color-leaf);
+}
+.btn-line {
+  --ol: rgba(247, 246, 242, 0.55);
+  --ol-fill: var(--color-night);
+  color: var(--color-paper);
+}
+.btn-line:hover {
+  --ol: var(--color-paper);
+  --ol-fill: var(--color-night-2);
+}
+
+/* Seta em ângulo de 45°: o "botão com efeito sutil" — a quina desliza para a frente */
+.btn .seta {
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btn:hover .seta,
+.btn:focus-visible .seta {
+  transform: translateX(4px);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-emerald);
+  outline-offset: 3px;
+}
+.chamfer:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -6px;
+}
+
+.link {
+  color: var(--color-emerald-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: color 0.3s ease;
+}
+.link:hover {
+  color: var(--color-ink);
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-display);
+}
+.skip:focus {
+  top: 1rem;
+}
+
+/* Formulário */
+.field {
+  width: 100%;
+  min-height: 52px;
+  background: #fff;
+  border: 1px solid #8d8a82;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  appearance: none;
+}
+.field:hover {
+  border-color: var(--color-ink);
+}
+.field:focus-visible,
+.field:focus {
+  outline: none;
+  border-color: var(--color-emerald-deep);
+  box-shadow: 0 0 0 2px var(--color-emerald-deep);
+}
+.field[aria-invalid="true"] {
+  border-color: var(--color-alert);
+  box-shadow: 0 0 0 1px var(--color-alert);
+}
+.field:disabled {
+  background: var(--color-paper-2);
+  color: var(--color-stone);
+  cursor: not-allowed;
+}
+select.field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%231e1e1c' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.6rem;
+}
+textarea.field {
+  min-height: 7rem;
+  resize: vertical;
+  font-family: var(--font-serif);
+}
+
+/* Desenho do cérebro: o contorno exato só aparece ao final */
+.brain-stroke {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
