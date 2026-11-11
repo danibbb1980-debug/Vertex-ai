@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/* Tokens da Lumivo Web. Os componentes usam só estes nomes, nunca hex soltos. */
+:root {
+  --bg: #f6f9f8;
+  --surface: #ffffff;
+  --surface-2: #eef3f1;
+  --ink: #0e1b24;
+  --ink-2: #384953;
+  --ink-3: #56666f;
+  --line: #d5dedb;
+  --line-strong: #aebcb8;
+  --accent: #0f7b6c;
+  --accent-strong: #0b5f54;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3f2ee;
+  --warn: #7a4f00;
+  --warn-soft: #fbf0d9;
+  --danger: #a3301d;
+  --danger-soft: #fbe9e5;
+  --chart-in: #00806b;
+  --chart-out: #c0692b;
+  --focus: #0f7b6c;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0c1820;
+  --surface: #132530;
+  --surface-2: #182d39;
+  --ink: #e7efec;
+  --ink-2: #bccbc6;
+  --ink-3: #93a6a0;
+  --line: #27404b;
+  --line-strong: #3c5a66;
+  --accent: #3cb39e;
+  --accent-strong: #5cc6b2;
+  --accent-ink: #0b1a15;
+  --accent-soft: #143c37;
+  --warn: #f0c26a;
+  --warn-soft: #3a2f16;
+  --danger: #f39a88;
+  --danger-soft: #3d1f1a;
+  --chart-in: #1f9a86;
+  --chart-out: #cf7834;
+  --focus: #5cc6b2;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-chart-in: var(--chart-in);
+  --color-chart-out: var(--chart-out);
+}
+
+@layer base {
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+input, select, textarea, button { font: inherit; font-variant-numeric: tabular-nums; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection { background: var(--accent-soft); }
+
+}
+
+@layer components {
+/* Números: sempre tabulares e com traço de menos real. */
+.num { font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+
+/* Título de seção: pequeno, caixa alta espaçada. */
+.eyebrow {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Campos */
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 16px; /* evita zoom no iOS */
+}
+.input:focus-visible { outline-offset: 0; border-color: var(--focus); }
+textarea.input { padding: 10px 12px; min-height: 88px; resize: vertical; }
+select.input {
+  appearance: none;
+  padding-right: 32px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
+  background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+.input[aria-invalid="true"] { border-color: var(--danger); }
+@media (min-width: 1024px) {
+  .input { min-height: 40px; font-size: 15px; }
+}
+
+dialog::backdrop { background: rgb(8 18 24 / 0.45); }
+dialog { color: var(--ink); }
+
+/* Barra de rolagem controlada em tabelas */
+.scroll-x { position: relative; overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes rise { from { transform: translateY(6px); opacity: 0; } to { transform: none; opacity: 1; } }
+.rise { animation: rise 160ms ease-out; }
