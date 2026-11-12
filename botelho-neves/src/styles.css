@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "@fontsource/gloock/latin-400.css";
+@import "@fontsource/hanken-grotesk/latin-400.css";
+@import "@fontsource/hanken-grotesk/latin-500.css";
+
+@theme {
+  --color-tinta: #141413;
+  --color-tinta-2: #1f1f1d;
+  --color-osso: #f3efe6;
+  --color-osso-2: #e9e3d6;
+  --color-pedra: #5c5953;
+  --color-pedra-claro: #a9a49a;
+  --color-fio: #cdc5b4;
+  --color-verde: #1d3a2d;
+  --color-verde-claro: #a9c4b2;
+  --color-erro: #8a1c1c;
+
+  --font-display: "Gloock", "Bodoni 72", "Didot", Georgia, serif;
+  --font-sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --breakpoint-xs: 26rem;
+}
+
+@layer base {
+  :root { --faixa: 2.75rem; }
+  @media (min-width: 40rem) { :root { --faixa: 2rem; } }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  body {
+    background: var(--color-osso);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-feature-settings: "kern", "liga";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  ::selection { background: var(--color-verde); color: var(--color-osso); }
+  :focus-visible {
+    outline: 2px solid var(--color-verde);
+    outline-offset: 3px;
+  }
+  .escuro :focus-visible { outline-color: var(--color-osso); }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 400; text-wrap: balance; }
+  p { text-wrap: pretty; }
+}
+
+@layer components {
+  .skip {
+    position: absolute; left: 1rem; top: -4rem; z-index: 100;
+    background: var(--color-tinta); color: var(--color-osso);
+    padding: .75rem 1rem; text-decoration: none;
+  }
+  .skip:focus { top: 1rem; }
+
+  .rotulo {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: .75rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .titulo {
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+  }
+  .enfase { color: var(--color-verde); }
+  .escuro .enfase { color: var(--color-verde-claro); }
+  .num { font-variant-numeric: lining-nums tabular-nums; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .75rem;
+    min-height: 3.25rem; padding: .75rem 1.5rem;
+    font-weight: 500; font-size: 1rem; line-height: 1.2;
+    text-decoration: none; border: 1px solid currentColor;
+    position: relative; overflow: hidden; isolation: isolate;
+    transition: color .35s cubic-bezier(.2,.7,.2,1);
+  }
+  /* Botão: o preenchimento sobe como a barra do monograma. */
+  .btn::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: currentColor; transform: scaleY(0); transform-origin: bottom;
+    transition: transform .45s cubic-bezier(.2,.7,.2,1);
+  }
+  .btn-cheio { background: var(--color-tinta); color: var(--color-osso); border-color: var(--color-tinta); }
+  .btn-cheio::before { background: var(--color-verde); }
+  .btn-cheio:hover::before, .btn-cheio:focus-visible::before { transform: scaleY(1); }
+  .btn-linha { color: var(--color-tinta); }
+  .btn-linha:hover, .btn-linha:focus-visible { color: var(--color-osso); }
+  .btn-linha::before { background: var(--color-tinta); }
+  .btn-linha:hover::before, .btn-linha:focus-visible::before { transform: scaleY(1); }
+  .escuro .btn-cheio { background: var(--color-osso); color: var(--color-tinta); border-color: var(--color-osso); }
+  .escuro .btn-cheio::before { background: var(--color-verde-claro); }
+  .escuro .btn-linha { color: var(--color-osso); }
+  .escuro .btn-linha:hover, .escuro .btn-linha:focus-visible { color: var(--color-tinta); }
+  .escuro .btn-linha::before { background: var(--color-osso); }
+  @media (prefers-reduced-motion: reduce) {
+    .btn::before { transition: none; }
+  }
+
+  .link {
+    color: inherit; text-decoration: underline; text-decoration-thickness: 1px;
+    text-underline-offset: .22em; text-decoration-color: var(--color-fio);
+    transition: text-decoration-color .2s;
+  }
+  .link:hover { text-decoration-color: currentColor; }
+
+  .fio-v { width: 1px; background: var(--color-fio); }
+  .barra { width: 5px; background: var(--color-tinta); }
+}
