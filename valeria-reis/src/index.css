@@ -1,0 +1,381 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-creme: #f6f1e6;
+  --color-creme-2: #eee6d5;
+  --color-papel: #fbf8f2;
+  --color-tinta: #2d211a;
+  --color-cafe: #2d211a;
+  --color-cafe-2: #3a2b21;
+  --color-bronze: #5a4029;
+  --color-taupe: #675f55;
+  --color-ouro: #b48e57; /* só filetes e detalhes; texto sobre creme usa ouro-texto */
+  --color-ouro-texto: #7e5e31;
+  --color-champagne: #e3cfa5;
+  --color-taupe-claro: #cfc6b4;
+  --color-linha: #d9ccb4;
+  --color-erro: #9a2b1e;
+
+  --font-display: 'Gilda Display', 'Times New Roman', serif;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-calmo: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+/* ---------- base ---------- */
+:root {
+  --wrap: 1200px;
+  --pad: 1.25rem;
+  --faixa: 2rem; /* altura da faixa de rascunho (0 quando desligada) */
+  --trilho-recuo: 1.875rem; /* distância entre o fio e o texto */
+  color-scheme: light;
+}
+@media (min-width: 768px) {
+  :root {
+    --pad: 2.5rem;
+    --trilho-recuo: 5.5rem;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--faixa) + 5rem);
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-creme);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-feature-settings: 'kern', 'liga';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: #e7d6b2;
+  color: var(--color-tinta);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-bronze);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.sobre-escuro :focus-visible,
+.sobre-escuro:focus-visible {
+  outline-color: var(--color-champagne);
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+/* conteúdo que corre ao lado do fio */
+.no-trilho {
+  padding-left: var(--trilho-recuo);
+}
+
+}
+
+@layer components {
+/* ---------- tipografia ---------- */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.04;
+  font-feature-settings: 'kern', 'liga', 'lnum';
+  text-wrap: balance;
+}
+.rotulo {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.num {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* palavra em ênfase: ouro escurecido + sublinhado em traço fino, como o fio da marca */
+.enfase {
+  font-style: normal;
+  color: var(--color-ouro-texto);
+  position: relative;
+  white-space: nowrap;
+}
+.enfase > svg {
+  position: absolute;
+  left: -2%;
+  bottom: -0.12em;
+  width: 104%;
+  height: 0.32em;
+  overflow: visible;
+  pointer-events: none;
+}
+.sobre-escuro .enfase {
+  color: var(--color-champagne);
+}
+
+/* ---------- botões ---------- */
+.botao {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  text-decoration: none;
+  transition:
+    background-color 0.35s var(--ease-calmo),
+    color 0.35s var(--ease-calmo),
+    border-color 0.35s var(--ease-calmo);
+  isolation: isolate;
+  overflow: hidden;
+}
+/* efeito sutil: um filete de ouro corre por baixo do texto ao passar o mouse */
+.botao::after {
+  content: '';
+  position: absolute;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 0.7rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s var(--ease-calmo);
+}
+.botao:hover::after,
+.botao:focus-visible::after {
+  transform: scaleX(1);
+}
+.botao-cheio {
+  background: var(--color-cafe);
+  color: var(--color-creme);
+}
+.botao-cheio:hover {
+  background: var(--color-bronze);
+}
+.botao-linha {
+  border: 1px solid color-mix(in oklab, var(--color-tinta) 40%, transparent);
+  color: var(--color-tinta);
+}
+.botao-linha:hover {
+  border-color: var(--color-tinta);
+  background: color-mix(in oklab, var(--color-creme-2) 70%, transparent);
+}
+.botao-claro {
+  background: var(--color-creme);
+  color: var(--color-cafe);
+}
+.botao-claro:hover {
+  background: var(--color-champagne);
+}
+.botao-linha-claro {
+  border: 1px solid color-mix(in oklab, var(--color-champagne) 55%, transparent);
+  color: var(--color-creme);
+}
+.botao-linha-claro:hover {
+  border-color: var(--color-champagne);
+}
+
+.link-sutil {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+  transition: text-decoration-color 0.3s;
+}
+.link-sutil:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---------- monograma: desenho do traço (momento de assinatura) ---------- */
+.vm-desenhar path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: vm-traco var(--vm-dur, 1.2s) cubic-bezier(0.45, 0.05, 0.25, 1) var(--vm-atraso, 0s) forwards;
+}
+@keyframes vm-traco {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.fio-hero path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: vm-traco 2.4s cubic-bezier(0.45, 0.05, 0.25, 1) 4.6s forwards;
+}
+
+/* revelação lenta das linhas do título */
+.linha-revela {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.linha-revela > span {
+  display: block;
+  transform: translateY(105%);
+  animation: sobe 1.4s var(--ease-calmo) forwards;
+  animation-delay: var(--d, 0s);
+}
+@keyframes sobe {
+  to {
+    transform: none;
+  }
+}
+.aparece {
+  opacity: 0;
+  animation: aparece 1.2s var(--ease-calmo) forwards;
+  animation-delay: var(--d, 0s);
+}
+@keyframes aparece {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vm-desenhar path,
+  .fio-hero path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .linha-revela > span,
+  .aparece {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+  .botao::after {
+    transition: none;
+  }
+}
+
+/* ---------- marcas do fio (nós) ---------- */
+.no {
+  position: absolute;
+  left: calc(-1 * var(--trilho-recuo) - 4.5px);
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--color-ouro);
+  background: var(--color-creme);
+  transition:
+    background-color 0.8s var(--ease-calmo),
+    transform 0.8s var(--ease-calmo);
+}
+.no[data-ativo='true'] {
+  background: var(--color-ouro);
+}
+.fundo-2 .no {
+  background: var(--color-creme-2);
+}
+.fundo-2 .no[data-ativo='true'] {
+  background: var(--color-ouro);
+}
+
+/* ---------- formulário ---------- */
+.campo {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #b9ab92;
+  border-radius: 10px;
+  background: #fffdf8;
+  color: var(--color-tinta);
+  font: inherit;
+  font-size: 1rem;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+  appearance: none;
+}
+.campo::placeholder {
+  color: #7a7166;
+}
+.campo:hover {
+  border-color: var(--color-taupe);
+}
+.campo:focus-visible {
+  outline: none;
+  border-color: var(--color-bronze);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-ouro) 35%, transparent);
+}
+.campo[aria-invalid='true'] {
+  border-color: var(--color-erro);
+}
+select.campo {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' fill='none' stroke='%235A4029' stroke-width='1.2'%3E%3Cpath d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.75rem;
+}
+input[type='date'].campo::-webkit-calendar-picker-indicator {
+  opacity: 0.65;
+  cursor: pointer;
+}
+textarea.campo {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+/* acordeão */
+.acordeao-painel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease-calmo);
+}
+.acordeao-painel[data-aberto='true'] {
+  grid-template-rows: 1fr;
+}
+.acordeao-painel > div {
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear 0.5s;
+}
+.acordeao-painel[data-aberto='true'] > div {
+  visibility: visible;
+  transition-delay: 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .acordeao-painel {
+    transition: none;
+  }
+}
+
+.sr-only-foco:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+}
