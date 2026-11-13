@@ -1,0 +1,249 @@
+@import '@fontsource/bellefair/latin-400.css';
+@import '@fontsource/hanken-grotesk/latin-400.css';
+@import '@fontsource/hanken-grotesk/latin-500.css';
+@import 'tailwindcss';
+
+@theme {
+  /* Paleta derivada do logo (círculo caramelo amostrado: #D7A675) */
+  --color-marfim: #f6f0e6;
+  --color-areia: #ecdfcc;
+  --color-caramelo: #d7a675;
+  --color-caramelo-queimado: #8a4e22; /* só texto pequeno sobre claro: 5,8:1 no marfim */
+  --color-cafe: #22160e; /* texto */
+  --color-cafe-fundo: #2c1e15; /* seções escuras */
+  --color-cafe-suave: #5c4636; /* texto secundário no claro: 7,7:1 */
+  --color-cafe-sobre-caramelo: #4a3426; /* texto secundário no caramelo: 5,3:1 */
+  --color-creme: #f3e9da; /* texto no café */
+  --color-creme-suave: #cdbba5; /* texto secundário no café: 8,6:1 */
+  --color-fio: rgb(34 22 14 / 0.16);
+  --color-fio-claro: rgb(243 233 218 / 0.18);
+
+  --font-display: 'Bellefair', 'Times New Roman', serif;
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-porta: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 96px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background: var(--color-marfim);
+    color: var(--color-cafe);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-feature-settings: 'kern', 'liga', 'calt';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-caramelo);
+    color: var(--color-cafe);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-caramelo-queimado);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .no-escuro :focus-visible,
+  .no-escuro:focus-visible {
+    outline-color: var(--color-caramelo);
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  .rotulo {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .num {
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: 'tnum', 'lnum';
+  }
+  .moldura-arco {
+    border-radius: 999px 999px 0 0;
+  }
+  .grao {
+    position: relative;
+    isolation: isolate;
+  }
+  .grao::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.16;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .25 0 0 0 0 .12 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Botão com preenchimento em varredura (adaptado do "Fill Button" do 21st.dev) */
+  .botao {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0 1.6rem;
+    font-weight: 500;
+    font-size: 0.975rem;
+    letter-spacing: 0.01em;
+    border-radius: 999px;
+    overflow: hidden;
+    isolation: isolate;
+    cursor: pointer;
+    transition: color 0.35s var(--ease-suave), border-color 0.35s var(--ease-suave);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .botao::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s var(--ease-porta);
+  }
+  .botao:hover::before,
+  .botao:focus-visible::before {
+    transform: scaleX(1);
+  }
+  .botao-cheio {
+    background: var(--color-cafe);
+    color: var(--color-creme);
+  }
+  .botao-cheio::before {
+    background: var(--color-caramelo-queimado);
+  }
+  .botao-caramelo {
+    background: var(--color-caramelo);
+    color: var(--color-cafe);
+  }
+  .botao-caramelo::before {
+    background: var(--color-creme);
+  }
+  .botao-linha {
+    border: 1px solid currentColor;
+    color: var(--color-cafe);
+  }
+  .botao-linha::before {
+    background: var(--color-cafe);
+  }
+  .botao-linha:hover,
+  .botao-linha:focus-visible {
+    color: var(--color-creme);
+  }
+  .botao-linha-claro {
+    border: 1px solid rgb(243 233 218 / 0.5);
+    color: var(--color-creme);
+  }
+  .botao-linha-claro::before {
+    background: var(--color-creme);
+  }
+  .botao-linha-claro:hover,
+  .botao-linha-claro:focus-visible {
+    color: var(--color-cafe);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .botao::before {
+      transition: none;
+    }
+  }
+
+  .link-sublinhado {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+  }
+
+  /* Campos do formulário */
+  .campo {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.85rem 1rem;
+    background: var(--color-marfim);
+    border: 1px solid rgb(34 22 14 / 0.28);
+    border-radius: 14px;
+    color: var(--color-cafe);
+    font: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+  }
+  .campo::placeholder {
+    color: #7a6454;
+  }
+  .campo:hover {
+    border-color: rgb(34 22 14 / 0.5);
+  }
+  .campo:focus-visible {
+    outline: none;
+    border-color: var(--color-caramelo-queimado);
+    box-shadow: 0 0 0 3px rgb(138 78 34 / 0.25);
+  }
+  .campo[aria-invalid='true'] {
+    border-color: #9b2c1f;
+    box-shadow: 0 0 0 1px #9b2c1f;
+  }
+  .campo:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  select.campo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2322160e' stroke-width='1.4'%3E%3Cpath d='M1 1.5 6 6.5l5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.6rem;
+  }
+}
+
+@keyframes abrir {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
