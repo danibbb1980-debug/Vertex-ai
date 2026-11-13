@@ -41,8 +41,8 @@ Não existe placeholder na tela.
 
 > **Atenção, antes de qualquer publicação definitiva:**
 >
-> 1. **Avatares da equipe**: as fotos de Polliana Damasceno e Stefani Paiva Cavecchia (`public/equipe/`) foram recortadas dos avatares dos perfis do Instagram **apenas para este rascunho**. Substituir por fotos enviadas e autorizadas.
-> 2. **Registro e cargos**: não publicar sem o **número do CRF-MG da Polliana** (preencher `registro`) e sem a **confirmação do cargo e da profissão da Stefani** (hoje só "Fundadora").
+> 1. **Fotos da equipe**: as fotos de Polliana Damasceno e Stefani Paiva Cavecchia (`public/equipe/`) são as fotos de perfil do Instagram, usadas **apenas para este rascunho**. Substituir por fotos enviadas e autorizadas.
+> 2. **Registro e cargos**: não publicar sem o **número do CRF-MG da Polliana** (preencher `registro`) e sem a **confirmação do cargo da Stefani**: o perfil dela informa "Empreendedor(a)" e não diz "fundadora", então o site mostra só "Empreendedora". A Polliana aparece como "Fundadora · Farmacêutica esteta e docente", conforme o perfil.
 > 3. **Horário**: Google Maps 08h00 às 20h00 x perfil do WhatsApp 09h00 às 16h00, ainda pendente de confirmação.
 
 - **Responsável técnico**: preencher `CONFIG.responsavelTecnico` (nome e registro) para aparecer no rodapé.

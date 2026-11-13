@@ -198,20 +198,21 @@ export const CONFIG = {
 
   /**
    * Seção "Equipe" (aparece se houver ao menos um nome).
-   * Avatares recortados dos perfis do Instagram apenas para o rascunho: trocar por fotos autorizadas.
+   * Fotos de perfil do Instagram usadas apenas para o rascunho: trocar por fotos autorizadas.
    */
   profissionais: [
     {
       nome: 'Polliana Damasceno',
       cargo: 'Fundadora',
-      profissao: 'Farmacêutica',
+      profissao: 'Farmacêutica esteta e docente', // conforme o perfil do Instagram
       conselho: 'CRF-MG',
       registro: '', // número do CRF-MG ainda não informado
       foto: '/equipe/polliana.webp',
     },
     {
       nome: 'Stefani Paiva Cavecchia',
-      cargo: 'Fundadora',
+      // o perfil informa "Empreendedor(a)" e cita a clínica, sem dizer "fundadora"; confirmar o cargo
+      profissao: 'Empreendedora',
       foto: '/equipe/stefani.webp',
     },
   ] as Profissional[],

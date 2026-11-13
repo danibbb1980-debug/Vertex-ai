@@ -16,7 +16,7 @@ export function Equipe() {
           <div className="lg:sticky lg:top-32">
             <p className="rotulo text-caramelo-queimado">Equipe</p>
             <h2 id="titulo-equipe" className="mt-5 text-[clamp(2.4rem,6vw,4.2rem)]">
-              Quem abriu esta <em className="not-italic text-caramelo-queimado">porta</em>.
+              Quem está por trás da <em className="not-italic text-caramelo-queimado">porta</em>.
             </h2>
           </div>
         </div>
@@ -44,20 +44,23 @@ function Pessoa({ p, i }: { p: Profissional; i: number }) {
         {/* a porta: arco fino com base aberta, como no logo */}
         <div
           className={`moldura-arco relative border border-b-0 border-cafe/35 ${
-            alta ? 'aspect-[3/4.4]' : 'aspect-[3/3.9]'
+            alta ? 'aspect-[3/4.75]' : 'aspect-[3/4.45]'
           }`}
         >
           <span aria-hidden="true" className="moldura-arco absolute inset-3 border border-b-0 border-caramelo/60" />
           {p.foto && (
-            <img
-              src={p.foto}
-              alt={`Retrato de ${p.nome}`}
-              width={112}
-              height={112}
-              loading="lazy"
-              decoding="async"
-              className="absolute left-1/2 top-[18%] size-24 -translate-x-1/2 rounded-full object-cover ring-1 ring-caramelo ring-offset-4 ring-offset-marfim sm:size-28"
-            />
+            // janela redonda concêntrica ao topo da porta (mt em % = % da largura)
+            <div className="absolute inset-x-[8%] top-0 mt-[8%] aspect-square overflow-hidden rounded-full ring-1 ring-caramelo ring-offset-[6px] ring-offset-marfim">
+              <img
+                src={p.foto}
+                alt={`Retrato de ${p.nome}`}
+                width={760}
+                height={760}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
+            </div>
           )}
           <figcaption className="absolute inset-x-0 bottom-0 px-5 pb-6 sm:px-7 sm:pb-8">
             <span aria-hidden="true" className="num mb-4 block text-xs text-cafe-suave">
