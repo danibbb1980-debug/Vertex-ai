@@ -1,0 +1,82 @@
+/* Newsreader (OFL), instância peso 400 com eixo opsz, subconjunto latino. Gerada de @fontsource-variable/newsreader. */
+@font-face {
+  font-family: "Newsreader Variable";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/newsreader-opsz-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader Variable";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/newsreader-opsz-italic.woff2") format("woff2");
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+  body {
+    @apply bg-osso font-sans text-[1.0625rem] text-grafite antialiased;
+    font-feature-settings: "kern", "liga";
+    overflow-x: clip;
+  }
+  .font-serif { font-feature-settings: "kern", "liga", "dlig"; }
+  em { font-style: italic; }
+  ::selection { background: #5B1E34; color: #F5F0E7; }
+  :focus-visible {
+    outline: 2px solid #5B1E34;
+    outline-offset: 3px;
+  }
+  .bg-vinho-escuro :focus-visible, footer :focus-visible { outline-color: #D2B48A; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline-offset: 0; }
+}
+
+@layer components {
+  .revela { animation: revela 1.1s cubic-bezier(0.65, 0, 0.35, 1) both; }
+  @media (prefers-reduced-motion: reduce) { .revela { animation: none; } }
+  @keyframes revela { from { transform: translateY(105%); } to { transform: none; } }
+
+  .num { font-variant-numeric: tabular-nums lining-nums; }
+  .titulo-secao {
+    @apply font-serif text-[2.25rem] font-normal leading-[1.05] tracking-[-0.02em] text-grafite sm:text-5xl lg:text-[3.4rem];
+    font-variation-settings: "opsz" 72;
+    text-wrap: balance;
+  }
+  .titulo-secao em { @apply italic text-vinho; }
+
+  /* fio sob links de texto */
+  .link-fio {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 92%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s cubic-bezier(0.65, 0, 0.35, 1), color 0.3s;
+  }
+  .link-fio:hover, .link-fio:focus-visible { background-size: 100% 1px; }
+
+  /* botão: um fio bronze que se estende sob o rótulo */
+  .botao-fio {
+    position: absolute;
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 0.6rem;
+    height: 1px;
+    background: #D2B48A;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .botao:hover .botao-fio, .botao:focus-visible .botao-fio { transform: scaleX(1); }
+}
