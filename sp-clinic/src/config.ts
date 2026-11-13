@@ -13,11 +13,18 @@ export type Tratamento = {
 }
 
 export type Profissional = {
-  nome: string // nome completo
-  profissao: string // ex.: "Biomédica" — só com o registro abaixo
-  registro: string // ex.: "CRBM-MG 00000"
+  nome: string // nome completo, sem "Dr." ou "Dra."
+  /** Ex.: "Fundadora". Vazio = não aparece. */
+  cargo?: string
+  /** Só a profissão informada pela clínica. Vazio = não aparece. */
+  profissao?: string
+  /** Sigla do conselho, ex.: "CRF-MG". Só aparece junto com o número do registro. */
+  conselho?: string
+  /** Número do registro. Vazio = a linha de registro não aparece. Exibido como "CRF-MG nº 00000". */
+  registro?: string
   /** Título de especialista só com o registro de especialidade (RQE ou equivalente). */
   especialidade?: { titulo: string; registro: string }
+  /** Foto (substituir por foto enviada e autorizada; basta trocar o arquivo). */
   foto?: string
 }
 
@@ -133,6 +140,11 @@ export const CONFIG = {
       descricao:
         'Uma leitura da face como um todo, e não de áreas isoladas, para organizar um plano de cuidado coerente.',
     },
+    {
+      nome: 'Harmonização corporal',
+      descricao:
+        'Cuidados com os contornos do corpo, planejados a partir das características e do histórico de cada pessoa.',
+    },
   ] as Tratamento[],
   /** Linha final do índice. Vazio = não aparece. */
   tratamentosComplemento: 'Tratamentos faciais e corporais',
@@ -184,8 +196,25 @@ export const CONFIG = {
     },
   ] as Foto[],
 
-  /** Preencha com nome completo, profissão e registro para exibir a seção "Equipe". */
-  profissionais: [] as Profissional[],
+  /**
+   * Seção "Equipe" (aparece se houver ao menos um nome).
+   * Avatares recortados dos perfis do Instagram apenas para o rascunho: trocar por fotos autorizadas.
+   */
+  profissionais: [
+    {
+      nome: 'Polliana Damasceno',
+      cargo: 'Fundadora',
+      profissao: 'Farmacêutica',
+      conselho: 'CRF-MG',
+      registro: '', // número do CRF-MG ainda não informado
+      foto: '/equipe/polliana.webp',
+    },
+    {
+      nome: 'Stefani Paiva Cavecchia',
+      cargo: 'Fundadora',
+      foto: '/equipe/stefani.webp',
+    },
+  ] as Profissional[],
   /** Preencha nome e registro para exibir no rodapé. */
   responsavelTecnico: { nome: '', registro: '' },
 
@@ -206,6 +235,12 @@ export const CONFIG = {
 }
 
 // ---------------------------------------------------------------- derivados
+
+/** Linha de registro ("CRF-MG nº 00000") ou '' quando o número não foi informado. */
+export const linhaRegistro = (p: Profissional) =>
+  p.registro?.trim() ? `${p.conselho ? `${p.conselho} nº ` : ''}${p.registro.trim()}` : ''
+
+export const equipe = () => CONFIG.profissionais.filter((p) => p.nome?.trim())
 
 const diasAbertos = CONFIG.horarios.filter((h) => h.abre && h.fecha)
 const diasFechados = CONFIG.horarios.filter((h) => !h.abre)

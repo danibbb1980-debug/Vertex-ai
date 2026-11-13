@@ -1,4 +1,4 @@
-import { CONFIG, temWhatsapp } from './config'
+import { CONFIG, equipe, temWhatsapp } from './config'
 import { Cabecalho, type LinkNav } from './components/Cabecalho'
 import { Hero } from './components/Hero'
 import { Clinica } from './components/Clinica'
@@ -19,7 +19,7 @@ const mostra = {
   espaco: s.espaco && CONFIG.fotos.some((f) => f.src),
   tratamentos: s.tratamentos && CONFIG.tratamentos.length > 0,
   comoFunciona: s.comoFunciona && CONFIG.etapas.length > 0,
-  equipe: s.equipe && CONFIG.profissionais.some((p) => p.nome && p.profissao && p.registro),
+  equipe: s.equipe && equipe().length > 0,
   duvidas: s.duvidas && CONFIG.faq.length > 0,
   contato: s.contato,
   agendar: s.agendar && temWhatsapp,
@@ -28,6 +28,7 @@ const mostra = {
 
 const links: LinkNav[] = [
   mostra.clinica && { href: '#clinica', rotulo: 'A clínica' },
+  mostra.equipe && { href: '#equipe', rotulo: 'Equipe' },
   mostra.tratamentos && { href: '#tratamentos', rotulo: 'Tratamentos' },
   mostra.comoFunciona && { href: '#como-funciona', rotulo: 'Como funciona' },
   mostra.duvidas && { href: '#duvidas', rotulo: 'Dúvidas' },
@@ -48,10 +49,10 @@ export default function App() {
       <main id="conteudo">
         <Hero />
         {mostra.clinica && <Clinica />}
+        {mostra.equipe && <Equipe />}
         {mostra.espaco && <Espaco />}
         {mostra.tratamentos && <Tratamentos />}
         {mostra.comoFunciona && <ComoFunciona />}
-        {mostra.equipe && <Equipe />}
         {mostra.duvidas && <Duvidas />}
         {mostra.contato && <Contato />}
         {mostra.agendar && <Agendar />}

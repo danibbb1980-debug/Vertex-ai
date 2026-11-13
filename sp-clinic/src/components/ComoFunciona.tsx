@@ -24,7 +24,7 @@ export function ComoFunciona() {
   if (!CONFIG.etapas.length) return null
 
   return (
-    <section id="como-funciona" ref={secaoRef} aria-labelledby="titulo-como" className="bg-areia">
+    <section id="como-funciona" ref={secaoRef} aria-labelledby="titulo-como" className="bg-marfim">
       <motion.div
         style={reduz ? undefined : { clipPath }}
         className="no-escuro bg-cafe-fundo text-creme"

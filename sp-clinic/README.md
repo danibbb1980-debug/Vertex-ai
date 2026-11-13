@@ -24,7 +24,8 @@ Não existe placeholder na tela.
 | WhatsApp, telefone, e-mail, Instagram | `CONFIG.whatsapp`, `CONFIG.telefone`, `CONFIG.email`, `CONFIG.instagram` |
 | Fotos do espaço (exibidas dentro dos arcos) | coloque o arquivo em `public/fotos/` e adicione `{ src, alt, legenda }` em `CONFIG.fotos` |
 | Logo original | coloque o SVG/PNG em `public/` e preencha `CONFIG.logo` (ex.: `'/logo.svg'`). Vazio = redesenho vetorial |
-| Equipe | `CONFIG.profissionais`: **nome completo, profissão e registro** (os três obrigatórios). Título de especialista só com `especialidade: { titulo, registro }` (RQE ou equivalente) |
+| Equipe | `CONFIG.profissionais`: `nome` (obrigatório), `cargo`, `profissao`, `conselho` + `registro`, `foto`. Campo vazio não aparece. O registro só é exibido com o número preenchido, no formato `CRF-MG nº 12345` (ex.: `conselho: 'CRF-MG', registro: '12345'`). Nunca usar "Dr." ou "Dra." no nome. Título de especialista só com `especialidade: { titulo, registro }` (RQE ou equivalente) |
+| Fotos da equipe | substitua o arquivo em `public/equipe/` (mesmo nome) ou aponte `foto` para o novo arquivo. Use foto enviada e autorizada pela pessoa |
 | Responsável técnico (rodapé) | `CONFIG.responsavelTecnico` (`nome` e `registro`) |
 | URL pública | `CONFIG.siteUrl` (canonical, og:url, og:image e JSON-LD) |
 
@@ -38,7 +39,13 @@ Não existe placeholder na tela.
 
 ## O que falta para publicar de forma definitiva
 
-- **Profissionais responsáveis**: nomes completos, profissões e registros (CRM, CRO, CRBM etc.) e o **responsável técnico**. Até lá o site não cita nenhum título profissional.
+> **Atenção, antes de qualquer publicação definitiva:**
+>
+> 1. **Avatares da equipe**: as fotos de Polliana Damasceno e Stefani Paiva Cavecchia (`public/equipe/`) foram recortadas dos avatares dos perfis do Instagram **apenas para este rascunho**. Substituir por fotos enviadas e autorizadas.
+> 2. **Registro e cargos**: não publicar sem o **número do CRF-MG da Polliana** (preencher `registro`) e sem a **confirmação do cargo e da profissão da Stefani** (hoje só "Fundadora").
+> 3. **Horário**: Google Maps 08h00 às 20h00 x perfil do WhatsApp 09h00 às 16h00, ainda pendente de confirmação.
+
+- **Responsável técnico**: preencher `CONFIG.responsavelTecnico` (nome e registro) para aparecer no rodapé.
 - **Horário real**: o Google Maps informa segunda a sexta, 08h00 às 20h00; o perfil do WhatsApp Business informa 09h00 às 16h00. O config usa o do Google. **Confirmar com a clínica antes de publicar** (o formulário gera os horários a partir daqui).
 - **Lista completa de tratamentos** (hoje: os destaques do Instagram).
 - **Fotos com autorização e em alta resolução**: as quatro fotos do espaço vieram de capturas de tela das publicações da própria clínica (`referencias/fotos/`), em baixa resolução. Substituir pelos originais.

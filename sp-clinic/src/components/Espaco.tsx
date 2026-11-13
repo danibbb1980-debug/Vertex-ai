@@ -7,12 +7,12 @@ export function Espaco() {
   const fotos = CONFIG.fotos.filter((f) => f.src)
   if (!fotos.length) return null
   return (
-    <section id="espaco" aria-labelledby="titulo-espaco" className="bg-marfim">
+    <section id="espaco" aria-labelledby="titulo-espaco" className="bg-areia">
       <div className="mx-auto max-w-[1320px] px-5 py-24 sm:px-8 lg:py-36">
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
           <p className="rotulo text-caramelo-queimado lg:col-span-12">O espaço</p>
           <h2 id="titulo-espaco" className="text-[clamp(2.4rem,6.4vw,4.6rem)] lg:col-span-7">
-            Uma porta aberta para <em className="not-italic text-caramelo-queimado">conversar</em> com calma.
+            Um lugar para <em className="not-italic text-caramelo-queimado">conversar</em> com calma.
           </h2>
           <p className="max-w-[26rem] text-cafe-suave lg:col-span-4 lg:col-start-9 lg:pb-2">
             {CONFIG.endereco.rua}, no bairro {CONFIG.endereco.bairro}, em {CONFIG.endereco.cidade}.
@@ -22,7 +22,7 @@ export function Espaco() {
           {fotos.map((f, i) => (
             <li key={f.src} className={`${deslocamentos[i % 4]} ${i % 2 === 1 ? 'mt-14 lg:mt-0' : ''}`}>
               <figure>
-                <div className="moldura-arco overflow-hidden bg-areia">
+                <div className="moldura-arco overflow-hidden bg-marfim">
                   <img
                     src={f.src}
                     alt={f.alt}

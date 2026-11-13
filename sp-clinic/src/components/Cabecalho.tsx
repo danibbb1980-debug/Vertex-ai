@@ -65,7 +65,7 @@ export function Cabecalho({ links }: { links: LinkNav[] }) {
             <Monograma className="h-9 w-auto text-caramelo-queimado" />
             <span className="font-display text-[1.4rem] leading-none tracking-[0.01em]">{CONFIG.nome}</span>
           </a>
-          <nav aria-label="Principal" className="ml-auto hidden lg:block">
+          <nav aria-label="Principal" className="ml-auto hidden xl:block">
             <ul className="flex items-center gap-7 text-[0.92rem]">
               {links.map((l) => (
                 <li key={l.href}>
@@ -81,7 +81,7 @@ export function Cabecalho({ links }: { links: LinkNav[] }) {
               href={waLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="botao botao-cheio ml-auto hidden !min-h-11 !px-5 text-[0.9rem] sm:inline-flex lg:ml-0"
+              className="botao botao-cheio ml-auto hidden !min-h-11 !px-5 text-[0.9rem] sm:inline-flex xl:ml-0"
             >
               <IconeWhatsapp className="size-[1.1rem]" />
               Agendar avaliação
@@ -90,7 +90,7 @@ export function Cabecalho({ links }: { links: LinkNav[] }) {
           <button
             ref={botaoRef}
             type="button"
-            className="ml-auto inline-flex size-12 items-center justify-center rounded-full sm:ml-0 lg:hidden"
+            className="ml-auto inline-flex size-12 items-center justify-center rounded-full sm:ml-0 xl:hidden"
             aria-expanded={aberto}
             aria-controls="menu-movel"
             aria-label={aberto ? 'Fechar menu' : 'Abrir menu'}
@@ -114,7 +114,7 @@ export function Cabecalho({ links }: { links: LinkNav[] }) {
           id="menu-movel"
           ref={painelRef}
           hidden={!aberto}
-          className="h-[calc(100svh-6rem)] overflow-y-auto border-t border-fio bg-marfim px-5 pb-10 pt-6 lg:hidden"
+          className="h-[calc(100svh-6rem)] overflow-y-auto border-t border-fio bg-marfim px-5 pb-10 pt-6 xl:hidden"
         >
           <nav aria-label="Menu">
             <ul>

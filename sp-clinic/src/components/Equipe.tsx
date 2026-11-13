@@ -1,46 +1,79 @@
-import { CONFIG } from '../config'
+import { equipe, linhaRegistro, type Profissional } from '../config'
 
-/** Só aparece quando CONFIG.profissionais tiver nome completo, profissão e registro. */
+/*
+ * Equipe: cada pessoa dentro de uma "porta" em traço fino, como o arco do logo.
+ * O avatar ocupa o lugar do monograma (no centro do semicírculo) e o nome fica na base
+ * da porta, como uma placa. Portas de alturas diferentes e desencontradas (não são cartões).
+ * Só mostra cargo, profissão e registro quando informados em CONFIG.profissionais.
+ */
 export function Equipe() {
-  const lista = CONFIG.profissionais.filter((p) => p.nome && p.profissao && p.registro)
+  const lista = equipe()
   if (!lista.length) return null
   return (
     <section id="equipe" aria-labelledby="titulo-equipe" className="bg-marfim">
-      <div className="mx-auto grid max-w-[1320px] gap-10 px-5 py-24 sm:px-8 lg:grid-cols-12 lg:py-32">
+      <div className="mx-auto grid max-w-[1320px] gap-14 px-5 py-24 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:py-36">
         <div className="lg:col-span-4">
-          <p className="rotulo text-caramelo-queimado">Equipe</p>
-          <h2 id="titulo-equipe" className="mt-5 text-[clamp(2.4rem,6vw,4rem)]">
-            Quem <em className="not-italic text-caramelo-queimado">atende</em>.
-          </h2>
+          <div className="lg:sticky lg:top-32">
+            <p className="rotulo text-caramelo-queimado">Equipe</p>
+            <h2 id="titulo-equipe" className="mt-5 text-[clamp(2.4rem,6vw,4.2rem)]">
+              Quem abriu esta <em className="not-italic text-caramelo-queimado">porta</em>.
+            </h2>
+          </div>
         </div>
-        <ul className="border-b border-fio lg:col-span-8">
-          {lista.map((p) => (
-            <li key={p.nome} className="grid gap-6 border-t border-fio py-8 sm:grid-cols-[auto_1fr] sm:items-center">
-              {p.foto && (
-                <img
-                  src={p.foto}
-                  alt={`Retrato de ${p.nome}`}
-                  width={160}
-                  height={210}
-                  loading="lazy"
-                  className="moldura-arco h-[210px] w-[160px] object-cover"
-                />
-              )}
-              <div>
-                <h3 className="text-[clamp(1.9rem,4.4vw,3rem)]">{p.nome}</h3>
-                <p className="mt-2 text-cafe-suave">
-                  {p.profissao} · <span className="num">{p.registro}</span>
-                </p>
-                {p.especialidade?.titulo && p.especialidade.registro && (
-                  <p className="mt-1 text-cafe-suave">
-                    {p.especialidade.titulo} · <span className="num">{p.especialidade.registro}</span>
-                  </p>
-                )}
-              </div>
-            </li>
+        <ul className="grid gap-16 sm:grid-cols-2 sm:gap-8 lg:col-span-8 lg:gap-12">
+          {lista.map((p, i) => (
+            <Pessoa key={p.nome} p={p} i={i} />
           ))}
         </ul>
       </div>
     </section>
+  )
+}
+
+function Pessoa({ p, i }: { p: Profissional; i: number }) {
+  const alta = i % 2 === 0
+  const registro = linhaRegistro(p)
+  const rotulo = [p.cargo, p.profissao].filter((x) => x?.trim()).join(' · ')
+  return (
+    <li
+      className={`${
+        alta ? 'w-[86%] sm:w-full' : 'ml-auto w-[76%] sm:ml-0 sm:mt-40 sm:w-[88%] sm:justify-self-end'
+      }`}
+    >
+      <figure className="relative">
+        {/* a porta: arco fino com base aberta, como no logo */}
+        <div
+          className={`moldura-arco relative border border-b-0 border-cafe/35 ${
+            alta ? 'aspect-[3/4.4]' : 'aspect-[3/3.9]'
+          }`}
+        >
+          <span aria-hidden="true" className="moldura-arco absolute inset-3 border border-b-0 border-caramelo/60" />
+          {p.foto && (
+            <img
+              src={p.foto}
+              alt={`Retrato de ${p.nome}`}
+              width={112}
+              height={112}
+              loading="lazy"
+              decoding="async"
+              className="absolute left-1/2 top-[18%] size-24 -translate-x-1/2 rounded-full object-cover ring-1 ring-caramelo ring-offset-4 ring-offset-marfim sm:size-28"
+            />
+          )}
+          <figcaption className="absolute inset-x-0 bottom-0 px-5 pb-6 sm:px-7 sm:pb-8">
+            <span aria-hidden="true" className="num mb-4 block text-xs text-cafe-suave">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 className="text-[clamp(2rem,4.4vw,3rem)] leading-[0.98]">{p.nome}</h3>
+            {rotulo && <p className="rotulo mt-4 border-t border-fio pt-3 text-caramelo-queimado">{rotulo}</p>}
+            {registro && <p className="num mt-2 text-[0.92rem] text-cafe-suave">{registro}</p>}
+            {p.especialidade?.titulo && p.especialidade.registro && (
+              <p className="mt-1 text-[0.92rem] text-cafe-suave">
+                {p.especialidade.titulo} · <span className="num">{p.especialidade.registro}</span>
+              </p>
+            )}
+          </figcaption>
+        </div>
+      </figure>
+    </li>
   )
 }

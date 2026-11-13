@@ -15,7 +15,7 @@ export function Tratamentos() {
   if (!lista.length) return null
 
   return (
-    <section id="tratamentos" aria-labelledby="titulo-tratamentos" className="bg-areia">
+    <section id="tratamentos" aria-labelledby="titulo-tratamentos" className="bg-marfim">
       <div className="mx-auto grid max-w-[1320px] gap-12 px-5 py-24 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:py-36">
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-32">

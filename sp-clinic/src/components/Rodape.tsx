@@ -1,8 +1,9 @@
-import { CONFIG, enderecoLinha, temWhatsapp, waLink } from '../config'
+import { CONFIG, enderecoLinha, equipe, linhaRegistro, temWhatsapp, waLink } from '../config'
 import { LogoCompleto } from './Logo'
 
 export function Rodape() {
   const rt = CONFIG.responsavelTecnico
+  const pessoas = equipe()
   return (
     <footer className="no-escuro border-t border-fio-claro bg-[#1d130c] text-creme">
       <div className="mx-auto grid max-w-[1320px] gap-12 px-5 pb-32 pt-16 sm:px-8 lg:grid-cols-12 lg:pb-16">
@@ -50,6 +51,18 @@ export function Rodape() {
               )}
             </ul>
           </div>
+          {pessoas.length > 0 && (
+            <div className="sm:col-span-2">
+              <p className="rotulo text-creme">{pessoas.every((p) => p.cargo === 'Fundadora') ? (pessoas.length > 1 ? 'Fundadoras' : 'Fundadora') : 'Equipe'}</p>
+              <ul className="mt-3 space-y-1">
+                {pessoas.map((p) => (
+                  <li key={p.nome}>
+                    {[p.nome, p.cargo, p.profissao, linhaRegistro(p)].filter((x) => x?.trim()).join(' · ')}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           {rt.nome && rt.registro && (
             <div className="sm:col-span-2">
               <p className="rotulo text-creme">Responsável técnico</p>
