@@ -101,3 +101,14 @@ export function BotoesContato({ variante = "primario", secundaria = "secundario"
     </div>
   );
 }
+
+/** Imagem com WebP + JPG, dimensões reservadas (sem CLS) e carregamento preguiçoso. */
+export function Imagem({ src, alt, largura, altura, className = "", eager = false }: { src: string; alt: string; largura: number; altura: number; className?: string; eager?: boolean }) {
+  const webp = src.replace(/\.(jpe?g|png)$/i, ".webp");
+  return (
+    <picture>
+      {webp !== src && <source srcSet={webp} type="image/webp" />}
+      <img src={src} alt={alt} width={largura} height={altura} loading={eager ? "eager" : "lazy"} decoding="async" className={className} />
+    </picture>
+  );
+}

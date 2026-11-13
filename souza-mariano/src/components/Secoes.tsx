@@ -2,7 +2,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import { useEffect, useId, useRef, useState } from "react";
 import { CONFIG, temWhatsapp } from "../config";
 import { Monograma } from "./Monograma";
-import { Botao, BotaoLigar, BotoesContato, Container, IconeTelefone, Rotulo, Seta, contatoPrincipal } from "./ui";
+import { Botao, BotaoLigar, BotoesContato, Container, IconeTelefone, Imagem, Rotulo, Seta, contatoPrincipal } from "./ui";
 
 /** "inert" fora da tabulação quando fechado (React 18 não tipa o atributo). */
 const inerte = (on: boolean) => (on ? ({ inert: "" } as Record<string, string>) : {});
@@ -139,6 +139,8 @@ export function Escritorio() {
           </div>
         </div>
 
+        {CONFIG.fotosEscritorio.length > 0 && <FotosEscritorio />}
+
         {CONFIG.formaDeTrabalhar.length > 0 && (
           <div className="mt-16 lg:mt-24">
             <Rotulo className="lg:ml-[33.4%]">Forma de trabalhar</Rotulo>
@@ -163,6 +165,37 @@ export function Escritorio() {
   );
 }
 
+function FotosEscritorio() {
+  const [principal, ...outras] = CONFIG.fotosEscritorio;
+  return (
+    <div className="mt-14 grid grid-cols-12 gap-x-5 lg:mt-20 lg:gap-x-8">
+      <figure className="col-span-12 lg:col-span-6 lg:col-start-5 lg:row-start-1">
+        <Imagem {...principal} className="aspect-[3/4] h-auto w-full object-cover" />
+        {principal.legenda && (
+          <figcaption className="mt-3 flex items-center gap-3 font-sans text-[0.8rem] uppercase tracking-[0.18em] text-grafite-suave">
+            <span className="h-px w-8 bg-bronze" aria-hidden="true" />
+            {principal.legenda}
+          </figcaption>
+        )}
+      </figure>
+      {outras.slice(0, 1).map((f) => (
+        <figure
+          key={f.src}
+          className="relative col-span-7 col-start-6 mt-8 sm:col-span-5 sm:col-start-8 lg:col-span-3 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:self-end"
+        >
+          <Imagem {...f} className="aspect-[3/4] h-auto w-full object-cover" />
+          {f.legenda && (
+            <figcaption className="mt-3 hidden items-center gap-3 font-sans text-[0.8rem] uppercase tracking-[0.18em] text-grafite-suave lg:flex">
+              <span className="h-px w-8 bg-bronze" aria-hidden="true" />
+              {f.legenda}
+            </figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 /* ---------------------------------------------------------------- As advogadas */
 function Cruzamento() {
   return (
@@ -173,9 +206,39 @@ function Cruzamento() {
   );
 }
 
+function NomeAdvogada({ nome, oab }: { nome: string; oab: string }) {
+  return (
+    <>
+      <h3 className="font-serif text-[2rem] leading-[1.08] tracking-[-0.015em] text-grafite [font-variation-settings:'opsz'_60] sm:text-[2.6rem]">
+        {nome.replace(/^Dra\.\s*/, "")}
+      </h3>
+      <p className="mt-4 flex items-center gap-3 font-sans text-[0.95rem] text-grafite-suave">
+        <span className="h-px w-8 bg-bronze" aria-hidden="true" />
+        <span>Advogada</span>
+        <span aria-hidden="true">·</span>
+        <span className="num text-vinho">{oab.replace("OAB/MG", "OAB/MG nº")}</span>
+      </p>
+    </>
+  );
+}
+
+/** Divisor horizontal: os dois fios se cruzam entre um nome e outro. */
+function CruzamentoHorizontal() {
+  return (
+    <svg viewBox="0 0 200 24" className="my-10 h-6 w-full" preserveAspectRatio="none" aria-hidden="true" fill="none">
+      <path d="M0 4 C60 4 80 20 100 12 C120 4 140 20 200 20" stroke="#5B1E34" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+      <path d="M0 20 C60 20 80 4 100 12 C120 20 140 4 200 4" stroke="#A9855A" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+    </svg>
+  );
+}
+
 export function Advogadas() {
   const lista = CONFIG.advogadas.filter((a) => a.nome && a.oab);
   if (!CONFIG.secoes.advogadas || lista.length === 0) return null;
+  const comFoto = lista.filter((a) => a.foto);
+  const todasComFoto = comFoto.length === lista.length;
+  const algumasComFoto = comFoto.length > 0 && !todasComFoto;
+
   return (
     <section id="advogadas" data-fio-cruza className="scroll-mt-28 bg-osso-2 py-20 lg:py-28" aria-labelledby="t-advogadas">
       <Container>
@@ -183,29 +246,49 @@ export function Advogadas() {
         <h2 id="t-advogadas" className="sr-only">
           As advogadas
         </h2>
-        <div className="mt-10 grid items-stretch gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-10">
-          {lista.map((a, i) => (
-            <div key={a.nome} className={`contents`}>
-              {i === 1 && (
-                <div className="relative hidden w-6 self-stretch md:block">
-                  <Cruzamento />
-                </div>
-              )}
-              <article className={`${i === 1 ? "border-t border-grafite/15 pt-10 md:border-0 md:pt-0" : ""}`}>
-                {a.foto && <img src={a.foto} alt={a.nome} loading="lazy" className="mb-6 aspect-[4/5] w-full max-w-xs object-cover" />}
-                <h3 className="font-serif text-[2rem] leading-[1.08] tracking-[-0.015em] text-grafite [font-variation-settings:'opsz'_60] sm:text-[2.6rem]">
-                  {a.nome.replace(/^Dra\.\s*/, "")}
-                </h3>
-                <p className="mt-4 flex items-center gap-3 font-sans text-[0.95rem] text-grafite-suave">
-                  <span className="h-px w-8 bg-bronze" aria-hidden="true" />
-                  <span>Advogada</span>
-                  <span aria-hidden="true">·</span>
-                  <span className="num text-vinho">{a.oab.replace("OAB/MG", "OAB/MG nº")}</span>
-                </p>
-              </article>
+
+        {algumasComFoto ? (
+          /* Só parte das advogadas tem foto: retrato com legenda de um lado, os nomes do outro. */
+          <div className="mt-10 grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
+            <div className="flex gap-5 lg:col-span-5">
+              {comFoto.map((a) => (
+                <figure key={a.nome} className="w-full max-w-[24rem]">
+                  <Imagem src={a.foto!} alt={`Retrato de ${a.nome}`} largura={512} altura={640} className="aspect-[4/5] h-auto w-full object-cover" />
+                  <figcaption className="mt-3 hidden lg:flex items-center gap-3 font-sans text-[0.8rem] uppercase tracking-[0.18em] text-grafite-suave">
+                    <span className="h-px w-8 bg-bronze" aria-hidden="true" />
+                    {a.nome}
+                  </figcaption>
+                </figure>
+              ))}
             </div>
-          ))}
-        </div>
+            <div className="lg:col-span-6 lg:col-start-7">
+              {lista.map((a, i) => (
+                <article key={a.nome}>
+                  {i > 0 && <CruzamentoHorizontal />}
+                  <NomeAdvogada nome={a.nome} oab={a.oab} />
+                </article>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="mt-10 grid items-stretch gap-10 md:grid-cols-[1fr_auto_1fr] md:gap-10">
+            {lista.map((a, i) => (
+              <div key={a.nome} className="contents">
+                {i === 1 && (
+                  <div className="relative hidden w-6 self-stretch md:block">
+                    <Cruzamento />
+                  </div>
+                )}
+                <article className={`${i === 1 ? "border-t border-grafite/15 pt-10 md:border-0 md:pt-0" : ""}`}>
+                  {a.foto && (
+                    <Imagem src={a.foto} alt={`Retrato de ${a.nome}`} largura={512} altura={640} className="mb-6 aspect-[4/5] h-auto w-full max-w-xs object-cover" />
+                  )}
+                  <NomeAdvogada nome={a.nome} oab={a.oab} />
+                </article>
+              </div>
+            ))}
+          </div>
+        )}
       </Container>
     </section>
   );

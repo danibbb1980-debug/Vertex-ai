@@ -26,10 +26,18 @@ export interface Familia {
   areas: Area[];
 }
 
+export interface Foto {
+  src: string;
+  alt: string;
+  legenda?: string;
+  largura: number;
+  altura: number;
+}
+
 export interface Advogada {
   nome: string;
   oab: string;
-  /** caminho em /public (ex.: "/fotos/ilsara.jpg"). Vazio = sem foto. */
+  /** caminho em /public (ex.: "/fotos/ilsara.jpg"), retrato 4:5. Vazio = sem foto. */
   foto?: string;
 }
 
@@ -48,12 +56,18 @@ export const CONFIG = {
   logo: "",
 
   advogadas: [
-    { nome: "Dra. Ilsara Caroline de Souza", oab: "OAB/MG 202.983", foto: "" },
+    { nome: "Dra. Ilsara Caroline de Souza", oab: "OAB/MG 202.983", foto: "/fotos/ilsara.jpg" },
     { nome: "Dra. Jéssica Camila Mariano", oab: "OAB/MG 196.832", foto: "" },
   ] as Advogada[],
 
-  /** Fotos do escritório em /public (ex.: ["/fotos/sala.jpg"]). Vazio = seção sem fotos. */
-  fotosEscritorio: [] as string[],
+  /**
+   * Fotos do escritório em /public/fotos. Vazio = seção sem fotos.
+   * Para cada .jpg, se existir um .webp com o mesmo nome, ele é usado primeiro.
+   */
+  fotosEscritorio: [
+    { src: "/fotos/sala.jpg", alt: "Sala do escritório com mesa redonda de atendimento, monograma SM na parede e janela com vista da cidade", legenda: "Sala 315, no Centro de Pouso Alegre", largura: 739, altura: 976 },
+    { src: "/fotos/recepcao.jpg", alt: "Canto do escritório com aparador, café e o monograma SM bordado", legenda: "Detalhe do escritório", largura: 739, altura: 976 },
+  ] as Foto[],
 
   telefone,
   telefoneHref: "tel:+5535991420078",

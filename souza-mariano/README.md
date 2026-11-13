@@ -33,9 +33,12 @@ se reorganiza. Nada de placeholder na tela.
 - **Áreas de atuação:** `CONFIG.familias`. Cada família tem `nome`, `resumo` e `areas` (nome + uma
   linha de descrição). A contagem ("16 áreas") e o número de cada família são automáticos.
 - **Advogadas:** `CONFIG.advogadas` (nome, OAB e, opcionalmente, `foto`).
-- **Fotos:** coloque os arquivos em `public/fotos/` e preencha `foto` de cada advogada
-  (ex.: `"/fotos/ilsara.jpg"`). As capturas e o retrato recebidos estão em `referencias/` e **não**
-  foram publicados (ver "Referências").
+- **Fotos:** ficam em `public/fotos/` (`.jpg` + `.webp` com o mesmo nome).
+  - Retrato: campo `foto` de cada advogada (hoje só a Dra. Ilsara tem). Com só uma parte das
+    advogadas com foto, a seção mostra o retrato ao lado dos nomes; quando todas tiverem, cada uma
+    ganha o retrato na própria coluna. Use retrato vertical 4:5.
+  - Escritório: `CONFIG.fotosEscritorio` (src, alt, legenda, largura, altura). Hoje: a sala 315 e um
+    detalhe do escritório, recortados das capturas recebidas (sem a interface do celular).
 - **Instagram / e-mail:** preencha `CONFIG.instagram` (URL completa) e `CONFIG.email`.
 - **Horários:** `CONFIG.horarios` (por dia; sem `abre`/`fecha` = fechado; `pausa` opcional para almoço).
 - **Dúvidas frequentes:** `CONFIG.faq`.
@@ -66,9 +69,10 @@ Atualize `CONFIG.siteUrl` com o domínio final (usado no canonical, og:url e JSO
 
 ## Referências
 
-`referencias/` guarda o material recebido: foto da placa (fonte do logo e das OAB), três capturas
-do escritório (baixa resolução, com interface do celular e imagens de balança/Têmis, por isso não
-publicadas) e um retrato sem identificação de qual advogada é (não publicado até confirmação).
+`referencias/` guarda o material original recebido: foto da placa (fonte do logo e das OAB), três
+capturas do escritório e o retrato da Dra. Ilsara. Foram publicados o retrato e duas capturas
+(recortadas). A captura da parede vermelha não foi usada porque mostra o quadro com a balança.
+As capturas têm baixa resolução: fotos originais em resolução maior melhoram bastante o resultado.
 
 ## Fontes
 
