@@ -155,8 +155,8 @@ export const CONFIG = {
       cargo: 'Fundadora',
       profissao: '',
       registro: '',
-      foto: '',
-      fotoAlt: '',
+      foto: '/fotos/julia-beraldo.webp',
+      fotoAlt: 'Júlia Beraldo, fundadora da B Clinic, de blazer branco, no espaço da clínica',
     },
   ] as Profissional[],
 

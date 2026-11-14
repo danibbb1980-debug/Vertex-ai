@@ -39,7 +39,7 @@ Todo o conteúdo fica em **`src/config.ts`**. Campo vazio (`''`) = o item não a
 3. **Horários:** confirmar os horários reais com a clínica antes de publicar. Google: seg. a sáb., 08h00 às 19h00. Perfil do WhatsApp Business: 09h00 às 18h00, com o domingo listado.
 4. **Profissão e registro da fundadora** (Júlia Beraldo), para exibir abaixo do nome.
 5. **Responsável técnico** (nome e registro).
-6. **Foto autorizada** da fundadora e/ou do espaço.
+6. **Foto da fundadora em alta resolução:** a atual (`public/fotos/julia-beraldo.webp`) foi recortada de um print do Instagram. Trocar pelo arquivo original e confirmar a autorização de uso.
 7. **Logo em alta resolução** (SVG ou PNG), para substituir o redesenho.
 
 ## Deploy

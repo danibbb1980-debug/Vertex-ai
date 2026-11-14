@@ -33,7 +33,7 @@ export function Equipe() {
                       decoding="async"
                       width={480}
                       height={480}
-                      className="absolute inset-[4%] h-[92%] w-[92%] rounded-full object-cover grayscale-[15%]"
+                      className="absolute inset-[4%] h-[92%] w-[92%] rounded-full object-cover object-[50%_30%]"
                     />
                   ) : null}
                   <svg viewBox="0 0 200 200" className="absolute inset-0 h-full w-full" aria-hidden="true">
@@ -58,7 +58,7 @@ export function Equipe() {
                 </div>
 
                 <div
-                  className={`relative mt-[-9vw] md:absolute md:inset-x-0 md:top-1/2 md:mt-0 md:-translate-y-1/2 ${
+                  className={`relative ${temFoto ? 'mt-8' : 'mt-[-9vw]'} md:absolute md:inset-x-0 md:top-1/2 md:mt-0 md:-translate-y-1/2 ${
                     i % 2 ? 'md:text-right' : ''
                   }`}
                 >
