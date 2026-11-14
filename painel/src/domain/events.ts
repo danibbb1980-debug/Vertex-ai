@@ -1,6 +1,8 @@
 import { costDueDate } from "./calc";
 import { money, monthKey, plusDays, shiftMonth } from "./format";
-import type { Dataset, ISODate } from "./types";
+import { followupDate, followupStatus, followupSubject } from "./followups";
+import { FOLLOWUP_CANAIS, FOLLOWUP_TIPOS_CURTO } from "./labels";
+import type { Dataset, FollowupStatus, FollowupTipo, ISODate } from "./types";
 
 export type EventKind = "recebimento" | "ajustes" | "dominio" | "followup" | "custo";
 
@@ -20,7 +22,9 @@ export interface CalEvent {
   detail?: string;
   done?: boolean;
   late?: boolean;
-  target: { type: "sale" | "lead" | "cost"; id: string };
+  /** Só follow-ups: situação calculada e tipo. */
+  followup?: { status: FollowupStatus; tipo: FollowupTipo };
+  target: { type: "sale" | "lead" | "cost" | "followup"; id: string };
 }
 
 /** Eventos gerados a partir dos dados, entre duas datas (inclusive). */
@@ -55,14 +59,19 @@ export function buildEvents(data: Dataset, from: ISODate, to: ISODate, today: IS
     }
   }
 
-  for (const l of data.leads) {
-    if (l.deleted_at || l.stage === "fechado" || l.stage === "perdido") continue;
-    if (inRange(l.next_followup_at)) {
-      out.push({
-        id: `f-${l.id}`, date: l.next_followup_at, kind: "followup", title: l.name, detail: "Follow-up",
-        late: l.next_followup_at < today, target: { type: "lead", id: l.id },
-      });
-    }
+  // Follow-ups: pendentes/atrasados na data prevista, enviados na data do envio.
+  for (const f of data.followups ?? []) {
+    if (f.deleted_at || f.dispensado_em) continue;
+    const date = followupDate(f);
+    if (!inRange(date)) continue;
+    const status = followupStatus(f, today);
+    out.push({
+      id: `f-${f.id}`, date, kind: "followup", title: followupSubject(data, f).name,
+      detail: `${FOLLOWUP_TIPOS_CURTO[f.tipo]} · ${FOLLOWUP_CANAIS[f.canal]}${status === "enviado" ? " · enviado" : ""}`,
+      done: status === "enviado", late: status === "atrasado",
+      followup: { status, tipo: f.tipo },
+      target: { type: "followup", id: f.id },
+    });
   }
 
   for (let key = monthKey(from); key <= monthKey(to); key = shiftMonth(key, 1)) {

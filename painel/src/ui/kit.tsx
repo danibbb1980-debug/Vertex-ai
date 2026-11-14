@@ -279,7 +279,7 @@ export function useConfirm(): [
 
 // ------------------------------------------------------------------ pequenos
 
-export type Tone = "neutral" | "accent" | "warn" | "danger" | "muted";
+export type Tone = "neutral" | "accent" | "warn" | "danger" | "muted" | "fu";
 
 const TONES: Record<Tone, string> = {
   neutral: "bg-surface-2 text-ink-2",
@@ -287,6 +287,7 @@ const TONES: Record<Tone, string> = {
   warn: "bg-warn-soft text-warn",
   danger: "bg-danger-soft text-danger",
   muted: "bg-transparent text-ink-3 border border-line",
+  fu: "bg-fu-soft text-fu",
 };
 
 export function Pill({ tone = "neutral", children }: { tone?: Tone; children: ReactNode }) {

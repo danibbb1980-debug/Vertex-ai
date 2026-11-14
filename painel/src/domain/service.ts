@@ -5,9 +5,11 @@ import {
   adjustmentsEnd, isRecurring, netAmount, nextRecurring, planInstallments, statusAfterReceipts,
 } from "./calc";
 import { dateBR, money } from "./format";
+import { cadenceFollowup, leadMirrorDate, postSaleFollowups } from "./followups";
+import { uid } from "./id";
 import { METHODS, PACKAGES, PLATFORMS, SALE_STATUS, SEGMENTS } from "./labels";
 import type {
-  Dataset, ISODate, Installment, Lead, LeadStage, Sale, SaleHistory, TableName,
+  Dataset, Followup, ISODate, Installment, Lead, LeadStage, Sale, SaleHistory, TableName,
 } from "./types";
 
 export type Changes = Partial<{
@@ -16,17 +18,14 @@ export type Changes = Partial<{
   costs: Dataset["costs"];
   leads: Lead[];
   sale_history: SaleHistory[];
+  followups: Followup[];
 }>;
 
 export type SaleDraft = Omit<Sale, "id" | "created_at" | "updated_at" | "deleted_at" | "net_amount"> & {
   id?: string;
 };
 
-export const uid = (): string =>
-  typeof crypto !== "undefined" && "randomUUID" in crypto
-    ? crypto.randomUUID()
-    : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
-        (Number(c) ^ (Math.random() * 16) >> (Number(c) / 4)).toString(16));
+export { uid };
 
 const nowISO = () => new Date().toISOString();
 
@@ -134,6 +133,7 @@ export function saveSale(data: Dataset, draft: SaleDraft, author: string | null,
       sales: [sale],
       installments: [...installments, ...recurring],
       sale_history: [history(sale.id, author, before ? describeDiff(before, sale) : "Venda cadastrada")],
+      followups: postSaleFollowups(data.followups ?? [], sale, data.leads),
     },
   };
 }
@@ -200,16 +200,27 @@ export function ensureRecurring(data: Dataset, today: ISODate): Changes {
   return created.length ? { installments: created } : {};
 }
 
+/**
+ * Move o lead de estágio. Ao entrar em "Rascunho enviado" ou "Proposta/valor
+ * enviado", cria o follow-up de 2 dias úteis (se o lead ainda não tiver um).
+ */
 export function moveLead(data: Dataset, leadId: string, stage: LeadStage, today: ISODate): Changes {
   const lead = data.leads.find((l) => l.id === leadId);
   if (!lead || lead.stage === stage) return {};
-  return {
-    leads: [{
-      ...lead, stage, last_contact_at: today,
-      stage_dates: { ...lead.stage_dates, [stage]: lead.stage_dates[stage] ?? today },
-      updated_at: nowISO(),
-    }],
+  const moved: Lead = {
+    ...lead, stage, last_contact_at: today,
+    stage_dates: { ...lead.stage_dates, [stage]: lead.stage_dates[stage] ?? today },
+    updated_at: new Date().toISOString(),
   };
+  return withCadence(data, moved, today);
+}
+
+/** Aplica a regra de cadência a um lead salvo (novo ou editado). */
+export function withCadence(data: Dataset, lead: Lead, today: ISODate): Changes {
+  const fu = cadenceFollowup(data.followups ?? [], lead, today, data.settings);
+  if (!fu) return { leads: [lead] };
+  const mirror = leadMirrorDate([...(data.followups ?? []), fu], lead.id);
+  return { leads: [{ ...lead, next_followup_at: mirror }], followups: [fu] };
 }
 
 export function softDelete<T extends { deleted_at: string | null; updated_at: string }>(row: T): T {

@@ -11,6 +11,10 @@ import { alive, useStore } from "../data/store";
 import { EventList } from "../ui/EventList";
 import { Button, Empty, Section, Segmented, cx } from "../ui/kit";
 import { RevenueChart } from "../ui/RevenueChart";
+import { dateInSaoPaulo } from "../domain/followups";
+import { plusDays } from "../domain/format";
+import { groupFollowups } from "./Followups";
+import { followupsHref } from "../ui/followups";
 
 type Basis = "caixa" | "competencia";
 
@@ -45,6 +49,9 @@ export function Dashboard() {
   const mei = meiStatus(receivedInYear(data, year), data.settings.mei_other_revenue, data.settings.mei_limit);
 
   const upcoming = useMemo(() => nextDays(data, today, 7), [data, today]);
+  const fuGroups = useMemo(() => groupFollowups(data.followups, today), [data.followups, today]);
+  const weekAgo = plusDays(today, -6);
+  const sentWeek = fuGroups.enviados.filter((f) => f.enviado_em && dateInSaoPaulo(f.enviado_em) >= weekAgo).length;
   const sales = alive(data.sales);
   const refunds = sales.map((s) => ({ s, v: pendingRefund(s, data.installments) })).filter((x) => x.v > 0);
   const ending = sales.filter((s) => adjustmentsEndingSoon(s, today));
@@ -209,6 +216,24 @@ export function Dashboard() {
               Recebido bruto de vendas{data.settings.mei_other_revenue > 0 ? ` + ${money(data.settings.mei_other_revenue)} de outras receitas` : ""}.
               {" "}Soma informativa. Confirme as regras do MEI com seu contador.
             </p>
+          </Section>
+
+          {/* Follow-ups */}
+          <Section title="Follow-ups" action={<a href={followupsHref("hoje")} className="text-[13px] text-accent underline underline-offset-2">Ver todos</a>}>
+            <dl className="grid grid-cols-3 gap-px border-y border-line bg-line">
+              {([
+                ["atrasados", "Atrasados", fuGroups.atrasados.length],
+                ["hoje", "Hoje", fuGroups.hoje.length],
+                ["enviados", "Enviados (7 dias)", sentWeek],
+              ] as const).map(([tab, label, n]) => (
+                <div key={tab} className="bg-bg">
+                  <a href={followupsHref(tab)} className="group flex h-full min-h-16 flex-col justify-between px-2 py-2.5 text-ink no-underline">
+                    <dt className="text-[12.5px] text-ink-3 group-hover:underline">{label}</dt>
+                    <dd className={cx("num text-[24px] font-semibold tracking-[-0.02em]", tab === "atrasados" && n > 0 && "text-danger")}>{n}</dd>
+                  </a>
+                </div>
+              ))}
+            </dl>
           </Section>
 
           {/* Próximos 7 dias */}

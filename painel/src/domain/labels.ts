@@ -1,5 +1,5 @@
 import type {
-  CostCategory, InstallmentStatus, LeadOrigin, LeadStage, Package, PaymentMethod, Platform,
+  CostCategory, FollowupCanal, FollowupStatus, FollowupTipo, InstallmentStatus, LeadOrigin, LeadStage, Package, PaymentMethod, Platform,
   Recurrence, SaleStatus, Segment,
 } from "./types";
 
@@ -80,6 +80,38 @@ export const STAGES: Record<LeadStage, string> = {
   fechado: "Fechado",
   perdido: "Perdido",
 };
+
+export const FOLLOWUP_TIPOS: Record<FollowupTipo, string> = {
+  followup_2du: "Follow-up (2 dias úteis)",
+  retomada: "Retomada (60 a 90 dias)",
+  pos_venda: "Pós-venda: oferta de manutenção (30º dia)",
+  outro: "Outro",
+};
+
+/** Versão curta para listas e calendário. */
+export const FOLLOWUP_TIPOS_CURTO: Record<FollowupTipo, string> = {
+  followup_2du: "Follow-up",
+  retomada: "Retomada",
+  pos_venda: "Pós-venda",
+  outro: "Outro",
+};
+
+export const FOLLOWUP_CANAIS: Record<FollowupCanal, string> = {
+  whatsapp: "WhatsApp",
+  instagram: "Instagram",
+  email: "E-mail",
+  outro: "Outro",
+};
+
+export const FOLLOWUP_STATUS: Record<FollowupStatus, string> = {
+  atrasado: "Atrasado",
+  hoje: "Hoje",
+  pendente: "Pendente",
+  enviado: "Enviado",
+  dispensado: "Dispensado",
+};
+
+export const LOST_REASONS = ["Sem resposta", "Já tem site", "Sem interesse", "Preço", "Outro"] as const;
 
 /** Ordem do funil (sem "perdido", que é uma saída lateral). */
 export const STAGE_ORDER: LeadStage[] = ["contatado", "respondeu", "rascunho", "proposta", "fechado"];

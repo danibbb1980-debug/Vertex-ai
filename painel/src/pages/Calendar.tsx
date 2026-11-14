@@ -3,7 +3,10 @@ import { EVENT_LABELS, buildEvents, toICS, type CalEvent, type EventKind } from 
 import { monthKey, monthLabel, plusDays, plusMonths, shiftMonth, toDate, toISO } from "../domain/format";
 import { download } from "../domain/csv";
 import { useStore } from "../data/store";
-import { EventList, KIND_SHORT, KIND_STYLE, eventHref } from "../ui/EventList";
+import { FOLLOWUP_TIPOS, entries } from "../domain/labels";
+import type { FollowupTipo } from "../domain/types";
+import { EventList, KIND_STYLE, eventChip, eventHref, eventLabel } from "../ui/EventList";
+import { useFollowupActions } from "../ui/followups";
 import { Button, Empty, PageHeader, Segmented, cx } from "../ui/kit";
 
 const KINDS: EventKind[] = ["recebimento", "ajustes", "dominio", "followup", "custo"];
@@ -14,6 +17,8 @@ export function Calendar() {
   const [month, setMonth] = useState(monthKey(today));
   const [view, setView] = useState<"mes" | "agenda">(() => (window.matchMedia("(min-width: 768px)").matches ? "mes" : "agenda"));
   const [kinds, setKinds] = useState<Set<EventKind>>(new Set(KINDS));
+  const [fuTipo, setFuTipo] = useState<FollowupTipo | "">("");
+  const actions = useFollowupActions();
 
   const first = `${month}-01`;
   const last = plusDays(plusMonths(first, 1), -1);
@@ -21,8 +26,9 @@ export function Calendar() {
   const gridEnd = plusDays(last, 6 - toDate(last).getDay());
 
   const events = useMemo(
-    () => buildEvents(data, gridStart, gridEnd, today).filter((e) => kinds.has(e.kind)),
-    [data, gridStart, gridEnd, today, kinds],
+    () => buildEvents(data, gridStart, gridEnd, today)
+      .filter((e) => kinds.has(e.kind) && (!fuTipo || e.kind !== "followup" || e.followup?.tipo === fuTipo)),
+    [data, gridStart, gridEnd, today, kinds, fuTipo],
   );
   const byDay = useMemo(() => {
     const m = new Map<string, CalEvent[]>();
@@ -75,6 +81,13 @@ export function Calendar() {
               </label>
             );
           })}
+          {kinds.has("followup") && (
+            <select className="input !min-h-9 !w-auto text-[13px]" aria-label="Tipo de follow-up" value={fuTipo}
+              onChange={(e) => setFuTipo(e.target.value as FollowupTipo | "")}>
+              <option value="">Follow-ups: todos os tipos</option>
+              {entries(FOLLOWUP_TIPOS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+            </select>
+          )}
         </fieldset>
       </div>
 
@@ -94,14 +107,21 @@ export function Calendar() {
                     {Number(d.slice(8))}
                   </p>
                   <ul className="flex flex-col gap-0.5">
-                    {evs.slice(0, 4).map((e) => (
-                      <li key={e.id}>
-                        <a href={eventHref(e)} title={`${KIND_SHORT[e.kind]}: ${e.title}${e.detail ? ` · ${e.detail}` : ""}`}
-                          className={cx("block truncate rounded px-1.5 py-0.5 text-[12px] no-underline hover:brightness-95", KIND_STYLE[e.kind].chip, e.done && "opacity-60", e.late && "ring-1 ring-inset ring-danger")}>
-                          <span className="sr-only">{KIND_SHORT[e.kind]}: </span>{e.title}
-                        </a>
-                      </li>
-                    ))}
+                    {evs.slice(0, 4).map((e) => {
+                      const cls = cx("block w-full truncate rounded px-1.5 py-0.5 text-left text-[12px] no-underline hover:brightness-95", eventChip(e),
+                        e.done && e.kind !== "followup" && "opacity-60", e.late && "ring-1 ring-inset ring-danger");
+                      const title = `${eventLabel(e)}: ${e.title}${e.detail ? ` · ${e.detail}` : ""}`;
+                      const inner = <><span className="sr-only">{eventLabel(e)}: </span>{e.title}</>;
+                      return (
+                        <li key={e.id}>
+                          {e.target.type === "followup" ? (
+                            <button type="button" title={title} className={cls} onClick={() => actions.open(e.target.id)}>{inner}</button>
+                          ) : (
+                            <a href={eventHref(e)} title={title} className={cls}>{inner}</a>
+                          )}
+                        </li>
+                      );
+                    })}
                     {evs.length > 4 && <li className="px-1.5 text-[12px] text-ink-3">+{evs.length - 4}</li>}
                   </ul>
                 </div>
@@ -111,7 +131,8 @@ export function Calendar() {
         </div>
       )}
       <p className="mt-3 text-[12.5px] text-ink-3">
-        Verde: recebimentos · Âmbar: fim dos 30 dias de ajustes · Vermelho suave: vencimento de domínio · Contorno vermelho: atrasado.
+        Verde: recebimentos · Âmbar: fim dos 30 dias de ajustes · Vermelho suave: domínio ou follow-up atrasado ·
+        Azul-petróleo: follow-up pendente · Cinza: follow-up enviado · Contorno vermelho: atrasado. Clique num follow-up para marcar como enviado.
       </p>
     </div>
   );

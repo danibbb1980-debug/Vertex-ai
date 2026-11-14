@@ -8,6 +8,7 @@ import type { Dataset } from "./domain/types";
 import { Calendar } from "./pages/Calendar";
 import { Costs } from "./pages/Costs";
 import { Dashboard } from "./pages/Dashboard";
+import { Followups } from "./pages/Followups";
 import { Funnel } from "./pages/Funnel";
 import { Login } from "./pages/Login";
 import { SaleDetail } from "./pages/SaleDetail";
@@ -15,6 +16,7 @@ import { SaleForm } from "./pages/SaleForm";
 import { Sales } from "./pages/Sales";
 import { SettingsPage } from "./pages/Settings";
 import { Button } from "./ui/kit";
+import { FollowupProvider } from "./ui/followups";
 import { Shell, Wordmark } from "./ui/Shell";
 
 export function App() {
@@ -90,11 +92,16 @@ function Routes({ onSignOut }: { onSignOut?: () => void }) {
   else if (a === "vendas") page = <Sales query={route.query} />;
   else if (a === "agenda") page = <Calendar />;
   else if (a === "custos") page = <Costs focus={route.query.get("id")} />;
+  else if (a === "followups") page = <Followups tab={route.query.get("aba")} />;
   else if (a === "funil") page = <Funnel focus={route.query.get("id")} />;
   else if (a === "config") page = <SettingsPage />;
   else page = <p>Página não encontrada. <a href="#/" className="text-accent underline">Voltar ao painel</a></p>;
 
-  return <Shell route={route} onSignOut={onSignOut}>{page}</Shell>;
+  return (
+    <FollowupProvider>
+      <Shell route={route} onSignOut={onSignOut}>{page}</Shell>
+    </FollowupProvider>
+  );
 }
 
 function Splash({ text, children }: { text: string; children?: React.ReactNode }) {
