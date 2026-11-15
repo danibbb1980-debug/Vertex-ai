@@ -30,7 +30,7 @@ interface StoreValue {
 const Ctx = createContext<StoreValue | null>(null);
 
 // Ordem de gravação: vendas antes de parcelas/histórico (chave estrangeira).
-const ORDER: TableName[] = ["sales", "installments", "sale_history", "costs", "leads"];
+const ORDER: TableName[] = ["sales", "installments", "sale_history", "costs", "leads", "followups"];
 
 export function StoreProvider({
   repo, initial, author, children,

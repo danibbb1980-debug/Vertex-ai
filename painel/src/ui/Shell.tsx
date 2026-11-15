@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { href, type Route } from "../data/router";
+import { followupStatus } from "../domain/followups";
 import { useStore } from "../data/store";
 import { cx } from "./kit";
 import { useTheme } from "./theme";
@@ -7,10 +8,32 @@ import { useTheme } from "./theme";
 const NAV = [
   { to: "/", label: "Painel", short: "Painel" },
   { to: "/vendas", label: "Vendas", short: "Vendas" },
+  { to: "/followups", label: "Follow-ups", short: "Follow-ups" },
   { to: "/agenda", label: "Calendário", short: "Agenda" },
   { to: "/funil", label: "Funil", short: "Funil" },
   { to: "/custos", label: "Custos", short: "Custos" },
 ];
+/** No celular, Custos sai da barra inferior e vai para o topo (máximo 5 itens embaixo). */
+const MOBILE_NAV = NAV.filter((n) => n.to !== "/custos");
+
+/** Atrasados + hoje, para o número ao lado de "Follow-ups". */
+function useFollowupBadge(): number {
+  const { data, today } = useStore();
+  return data.followups.filter((f) => {
+    if (f.deleted_at) return false;
+    const s = followupStatus(f, today);
+    return s === "atrasado" || s === "hoje";
+  }).length;
+}
+
+function Badge({ n, label }: { n: number; label: string }) {
+  if (!n) return null;
+  return (
+    <span className="num ml-1.5 inline-flex min-w-5 justify-center rounded-full bg-danger-soft px-1.5 text-[11.5px] font-semibold leading-5 text-danger" aria-label={label}>
+      {n}
+    </span>
+  );
+}
 
 function isActive(route: Route, to: string): boolean {
   if (to === "/") return route.path === "/";
@@ -30,6 +53,8 @@ export function Shell({ route, children, onSignOut }: { route: Route; children: 
   const { mode, toastState, dismissToast } = useStore();
   const [theme, toggleTheme] = useTheme();
   const onForm = route.path.startsWith("/vendas/nova") || route.path.endsWith("/editar");
+  const pending = useFollowupBadge();
+  const badgeLabel = `${pending} follow-ups atrasados ou para hoje`;
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-[216px_minmax(0,1fr)]">
@@ -57,6 +82,7 @@ export function Shell({ route, children, onSignOut }: { route: Route; children: 
               )}
             >
               {n.label}
+              {n.to === "/followups" && <Badge n={pending} label={badgeLabel} />}
             </a>
           ))}
         </nav>
@@ -78,6 +104,13 @@ export function Shell({ route, children, onSignOut }: { route: Route; children: 
         <a href={href("/")} className="text-ink no-underline"><Wordmark /></a>
         <div className="flex items-center gap-1">
           {mode === "local" && <span className="rounded-full border border-line px-2 py-0.5 text-[12px] text-ink-3" title="Modo local: os dados ficam só neste navegador.">Modo local</span>}
+          <a
+            href={href("/custos")}
+            aria-current={isActive(route, "/custos") ? "page" : undefined}
+            className={cx("inline-flex min-h-11 items-center rounded-md px-2 text-[14px] no-underline", isActive(route, "/custos") ? "font-semibold text-ink" : "text-ink-2")}
+          >
+            Custos
+          </a>
           <a
             href={href("/config")}
             aria-current={route.path === "/config" ? "page" : undefined}
@@ -106,19 +139,24 @@ export function Shell({ route, children, onSignOut }: { route: Route; children: 
       {/* Navegação inferior (celular) */}
       <nav aria-label="Principal" className="safe-bottom fixed inset-x-0 bottom-0 z-30 border-t border-line bg-surface lg:hidden">
         <ul className="grid grid-cols-5">
-          {NAV.map((n) => (
+          {MOBILE_NAV.map((n) => (
             <li key={n.to}>
               <a
                 href={href(n.to)}
                 aria-current={isActive(route, n.to) ? "page" : undefined}
                 className={cx(
-                  "relative flex min-h-14 items-center justify-center text-[13.5px] no-underline",
+                  "relative flex min-h-14 items-center justify-center text-[13px] no-underline",
                   isActive(route, n.to)
                     ? "font-semibold text-ink before:absolute before:inset-x-4 before:top-0 before:h-[3px] before:rounded-b before:bg-accent"
                     : "text-ink-3",
                 )}
               >
-                {n.short}
+                {n.to === "/followups" ? (
+                  <span className="flex flex-col items-center leading-tight">
+                    {n.short}
+                    {pending > 0 && <span className="num text-[11px] font-semibold text-danger" aria-label={badgeLabel}>{pending}</span>}
+                  </span>
+                ) : n.short}
               </a>
             </li>
           ))}
@@ -133,7 +171,7 @@ export function Shell({ route, children, onSignOut }: { route: Route; children: 
 function Toast({ state, onDismiss }: { state: ReturnType<typeof useStore>["toastState"]; onDismiss: () => void }) {
   useEffect(() => {
     if (!state) return;
-    const t = setTimeout(onDismiss, state.action ? 7000 : 4000);
+    const t = setTimeout(onDismiss, state.action ? 6000 : 4000);
     return () => clearTimeout(t);
   }, [state, onDismiss]);
   return (

@@ -1,4 +1,5 @@
 import { MEI_DEFAULT_LIMIT } from "../domain/calc";
+import { DEFAULT_BUSINESS_DAYS, DEFAULT_RETAKE_DAYS } from "../domain/followups";
 import type { SaleDraft } from "../domain/service";
 import type { Cost, Settings } from "../domain/types";
 
@@ -12,6 +13,9 @@ export function defaultSettings(): Settings {
     hourly_cost: null,
     daily_cost: null,
     first_sale_prompt_done: false,
+    followup_templates: {},
+    followup_business_days: DEFAULT_BUSINESS_DAYS,
+    followup_retake_days: DEFAULT_RETAKE_DAYS,
     updated_at: new Date().toISOString(),
   };
 }

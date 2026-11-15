@@ -5,7 +5,10 @@ import { money } from "../domain/format";
 import { METHODS, PLATFORMS, entries } from "../domain/labels";
 import type { Cost, Dataset, Installment, Sale, Settings, TableName } from "../domain/types";
 import { useStore } from "../data/store";
-import { Button, MoneyField, NumberField, PageHeader, Section, Segmented, useConfirm } from "../ui/kit";
+import { Button, MoneyField, NumberField, PageHeader, Section, Segmented, TextArea, useConfirm } from "../ui/kit";
+import { DEFAULT_TEMPLATES, migrateLeadsToFollowups } from "../domain/followups";
+import { FOLLOWUP_TIPOS, entries as entriesOf } from "../domain/labels";
+import type { Followup, FollowupTipo } from "../domain/types";
 import { useTheme } from "../ui/theme";
 
 const SALE_COLS: (keyof Sale)[] = [
@@ -45,7 +48,11 @@ export function SettingsPage() {
     try {
       const parsed = JSON.parse(await file.text()) as Partial<Dataset> & { app?: string };
       if (parsed.app !== "lumivo-painel" && !parsed.sales) throw new Error("Arquivo não parece um backup do painel.");
-      const total = ["sales", "installments", "costs", "leads", "sale_history"].reduce((a, k) => a + ((parsed as Record<string, unknown[]>)[k]?.length ?? 0), 0);
+      // Backup antigo (sem follow-ups): migra os "próximos follow-ups" dos leads.
+      if (!Array.isArray(parsed.followups)) {
+        parsed.followups = migrateLeadsToFollowups(parsed.leads ?? [], data.followups) as Followup[];
+      }
+      const total = ["sales", "installments", "costs", "leads", "sale_history", "followups"].reduce((a, k) => a + ((parsed as Record<string, unknown[]>)[k]?.length ?? 0), 0);
       const ok = await ask({
         title: "Importar backup?",
         body: `${total} registros serão adicionados ou atualizados (mesmo id = substitui). Nada é apagado.${mode === "supabase" ? " Os dados vão para o Supabase." : ""}`,
@@ -54,7 +61,7 @@ export function SettingsPage() {
       if (!ok) return;
       const n = await importData({
         sales: parsed.sales, installments: parsed.installments, costs: parsed.costs, leads: parsed.leads,
-        sale_history: parsed.sale_history, settings: parsed.settings,
+        sale_history: parsed.sale_history, followups: parsed.followups, settings: parsed.settings,
       });
       setS((x) => ({ ...x, ...parsed.settings, id: 1 }));
       toast({ message: `${n} registros importados.` });
@@ -123,6 +130,28 @@ export function SettingsPage() {
         <div className="grid gap-4 sm:grid-cols-2">
           <MoneyField label="Custo por hora" value={s.hourly_cost} allowEmpty onChange={(v) => setS({ ...s, hourly_cost: v })} />
           <MoneyField label="Custo por dia" value={s.daily_cost} allowEmpty onChange={(v) => setS({ ...s, daily_cost: v })} />
+        </div>
+      </Section>
+
+      <Section title="Follow-ups" className="mt-8">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <NumberField label="Dias úteis para o primeiro follow-up" min={1} max={15} value={s.followup_business_days}
+            hint="Contados a partir de quando o lead vai para Rascunho ou Proposta. Padrão 2."
+            onChange={(v) => setS({ ...s, followup_business_days: Math.round(v ?? 2) })} />
+          <NumberField label="Retomada padrão (dias)" min={1} max={365} value={s.followup_retake_days}
+            hint="Primeira opção depois de marcar um follow-up como enviado. Padrão 60."
+            onChange={(v) => setS({ ...s, followup_retake_days: Math.round(v ?? 60) })} />
+        </div>
+        <p className="mb-3 mt-6 text-[13.5px] text-ink-3">
+          Modelos usados no botão "Copiar mensagem". Escreva {"{nome}"} onde deve entrar o nome do lead. O painel só copia; quem envia é você.
+        </p>
+        <div className="grid gap-4">
+          {entriesOf(FOLLOWUP_TIPOS).map(([tipo, label]) => (
+            <TextArea key={tipo} label={label} rows={3} maxLength={1000}
+              value={s.followup_templates[tipo as FollowupTipo] ?? DEFAULT_TEMPLATES[tipo as FollowupTipo]}
+              onChange={(e) => setS({ ...s, followup_templates: { ...s.followup_templates, [tipo]: e.target.value } })}
+            />
+          ))}
         </div>
       </Section>
 

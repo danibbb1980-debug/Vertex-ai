@@ -101,6 +101,66 @@ inativo até você saber o valor (é o caso do DAS e dos domínios).
 
 ---
 
+## Follow-ups (enviado e atrasado)
+
+Você envia os follow-ups **à mão** (WhatsApp, Instagram); o painel só registra.
+Não há envio automático de nenhuma mensagem.
+
+### Aplicar a migração no Supabase (uma vez)
+
+1. Supabase → **SQL Editor → New query**.
+2. Cole todo o conteúdo de
+   [`supabase/migrations/20261114_followups.sql`](supabase/migrations/20261114_followups.sql)
+   e clique em **Run**.
+3. Faça isso **antes** de publicar esta versão. Sem a tabela, o painel mostra
+   um aviso pedindo para rodar a migração.
+
+Ela cria a tabela `followups` (mesma segurança das outras: só logado e com
+e-mail em `allowed_emails`, sem exclusão física), três configurações novas e,
+para cada lead que já tinha "próximo follow-up", um follow-up em aberto naquela
+data (canal conforme a origem do lead). Pode rodar de novo sem duplicar. Nenhum
+dado existente é alterado ou apagado.
+
+### Modo local
+
+Na primeira abertura desta versão, o navegador faz a mesma migração sozinho:
+se os dados salvos não têm follow-ups, cria um para cada lead com "próximo
+follow-up". Acontece uma vez só. Importar um backup JSON antigo também migra.
+
+### Status (calculado, nunca gravado)
+
+Comparando só a data, no fuso America/Sao_Paulo:
+
+| Status | Regra |
+|---|---|
+| **Enviado** | tem `enviado_em` |
+| **Dispensado** | tem `dispensado_em` |
+| **Atrasado** | não enviado e `data_prevista` antes de hoje |
+| **Hoje** | não enviado e `data_prevista` igual a hoje (não é atrasado) |
+| **Pendente** | não enviado e `data_prevista` no futuro |
+
+A data de hoje é reavaliada a cada minuto, então à meia-noite os de "Hoje"
+viram "Atrasado" sem recarregar a página.
+
+### Cadência (sugestão automática, sempre editável)
+
+- Lead vai para **Rascunho enviado** ou **Proposta/valor enviado** → cria um
+  follow-up para hoje + **2 dias úteis** (configurável). Sexta vira terça.
+- **No máximo um** follow-up de 2 dias úteis por lead. Depois de enviado, o
+  painel só oferece: retomada em 60 ou 90 dias, ou encerrar (lead vai para
+  Perdido com o motivo).
+- Data em sábado ou domingo → aviso "Fim de semana: sugerimos segunda-feira",
+  com um clique para mover. Nunca move sozinho.
+- Venda com **Publicado em** → follow-up "Pós-venda: oferta de manutenção" no
+  30º dia (mesma data do fim dos ajustes). Se a venda for cancelada, ele é
+  dispensado.
+- O "próximo follow-up" do lead virou espelho: mostra a data do follow-up em
+  aberto mais próximo.
+
+Adiar (+1 dia útil, +2, +7 ou outra data), dispensar e marcar como enviado
+têm "Desfazer". "Enviei antes" registra um envio esquecido com data e hora.
+Os modelos do botão "Copiar mensagem" ficam em Configurações.
+
 ## Como os números são calculados
 
 - **Líquido** = bruto − taxa (%). A taxa padrão vem de Configurações (por
@@ -136,16 +196,19 @@ inativo até você saber o valor (é o caso do DAS e dos domínios).
 src/domain/   regras de negócio puras (sem React, sem banco) + testes
   calc.ts       líquido, parcelas, métricas do mês, MEI, custos, equilíbrio
   service.ts    saveSale, markReceived, cancelamento, assinatura...
+  followups.ts  status, dias úteis, cadência, marcar enviado/adiar/dispensar, migração
   parser.ts     leitura do texto colado (Asaas, Pix, mensagens)
   events.ts     eventos do calendário e exportação .ics
 src/data/     armazenamento (local ou Supabase), estado e rotas
 src/pages/    telas
 src/ui/       componentes visuais
-supabase/     schema.sql
+supabase/     schema.sql e migrations/ (rodar em ordem de data)
 ```
 
 **Webhook no futuro (Asaas/Mercado Pago):** as funções de `src/domain/service.ts`
 recebem os dados e devolvem só as linhas que mudaram. Uma função serverless pode
 montar um `SaleDraft` a partir do evento de pagamento, chamar `saveSale` (nova
 venda) ou `markReceived` (parcela paga) e gravar o resultado no Supabase com a
-chave de serviço, no servidor.
+chave de serviço, no servidor. Da mesma forma, um lembrete por e-mail ou push
+no futuro só precisa ler os follow-ups com status "Hoje"/"Atrasado"
+(`followupStatus` em `src/domain/followups.ts`).
