@@ -1,0 +1,288 @@
+/* Fontes auto-hospedadas: Newsreader (opsz 60, pesos 250-400) e Hanken Grotesk (400-500),
+   recortadas para o alfabeto latino a partir dos pacotes @fontsource-variable (licença OFL). */
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 250 400;
+  src: url("/fonts/newsreader-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-display: swap;
+  font-weight: 250 400;
+  src: url("/fonts/newsreader-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Hanken Grotesk";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 500;
+  src: url("/fonts/hanken-grotesk.woff2") format("woff2");
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --faixa: 0px;
+    --pedra: #ece6dc;
+    --tinta: #17130f;
+    --ouro: #b19c71;
+  }
+  :root[data-rascunho="1"] {
+    --faixa: 28px;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--faixa) + 76px);
+  }
+  body {
+    @apply bg-pedra text-grafite font-sans antialiased;
+    font-size: 17px;
+    line-height: 1.6;
+    font-feature-settings: "kern", "liga";
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--tinta);
+    color: var(--pedra);
+  }
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  .sobre-tinta :focus-visible {
+    outline-color: var(--ouro);
+  }
+  h1, h2, h3 {
+    @apply font-serif;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  em {
+    font-style: italic;
+  }
+}
+
+@layer components {
+  /* Rótulo em caixa-alta espaçada, como o descritor do logo. */
+  .rotulo {
+    @apply font-sans uppercase;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    line-height: 1.4;
+  }
+  .num {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .container-site {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-site {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Botões: cantos retos, sem sombra. Efeito sutil: um fio corre por baixo do texto. */
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-3 font-sans;
+    min-height: 52px;
+    padding: 0 1.6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    cursor: pointer;
+  }
+  @media (min-width: 640px) {
+    .btn {
+      letter-spacing: 0.16em;
+    }
+  }
+  .btn-cheio {
+    @apply bg-tinta text-pedra;
+  }
+  .btn-cheio:hover {
+    @apply bg-tinta-3;
+  }
+  .btn-cheio::after {
+    content: "";
+    position: absolute;
+    left: 1.6rem;
+    right: 1.6rem;
+    bottom: 14px;
+    height: 1px;
+    background: var(--ouro);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .btn-cheio:hover::after,
+  .btn-cheio:focus-visible::after {
+    transform: scaleX(1);
+  }
+  .btn-linha {
+    @apply border border-current bg-transparent;
+  }
+  .btn-linha:hover {
+    @apply bg-tinta text-pedra border-tinta;
+  }
+  .sobre-tinta .btn-cheio {
+    @apply bg-pedra text-tinta;
+  }
+  .sobre-tinta .btn-cheio:hover {
+    @apply bg-pedra-clara;
+  }
+  .sobre-tinta .btn-cheio::after {
+    background: var(--tinta);
+  }
+  .sobre-tinta .btn-linha:hover {
+    @apply bg-pedra text-tinta border-pedra;
+  }
+
+  .link-fio {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-size 0.3s ease;
+  }
+  .link-fio:hover {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+  }
+
+  /* Grão sutil nos blocos pretos. */
+  .grao {
+    position: relative;
+    isolation: isolate;
+  }
+  .grao::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.07;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Campos do formulário */
+  .campo {
+    @apply w-full bg-transparent border-0 border-b border-grafite/40 text-grafite font-sans rounded-none;
+    min-height: 52px;
+    font-size: 1rem;
+    padding: 0.6rem 0;
+    transition: border-color 0.2s ease;
+  }
+  .campo:focus {
+    outline: none;
+    @apply border-tinta;
+    box-shadow: 0 1px 0 0 var(--tinta);
+  }
+  .campo:focus-visible {
+    outline: none;
+  }
+  .campo[aria-invalid="true"] {
+    border-color: #9a2a1c;
+    box-shadow: 0 1px 0 0 #9a2a1c;
+  }
+  .campo:disabled {
+    opacity: 0.55;
+  }
+  select.campo {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%232A241F' stroke-width='1.2'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 1.75rem;
+  }
+  textarea.campo {
+    min-height: 96px;
+    resize: vertical;
+  }
+}
+
+/* --- A cortina (momento de assinatura) --- */
+.cortina {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  pointer-events: none;
+  overflow: hidden;
+}
+.cortina > span {
+  flex: 1 1 0;
+  height: 100%;
+  background: var(--tinta);
+  border-right: 1px solid rgba(177, 156, 113, 0.35);
+  transform: translate3d(0, 0, 0);
+  animation: cortina-sobe 0.62s cubic-bezier(0.7, 0, 0.25, 1) forwards;
+  animation-delay: calc(0.08s + var(--d) * 0.5s);
+  will-change: transform;
+}
+.cortina > span:nth-child(4n + 2) {
+  border-right-color: rgba(177, 156, 113, 0.75);
+}
+@keyframes cortina-sobe {
+  to {
+    transform: translate3d(0, -101%, 0);
+  }
+}
+
+/* Numeração que se acende: de grafite para dourado (contraste AA nos dois estados). */
+.acende {
+  color: #8a8073;
+  transition: color 0.9s ease;
+}
+.acende.aceso {
+  color: var(--ouro);
+}
+.acende-texto {
+  color: #685f55;
+}
+.acende-texto.aceso {
+  color: #6e5a33;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cortina {
+    display: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .acende {
+    color: var(--ouro);
+  }
+  .acende-texto {
+    color: #6e5a33;
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
