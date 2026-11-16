@@ -28,16 +28,24 @@ placeholder.
 | Desligar o rascunho | `CONFIG.rascunho = false` **e** veja "Publicação definitiva" abaixo |
 | URL pública | `CONFIG.siteUrl` (canonical e `og:url`; o build recusa `localhost`) |
 
-### Fotos autorizadas
+### Fotos da profissional
 
-Coloque as fotos **autorizadas** em `referencias/fotos/` (jpg, png, webp ou
-avif). No próximo build a primeira aparece em recorte sóbrio (4:5) na seção da
-profissional. Para escolher uma foto específica, ponha o arquivo em `public/` e
-indique o caminho em `CONFIG.profissionais[0].foto`. Nenhuma foto de paciente,
-antes e depois ou imagem de banco.
+As fotos enviadas estão em `referencias/fotos-originais/` e são recortadas
+(4:5) e otimizadas para `public/fotos/` com:
 
-Para `og:image`, salve `public/og.jpg` (1200×630): o build passa a incluir a meta
-automaticamente.
+```bash
+python3 -I scripts/fotos.py
+```
+
+O site usa `CONFIG.profissionais[0].fotos`: a primeira é o retrato principal,
+a segunda entra menor ao lado/sobreposta. Para trocar, ajuste os recortes em
+`scripts/fotos.py` ou a lista no config; lista vazia = seção só tipográfica.
+Também funciona soltar uma foto em `referencias/fotos/` (entra automaticamente
+depois das que estão no config). Nunca use foto de paciente, antes e depois ou
+imagem de banco.
+
+`public/og.jpg` (logo + retrato, 1200×630) é a imagem de compartilhamento; o
+build inclui a meta `og:image` automaticamente quando o arquivo existe.
 
 ### Logo
 
@@ -81,7 +89,7 @@ avaliação" e bloqueia indexação em três camadas:
 - grafia exata da rua (o Google Maps mostra "R. Alberto Cabre");
 - lista real de procedimentos (hoje: toxina botulínica e preenchimento facial,
   conforme a bio do Instagram);
-- fotos autorizadas (se houver);
+- confirmar que as duas fotos estão autorizadas para uso no site;
 - logo em alta resolução.
 
 ## Formulário "Solicitar agendamento"

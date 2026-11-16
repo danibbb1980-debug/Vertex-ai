@@ -239,53 +239,111 @@ export function Procedimentos() {
 
 /* ---------------------------------------------------------------- profissional */
 
+/** <img> responsiva: usa a variante "-640.webp" quando o arquivo é .webp. */
+function Foto({ src, alt, className = '', sizes }: { src: string; alt: string; className?: string; sizes: string }) {
+  const pequena = src.endsWith('.webp') ? src.replace(/\.webp$/, '-640.webp') : ''
+  return (
+    <img
+      src={src}
+      srcSet={pequena ? `${pequena} 640w, ${src} 1100w` : undefined}
+      sizes={pequena ? sizes : undefined}
+      width={1100}
+      height={1375}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      className={`aspect-[4/5] w-full object-cover ${className}`}
+    />
+  )
+}
+
 export function Profissional() {
   const lista = CONFIG.profissionais.filter((p) => temTexto(p.nome))
   if (!lista.length) return null
   return (
-    <section id="profissional" aria-labelledby="t-profissional" className="relative overflow-hidden bg-perola-2 pb-20 pt-24 md:pb-24 md:pt-32">
+    <section id="profissional" aria-labelledby="t-profissional" className="relative overflow-hidden bg-perola-2 pb-20 pt-24 md:pb-28 md:pt-32">
       {lista.map((p, idx) => {
-        const foto = temTexto(p.foto) ? p.foto : idx === 0 ? FOTOS[0] : undefined
+        const fotos = [...p.fotos.filter(temTexto), ...(idx === 0 ? FOTOS : [])]
+        const [principal, segunda] = fotos
         const partes = p.nome.trim().split(/\s+/)
         const ultimo = partes.length > 1 ? partes.pop() : undefined
         const linhaRegistro = [p.profissao, p.registro].filter(temTexto).join(' · ')
-        return (
-          <div key={p.nome} className="moldura relative">
-            <p className="rotulo mb-10 text-agua-escura">{lista.length > 1 ? 'Profissionais' : 'A profissional'}</p>
-            <div className={`grid items-end gap-10 ${foto ? 'md:grid-cols-[1fr_minmax(0,22rem)]' : ''}`}>
+        const nome = (
+          <h2
+            id={idx === 0 ? 't-profissional' : undefined}
+            className={`relative leading-[0.9] tracking-[-0.045em] text-petroleo ${
+              principal
+                ? 'text-[clamp(4.4rem,22vw,6.5rem)] md:text-[clamp(5rem,10.5vw,10rem)]'
+                : 'text-[clamp(4.6rem,24vw,7rem)] sm:text-[clamp(4rem,14.5vw,12.5rem)]'
+            }`}
+          >
+            <span className={principal ? 'block' : 'block sm:inline'}>{partes.join(' ')}</span>
+            {ultimo && (
+              <>
+                {' '}
+                <em className={`block pl-[0.6em] font-light text-agua-escura ${principal ? '' : 'sm:inline sm:pl-0'}`}>{ultimo}</em>
+              </>
+            )}
+          </h2>
+        )
+        const rodape = (
+          <div className="flex flex-col gap-2 border-t border-filete pt-6">
+            {temTexto(linhaRegistro) && <p className="num text-[1.0625rem] text-grafite">{linhaRegistro}</p>}
+            <p className="text-grafite-2">
+              Atendimento em {CONFIG.endereco.cidade} - {CONFIG.endereco.uf}, com horário marcado.
+            </p>
+            {insta() && (
+              <a href={CONFIG.instagram.url} target="_blank" rel="noopener noreferrer" className="sublinha inline-flex min-h-12 items-center self-start text-agua-escura">
+                {CONFIG.instagram.usuario}
+                <span className="sr-only"> no Instagram (abre em nova aba)</span>
+              </a>
+            )}
+          </div>
+        )
+
+        if (!principal)
+          return (
+            <div key={p.nome} className="moldura relative">
+              <p className="rotulo mb-10 text-agua-escura">{lista.length > 1 ? 'Profissionais' : 'A profissional'}</p>
               <div className="relative">
                 <FitasHorizontais className="pointer-events-none absolute -left-5 -right-5 top-1/2 -translate-y-1/2 !h-[90px] w-[calc(100%+2.5rem)] md:-left-8 md:-right-8 md:!h-[140px] md:w-[calc(100%+4rem)]" voltas={1.6} />
-                <h2 id={idx === 0 ? 't-profissional' : undefined} className="relative text-[clamp(4.6rem,24vw,7rem)] leading-[0.9] tracking-[-0.045em] text-petroleo sm:text-[clamp(4rem,14.5vw,12.5rem)]">
-                  <span className="block sm:inline">{partes.join(' ')}</span>
-                  {ultimo && (
-                    <>
-                      {' '}
-                      <em className="block pl-[0.6em] font-light text-agua-escura sm:inline sm:pl-0">{ultimo}</em>
-                    </>
-                  )}
-                </h2>
+                {nome}
               </div>
-              {foto && (
-                <img
-                  src={foto}
-                  alt={`Retrato de ${p.nome}`}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[4/5] w-full object-cover"
-                />
-              )}
+              <div className="mt-10">{rodape}</div>
             </div>
-            <div className="mt-10 flex flex-col gap-2 border-t border-filete pt-6 sm:flex-row sm:items-baseline sm:justify-between">
-              {temTexto(linhaRegistro) && <p className="num text-[1.0625rem] text-grafite">{linhaRegistro}</p>}
-              <p className="text-grafite-2">
-                Atendimento em {CONFIG.endereco.cidade} - {CONFIG.endereco.uf}, com horário marcado.
-              </p>
-              {insta() && (
-                <a href={CONFIG.instagram.url} target="_blank" rel="noopener noreferrer" className="sublinha inline-flex min-h-12 items-center self-start text-agua-escura sm:self-auto">
-                  {CONFIG.instagram.usuario}
-                  <span className="sr-only"> no Instagram (abre em nova aba)</span>
-                </a>
+          )
+
+        // com fotos: retrato à direita, nome sobreposto à esquerda, segunda foto menor
+        return (
+          <div key={p.nome} className="moldura relative grid grid-cols-12 gap-x-6 gap-y-10 md:gap-x-10">
+            <div className="relative z-10 col-span-12 flex flex-col md:col-span-6 md:pt-6 lg:col-span-6">
+              <p className="rotulo mb-8 text-agua-escura md:mb-12">{lista.length > 1 ? 'Profissionais' : 'A profissional'}</p>
+              <div className="relative md:-mr-[30%]">
+                <FitasHorizontais className="pointer-events-none absolute -left-5 top-1/2 -translate-y-1/2 !h-[90px] w-[calc(100%+2.5rem)] md:-left-8 md:!h-[130px] md:w-[calc(100%+2rem)]" voltas={1.3} />
+                {nome}
+              </div>
+              {segunda && (
+                <div className="mt-14 hidden w-[58%] max-w-[17rem] md:block">
+                  <Foto src={segunda} alt={`${p.nome}`} sizes="17rem" />
+                </div>
               )}
+              <div className="mt-auto hidden pt-12 md:block">{rodape}</div>
+            </div>
+            <div className="relative col-span-12 row-start-2 md:col-span-6 md:col-start-7 md:row-start-1 lg:col-span-5 lg:col-start-8">
+              <div className="relative">
+                <Foto src={principal} alt={`Retrato de ${p.nome}`} sizes="(min-width: 768px) 40vw, 100vw" />
+                {/* filetes nos cantos, como no cartão do formulário */}
+                <span aria-hidden="true" className="absolute -left-3 -top-3 h-px w-20 bg-agua" />
+                <span aria-hidden="true" className="absolute -left-3 -top-3 h-20 w-px bg-agua" />
+                <span aria-hidden="true" className="absolute -bottom-3 -right-3 h-px w-20 bg-agua-escura" />
+                <span aria-hidden="true" className="absolute -bottom-3 -right-3 h-20 w-px bg-agua-escura" />
+              </div>
+              {segunda && (
+                <div className="relative -mt-24 ml-auto w-[46%] border-[6px] border-perola-2 md:hidden">
+                  <Foto src={segunda} alt={`${p.nome}`} sizes="46vw" />
+                </div>
+              )}
+              <div className="mt-10 md:hidden">{rodape}</div>
             </div>
           </div>
         )

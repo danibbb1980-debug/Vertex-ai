@@ -25,8 +25,12 @@ export type Profissional = {
   profissao: string
   /** ex.: "CRBM nº 00000" — vazio, não aparece */
   registro: string
-  /** caminho de foto AUTORIZADA em /public — vazio, não aparece */
-  foto: string
+  /**
+   * Fotos AUTORIZADAS em /public (a primeira é o retrato principal; a segunda,
+   * opcional, entra menor e sobreposta). Lista vazia = só tipografia.
+   * Se existir a versão "-640.webp" ao lado, ela é usada em telas pequenas.
+   */
+  fotos: string[]
 }
 
 export const CONFIG = {
@@ -96,7 +100,12 @@ export const CONFIG = {
   ] as Procedimento[],
 
   profissionais: [
-    { nome: 'Danielle Souza', profissao: '', registro: '', foto: '' },
+    {
+      nome: 'Danielle Souza',
+      profissao: '',
+      registro: '',
+      fotos: ['/fotos/danielle-estudio.webp', '/fotos/danielle-congresso.webp'],
+    },
   ] as Profissional[],
 
   /** Preencha nome e registro para exibir no rodapé. */
