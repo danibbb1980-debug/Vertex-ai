@@ -1,0 +1,275 @@
+/* Fontes auto-hospedadas (arquivos copiados de @fontsource/besley e @fontsource/hanken-grotesk, subconjunto latin). */
+@font-face {
+  font-family: 'Besley';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/besley-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Besley';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/besley-500-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/hanken-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/hanken-600.woff2') format('woff2');
+}
+@import 'tailwindcss';
+
+@theme {
+  --color-areia: #efe7da;
+  --color-areia-2: #e6dccb;
+  --color-fio: #cfc3ae;
+  --color-musgo: #1d2a22;
+  --color-musgo-2: #26362c;
+  --color-grafite: #2a2622;
+  --color-grafite-2: #5b534b;
+  --color-terracota: #b5603f;
+  --color-terracota-escuro: #8f4428;
+  --color-terracota-clara: #d9906e;
+  --color-areia-suave: #b9b6a8;
+  /* numerais grandes ainda não ativos (contraste >= 3:1 para texto grande) */
+  --color-apagado: #7d7268;
+
+  --font-display: 'Besley', 'Georgia', serif;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --breakpoint-xs: 26rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background: var(--color-areia);
+    color: var(--color-grafite);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-feature-settings: 'kern', 'liga';
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.022em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+  em {
+    font-style: italic;
+  }
+  ::selection {
+    background: var(--color-musgo);
+    color: var(--color-areia);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-terracota-escuro);
+    outline-offset: 3px;
+  }
+  .on-musgo :focus-visible {
+    outline-color: var(--color-terracota-clara);
+  }
+}
+
+@layer components {
+  .rotulo {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .num {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    font-weight: 600;
+    font-size: 0.975rem;
+    letter-spacing: 0.01em;
+    border: 1px solid currentColor;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: color 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  /* Preenchimento que sobe por clip-path: efeito sutil de botão */
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--btn-fill, var(--color-grafite));
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .btn:hover::before,
+  .btn:focus-visible::before {
+    clip-path: inset(0 0 0 0);
+  }
+  .btn-primario {
+    background: var(--color-musgo);
+    color: var(--color-areia);
+    border-color: var(--color-musgo);
+    --btn-fill: var(--color-terracota-escuro);
+  }
+  .btn-secundario {
+    color: var(--color-grafite);
+    --btn-fill: var(--color-grafite);
+  }
+  .btn-secundario:hover,
+  .btn-secundario:focus-visible {
+    color: var(--color-areia);
+  }
+  .btn-claro {
+    background: var(--color-areia);
+    color: var(--color-musgo);
+    border-color: var(--color-areia);
+    --btn-fill: var(--color-terracota-clara);
+  }
+  .btn-contorno-claro {
+    color: var(--color-areia);
+    --btn-fill: var(--color-areia);
+  }
+  .btn-contorno-claro:hover,
+  .btn-contorno-claro:focus-visible {
+    color: var(--color-musgo);
+  }
+  .seta {
+    width: 1.1em;
+    height: 1px;
+    background: currentColor;
+    position: relative;
+    transition: width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .seta::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 7px;
+    height: 7px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transform: rotate(45deg);
+  }
+  .btn:hover .seta {
+    width: 1.6em;
+  }
+  .link-sub {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    text-decoration-color: var(--color-terracota);
+  }
+  .link-sub:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* Grão sutil nos blocos verdes */
+  .grao {
+    position: relative;
+  }
+  .grao::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: screen;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Curvas que se desenham */
+  .curva {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+  }
+  .desenhar .curva {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: desenha 2.4s cubic-bezier(0.55, 0.1, 0.25, 1) forwards;
+    animation-delay: calc(0.25s + var(--i) * 0.11s);
+  }
+  @keyframes desenha {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .desenhar .curva {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Campos do formulário */
+  .campo {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.75rem 0.9rem;
+    background: var(--color-areia);
+    border: 1px solid var(--color-fio);
+    border-bottom-color: var(--color-grafite-2);
+    color: var(--color-grafite);
+    font: inherit;
+    font-size: 1rem;
+    border-radius: 0;
+    appearance: none;
+    transition: border-color 0.2s;
+  }
+  .campo:hover {
+    border-color: var(--color-grafite-2);
+  }
+  .campo:focus-visible {
+    outline: 2px solid var(--color-terracota-escuro);
+    outline-offset: 0;
+    border-color: var(--color-terracota-escuro);
+  }
+  .campo[aria-invalid='true'] {
+    border-color: var(--color-terracota-escuro);
+    border-width: 1px 1px 2px;
+  }
+  select.campo {
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%232a2622' stroke-width='1.2'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+  }
+  input[type='date'].campo::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+  }
+}

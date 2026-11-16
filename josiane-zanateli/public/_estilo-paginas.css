@@ -1,0 +1,12 @@
+body{margin:0;background:#efe7da;color:#2a2622;font:17px/1.65 "Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.faixa{background:#2a2622;color:#efe7da;text-align:center;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:6px 16px;margin:0}
+main{max-width:680px;margin:0 auto;padding:72px 20px 96px}
+.rotulo{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:#8f4428}
+h1{font-family:Besley,Georgia,serif;font-weight:500;letter-spacing:-.03em;line-height:1.02;font-size:clamp(40px,8vw,64px);margin:20px 0 32px}
+h2{font-family:Besley,Georgia,serif;font-weight:500;font-size:24px;letter-spacing:-.015em;margin:40px 0 8px}
+p,li{color:#5b534b}
+a{color:#2a2622;text-decoration:underline;text-decoration-color:#b5603f;text-underline-offset:.25em}
+a:focus-visible{outline:2px solid #8f4428;outline-offset:3px}
+.voltar{display:inline-flex;align-items:center;min-height:48px;margin-top:40px;padding:0 24px;border:1px solid #1d2a22;background:#1d2a22;color:#efe7da;text-decoration:none;font-weight:600}
+hr{border:0;border-top:1px solid #cfc3ae;margin:40px 0}
+em{font-style:italic}
