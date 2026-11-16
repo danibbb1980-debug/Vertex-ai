@@ -223,6 +223,8 @@ export function Fotos() {
 /* --------------------------------------------------------------- FORMAÇÃO */
 export function Formacao() {
   if (!temItens(CONFIG.formacao)) return null;
+  const foto = CONFIG.fotoProfissional;
+  const temFoto = !!foto?.src;
   return (
     <section id="formacao" aria-labelledby="titulo-formacao" className="bg-pedra-funda">
       <div className="container-site py-20 md:py-32">
@@ -233,7 +235,7 @@ export function Formacao() {
               Percurso de <em className="text-ouro-texto">estudo</em>.
             </h2>
           </div>
-          {CONFIG.cargo && (
+          {CONFIG.cargo && !temFoto && (
             <p className="rotulo text-grafite-suave">
               {CONFIG.cargo}
               {CONFIG.nomeProfissional && ` · ${CONFIG.nomeProfissional}`}
@@ -241,19 +243,50 @@ export function Formacao() {
             </p>
           )}
         </div>
-        <ol className="relative mt-14 md:mt-20 md:pl-[12%]">
-          <span aria-hidden="true" className="absolute bottom-6 left-[2.15rem] top-6 w-px bg-ouro/60 md:left-[calc(12%+3.1rem)]" />
-          {CONFIG.formacao.map((f, i) => (
-            <li key={f} className="relative grid grid-cols-[4.3rem_1fr] items-center gap-6 py-6 md:grid-cols-[6.2rem_1fr] md:gap-12 md:py-9">
-              <Numeral texto className="relative bg-pedra-funda text-center font-serif text-6xl leading-none md:text-[5.5rem]">
-                {n2(i)}
-              </Numeral>
-              <p className="border-b border-grafite/20 pb-6 font-serif text-2xl leading-tight text-tinta md:pb-9 md:text-[2.4rem]">
-                {f}
-              </p>
-            </li>
-          ))}
-        </ol>
+
+        <div className={`mt-14 grid gap-12 md:mt-20 ${temFoto ? "lg:grid-cols-12 lg:gap-16" : ""}`}>
+          {temFoto && (
+            <figure className="w-[68%] max-w-[300px] lg:col-span-4 lg:w-full lg:max-w-none">
+              <div className="relative">
+                {/* moldura em fio dourado deslocada, como uma prega */}
+                <span aria-hidden="true" className="absolute -right-3 -top-3 bottom-3 left-3 border border-ouro/70" />
+                <picture>
+                {foto.webp && <source srcSet={foto.webp} type="image/webp" />}
+                <img
+                  src={foto.src}
+                  alt={foto.alt}
+                  width={foto.largura}
+                  height={foto.altura}
+                  loading="lazy"
+                  decoding="async"
+                  className="relative block aspect-[550/976] h-auto w-full object-cover"
+                />
+                </picture>
+              </div>
+              <figcaption className="rotulo mt-5 text-grafite-suave">
+                {CONFIG.cargo}
+                {CONFIG.nomeProfissional && ` · ${CONFIG.nomeProfissional}`}
+                {CONFIG.registro && ` · ${CONFIG.registro}`}
+              </figcaption>
+            </figure>
+          )}
+          <ol className={`relative self-center ${temFoto ? "lg:col-span-8" : "md:pl-[12%]"}`}>
+            <span
+              aria-hidden="true"
+              className={`absolute bottom-6 left-[2.15rem] top-6 w-px bg-ouro/60 ${temFoto ? "md:left-[3.1rem]" : "md:left-[calc(12%+3.1rem)]"}`}
+            />
+            {CONFIG.formacao.map((f, i) => (
+              <li key={f} className="relative grid grid-cols-[4.3rem_1fr] items-center gap-6 py-6 md:grid-cols-[6.2rem_1fr] md:gap-12 md:py-9">
+                <Numeral texto className="relative bg-pedra-funda text-center font-serif text-6xl leading-none md:text-[5.5rem]">
+                  {n2(i)}
+                </Numeral>
+                <p className="border-b border-grafite/20 pb-6 font-serif text-2xl leading-tight text-tinta md:pb-9 md:text-[2.4rem]">
+                  {f}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

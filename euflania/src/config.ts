@@ -86,12 +86,21 @@ export const CONFIG = {
   /** Vazio: a seção Cursos, o link no menu e a opção do formulário não aparecem. */
   cursos: [] as Curso[],
 
-  /** Formação informada no perfil do Google (confirmar antes de publicar). Vazio: seção some. */
+  /** Formação (confirmada pelo cliente em 16/11/2026). Vazio: seção some. */
   formacao: [
     "Formada em Estética pelo Senac",
     "Graduada pela Unifran",
     "Pós-graduada em Estética Avançada",
   ] as string[],
+
+  /** Foto da profissional (seção Formação). Vazio (src: ""): não aparece. */
+  fotoProfissional: {
+    src: "/fotos/profissional.jpg",
+    webp: "/fotos/profissional.webp",
+    largura: 550,
+    altura: 976,
+    alt: "Esteticista da Euflânia, de jaleco branco, no espaço de atendimento",
+  },
 
   /** Fotos autorizadas (ex.: { src: "/fotos/espaco-1.jpg", alt: "..." }). Vazio: nada aparece. */
   fotos: [] as Foto[],

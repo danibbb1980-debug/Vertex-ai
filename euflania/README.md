@@ -34,6 +34,10 @@ Coloque os arquivos em `public/fotos/` e liste em `fotos`, por exemplo
 sóbrios depois da seção de atendimentos, e a primeira vira a `og:image`. Use só fotos com autorização,
 nunca de clientes, corpos ou antes e depois.
 
+### Foto da profissional
+Fica em `fotoProfissional` (seção Formação). Para trocar, substitua os arquivos em `public/fotos/` e
+ajuste `largura`, `altura` e `alt`. Com `src: ""`, a foto some e a linha do tempo ocupa a largura toda.
+
 ### Logo original
 O logotipo foi recriado em SVG (texto vetorial) porque a imagem recebida tinha baixa resolução.
 Quando houver o arquivo original, salve em `public/` e preencha
@@ -49,8 +53,11 @@ Quando houver o arquivo original, salve em `public/` e preencha
 ## Pendências antes de publicar
 - **Cursos**: não há nenhuma informação (nomes, descrições). A seção está pronta, mas vazia e oculta.
 - **Logo em alta resolução** (SVG ou PNG grande).
-- **Confirmar a formação** com a profissional: o perfil do Google cita Senac, Unifran e pós-graduação
-  em Estética Avançada, mas não informa o curso da graduação.
+- Formação confirmada pelo cliente (Senac, Unifran, pós em Estética Avançada). O curso da graduação
+  na Unifran não foi informado.
+- **Autorização de imagem**: a foto da profissional (`public/fotos/profissional.*`) veio do perfil do
+  Google, enviada pelo cliente. Confirmar a autorização por escrito e, se possível, trocar por uma foto
+  original em alta resolução (a atual tem 550 × 976 px).
 - **Tempo de atuação**: o Instagram diz "+20 anos" e o Google diz "mais de 18 anos". Por causa do
   conflito, nada foi exibido.
 - **Lista real de atendimentos**: hoje só "Estética corporal".
