@@ -54,9 +54,17 @@ export const CONFIG = {
     'Pós-graduada em Ultrassonografia Ginecológica e Obstétrica',
   ],
   frase: 'Cuidando da mulher em todas as fases da vida',
-  /** caminho da foto em /public (ex.: "/fotos/dra-valeria.jpg"). Vazio = composição tipográfica. Só com autorização. */
-  foto: '',
-  fotoAlt: '',
+  /**
+   * Fotos em /public/fotos (JPG; se existir um .webp com o mesmo nome, ele é usado primeiro).
+   * Vazio = composição só tipográfica. Use somente fotos autorizadas pela médica e pela fotógrafa.
+   */
+  foto: '/fotos/dra-valeria-consultorio.jpg',
+  fotoAlt: 'Dra. Valéria Reis, de jaleco azul-marinho, sentada no consultório do Espaço Saúde e Mulher',
+  /** segunda foto, exibida ao lado da frase da médica */
+  fotoEspaco: '/fotos/dra-valeria-espaco.jpg',
+  fotoEspacoAlt: 'Dra. Valéria Reis em frente à parede com o logo do Espaço Saúde e Mulher',
+  /** crédito exibido sob as fotos; vazio = sem crédito */
+  fotoCredito: 'Fotos: Julia Danziger Fotografias',
   /** vínculos institucionais (Santa Casa). Desligado até o cliente decidir. */
   mostrarSantaCasa: false,
   santaCasa: [

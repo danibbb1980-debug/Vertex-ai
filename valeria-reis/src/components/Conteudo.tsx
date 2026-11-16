@@ -12,6 +12,31 @@ import {
 import { Monograma } from './Monograma'
 import { IconeInstagram, IconeMapa, IconeWhatsapp, LinkExterno, Marca, Titulo, useEmFoco } from './ui'
 
+/* ============ Foto com filete de ouro deslocado (moldura da marca) ============ */
+function Foto({ src, alt, lado = 'esquerda' }: { src: string; alt: string; lado?: 'esquerda' | 'direita' }) {
+  const webp = src.replace(/\.jpe?g$/i, '.webp')
+  return (
+    <div className="relative">
+      <span
+        aria-hidden="true"
+        className={`absolute inset-0 rounded-[3px] border border-ouro ${lado === 'esquerda' ? '-translate-x-3 translate-y-3' : 'translate-x-3 translate-y-3'}`}
+      />
+      <picture>
+        {webp !== src && <source srcSet={webp} type="image/webp" />}
+        <img
+          src={src}
+          alt={alt}
+          width={733}
+          height={1100}
+          loading="lazy"
+          decoding="async"
+          className="relative block aspect-[733/1100] w-full rounded-[3px] bg-creme-2 object-cover"
+        />
+      </picture>
+    </div>
+  )
+}
+
 /* ============ A médica ============ */
 export function Medica() {
   const temFoto = !!CONFIG.foto
@@ -38,15 +63,9 @@ export function Medica() {
 
             <div className="lg:col-span-5 lg:pt-4">
               {temFoto && (
-                <img
-                  src={CONFIG.foto}
-                  alt={CONFIG.fotoAlt || `Retrato de ${nome}`}
-                  width={800}
-                  height={1000}
-                  loading="lazy"
-                  decoding="async"
-                  className="mb-10 aspect-[4/5] w-full rounded-[2px] object-cover"
-                />
+                <div className="mb-12 max-w-[26rem] lg:ml-auto">
+                  <Foto src={CONFIG.foto} alt={CONFIG.fotoAlt || `Retrato de ${nome}`} />
+                </div>
               )}
               {CONFIG.formacao.length > 0 && (
                 <>
@@ -75,7 +94,21 @@ export function Medica() {
             </div>
           </div>
 
-          {CONFIG.frase && (
+          {CONFIG.frase && CONFIG.fotoEspaco && (
+            <figure className="mt-20 grid items-end gap-10 md:mt-28 md:grid-cols-12 md:gap-10">
+              <div className="max-w-[20rem] md:col-span-4 md:max-w-none">
+                <Foto src={CONFIG.fotoEspaco} alt={CONFIG.fotoEspacoAlt} lado="direita" />
+              </div>
+              <div className="md:col-span-8 md:pb-16 md:pl-6">
+                <Monograma className="mb-8 hidden h-auto w-20 md:block" peso={1.4} />
+                <blockquote>
+                  <p className="display text-[clamp(1.75rem,4.4vw,3.25rem)] leading-[1.12] text-bronze">{CONFIG.frase}</p>
+                </blockquote>
+                <figcaption className="rotulo mt-6 text-taupe">{CONFIG.nome}</figcaption>
+              </div>
+            </figure>
+          )}
+          {CONFIG.frase && !CONFIG.fotoEspaco && (
             <figure className="mt-20 grid items-end gap-6 md:mt-28 md:grid-cols-12">
               <Monograma className="hidden h-auto w-24 md:col-span-2 md:block" peso={1.4} />
               <blockquote className="md:col-span-10">
@@ -83,6 +116,9 @@ export function Medica() {
               </blockquote>
               <figcaption className="rotulo text-taupe md:col-span-10 md:col-start-3">{CONFIG.nome}</figcaption>
             </figure>
+          )}
+          {(temFoto || CONFIG.fotoEspaco) && CONFIG.fotoCredito && (
+            <p className="mt-10 text-[0.8rem] text-taupe">{CONFIG.fotoCredito}</p>
           )}
         </div>
       </div>

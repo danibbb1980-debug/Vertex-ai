@@ -20,7 +20,7 @@ Todos os dados estão em **`src/config.ts`**. Regra: campo vazio = o elemento n�
 | URL pública (canonical, og:url, og:image) | `siteUrl` |
 | CRM | `crm` e `crmUF`. Preenchido, aparece no hero, no bloco da médica, no rodapé (com "Responsável técnica") e no JSON-LD |
 | Nome completo | `nomeCompleto` (vazio = usa "Dra. Valéria Reis") |
-| Foto da médica | coloque o arquivo em `public/fotos/` e preencha `foto` (ex.: `/fotos/dra-valeria.jpg`) e `fotoAlt`. **Só com autorização** |
+| Fotos da médica | `foto` (bloco da médica), `fotoEspaco` (ao lado da frase), com textos alternativos e `fotoCredito`. Arquivos em `public/fotos/` (JPG + WebP com o mesmo nome). Vazio = composição só tipográfica |
 | Vínculo com a Santa Casa | `mostrarSantaCasa` (hoje `false`) e textos em `santaCasa` |
 | Saúde íntima e estética ginecológica | `mostrarEsteticaIntima` (hoje `true`) |
 | Telefone fixo / e-mail | `telefone`, `email` (vazios = sem botão "Ligar" e sem e-mail) |
@@ -46,7 +46,7 @@ Todos os dados estão em **`src/config.ts`**. Regra: campo vazio = o elemento n�
 2. **Confirmar que o RQE 50585 é de Ginecologia e Obstetrícia.**
 3. **Nome completo** da médica (o Instagram exibe "Valeria Reis Nascimento"; confirmar antes de usar).
 4. **Horários**: o Google informa 08h00 às 17h30; o atendimento automático do WhatsApp diz 8h às 17h. Confirmar.
-5. **Fotos** da médica e do consultório, com autorização (os prints do Instagram não foram usados).
+5. **Fotos**: as duas fotos atuais foram recortadas de capturas do Instagram (739 px de largura, com a marca d'água da fotógrafa Julia Danziger). Confirmar a autorização de uso no site com a médica e a fotógrafa e, se possível, pedir os arquivos originais em alta resolução.
 6. Decidir sobre `mostrarSantaCasa` e `mostrarEsteticaIntima`.
 7. Desligar o rascunho: `rascunho: false` em `src/config.ts`, **e** remover o `X-Robots-Tag` de `vercel.json`
    e de `public/_headers`, e trocar `public/robots.txt` por `Allow: /`.
