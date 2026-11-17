@@ -1,0 +1,152 @@
+@import "tailwindcss";
+@import "@fontsource/newsreader/latin-300.css";
+@import "@fontsource/newsreader/latin-300-italic.css";
+@import "@fontsource/jost/latin-300.css";
+@import "@fontsource/jost/latin-400.css";
+
+@theme {
+  --color-gesso: #f2efe9;
+  --color-gesso-2: #e8e3da;
+  --color-tinta: #0d0e38;
+  --color-tinta-2: #1a1c4d;
+  --color-champanhe: #cfc7a6;
+  --color-champanhe-escuro: #6b5f3a;
+  --color-ardosia: #545a70;
+  --color-nevoa: #a6aac0;
+  --color-apagado: #7c8096;
+  --color-texto: #14152b;
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+}
+
+:root {
+  /* direção da luz (atualizada pela rolagem em src/lib/light.ts) */
+  --lx: -1.4px;
+  --ly: -1.4px;
+  --draft-h: 30px;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--draft-h) + 76px);
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--color-gesso);
+  color: var(--color-texto);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+body.sem-rascunho { --draft-h: 0px; }
+
+@layer components {
+.display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.022em;
+  line-height: 1.02;
+  font-optical-sizing: auto;
+  font-feature-settings: "kern", "liga", "dlig";
+}
+.display em { font-style: italic; letter-spacing: -0.01em; }
+
+.rotulo {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.num { font-variant-numeric: tabular-nums lining-nums; font-feature-settings: "tnum", "lnum"; }
+
+:focus-visible {
+  outline: 2px solid var(--color-champanhe-escuro);
+  outline-offset: 3px;
+}
+.escuro :focus-visible { outline-color: var(--color-champanhe); }
+
+/* grão sutil nos blocos escuros */
+.grao { position: relative; isolation: isolate; }
+.grao::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem;
+  min-height: 52px; padding: 0 1.6rem;
+  font-family: var(--font-sans); font-size: 13px; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  border: 1px solid currentColor; border-radius: 0;
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+  position: relative; overflow: hidden; cursor: pointer; text-align: center;
+}
+.btn-primario { background: var(--color-tinta); color: var(--color-gesso); border-color: var(--color-tinta); }
+.btn-primario:hover { background: var(--color-tinta-2); }
+.btn-secundario { color: var(--color-tinta); background: transparent; }
+.btn-secundario:hover { background: var(--color-tinta); color: var(--color-gesso); }
+.escuro .btn-primario { background: var(--color-champanhe); color: var(--color-tinta); border-color: var(--color-champanhe); }
+.escuro .btn-primario:hover { background: var(--color-gesso); border-color: var(--color-gesso); }
+.escuro .btn-secundario { color: var(--color-gesso); }
+.escuro .btn-secundario:hover { background: var(--color-gesso); color: var(--color-tinta); }
+/* efeito sutil: filete que corre sob o rótulo */
+.btn .seta { display: inline-block; width: 18px; height: 1px; background: currentColor; transition: width .3s ease; }
+.btn:hover .seta { width: 30px; }
+
+.link-sub {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px; background-repeat: no-repeat; background-position: 0 100%;
+  transition: background-size .3s ease;
+}
+.link-sub:hover { background-size: 100% 1px; }
+
+/* ---------- A luz esculpe ---------- */
+.sculpt path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.sculpt .s-sombra, .sculpt .s-brilho { opacity: 0; transition: opacity 1.2s ease; }
+.sculpt .s-sombra { transform: translate(calc(var(--lx) * var(--k, 1) * -1), calc(var(--ly) * var(--k, 1) * -1)); }
+.sculpt .s-brilho { transform: translate(calc(var(--lx) * var(--k, 1)), calc(var(--ly) * var(--k, 1))); }
+.sculpt .s-traco { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.sculpt.desenhado .s-traco { transition: stroke-dashoffset 2.6s cubic-bezier(.65,.05,.25,1); stroke-dashoffset: 0; }
+.sculpt.relevo .s-sombra, .sculpt.relevo .s-brilho { opacity: 1; }
+/* claro: entalhe em gesso */
+.sculpt-claro .s-traco { stroke: #b9b2a4; }
+.sculpt-claro .s-sombra { stroke: #8f8676; }
+.sculpt-claro .s-brilho { stroke: #ffffff; }
+/* escuro: linha champanhe luminosa */
+.sculpt-escuro .s-traco { stroke: var(--color-champanhe); }
+.sculpt-escuro .s-sombra { stroke: #05061c; }
+.sculpt-escuro .s-brilho { stroke: #f6f0d8; opacity: 0; }
+.sculpt-escuro.relevo .s-brilho { opacity: .55; }
+
+/* numeração que se acende */
+.acende { color: var(--color-apagado); transition: color .9s ease; }
+.acende.aceso { color: var(--color-champanhe-escuro); }
+
+/* revelação do título do hero */
+.revela > span { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+.revela > span > span { display: inline-block; transform: translateY(105%); animation: sobe 1s cubic-bezier(.2,.7,.1,1) forwards; }
+@keyframes sobe { to { transform: translateY(0); } }
+
+.painel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s ease, opacity .4s ease; opacity: 0; }
+.painel.aberto { grid-template-rows: 1fr; opacity: 1; }
+.painel > div { overflow: hidden; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .sculpt .s-traco { stroke-dashoffset: 0; }
+  .sculpt .s-sombra, .sculpt .s-brilho { opacity: 1; }
+  .sculpt-escuro .s-brilho { opacity: .55; }
+  .revela > span > span { transform: none; }
+}
