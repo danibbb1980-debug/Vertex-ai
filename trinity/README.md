@@ -17,6 +17,7 @@ Tudo vem desse arquivo. **Campo vazio ou lista vazia = o bloco não aparece** e 
 - **Cursos:** `CONFIG.cursos`. Hoje só traz a frase de contato. Lista vazia = seção some.
 - **Profissionais:** preencha `CONFIG.profissionais` com `nome`, `profissao`, `registro` e `foto` (opcional). Só aparece quem tiver nome **e** registro.
 - **Responsável técnico:** `CONFIG.responsavelTecnico` (nome e registro). Aparece no rodapé quando preenchido.
+- **Antes e depois:** em `CONFIG.fotosRegistros`, preencha `antes` e `depois` (mesmo tamanho e enquadramento) para virar uma comparação arrastável. Sem esses campos, a foto aparece normal.
 - **Fotos:** coloque os arquivos em `public/img/` (de preferência `.webp`, com uma versão `-600.webp`) e liste em `CONFIG.fotosEspaco` ou `CONFIG.fotosRegistros` com `alt`, `legenda`, `largura` e `altura`. Os originais recortados estão em `referencias/fotos/`.
 - **Logo original:** salve como `public/logo.svg` e defina `CONFIG.logo = '/logo.svg'`. O logotipo atual foi recriado (nó redesenhado + "TRINITY" em Bodoni Moda e descritor em Schibsted Grotesk, convertidos em contornos).
 - **Tirar do modo rascunho:** `CONFIG.rascunho = false`, atualize `CONFIG.siteUrl` e apague `public/robots.txt`/`public/_headers` e o bloco `headers` do `vercel.json`.

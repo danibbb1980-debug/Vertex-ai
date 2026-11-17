@@ -8,6 +8,9 @@ export type Foto = {
   legenda?: string
   largura: number
   altura: number
+  /** comparativo: com antes e depois preenchidos, vira uma comparação arrastável */
+  antes?: string
+  depois?: string
 }
 
 export type Atendimento = { nome: string; descricao: string }
@@ -89,10 +92,10 @@ export const CONFIG = {
   ] as Foto[],
 
   fotosRegistros: [
-    { src: '/img/olhos.webp', alt: 'Comparativo de registro facial da região abaixo dos olhos, foto superior e inferior', legenda: 'Região dos olhos', largura: 800, altura: 1109 },
-    { src: '/img/perfil-olhos.webp', alt: 'Comparativo de registro facial de perfil, região lateral dos olhos', legenda: 'Lateral dos olhos', largura: 1000, altura: 876 },
+    { src: '/img/perfil-olhos-depois.webp', antes: '/img/perfil-olhos-antes.webp', depois: '/img/perfil-olhos-depois.webp', alt: 'registro facial de perfil, região lateral dos olhos', legenda: 'Lateral dos olhos', largura: 1170, altura: 445 },
+    { src: '/img/perfil-rosto-depois.webp', antes: '/img/perfil-rosto-antes.webp', depois: '/img/perfil-rosto-depois.webp', alt: 'registro facial de perfil masculino', legenda: 'Perfil do rosto', largura: 579, altura: 1026 },
+    { src: '/img/olhos-depois.webp', antes: '/img/olhos-antes.webp', depois: '/img/olhos-depois.webp', alt: 'registro facial de frente, região abaixo dos olhos', legenda: 'Região dos olhos', largura: 838, altura: 580 },
     { src: '/img/labios.webp', alt: 'Registro de atendimento na região dos lábios, vista lateral', legenda: 'Lábios', largura: 1000, altura: 876 },
-    { src: '/img/perfil-rosto.webp', alt: 'Comparativo de registro facial de perfil masculino, lado a lado', legenda: 'Perfil do rosto', largura: 1000, altura: 876 },
   ] as Foto[],
 
   secoes: {

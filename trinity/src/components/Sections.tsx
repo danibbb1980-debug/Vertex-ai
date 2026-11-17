@@ -3,6 +3,7 @@ import { CONFIG, wa, type Foto } from '../config'
 import { useChapter, useInView, useReducedMotion } from '../hooks'
 import { Knot } from './Knot'
 import { Logo } from './Logo'
+import { Comparar } from './Comparar'
 
 const ext = { target: '_blank', rel: 'noopener noreferrer' } as const
 const wrap = 'mx-auto w-full max-w-[1360px] px-4 sm:px-8'
@@ -220,17 +221,18 @@ export function Registros() {
             Imagens publicadas pela própria Trinity. Cada caso é individual: a indicação depende de avaliação por profissional habilitado, e as imagens não são promessa de efeito para outras pessoas.
           </p>
         </div>
-        <div className="scroller -mx-4 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-12 lg:gap-x-6 lg:gap-y-12 lg:overflow-visible lg:px-0 lg:pb-0" tabIndex={0} aria-label="Galeria de registros, role para o lado">
-          {fotos.map((f, i) => (
-            <Figure
-              key={f.src}
-              f={f}
-              sizes="(min-width:1024px) 40vw, 80vw"
-              className={`w-[78vw] max-w-[420px] shrink-0 snap-start lg:w-auto lg:max-w-none ${
-                ['lg:col-span-4 lg:row-span-2', 'lg:col-span-8', 'lg:col-span-4 lg:col-start-5', 'lg:col-span-4'][i % 4]
-              }`}
-            />
-          ))}
+        <p className="mt-8 text-[0.95rem] text-stone">
+          Arraste a alça sobre cada foto para comparar o antes e o depois. No teclado, use as setas.
+        </p>
+        <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-x-6 lg:gap-y-12">
+          {fotos.map((f, i) => {
+            const cls = ['lg:col-span-8', 'lg:col-span-4 lg:row-span-2', 'lg:col-span-5', 'lg:col-span-3'][i % 4]
+            return f.antes && f.depois ? (
+              <Comparar key={f.src} f={f} sizes="(min-width:1024px) 60vw, 100vw" className={cls} />
+            ) : (
+              <Figure key={f.src} f={f} sizes="(min-width:1024px) 30vw, 100vw" className={cls} />
+            )
+          })}
         </div>
       </div>
     </section>
