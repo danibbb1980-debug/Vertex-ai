@@ -78,10 +78,9 @@ export const CONFIG = {
   ] as Atendimento[],
 
   fotos: {
-    // Retratos: confirmar com o cliente quem aparece em cada foto antes de publicar.
+    // [0] aparece no hero; [1], se existir, aparece em "O profissional".
     profissional: [
-      { src: "/fotos/retrato-consultorio", larguras: [400], largura: 400, altura: 600, alt: "Retrato do profissional de jaleco azul, em pé, no consultório" },
-      { src: "/fotos/retrato-video", larguras: [400, 640], largura: 640, altura: 960, alt: "Retrato do profissional de terno cinza, diante de um painel de madeira" },
+      { src: "/fotos/retrato-consultorio", larguras: [400], largura: 400, altura: 600, alt: "Dr. Maurilio Caselato, de jaleco azul, no consultório" },
     ] as Foto[],
     consultorio: [
       { src: "/fotos/sala-de-espera", larguras: [480, 800], largura: 800, altura: 500, alt: "Sala de espera com sofá claro, luz indireta e passagem em arco", legenda: "Sala de espera" },

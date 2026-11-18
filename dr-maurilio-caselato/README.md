@@ -29,7 +29,7 @@ Tudo fica em `src/config.ts`. Campo vazio (`""`) ou lista vazia = o bloco não a
 2. Registre-a em `scripts/fotos.py` (nome, recorte opcional, larguras) e rode `npm run fotos` (precisa de Python + Pillow). Isso gera `.webp` e `.jpg` em `public/fotos/`.
 3. Adicione a entrada em `CONFIG.fotos.profissional` (hero e "O profissional") ou `CONFIG.fotos.consultorio` (galeria).
 
-Os recortes atuais removem a TV e o banner com marca comercial da sala de atendimento, a pessoa que aparecia na recepção e a marca d'água do editor de vídeo do retrato.
+Os recortes atuais removem a TV e o banner com marca comercial da sala de atendimento e a pessoa que aparecia na recepção.
 
 ### Logo
 
@@ -39,7 +39,6 @@ O logotipo atual é **provisório** (SVG tipográfico em `src/components/Marks.t
 
 - [ ] Confirmar o registro **CRO-MG 22618** (no perfil aparece como `CROMG:22618`).
 - [ ] Confirmar se há especialidade registrada (com RQE). Hoje o campo está vazio e nada é exibido.
-- [ ] **Confirmar quem aparece em cada retrato.** As duas fotos de retrato recebidas parecem mostrar pessoas diferentes; o site não identifica nenhuma delas pelo nome no texto alternativo.
 - [ ] Confirmar que as fotos são do consultório da Rua Alferes Joaquim Antônio, 170 e que há autorização de uso (parte delas veio de uma página que também cita outros profissionais).
 - [ ] Lista real de procedimentos (hoje: alinhadores transparentes e lentes de contato dental).
 - [ ] Logo definitivo.

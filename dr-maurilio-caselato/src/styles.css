@@ -304,6 +304,14 @@ form .btn-largo { margin-bottom: 14px; }
 .profissional-foto { position: relative; margin: 0; max-width: 380px; padding: 22px; }
 .profissional-foto img { aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 12%; width: 100%; filter: saturate(0.9); }
 .profissional-foto::before { content: ""; position: absolute; inset: 0; border: 1px solid var(--fio); pointer-events: none; }
+.profissional-marca { position: relative; justify-self: center; color: var(--vermelho); width: min(320px, 70vw); }
+.profissional-marca .regmark { width: 100%; height: auto; color: var(--vermelho); }
+.profissional-marca .regmark circle, .profissional-marca .regmark path { stroke-width: 0.08; }
+.profissional-marca-cro {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: var(--marfim); padding: 6px 10px;
+  font-family: var(--f-display); font-weight: 500; font-size: 13px; letter-spacing: .16em; color: var(--grafite); white-space: nowrap;
+}
+@media (max-width: 959px) { .profissional-marca { display: none; } }
 .moldura-reg { position: absolute; color: var(--vermelho); z-index: 1; }
 .moldura-reg-a { top: -14px; left: -14px; } .moldura-reg-b { bottom: -14px; right: -14px; }
 

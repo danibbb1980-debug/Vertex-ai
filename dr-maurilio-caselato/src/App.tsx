@@ -135,7 +135,7 @@ function Profissional() {
     ["Atendimento", `${CONFIG.endereco.bairro}, ${CONFIG.cidade}/${CONFIG.uf}`],
   ].filter(Boolean) as [string, string][];
   return (
-    <section className={`secao profissional ${foto ? "com-foto" : ""}`} id="profissional" aria-labelledby="prof-titulo">
+    <section className="secao profissional com-foto" id="profissional" aria-labelledby="prof-titulo">
       <div className="wrap profissional-grid">
         <div className="profissional-texto">
           <p className="rotulo">O profissional</p>
@@ -153,6 +153,12 @@ function Profissional() {
             ))}
           </dl>
         </div>
+        {!foto && (
+          <div className="profissional-marca" aria-hidden="true">
+            <RegMark size={320} />
+            <span className="profissional-marca-cro">{CONFIG.cro}</span>
+          </div>
+        )}
         {foto && (
           <figure className="profissional-foto">
             <RegMark className="moldura-reg moldura-reg-a" size={28} />

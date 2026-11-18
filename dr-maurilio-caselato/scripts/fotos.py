@@ -9,7 +9,6 @@ out.mkdir(parents=True, exist_ok=True)
 # nome: (arquivo, recorte (l,t,r,b) ou None, larguras)
 FOTOS = {
     "retrato-consultorio": ("retrato-consultorio.jpg", None, [400]),
-    "retrato-video": ("retrato-video.jpg", (0, 90, 640, 1050), [400, 640]),  # sem marca d'água
     "sala-de-espera": ("sala-de-espera.jpg", None, [480, 800]),
     "sala-atendimento": ("sala-atendimento.jpg", (0, 180, 360, 600), [360]),  # sem TV/banner de marca
     "sala-arcos": ("sala-arcos.jpg", None, [480, 800]),
