@@ -1,0 +1,298 @@
+@import "tailwindcss";
+
+/* ---------- fontes auto-hospedadas (copiadas de @fontsource para /fonts) ---------- */
+@font-face {
+  font-family: "Brygada 1918";
+  src: url("/fonts/brygada-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Brygada 1918";
+  src: url("/fonts/brygada-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("/fonts/hanken-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("/fonts/hanken-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+/* ---------- tokens ---------- */
+@theme {
+  --color-pedra: #eeeae2;
+  --color-pedra-2: #e4dfd5;
+  --color-pedra-3: #d6d0c4;
+  --color-grafite: #1f1e20;
+  --color-grafite-2: #2a292c;
+  --color-bronze: #a8894f; /* filetes, graduações, aro da lente */
+  --color-bronze-claro: #b39462; /* texto/números sobre grafite (AA) */
+  --color-bronze-texto: #735a2b; /* texto pequeno sobre pedra (AA) */
+  --color-cinza: #5f5a53; /* apoio sobre pedra */
+  --color-cinza-claro: #ada79d; /* apoio sobre grafite */
+
+  --font-display: "Brygada 1918", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  --breakpoint-xs: 26rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background: var(--color-pedra);
+    color: var(--color-grafite);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-feature-settings: "kern", "liga";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-grafite);
+    color: var(--color-pedra);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-bronze-texto);
+    outline-offset: 3px;
+  }
+  .escuro :focus-visible {
+    outline-color: var(--color-bronze-claro);
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+  em {
+    font-style: italic;
+  }
+}
+
+@layer components {
+  /* títulos */
+  .t-display {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6.4vw, 5.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+  .t-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.125rem, 4.6vw, 3.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.026em;
+  }
+  .t-h2 em,
+  .t-display em {
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+  /* rótulo: caixa-alta pequena e espaçada, numerais tabulares */
+  .rotulo {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+  .num {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* botões: cantos retos, preenchimento em varredura (clip-path) no hover */
+  .botao {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    border: 1px solid currentColor;
+    overflow: hidden;
+    transition: color 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+    white-space: nowrap;
+  }
+  .botao::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--varredura, var(--color-bronze));
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  @media (hover: hover) {
+    .botao:hover::before {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  .botao:focus-visible::before {
+    clip-path: inset(0 0 0 0);
+  }
+  .botao-cheio {
+    background: var(--color-grafite);
+    color: var(--color-pedra);
+    border-color: var(--color-grafite);
+    --varredura: var(--color-bronze-texto);
+  }
+  .botao-linha {
+    color: var(--color-grafite);
+    --varredura: var(--color-pedra-2);
+  }
+  .escuro .botao-cheio {
+    background: var(--color-pedra);
+    color: var(--color-grafite);
+    border-color: var(--color-pedra);
+    --varredura: var(--color-bronze-claro);
+  }
+  .escuro .botao-linha {
+    color: var(--color-pedra);
+    --varredura: var(--color-grafite-2);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .botao::before {
+      transition: none;
+    }
+  }
+
+  /* link sublinhado que se desenha */
+  .link {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+    text-decoration: none;
+    padding-bottom: 2px;
+    transition: background-size 0.35s ease;
+  }
+  @media (hover: hover) {
+    .link:hover {
+      background-size: 0% 1px;
+      background-position: 100% 100%;
+    }
+  }
+
+  /* link de navegação: sublinhado só no hover/foco */
+  .link-nav {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0% 1px no-repeat;
+    text-decoration: none;
+    padding-bottom: 2px;
+    transition: background-size 0.35s ease;
+  }
+  .link-nav:hover,
+  .link-nav:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* régua de graduação (divisor da marca) */
+  .regua {
+    display: block;
+    width: 100%;
+    height: 14px;
+    color: var(--color-bronze);
+    transform-origin: left center;
+  }
+
+  .grao {
+    position: relative;
+  }
+  .grao::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .campo {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.75rem 1rem;
+    background: var(--color-pedra);
+    border: 1px solid var(--color-pedra-3);
+    border-bottom-color: var(--color-grafite);
+    border-radius: 0;
+    color: var(--color-grafite);
+    font: inherit;
+    font-size: 1rem;
+    appearance: none;
+    transition: border-color 0.2s;
+  }
+  .campo::placeholder {
+    color: #827c73;
+  }
+  .campo:focus-visible {
+    outline: 2px solid var(--color-bronze-texto);
+    outline-offset: 0;
+    border-color: var(--color-grafite);
+  }
+  .campo[aria-invalid="true"] {
+    border-color: #9b2c1f;
+    border-bottom-width: 2px;
+  }
+  select.campo {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231F1E20' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.75rem;
+  }
+}
+
+/* ---------- utilidades ---------- */
+.sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* acordeão: altura animada só com grid-template-rows */
+.painel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.painel[data-aberto="true"] {
+  grid-template-rows: 1fr;
+}
+.painel > div {
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .painel {
+    transition: none;
+  }
+}

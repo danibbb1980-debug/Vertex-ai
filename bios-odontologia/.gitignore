@@ -1,0 +1,6 @@
+node_modules
+dist
+*.zip
+.vercel
+public/fonts
+dist-ssr
