@@ -1,0 +1,288 @@
+@import 'tailwindcss';
+@import '@fontsource/newsreader/latin-300.css';
+@import '@fontsource/newsreader/latin-300-italic.css';
+@import '@fontsource/hanken-grotesk/latin-400.css';
+@import '@fontsource/hanken-grotesk/latin-500.css';
+
+@theme {
+  --color-nevoa: #f2eff4;
+  --color-nevoa-2: #e8e3ec;
+  --color-ameixa: #24132a;
+  --color-ameixa-2: #321e39;
+  --color-ouro: #b39c6b;
+  --color-ouro-texto: #74602f;
+  --color-apoio: #5f5566;
+  --color-apoio-escuro: #b7abbd;
+  --color-linha: rgb(36 19 42 / 0.16);
+  --color-erro: #9b2c2c;
+
+  --font-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-marca: cubic-bezier(0.6, 0.05, 0.2, 1);
+}
+
+:root {
+  --faixa: 30px;
+  --header: 72px;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--faixa) + var(--header) + 12px);
+  -webkit-text-size-adjust: 100%;
+}
+html:not([data-rascunho]) {
+  --faixa: 0px;
+}
+
+body {
+  background: var(--color-nevoa);
+  color: var(--color-ameixa);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  font-feature-settings: 'kern', 'liga';
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+@media (max-width: 1023px) {
+  body {
+    padding-bottom: 76px;
+  }
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: -0.022em;
+  line-height: 1.02;
+  font-feature-settings: 'kern', 'liga', 'dlig';
+}
+.display em {
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.rotulo {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.num {
+  font-family: var(--font-display);
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'lnum', 'tnum';
+}
+
+/* Grão sutil nos blocos escuros */
+.grao {
+  position: relative;
+  isolation: isolate;
+}
+.grao::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Foco visível */
+:focus-visible {
+  outline: 2px solid var(--color-ouro-texto);
+  outline-offset: 3px;
+}
+.bg-ameixa :focus-visible,
+.bg-ameixa-2 :focus-visible {
+  outline-color: var(--color-ouro);
+}
+
+@layer components {
+/* Botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 52px;
+  padding: 0 1.6rem;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.25s var(--ease-marca),
+    color 0.25s var(--ease-marca),
+    border-color 0.25s var(--ease-marca);
+  position: relative;
+  text-decoration: none;
+}
+.btn-primario {
+  background: var(--color-ameixa);
+  color: var(--color-nevoa);
+}
+.btn-primario::after {
+  /* filete dourado que corre por baixo no hover */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-ouro);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease-marca);
+}
+.btn-primario:hover::after {
+  transform: scaleX(1);
+}
+.btn-secundario {
+  border-color: var(--color-ameixa);
+  color: var(--color-ameixa);
+}
+.btn-secundario:hover {
+  background: var(--color-ameixa);
+  color: var(--color-nevoa);
+}
+.btn-claro {
+  background: var(--color-nevoa);
+  color: var(--color-ameixa);
+}
+.btn-claro:hover {
+  background: var(--color-ouro);
+}
+.btn-contorno-claro {
+  border-color: rgb(242 239 244 / 0.5);
+  color: var(--color-nevoa);
+}
+.btn-contorno-claro:hover {
+  border-color: var(--color-ouro);
+  color: var(--color-ouro);
+}
+
+.link-sublinhado {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-ouro);
+}
+
+}
+
+/* Monograma: desenho do contorno */
+.mono-traco {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: desenhar 2.6s var(--ease-marca) 0.2s forwards;
+}
+.fio {
+  clip-path: inset(0 0 0 100%);
+  animation: fio 1.8s var(--ease-marca) 1.8s forwards;
+}
+@keyframes fio {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes desenhar {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Numeração que acende ao entrar na tela */
+.acende {
+  color: #8e8396;
+  transition: color 0.9s var(--ease-marca);
+}
+.acende.on {
+  color: var(--color-ouro-texto);
+}
+.bg-ameixa .acende {
+  color: rgb(179 156 107 / 0.25);
+}
+.bg-ameixa .acende.on {
+  color: var(--color-ouro);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .mono-traco {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .fio {
+    animation: none;
+    clip-path: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+/* Campos do formulário */
+.campo {
+  width: 100%;
+  min-height: 52px;
+  padding: 0.8rem 0.9rem;
+  background: var(--color-nevoa);
+  border: 1px solid rgb(36 19 42 / 0.35);
+  border-radius: 0;
+  color: var(--color-ameixa);
+  font: inherit;
+  font-size: 16px;
+  appearance: none;
+}
+.campo:focus-visible {
+  outline: 2px solid var(--color-ouro-texto);
+  outline-offset: 0;
+  border-color: var(--color-ameixa);
+}
+.campo[aria-invalid='true'] {
+  border-color: var(--color-erro);
+}
+.campo:disabled {
+  opacity: 0.55;
+}
+select.campo {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2324132a' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+}
+
+@media (max-width: 1023px) {
+  .mono-traco {
+    stroke-width: 0.9px;
+  }
+}
+
+/* Acordeão: abre com transição de altura (grid 0fr → 1fr) */
+.recolhivel {
+  display: grid;
+  grid-template-rows: 1fr;
+  animation: abrir 0.45s var(--ease-marca);
+}
+@keyframes abrir {
+  from {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}

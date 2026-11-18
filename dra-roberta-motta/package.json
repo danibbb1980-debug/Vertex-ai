@@ -1,0 +1,35 @@
+{
+  "name": "dra-roberta-motta-rascunho",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "logo": "python3 scripts/alpha.py referencias/logo-original.jpg /tmp/claude-0/alpha6.png 6 && python3 scripts/split.py && node scripts/trace.mjs && node scripts/build-logo.mjs",
+    "fotos": "node scripts/fotos.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fontsource/bellefair": "^5.3.0",
+    "@fontsource/hanken-grotesk": "^5.3.0",
+    "@fontsource/newsreader": "^5.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "opentype.js": "^2.0.0",
+    "potrace": "^2.1.8",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^7.0.2",
+    "vite": "^6.4.6"
+  },
+  "private": true,
+  "type": "module"
+}
