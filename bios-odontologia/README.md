@@ -34,7 +34,7 @@ O logotipo foi redesenhado em SVG a partir de uma foto pequena do perfil (`scrip
 
 ## Antes de publicar de forma definitiva
 
-1. **Responsável técnico com número do CRO e inscrição da entidade no CRO** — exigência da publicidade odontológica de pessoa jurídica (Res. CFO 196/2019). Sem isso, não publique fora do modo rascunho.
+1. **Confirmar com o cliente o responsável técnico, os CROs, a inscrição da entidade (EPAO) e o segundo telefone.** Foram lidos numa foto pequena da placa da fachada, de cerca de 2 anos atrás. São exigência da publicidade odontológica de pessoa jurídica (Res. CFO 196/2019).
 2. Horários de atendimento.
 3. Lista real de procedimentos confirmada pelo cliente (decidir sobre `mostrarAtendimentosDiretorio`).
 4. Fotos autorizadas, sem pacientes.

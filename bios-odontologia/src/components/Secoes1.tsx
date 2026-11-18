@@ -110,6 +110,7 @@ export function Instituto() {
                   <span className="num text-[0.9375rem] text-cinza-claro">
                     {p.cro}
                     {p.especialidade ? ` · ${p.especialidade}` : ""}
+                    {rt && p.cro === CONFIG.responsavelTecnico.cro ? " · responsável técnico" : ""}
                   </span>
                 </li>
               ))}

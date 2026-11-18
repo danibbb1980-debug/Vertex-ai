@@ -83,6 +83,13 @@ export function Rodape() {
                   Telefone {CONFIG.telefone}
                 </a>
               </li>
+              {CONFIG.telefone2 && (
+                <li>
+                  <a href={CONFIG.telefone2Link} className="link-nav num inline-block py-1.5">
+                    Telefone {CONFIG.telefone2}
+                  </a>
+                </li>
+              )}
               <li>
                 <a href={CONFIG.instagram.url} target="_blank" rel="noopener noreferrer" className="link-nav inline-block py-1.5">
                   Instagram {CONFIG.instagram.usuario}

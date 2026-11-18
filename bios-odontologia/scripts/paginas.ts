@@ -31,7 +31,7 @@ export function jsonLd() {
     "@type": "Dentist",
     name: CONFIG.nome,
     url: base + "/",
-    telephone: ["+55-35-3214-8743", "+55-35-99966-8743"],
+    telephone: [CONFIG.telefone, CONFIG.telefone2, CONFIG.whatsappExibicao].filter(Boolean),
     address: {
       "@type": "PostalAddress",
       streetAddress: `${e.rua}, ${e.numero}`,
@@ -138,7 +138,7 @@ ${corpo}
 
 export function privacidadeHtml() {
   const rt = temResponsavel()
-    ? `<p>Responsável técnico: ${esc(CONFIG.responsavelTecnico.nome)} · ${esc(CONFIG.responsavelTecnico.cro)}</p>`
+    ? `<p>Responsável técnico: ${esc(CONFIG.responsavelTecnico.nome)} · ${esc(CONFIG.responsavelTecnico.cro)}${CONFIG.registroCRO ? `<br />Inscrição da entidade no CRO: ${esc(CONFIG.registroCRO)}` : ""}</p>`
     : "";
   return pagina(
     "Privacidade | " + CONFIG.nome,
@@ -151,7 +151,7 @@ export function privacidadeHtml() {
 <h2>Mapa e links externos</h2>
 <p>O mapa da seção de contato é carregado do Google Maps apenas quando você chega até ele na página. Os botões de WhatsApp, Instagram e Google Maps abrem serviços de terceiros, cada um com a sua política de privacidade.</p>
 <h2>Contato</h2>
-<p>${esc(CONFIG.nome)}<br />${esc(enderecoLinha())}, CEP ${esc(CONFIG.endereco.cep)}<br />Telefone ${esc(CONFIG.telefone)} · WhatsApp ${esc(CONFIG.whatsappExibicao)}</p>
+<p>${esc(CONFIG.nome)}<br />${esc(enderecoLinha())}, CEP ${esc(CONFIG.endereco.cep)}<br />Telefone ${esc(CONFIG.telefone)}${CONFIG.telefone2 ? " · " + esc(CONFIG.telefone2) : ""} · WhatsApp ${esc(CONFIG.whatsappExibicao)}</p>
 ${rt}
 <div class="regua" aria-hidden="true"></div>
 <a class="botao" href="/">Voltar ao site</a>`

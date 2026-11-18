@@ -61,10 +61,16 @@ export const CONFIG = {
   logo: "",
 
   /** Publicidade de pessoa jurídica: responsável técnico + CRO (Res. CFO 196/2019). */
-  responsavelTecnico: { nome: "", cro: "" },
+  // Dados lidos na placa da fachada (foto enviada pelo cliente). Confirmar com o cliente antes da publicação definitiva.
+  responsavelTecnico: { nome: "Dr. Walace Henry Miranda Coimbra", cro: "CRO/MG 23168" },
   /** inscrição da entidade no CRO */
-  registroCRO: "",
-  equipe: [] as Profissional[],
+  registroCRO: "EPAO 8783",
+  equipe: [
+    { nome: "Dr. Walace Henry Miranda Coimbra", cro: "CRO/MG 23168" },
+    { nome: "Dr. Marcus Azzalini Bernardes", cro: "CRO/MG 21809" },
+    { nome: "Dra. Maria Julia Corrêa", cro: "CRO/MG 57196" },
+    { nome: "Dra. Letícia de Paula Assis", cro: "CRO/MG 66019" },
+  ] as Profissional[],
 
   endereco: {
     rua: "Rua Coronel José Alves",
@@ -86,6 +92,9 @@ export const CONFIG = {
   whatsappExibicao: "(35) 99966-8743",
   telefone: "(35) 3214-8743",
   telefoneLink: "tel:+553532148743",
+  /** segundo telefone fixo (opcional; "" esconde) */
+  telefone2: "(35) 3222-8596",
+  telefone2Link: "tel:+553532228596",
   email: "",
 
   instagram: {

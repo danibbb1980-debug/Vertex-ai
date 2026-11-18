@@ -326,7 +326,17 @@ export function Contato() {
               )}
               <div className="grid grid-cols-[7.5rem_1fr] gap-4 border-t border-pedra-3 py-4 sm:grid-cols-[9rem_1fr]">
                 <dt className="rotulo pt-1 text-cinza">Telefone</dt>
-                <dd className="num m-0">{CONFIG.telefone}</dd>
+                <dd className="num m-0">
+                  {CONFIG.telefone}
+                  {CONFIG.telefone2 && (
+                    <>
+                      <br />
+                      <a href={CONFIG.telefone2Link} className="link">
+                        {CONFIG.telefone2}
+                      </a>
+                    </>
+                  )}
+                </dd>
               </div>
               {CONFIG.email && (
                 <div className="grid grid-cols-[7.5rem_1fr] gap-4 border-t border-pedra-3 py-4 sm:grid-cols-[9rem_1fr]">
