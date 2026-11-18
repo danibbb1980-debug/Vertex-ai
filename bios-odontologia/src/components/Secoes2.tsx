@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { m, LazyMotion, domAnimation, useScroll, useSpring, useMotionValueEvent } from "motion/react";
-import { CONFIG, atendimentosVisiveis, enderecoLinha, waLink } from "../config";
+import { CONFIG, atendimentosVisiveis, enderecoLinha, horariosAgrupados, waLink } from "../config";
 import { useMenosMovimento } from "../hooks";
 import { AroLente, Regua } from "./Regua";
 import { CONTEINER } from "./Secoes1";
@@ -144,7 +144,9 @@ function perguntas() {
     {
       p: "Qual é o horário de atendimento?",
       r: CONFIG.horarios.length
-        ? "Os horários de cada dia estão na seção de contato. O atendimento é feito com horário marcado."
+        ? `${horariosAgrupados()
+            .map((g) => `${g.dias}: ${g.horario.toLowerCase()}`)
+            .join(". ")}. O atendimento é feito com horário marcado.`
         : "O atendimento é feito mediante agendamento. Combine o dia e o horário pelo WhatsApp ou pelo telefone.",
     },
     {
@@ -228,7 +230,6 @@ export function Duvidas() {
 }
 
 /* ============================== CONTATO ============================== */
-const NOMES_DIAS = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
 
 function Mapa() {
   const caixa = useRef<HTMLDivElement>(null);
@@ -305,13 +306,12 @@ export function Contato() {
                 <dd className="m-0">
                   {CONFIG.horarios.length ? (
                     <ul className="m-0 list-none p-0">
-                      {CONFIG.horarios.map((h) => (
-                        <li key={h.dia} className="num">
-                          {NOMES_DIAS[h.dia]}: {h.abre} às {h.fecha}
-                          {h.pausas?.length ? ` (pausa ${h.pausas.map((p) => `${p.inicio}–${p.fim}`).join(", ")})` : ""}
+                      {horariosAgrupados().map((g) => (
+                        <li key={g.dias} className="num">
+                          {g.dias}: {g.horario}
                         </li>
                       ))}
-                      <li className="text-cinza">Com horário marcado.</li>
+                      <li className="text-cinza">Atendimento com horário marcado.</li>
                     </ul>
                   ) : (
                     "Atendimento mediante agendamento"

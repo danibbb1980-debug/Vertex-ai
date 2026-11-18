@@ -103,7 +103,7 @@ export const CONFIG = {
   },
 
   /** vazio = "Atendimento mediante agendamento" e campo livre no formulário */
-  horarios: [] as Horario[],
+  horarios: [1, 2, 3, 4, 5].map((dia) => ({ dia, abre: "09:00", fecha: "19:00" })) as Horario[],
 
   atendimentos: [
     {
@@ -239,3 +239,30 @@ export const waLink = (mensagem: string = MSG_GERAL) =>
 
 export const temResponsavel = () =>
   Boolean(CONFIG.responsavelTecnico.nome.trim() && CONFIG.responsavelTecnico.cro.trim());
+
+/* ---------- horários agrupados para exibição ---------- */
+const NOMES_DIA = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+const ORDEM_SEMANA = [1, 2, 3, 4, 5, 6, 0];
+
+/** Ex.: [{ dias: "Segunda a sexta", horario: "09:00 às 19:00" }, { dias: "Sábado e domingo", horario: "Fechado" }] */
+export function horariosAgrupados() {
+  const texto = (dia: number) => {
+    const h = CONFIG.horarios.find((x) => x.dia === dia);
+    if (!h) return "Fechado";
+    const pausas = h.pausas?.length ? ` (pausa ${h.pausas.map((p) => `${p.inicio}–${p.fim}`).join(", ")})` : "";
+    return `${h.abre} às ${h.fecha}${pausas}`;
+  };
+  const grupos: { dias: number[]; horario: string }[] = [];
+  for (const d of ORDEM_SEMANA) {
+    const t = texto(d);
+    const ultimo = grupos[grupos.length - 1];
+    if (ultimo && ultimo.horario === t) ultimo.dias.push(d);
+    else grupos.push({ dias: [d], horario: t });
+  }
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  return grupos.map((g) => {
+    const n = g.dias.map((d) => NOMES_DIA[d]);
+    const dias = n.length === 1 ? n[0] : n.length === 2 ? `${n[0]} e ${n[1]}` : `${n[0]} a ${n[n.length - 1]}`;
+    return { dias: cap(dias), horario: g.horario };
+  });
+}
