@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { CONFIG } from "../config";
+import { CONFIG, waLink, temWhatsapp } from "../config";
 import { CropMarks, LinkButton, Picture, RegMark, WaButton } from "./Marks";
 
 /**
@@ -58,6 +58,34 @@ const Titulo = () => (
   </>
 );
 
+/** Faixa de serviço: as três respostas que quem chega ao site procura primeiro. */
+function Faixa() {
+  const dias = CONFIG.horarios.filter((h) => "abre" in h);
+  const h0 = dias[0] && "abre" in dias[0] ? dias[0] : null;
+  const hora = (s: string) => s.replace(":00", "h").replace(/^0/, "");
+  const e = CONFIG.endereco;
+  const itens = [
+    h0 && { rot: "Atendimento", val: `Segunda a sexta, ${hora(h0.abre)} às ${hora(h0.fecha)}`, href: "#local" },
+    { rot: "Endereço", val: `${e.rua}, ${e.numero}, ${e.bairro}`, href: "#local" },
+    temWhatsapp() && { rot: "Agendamento", val: `WhatsApp ${CONFIG.whatsappExibicao}`, href: waLink(), externo: true },
+  ].filter(Boolean) as { rot: string; val: string; href: string; externo?: boolean }[];
+  return (
+    <div className="wrap">
+      <ul className="faixa">
+        {itens.map((i) => (
+          <li key={i.rot}>
+            <a href={i.href} {...(i.externo ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+              <span className="faixa-rot">{i.rot}</span>
+              <span className="faixa-val">{i.val}</span>
+              {i.externo && <span className="sr-only"> (abre o WhatsApp em nova aba)</span>}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   useRegistro(ref);
@@ -104,10 +132,14 @@ export function Hero() {
         {foto && (
           <figure className="hero-foto">
             <CropMarks />
-            <Picture foto={foto} sizes="(min-width: 960px) 34vw, 88vw" eager />
+            <Picture foto={foto} sizes="(min-width: 960px) 36vw, 92vw" eager />
+            <figcaption className="hero-legenda">
+              {CONFIG.nome} · {CONFIG.cro}
+            </figcaption>
           </figure>
         )}
       </div>
+      <Faixa />
     </section>
   );
 }

@@ -80,7 +80,8 @@ export const CONFIG = {
   fotos: {
     // [0] aparece no hero; [1], se existir, aparece em "O profissional".
     profissional: [
-      { src: "/fotos/retrato-consultorio", larguras: [400], largura: 400, altura: 600, alt: "Dr. Maurilio Caselato, de jaleco azul, no consultório" },
+      { src: "/fotos/retrato-consultorio", larguras: [480, 800, 1020], largura: 1020, altura: 1753, alt: "Dr. Maurilio Caselato, de jaleco azul, em pé no consultório" },
+      { src: "/fotos/retrato-detalhe", larguras: [480, 600], largura: 600, altura: 750, alt: "Retrato do Dr. Maurilio Caselato, de braços cruzados, no consultório" },
     ] as Foto[],
     consultorio: [
       { src: "/fotos/sala-de-espera", larguras: [480, 800], largura: 800, altura: 500, alt: "Sala de espera com sofá claro, luz indireta e passagem em arco", legenda: "Sala de espera" },

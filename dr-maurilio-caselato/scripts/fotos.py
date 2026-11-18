@@ -8,7 +8,9 @@ out = raiz / "public" / "fotos"
 out.mkdir(parents=True, exist_ok=True)
 # nome: (arquivo, recorte (l,t,r,b) ou None, larguras)
 FOTOS = {
-    "retrato-consultorio": ("retrato-consultorio.jpg", None, [400]),
+    # Print em alta enviado pelo cliente; o recorte tira a interface do celular e o ícone de curtir.
+    "retrato-consultorio": ("dr-maurilio-print.png", (0, 388, 1020, 2141), [480, 800, 1020]),
+    "retrato-detalhe": ("dr-maurilio-print.png", (330, 560, 930, 1310), [480, 600]),
     "sala-de-espera": ("sala-de-espera.jpg", None, [480, 800]),
     "sala-atendimento": ("sala-atendimento.jpg", (0, 180, 360, 600), [360]),  # sem TV/banner de marca
     "sala-arcos": ("sala-arcos.jpg", None, [480, 800]),
