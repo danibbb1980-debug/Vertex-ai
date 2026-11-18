@@ -1,0 +1,421 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-papel: #f2efe8;
+  --color-papel-2: #e9e5dc;
+  --color-grafite: #1c1d20;
+  --color-grafite-2: #2a2b2f;
+  --color-caneta: #2a3fa6;
+  --color-caneta-escura: #1f2f80;
+  --color-apoio: #5f5b54;
+  --color-fio: #cdc7ba;
+  --color-erro: #a3261b;
+
+  --font-serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+:root {
+  --margem: 56px; /* largura da margem dos autos (desktop) */
+  --topo: 28px; /* faixa de rascunho (zerada via JS se CONFIG.rascunho = false) */
+  --progresso: 0; /* 0..1, ligado à rolagem */
+  color-scheme: light;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --margem: 2px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-papel);
+  color: var(--color-grafite);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  font-feature-settings: 'kern', 'liga';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-caneta);
+  color: var(--color-papel);
+}
+
+@layer components {
+.serif {
+  font-family: var(--font-serif);
+  font-feature-settings: 'kern', 'liga', 'onum';
+}
+
+.titulo {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.titulo em {
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.rotulo {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1.4;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ===== foco visível ===== */
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--color-caneta);
+  outline-offset: 3px;
+}
+.escuro :where(a, button):focus-visible {
+  outline-color: var(--color-papel);
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: var(--color-grafite);
+  color: var(--color-papel);
+  padding: 10px 16px;
+  font-size: 15px;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ===== botões ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 22px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--color-grafite);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s ease;
+  text-decoration: none;
+}
+/* efeito sutil: tinta que sobe do pé do botão */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.btn:hover::before {
+  transform: scaleY(1);
+}
+.btn-tinta {
+  background: var(--color-grafite);
+  color: var(--color-papel);
+}
+.btn-tinta::before {
+  background: var(--color-caneta);
+}
+.btn-linha {
+  background: transparent;
+  color: var(--color-grafite);
+}
+.btn-linha::before {
+  background: var(--color-grafite);
+}
+.btn-linha:hover {
+  color: var(--color-papel);
+}
+.btn .seta {
+  transition: transform 0.35s ease;
+}
+.btn:hover .seta {
+  transform: translateX(3px);
+}
+.escuro .btn-tinta {
+  background: var(--color-papel);
+  color: var(--color-grafite);
+  border-color: var(--color-papel);
+}
+.escuro .btn-tinta::before {
+  background: #d9d4c9;
+}
+.escuro .btn-linha {
+  color: var(--color-papel);
+  border-color: var(--color-papel);
+}
+.escuro .btn-linha::before {
+  background: var(--color-papel);
+}
+.escuro .btn-linha:hover {
+  color: var(--color-grafite);
+}
+
+.link {
+  color: var(--color-caneta);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ===== margem dos autos ===== */
+.margem-fio {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--margem) - 1px);
+  width: 1px;
+  background: var(--color-fio);
+  z-index: 30;
+  pointer-events: none;
+}
+.margem-fio::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-caneta);
+  transform-origin: top;
+  transform: scaleY(var(--progresso));
+  will-change: transform;
+}
+@media (max-width: 767px) {
+  .margem-fio {
+    left: 0;
+    width: 2px;
+  }
+}
+
+.contador-num {
+  display: inline-block;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.contador-num[data-trocando='true'] {
+  opacity: 0;
+  transform: translateY(-3px);
+}
+
+/* área de conteúdo à direita da margem */
+.folha {
+  padding-left: var(--margem);
+}
+
+/* rótulo "fls. NN" de cada seção, pendurado na margem */
+.fls {
+  color: var(--color-caneta);
+}
+@media (min-width: 768px) {
+  .fls-margem {
+    position: absolute;
+    left: 0;
+    width: calc(var(--margem) - 1px);
+    flex-direction: column;
+    align-items: center;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    line-height: 1.3;
+    padding-top: 2px;
+    background: inherit;
+  }
+}
+
+/* ===== sublinhado manuscrito ===== */
+.sublinhado path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: tracar 1.4s cubic-bezier(0.55, 0.1, 0.3, 1) 0.6s forwards;
+}
+@keyframes tracar {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ===== entrada do hero (uma vez) ===== */
+.revela {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.revela > span {
+  display: block;
+  transform: translateY(105%);
+  animation: subir 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+@keyframes subir {
+  to {
+    transform: none;
+  }
+}
+.surge {
+  opacity: 0;
+  animation: surgir 0.8s ease forwards;
+}
+@keyframes surgir {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== lista de áreas: itens que se acendem ===== */
+.area-item {
+  --aceso: 0.32;
+}
+.area-item[data-aceso='true'] {
+  --aceso: 1;
+}
+.area-item .area-nome,
+.area-item .area-num {
+  opacity: var(--aceso);
+  transition: opacity 0.9s ease;
+}
+
+/* acordeão com altura animada via grid */
+.painel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.painel[data-aberto='true'] {
+  grid-template-rows: 1fr;
+}
+.painel > div {
+  overflow: hidden;
+}
+.mais {
+  transition: transform 0.4s ease;
+}
+[aria-expanded='true'] .mais {
+  transform: rotate(45deg);
+}
+
+/* ===== linha do tempo ===== */
+.trilho {
+  --p: 0;
+}
+.trilho-fio::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-caneta);
+  transform-origin: top;
+  transform: scaleY(var(--p));
+}
+.etapa .etapa-num {
+  color: var(--color-fio);
+  transition: color 0.6s ease;
+}
+.etapa[data-ativa='true'] .etapa-num {
+  color: var(--color-caneta);
+}
+
+/* ===== foto com canto dobrado (mesma "orelha" do logotipo) ===== */
+.foto-orelha {
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
+}
+.orelha {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(225deg, transparent 50%, var(--color-papel-2) 50%);
+  border-left: 1px solid var(--color-grafite);
+  border-bottom: 1px solid var(--color-grafite);
+}
+
+/* ===== formulário ===== */
+.campo {
+  width: 100%;
+  min-height: 52px;
+  background: var(--color-papel);
+  border: 0;
+  border-bottom: 1px solid var(--color-grafite);
+  padding: 12px 2px;
+  font-size: 17px;
+  color: var(--color-grafite);
+  border-radius: 0;
+  appearance: none;
+}
+.campo::placeholder {
+  color: #77726a;
+}
+.campo:focus-visible {
+  outline: none;
+  border-bottom: 2px solid var(--color-caneta);
+  padding-bottom: 11px;
+  background: #ece8df;
+}
+.campo[aria-invalid='true'] {
+  border-bottom: 2px solid var(--color-erro);
+  padding-bottom: 11px;
+}
+select.campo {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231C1D20' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  padding-right: 28px;
+}
+textarea.campo {
+  min-height: 104px;
+  resize: vertical;
+}
+
+}
+
+/* ===== movimento reduzido ===== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  .margem-fio::after {
+    transform: none;
+  }
+  .trilho-fio::after {
+    transform: none;
+  }
+  .area-item {
+    --aceso: 1;
+  }
+  .etapa .etapa-num {
+    color: var(--color-caneta);
+  }
+}
