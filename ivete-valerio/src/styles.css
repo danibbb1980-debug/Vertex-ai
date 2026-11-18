@@ -1,0 +1,324 @@
+@import 'tailwindcss';
+@import '@fontsource/hanken-grotesk/latin-400.css';
+@import '@fontsource/hanken-grotesk/latin-600.css';
+
+/* Newsreader (OFL) reduzida por scripts/subset-fontes.py: peso 400, eixo de tamanho óptico, latim */
+@font-face {
+  font-family: 'Newsreader Variable';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/newsreader-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Newsreader Variable';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/newsreader-italic.woff2') format('woff2');
+}
+
+@theme {
+  --color-cru: #f5eee6;
+  --color-cru-2: #efe5d9;
+  --color-areia: #ead6ca;
+  --color-argila: #a4553a;
+  --color-argila-escura: #8c4630;
+  --color-argila-clara: #dc9e81;
+  --color-cacau: #2e1e17;
+  --color-cacau-2: #3b2a22;
+  --color-fio: rgb(46 30 23 / 0.2);
+  --font-serif: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --radius-suave: 6px;
+}
+
+:root {
+  --faixa: 32px;
+  --header: 68px;
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--faixa) + var(--header) + 12px);
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--color-cru);
+  color: var(--color-cacau);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  font-feature-settings: 'kern', 'liga';
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* grão sutil */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-weight: 400;
+}
+.serif em,
+em.serif {
+  font-style: italic;
+}
+
+.display {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.rotulo {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.num {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.fio {
+  border-color: var(--color-fio);
+}
+
+/* foco visível */
+:focus-visible {
+  outline: 2px solid var(--color-argila);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.sobre-escuro :focus-visible {
+  outline-color: var(--color-argila-clara);
+}
+
+/* conteúdo acima da linha */
+.conteudo {
+  position: relative;
+  z-index: 2;
+}
+
+@layer components {
+/* botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 24px;
+  border-radius: var(--radius-suave);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.btn-argila {
+  background: var(--color-argila);
+  color: var(--color-cru);
+}
+.btn-argila:hover {
+  background: var(--color-argila-escura);
+}
+.btn-linha {
+  border: 1px solid currentColor;
+  color: var(--color-cacau);
+}
+.btn-linha:hover {
+  background: rgb(46 30 23 / 0.06);
+}
+.sobre-escuro .btn-linha {
+  color: var(--color-cru);
+}
+.sobre-escuro .btn-linha:hover {
+  background: rgb(245 238 230 / 0.08);
+}
+.sobre-escuro .btn-argila {
+  background: var(--color-argila-clara);
+  color: var(--color-cacau);
+}
+.sobre-escuro .btn-argila:hover {
+  background: #e7b39a;
+}
+/* traço da marca no botão: a pequena onda que desliza */
+.btn .onda {
+  width: 22px;
+  height: 10px;
+  flex: none;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.btn:hover .onda {
+  transform: translateX(3px);
+}
+
+}
+
+.link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: rgb(46 30 23 / 0.35);
+}
+.link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* revelação do título (hero) */
+.revela {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.revela > span {
+  display: inline-block;
+  transform: translateY(105%);
+  animation: sobe 0.9s cubic-bezier(0.2, 0.7, 0.15, 1) forwards;
+}
+@keyframes sobe {
+  to {
+    transform: none;
+  }
+}
+.aparece {
+  opacity: 0;
+  animation: aparece 0.8s ease forwards;
+}
+@keyframes aparece {
+  to {
+    opacity: 1;
+  }
+}
+
+/* numeração que se acende */
+.acende {
+  color: #66554c;
+  transition: color 0.8s ease;
+}
+.acende.aceso {
+  color: var(--color-argila);
+}
+.sobre-escuro .acende {
+  color: rgb(245 238 230 / 0.72);
+}
+.sobre-escuro .acende.aceso {
+  color: var(--color-argila-clara);
+}
+.bg-argila .acende,
+.bg-argila .acende.aceso {
+  color: var(--color-cru);
+}
+
+/* acordeão */
+.painel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.painel[data-aberto='true'] {
+  grid-template-rows: 1fr;
+}
+.painel > div {
+  overflow: hidden;
+}
+.painel[data-aberto='false'] > div {
+  visibility: hidden;
+  transition: visibility 0s 0.45s;
+}
+
+details.duvida summary::-webkit-details-marker {
+  display: none;
+}
+details.duvida summary {
+  list-style: none;
+}
+details.duvida .sinal {
+  transition: transform 0.3s ease;
+}
+details.duvida[open] .sinal {
+  transform: rotate(45deg);
+}
+
+/* linha da página */
+.linha-assinatura path {
+  transition: stroke-dashoffset 0.25s linear;
+}
+.linha-assinatura.primeiro path {
+  transition: stroke-dashoffset 2.2s cubic-bezier(0.45, 0.05, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revela > span,
+  .aparece {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+  .acende,
+  .painel,
+  .linha-assinatura path,
+  .btn .onda {
+    transition: none !important;
+  }
+}
+
+@layer components {
+/* campos */
+.campo {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  background: var(--color-cru);
+  border: 1px solid rgb(46 30 23 / 0.35);
+  border-radius: var(--radius-suave);
+  color: var(--color-cacau);
+  font: inherit;
+  font-size: 16px;
+}
+.campo::placeholder {
+  color: rgb(46 30 23 / 0.6);
+}
+.campo:focus-visible {
+  outline-offset: 1px;
+  border-color: var(--color-argila);
+}
+.campo[aria-invalid='true'] {
+  border-color: #9b2c1f;
+}
+select.campo {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8'%3E%3Cpath d='M1 1c2 0 4 6 6 6s4-6 6-6' fill='none' stroke='%232E1E17' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 44px;
+}
+}
