@@ -118,18 +118,38 @@ export function Instituto() {
         )}
 
         {CONFIG.fotos.length > 0 && (
-          <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {CONFIG.fotos.map((f) => (
-              <figure key={f.src} className="m-0 overflow-hidden">
-                <img
-                  src={f.src}
-                  alt={f.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[4/5] w-full object-cover grayscale-[35%]"
-                />
-              </figure>
-            ))}
+          <div className="mt-16 grid gap-x-6 gap-y-10 sm:mt-24 lg:grid-cols-12">
+            {CONFIG.fotos.map((f, i) => {
+              const principal = i === 0;
+              return (
+                <figure
+                  key={f.src}
+                  className={`m-0 ${
+                    principal ? "lg:col-span-8" : "lg:col-span-4 lg:self-end"
+                  }`}
+                >
+                  <picture>
+                    {f.webp && <source srcSet={f.webp} type="image/webp" />}
+                    <img
+                      src={f.src}
+                      alt={f.alt}
+                      width={f.largura}
+                      height={f.altura}
+                      loading="lazy"
+                      decoding="async"
+                      className={`foto block w-full object-cover ${principal ? "aspect-[4/3]" : "aspect-[4/3] lg:aspect-[4/5]"}`}
+                      style={{ objectPosition: f.foco }}
+                    />
+                  </picture>
+                  {f.legenda && (
+                    <figcaption className="mt-3 flex items-baseline gap-3 text-[0.875rem] text-cinza-claro">
+                      <span aria-hidden="true" className="h-px w-6 shrink-0 translate-y-[-0.25em] bg-bronze" />
+                      {f.legenda}
+                    </figcaption>
+                  )}
+                </figure>
+              );
+            })}
           </div>
         )}
       </div>

@@ -59,8 +59,13 @@ export function headTags() {
   const robots = CONFIG.rascunho
     ? `<meta name="robots" content="noindex, nofollow" />\n    <meta name="googlebot" content="noindex, nofollow" />`
     : "";
-  const ogImage = CONFIG.fotos[0]
-    ? `\n    <meta property="og:image" content="${esc(base + CONFIG.fotos[0].src)}" />`
+  const foto = CONFIG.fotos[0];
+  const ogImage = foto
+    ? `\n    <meta property="og:image" content="${esc(base + foto.src)}" />` +
+      `\n    <meta property="og:image:alt" content="${esc(foto.alt)}" />` +
+      (foto.largura && foto.altura
+        ? `\n    <meta property="og:image:width" content="${foto.largura}" />\n    <meta property="og:image:height" content="${foto.altura}" />`
+        : "")
     : "";
   return `<title>${esc(TITULO)}</title>
     <meta name="description" content="${esc(DESCRICAO)}" />
@@ -72,7 +77,7 @@ export function headTags() {
     <meta property="og:title" content="${esc(TITULO)}" />
     <meta property="og:description" content="${esc(DESCRICAO)}" />
     <meta property="og:url" content="${esc(base + "/")}" />${ogImage}
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="${foto ? "summary_large_image" : "summary"}" />
     <script type="application/ld+json">${jsonLd()}</script>`;
 }
 

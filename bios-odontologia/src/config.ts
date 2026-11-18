@@ -26,6 +26,16 @@ export type Horario = {
   pausas?: { inicio: string; fim: string }[];
 };
 
+export type Foto = {
+  src: string;
+  alt: string;
+  webp?: string;
+  largura?: number;
+  altura?: number;
+  legenda?: string;
+  foco?: string;
+};
+
 export type Profissional = {
   nome: string;
   cro: string;
@@ -161,9 +171,29 @@ export const CONFIG = {
 
   /**
    * Fotos autorizadas (fachada, recepção, ambientes, equipamentos — NUNCA pacientes).
-   * Coloque os arquivos em public/fotos/ e liste aqui: { src: "/fotos/fachada.jpg", alt: "..." }.
+   * Coloque os arquivos em public/fotos/ e liste aqui. A primeira vira og:image.
+   * webp é opcional (versão leve); foco = object-position do recorte.
    */
-  fotos: [] as { src: string; alt: string }[],
+  fotos: [
+    {
+      src: "/fotos/fachada-noite-2.jpg",
+      webp: "/fotos/fachada-noite-2.webp",
+      largura: 1170,
+      altura: 872,
+      alt: "Fachada do BIOS à noite: letreiro com o nome BIOS iluminado sobre a marquise curva e portas de vidro",
+      legenda: "A fachada, na Rua Coronel José Alves, 6.",
+      foco: "50% 40%",
+    },
+    {
+      src: "/fotos/fachada-noite-1.jpg",
+      webp: "/fotos/fachada-noite-1.webp",
+      largura: 1170,
+      altura: 872,
+      alt: "Entrada do instituto à noite, com a placa da clínica ao lado do número 6 e o acesso pela rampa",
+      legenda: "Entrada pela rampa, ao lado da placa.",
+      foco: "38% 50%",
+    },
+  ] as Foto[],
 
   /** liga/desliga seções inteiras */
   secoes: {

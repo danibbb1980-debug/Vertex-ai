@@ -269,6 +269,11 @@
   }
 }
 
+/* fotos: recorte sóbrio, cor contida para conversar com pedra e grafite */
+.foto {
+  filter: grayscale(0.85) sepia(0.12) contrast(1.04);
+}
+
 /* ---------- utilidades ---------- */
 .sr-only-focusable:not(:focus) {
   position: absolute;
