@@ -1,0 +1,248 @@
+/* Fontes auto-hospedadas, derivadas de @fontsource-variable (Newsreader com tamanho ótico fixo em 60, Hanken Grotesk),
+   recortadas para latim/português. */
+@font-face {
+  font-family: "Newsreader Variable";
+  src: url("/fonts/newsreader-display.woff2") format("woff2");
+  font-weight: 300 450;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader Variable";
+  src: url("/fonts/newsreader-display-italic.woff2") format("woff2");
+  font-weight: 300 450;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Hanken Grotesk Variable";
+  src: url("/fonts/hanken.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+@import "tailwindcss";
+
+@theme {
+  --color-nevoa: #ecedea;
+  --color-nevoa-2: #e1e2de;
+  --color-fio: #cfd0cb;
+  --color-preto: #0f0f10;
+  --color-preto-2: #1a1a1b;
+  --color-ouro: #b39257;
+  --color-ouro-claro: #c2a46a;
+  --color-ouro-texto: #6e5828;
+  --color-apoio: #5e5a53;
+  --color-apoio-escuro: #a6a29a;
+
+  --font-display: "Newsreader Variable", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Hanken Grotesk Variable", system-ui, sans-serif;
+}
+
+:root {
+  --gutter: 20px; /* posição do fio no celular */
+  --conteudo: 44px; /* início do conteúdo, à direita do fio */
+  --banner: 0px;
+  color-scheme: light;
+}
+@media (min-width: 768px) {
+  :root { --gutter: 48px; --conteudo: 112px; }
+}
+@media (min-width: 1280px) {
+  :root { --gutter: 64px; --conteudo: 152px; }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background: var(--color-nevoa);
+  color: var(--color-preto);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.6;
+  font-feature-settings: "kern", "liga";
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 340;
+  letter-spacing: -0.022em;
+  line-height: 1.02;
+  font-feature-settings: "kern", "liga", "dlig", "onum";
+}
+.display em {
+  font-style: italic;
+  font-weight: 320;
+}
+
+.rotulo {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 560;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.romano {
+  font-family: var(--font-display);
+  font-feature-settings: "lnum";
+  font-size: 15px;
+  letter-spacing: 0.12em;
+}
+
+/* conteúdo sempre à direita do fio */
+.trilho {
+  padding-left: var(--conteudo);
+  padding-right: 20px;
+}
+@media (min-width: 768px) {
+  .trilho { padding-right: 48px; }
+}
+@media (min-width: 1280px) {
+  .trilho { padding-right: 64px; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ouro-texto);
+  outline-offset: 3px;
+}
+.escuro :focus-visible {
+  outline-color: var(--color-ouro-claro);
+}
+
+/* grão sutil nos blocos pretos */
+.grao {
+  position: relative;
+  isolation: isolate;
+}
+.grao::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.07;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 26px;
+  font-weight: 560;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  border: 1px solid currentColor;
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+.btn-cheio {
+  background: var(--color-preto);
+  color: var(--color-nevoa);
+  border-color: var(--color-preto);
+}
+/* filete dourado que corre na base do botão no hover */
+.btn-cheio::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-ouro);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.btn-cheio:hover::after { transform: scaleX(1); }
+.btn-linha { color: var(--color-preto); background: transparent; }
+.btn-linha:hover { background: var(--color-preto); color: var(--color-nevoa); }
+.escuro .btn-cheio { background: var(--color-ouro); border-color: var(--color-ouro); color: var(--color-preto); }
+.escuro .btn-cheio::after { background: var(--color-nevoa); }
+.escuro .btn-linha { color: var(--color-nevoa); }
+.escuro .btn-linha:hover { background: var(--color-nevoa); color: var(--color-preto); }
+
+.link-sub {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-ouro);
+}
+.link-sub:hover { text-decoration-thickness: 2px; }
+
+/* campos do formulário */
+.campo {
+  width: 100%;
+  min-height: 52px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-apoio);
+  padding: 12px 0;
+  font: inherit;
+  color: inherit;
+  border-radius: 0;
+  appearance: none;
+}
+.campo:focus { outline: none; border-bottom: 2px solid var(--color-preto); padding-bottom: 11px; }
+.campo:focus-visible { outline: none; }
+.campo[aria-invalid="true"] { border-bottom-color: #9b2c1f; }
+select.campo {
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 12px) 50%, calc(100% - 7px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 28px;
+}
+textarea.campo { min-height: 96px; resize: vertical; }
+
+/* foto com recorte sóbrio */
+.foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.82) contrast(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* revelação do título do hero (palavra sobe por trás de uma máscara) */
+.revela {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0 0.06em 0.1em 0;
+  margin: 0 -0.06em -0.1em 0;
+}
+.revela > span {
+  display: inline-block;
+  animation: revela-subir 1s cubic-bezier(0.2, 0.7, 0.15, 1) var(--atraso, 0ms) both;
+}
+@keyframes revela-subir {
+  from { transform: translateY(108%); }
+  to { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .revela > span { animation: none; }
+}
