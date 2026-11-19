@@ -100,8 +100,8 @@ export function Agendar({ n }: { n: string }) {
   return (
     <section id="agendar" aria-labelledby="t-agendar" className="relative bg-nevoa-2/70 py-24 md:py-36">
       <MarcaSecao numeral={n} />
-      <div className="trilho grid gap-14 md:grid-cols-12 md:gap-8">
-        <div className="md:col-span-5">
+      <div className="trilho grid gap-14 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-5">
           <p className="rotulo mb-6 text-ouro-texto">Praticidade</p>
           <h2 id="t-agendar" className="display text-[clamp(40px,5vw,72px)]">
             Peça seu atendimento em poucos <em>cliques</em>.
@@ -113,8 +113,8 @@ export function Agendar({ n }: { n: string }) {
           </p>
         </div>
 
-        <div className="relative border-t-2 border-ouro bg-nevoa p-6 sm:p-10 md:col-span-6 md:col-start-7">
-          <span aria-hidden="true" className="romano absolute right-6 top-5 text-ouro-texto sm:right-10 sm:top-7">
+        <div className="relative border-t-2 border-ouro bg-nevoa px-5 pb-8 pt-14 sm:px-10 sm:pb-10 lg:col-span-6 lg:col-start-7">
+          <span aria-hidden="true" className="romano absolute right-5 top-5 text-ouro-texto sm:right-10 sm:top-7">
             {n}
           </span>
           {url ? (
@@ -183,7 +183,7 @@ export function Agendar({ n }: { n: string }) {
               </div>
 
               {comHorarios ? (
-                <div className="mb-8 grid gap-8 sm:grid-cols-2 sm:gap-6">
+                <div className="mb-8 grid gap-8 sm:grid-cols-2 sm:gap-6 lg:grid-cols-1 xl:grid-cols-2">
                   <div>
                     <label htmlFor="f-data" className="block text-[15px] font-medium">
                       Dia de preferência

@@ -120,12 +120,12 @@ export function Escritorio({ n }: { n: string }) {
           Resquioto{" "}
           <span className="block pl-[0.9em] italic text-preto/90 md:pl-[1.6em]">Advogados</span>
         </h2>
-        <div className="mt-14 grid gap-10 md:mt-20 md:grid-cols-12">
-          <p className="display text-[clamp(26px,3vw,38px)] leading-[1.2] md:col-span-6 md:col-start-2">
+        <div className="mt-14 grid gap-10 md:mt-20 lg:grid-cols-12">
+          <p className="display text-[clamp(26px,3vw,38px)] leading-[1.2] lg:col-span-6 lg:col-start-2">
             Escritório de advocacia em {CONFIG.cidade}. Atendimento por agendamento, com explicação clara sobre cada caso.
           </p>
           {CONFIG.endereco && (
-            <address className="not-italic text-[16px] leading-[1.7] text-apoio md:col-span-4 md:col-start-9 md:pt-2">
+            <address className="not-italic text-[16px] leading-[1.7] text-apoio lg:col-span-4 lg:col-start-9 lg:pt-2">
               <span className="rotulo mb-3 block text-ouro-texto">Endereço</span>
               {CONFIG.endereco}
               <br />
@@ -599,7 +599,7 @@ function MapaLazy() {
   }, []);
   const { lat, lng } = CONFIG.coordenadas;
   return (
-    <div ref={ref} className="relative aspect-[4/3] w-full overflow-hidden bg-nevoa-2 md:aspect-auto md:h-full md:min-h-[460px]">
+    <div ref={ref} className="relative aspect-[4/3] w-full overflow-hidden bg-nevoa-2 lg:aspect-auto lg:h-full lg:min-h-[460px]">
       {carregar && (
         <iframe
           title={`Mapa: localização do escritório ${CONFIG.nome} em ${CONFIG.cidade}`}
@@ -618,8 +618,8 @@ export function Contato({ n }: { n: string }) {
   return (
     <section id="contato" aria-labelledby="t-contato" className="relative border-t border-fio py-24 md:py-36">
       <MarcaSecao numeral={n} />
-      <div className="trilho grid gap-12 md:grid-cols-12 md:gap-8">
-        <div className="md:col-span-5">
+      <div className="trilho grid gap-12 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-5">
           <NumeralCelular n={n} />
           <h2 id="t-contato" className="display text-[clamp(40px,5vw,72px)]">
             Venha nos <em>visitar</em>
@@ -649,7 +649,7 @@ export function Contato({ n }: { n: string }) {
               </>
             )}
           </div>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 min-[1400px]:grid-cols-2">
             <a href={comoChegar()} target="_blank" rel="noopener noreferrer" className="btn btn-cheio">
               Como chegar<span className="sr-only"> (abre o Google Maps em nova aba)</span>
             </a>
@@ -657,12 +657,12 @@ export function Contato({ n }: { n: string }) {
               Ver no Google Maps<span className="sr-only"> (abre em nova aba)</span>
             </a>
           </div>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 min-[1400px]:grid-cols-2">
             {CONFIG.usarWhatsapp && <BotaoWhats variante="linha" />}
             <BotaoInstagram />
           </div>
         </div>
-        <div className="md:col-span-6 md:col-start-7">
+        <div className="lg:col-span-6 lg:col-start-7">
           <MapaLazy />
         </div>
       </div>
@@ -701,15 +701,15 @@ export function Rodape({ logo }: { logo: ReactNode }) {
   const advs = advogadosValidos();
   return (
     <footer className="escuro relative border-t border-ouro/40 bg-preto pb-28 pt-16 text-apoio-escuro md:pb-16">
-      <div className="trilho grid gap-10 md:grid-cols-12">
-        <div className="md:col-span-4">
+      <div className="trilho grid gap-10 md:grid-cols-2 lg:grid-cols-12">
+        <div className="md:col-span-2 lg:col-span-4">
           {logo}
           <p className="mt-6 text-nevoa">{CONFIG.nome}</p>
           <p>
             {CONFIG.cidade} - {CONFIG.uf}
           </p>
         </div>
-        <div className="text-[15px] leading-[1.9] md:col-span-4">
+        <div className="text-[15px] leading-[1.9] lg:col-span-4">
           {CONFIG.endereco && (
             <p>
               {CONFIG.endereco}
@@ -739,7 +739,7 @@ export function Rodape({ logo }: { logo: ReactNode }) {
             </ul>
           )}
         </div>
-        <div className="text-[14px] leading-[1.7] md:col-span-4">
+        <div className="text-[14px] leading-[1.7] lg:col-span-4">
           <p>
             Conteúdo meramente informativo, sem finalidade de captação de clientela, em conformidade com o Provimento
             205/2021 do Conselho Federal da OAB.

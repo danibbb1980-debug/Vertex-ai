@@ -8,7 +8,7 @@ export function FaixaRascunho() {
   return (
     <div
       role="note"
-      className="fixed inset-x-0 top-0 z-50 flex h-8 items-center justify-center bg-preto px-4 text-center text-[12px] leading-tight tracking-[0.02em] text-apoio-escuro"
+      className="fixed inset-x-0 top-0 z-50 flex h-8 items-center justify-center bg-preto overflow-hidden whitespace-nowrap px-3 text-center text-[11px] leading-tight sm:text-[12px] sm:tracking-[0.02em] text-apoio-escuro"
     >
       Rascunho para avaliação. Informações sujeitas a confirmação.
     </div>
@@ -62,7 +62,7 @@ export function Header() {
     >
       <div className="trilho flex h-[72px] items-center justify-between gap-6">
         <a href="#inicio" className="-ml-1 block p-1" aria-label={`${CONFIG.nome}, voltar ao início`}>
-          <Logo tom="preto" className="h-11 w-auto md:h-12" />
+          <Logo tom="preto" className="text-[46px] md:text-[50px]" />
         </a>
         <nav aria-label="Principal" className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (

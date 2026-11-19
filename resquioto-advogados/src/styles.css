@@ -142,7 +142,9 @@ body {
   justify-content: center;
   gap: 12px;
   min-height: 52px;
-  padding: 0 26px;
+  padding: 10px 24px;
+  text-align: center;
+  line-height: 1.25;
   font-weight: 560;
   font-size: 15px;
   letter-spacing: 0.01em;
@@ -245,4 +247,31 @@ textarea.campo { min-height: 96px; resize: vertical; }
 }
 @media (prefers-reduced-motion: reduce) {
   .revela > span { animation: none; }
+}
+
+/* logotipo: a altura vem do font-size do elemento (ex.: text-[44px] = 44px de altura) */
+.logo { height: 1em; line-height: 1; }
+.logo-nome {
+  display: inline-grid;
+  margin-left: 0.3em;
+  padding-top: 0.04em;
+}
+.logo-resquioto {
+  font-family: var(--font-display);
+  font-size: 0.47em;
+  font-weight: 380;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.logo-r { font-size: 1.18em; }
+.logo-advogados {
+  font-family: var(--font-sans);
+  font-size: 0.17em;
+  font-weight: 500;
+  line-height: 1;
+  margin-top: 0.9em;
+  text-align: justify;
+  text-align-last: justify;
+  white-space: normal;
 }

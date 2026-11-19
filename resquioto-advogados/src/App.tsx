@@ -41,7 +41,7 @@ export default function App() {
     <>
       <a
         href="#conteudo"
-        className="fixed left-4 top-10 z-[60] -translate-y-24 bg-preto px-4 py-3 text-nevoa focus:translate-y-0"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-10 focus:z-[60] focus:bg-preto focus:px-4 focus:py-3 focus:text-nevoa"
       >
         Pular para o conteúdo
       </a>
@@ -55,7 +55,7 @@ export default function App() {
         ))}
         {s.ctaFinal && <CtaFinal />}
       </main>
-      <Rodape logo={<Logo tom="ouro" className="h-12 w-auto" />} />
+      <Rodape logo={<Logo tom="ouro" className="text-[56px]" />} />
       <WhatsFixo />
     </>
   );
