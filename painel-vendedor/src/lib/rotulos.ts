@@ -1,6 +1,6 @@
 import type {
   FormaPagamento, Formato, RascunhoStatus, ResultadoLigacao, ResultadoReuniao,
-  Segmento, StatusComissao, StatusVenda, Whatsapp,
+  Segmento, StatusRepasse, StatusVenda, Whatsapp,
 } from './types'
 
 export const SEGMENTOS: Record<Segmento, string> = {
@@ -50,10 +50,13 @@ export const FORMA_PAGAMENTO: Record<FormaPagamento, string> = {
 }
 
 export const STATUS_VENDA: Record<StatusVenda, string> = {
-  aguardando_aprovacao: 'Aguardando aprovação do site',
   aguardando_pagamento: 'Aguardando pagamento',
   paga: 'Paga',
   cancelada: 'Cancelada ou reembolsada',
 }
 
-export const STATUS_COMISSAO: Record<StatusComissao, string> = { a_pagar: 'A pagar', paga: 'Paga' }
+export const STATUS_REPASSE: Record<StatusRepasse, string> = {
+  a_pagar: 'Repasse a pagar',
+  paga: 'Repasse pago',
+  estornar: 'Estornar',
+}

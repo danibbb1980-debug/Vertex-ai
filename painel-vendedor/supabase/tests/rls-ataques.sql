@@ -44,7 +44,7 @@ select tst.tentar('controle', 'A arquiva o próprio lead', 'permite', $q$update 
 select tst.tentar('controle', 'A cria lead próprio', 'permite', $q$insert into public.leads (nome, segmento) values ('TESTE Lead Novo', 'outro')$q$);
 select tst.tentar('controle', 'A registra resultado da reunião', 'permite', $q$update public.reunioes set resultado = 'pediu_tempo' where id = '20000000-0000-0000-0000-00000000000a'$q$);
 select tst.tentar('controle', 'A lê a própria comissão', 'permite', 'select * from public.comissoes');
-select tst.tentar('controle', 'A vê a própria venda em aberto', 'permite', $q$select * from public.vendas where id = '30000000-0000-0000-0000-00000000000c' and status = 'aguardando_aprovacao'$q$);
+select tst.tentar('controle', 'A vê a própria venda em aberto', 'permite', $q$select * from public.vendas where id = '30000000-0000-0000-0000-00000000000c' and status = 'aguardando_pagamento'$q$);
 select tst.tentar('controle', 'A lê as configurações', 'permite', 'select * from public.configuracoes');
 
 -- (a) linhas de outro vendedor
@@ -71,10 +71,9 @@ select tst.tentar('(b) campos do admin', 'criar venda já paga', 'nega', $q$inse
 select tst.tentar('(b) campos do admin', 'criar venda abaixo do piso', 'nega', $q$insert into public.vendas (lead_id, valor_combinado) values ('10000000-0000-0000-0000-00000000000a', 100)$q$);
 
 -- (c) comissões
-select tst.tentar('(c) comissões', 'criar comissão', 'nega', $q$insert into public.comissoes (venda_id, vendedor_id, percentual, base_calculo) values ('30000000-0000-0000-0000-00000000000a', auth.uid(), 100, 9999)$q$);
-select tst.tentar('(c) comissões', 'editar a própria comissão', 'nega', $q$update public.comissoes set percentual = 100, status = 'paga'$q$);
+select tst.tentar('(c) comissões', 'criar comissão', 'nega', $q$insert into public.comissoes (venda_id, vendedor_id, percentual_aplicado, base_calculo) values ('30000000-0000-0000-0000-00000000000a', auth.uid(), 100, 9999)$q$);
+select tst.tentar('(c) comissões', 'editar a própria comissão', 'nega', $q$update public.comissoes set percentual_aplicado = 100, status_repasse = 'paga', data_repasse = current_date$q$);
 select tst.tentar('(c) comissões', 'apagar comissão', 'nega', $q$delete from public.comissoes$q$);
-select tst.tentar('(c) comissões', 'chamar registrar_pagamento', 'nega', $q$select public.registrar_pagamento('30000000-0000-0000-0000-00000000000a', 9999, 9999, current_date, 100)$q$);
 select tst.tentar('(c) comissões', 'mudar a configuração de comissão', 'nega', $q$update public.configuracoes set percentual_comissao = 90$q$);
 
 -- (d) próprio papel / ativo
@@ -102,7 +101,7 @@ select tst.tentar('(f) sem login', 'ler comissões', 'nega', 'select * from publ
 select tst.tentar('(f) sem login', 'ler perfis', 'nega', 'select * from public.profiles');
 select tst.tentar('(f) sem login', 'ler configurações', 'nega', 'select * from public.configuracoes');
 select tst.tentar('(f) sem login', 'criar lead', 'nega', $q$insert into public.leads (vendedor_id, nome, segmento) values ('00000000-0000-0000-0000-000000000002','x','outro')$q$);
-select tst.tentar('(f) sem login', 'chamar registrar_pagamento', 'nega', $q$select public.registrar_pagamento('30000000-0000-0000-0000-00000000000a', 1, 1, current_date)$q$);
+select tst.tentar('(f) sem login', 'ler auditoria', 'nega', 'select * from public.auditoria_pagamentos');
 
 -- ============ (g) CONTA DESATIVADA ============
 reset role;
@@ -125,10 +124,100 @@ select tst.tentar('admin', 'admin altera rascunho_status', 'permite', $q$update 
 select tst.tentar('admin', 'comissão = 25% da base líquida (760 → 190,00)', 'permite', $q$select 1 from public.comissoes where venda_id = '30000000-0000-0000-0000-00000000000a' and valor = 190.00$q$);
 select tst.tentar('admin', 'admin cancela a venda de B', 'permite', $q$update public.vendas set status = 'cancelada' where id = '30000000-0000-0000-0000-00000000000b'$q$);
 select tst.tentar('admin', 'venda cancelada zera a comissão', 'permite', $q$select 1 from public.comissoes where venda_id = '30000000-0000-0000-0000-00000000000b' and valor = 0$q$);
-select tst.tentar('admin', 'comissão de venda não paga é recusada', 'nega', $q$insert into public.comissoes (venda_id, vendedor_id, percentual, base_calculo) values ('30000000-0000-0000-0000-00000000000c', '00000000-0000-0000-0000-000000000002', 25, 700)$q$);
-select tst.tentar('admin', 'admin marca comissão como paga', 'permite', $q$update public.comissoes set status = 'paga', data_pagamento = current_date where venda_id = '30000000-0000-0000-0000-00000000000a'$q$);
+select tst.tentar('admin', 'admin não cria comissão à mão (só o trigger)', 'nega', $q$insert into public.comissoes (venda_id, vendedor_id, percentual_aplicado, base_calculo) values ('30000000-0000-0000-0000-00000000000c', '00000000-0000-0000-0000-000000000002', 25, 700)$q$);
+select tst.tentar('admin', 'admin marca comissão como paga', 'permite', $q$update public.comissoes set status_repasse = 'paga', data_repasse = current_date where venda_id = '30000000-0000-0000-0000-00000000000a'$q$);
 select tst.tentar('admin', 'último admin não se desativa', 'nega', $q$update public.profiles set ativo = false where user_id = auth.uid()$q$);
 
+
+-- =====================================================================
+-- PAGAMENTO DA VENDA E COMISSÃO (migração 20261120)
+-- Vendas novas do vendedor A (lead a). Tudo com dados FALSOS.
+-- =====================================================================
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000002","role":"authenticated"}', false);
+select tst.tentar('pagamento', 'vendedor registra venda (aguardando pagamento)', 'permite', $q$insert into public.vendas (id, lead_id, valor_combinado) values ('40000000-0000-0000-0000-00000000000d', '10000000-0000-0000-0000-00000000000a', 797), ('40000000-0000-0000-0000-00000000000e', '10000000-0000-0000-0000-00000000000a', 797), ('40000000-0000-0000-0000-00000000000f', '10000000-0000-0000-0000-00000000000a', 797)$q$);
+select tst.tentar('pagamento', 'venda nova nasce aguardando pagamento', 'permite', $q$select 1 from public.vendas where id = '40000000-0000-0000-0000-00000000000d' and status = 'aguardando_pagamento'$q$);
+-- (a) status do pagamento
+select tst.tentar('(a) status do pagamento', 'vendedor marca a própria venda como paga', 'nega', $q$update public.vendas set status = 'paga', data_pagamento = current_date where id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('(a) status do pagamento', 'vendedor cancela a própria venda', 'nega', $q$update public.vendas set status = 'cancelada' where id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('(a) status do pagamento', 'vendedor informa valor líquido', 'nega', $q$update public.vendas set valor_liquido_recebido = 700 where id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('(a) status do pagamento', 'vendedor cria venda já paga', 'nega', $q$insert into public.vendas (lead_id, valor_combinado, status, data_pagamento) values ('10000000-0000-0000-0000-00000000000a', 797, 'paga', current_date)$q$);
+-- (c) aguardando pagamento: nada de comissão
+select tst.tentar('(c) comissão de venda aguardando', 'ver comissão de venda aguardando', 'nega', $q$select * from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d'$q$);
+
+-- ---------- admin marca como paga ----------
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000001","role":"authenticated"}', false);
+select tst.tentar('regra', 'aguardando pagamento não tem comissão', 'nega', $q$select * from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('regra', 'marcar "paga" exige a data do dinheiro', 'nega', $q$update public.vendas set status = 'paga' where id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('regra', 'admin marca D como paga, líquido em branco', 'permite', $q$update public.vendas set status = 'paga', data_pagamento = current_date, valor_fechado = 797 where id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('regra', 'líquido em branco usa o fechado: 25% de 797 = 199,25', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d' and percentual_aplicado = 25 and base_calculo = 797 and valor = 199.25 and status_repasse = 'a_pagar' and not cancelada$q$);
+select tst.tentar('regra', 'marcar "paga" de novo', 'permite', $q$update public.vendas set status = 'paga', data_pagamento = current_date where id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('regra', 'marcar duas vezes não duplica', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d' having count(*) = 1$q$);
+select tst.tentar('regra', 'admin marca E como paga com líquido 770,00', 'permite', $q$update public.vendas set status = 'paga', data_pagamento = current_date, valor_fechado = 797, valor_liquido_recebido = 770 where id = '40000000-0000-0000-0000-00000000000e'$q$);
+select tst.tentar('regra', 'líquido 770,00 a 25% = 192,50', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000e' and base_calculo = 770 and valor = 192.50$q$);
+select tst.tentar('regra', 'admin muda o percentual para 30%', 'permite', $q$update public.configuracoes set percentual_comissao = 30$q$);
+select tst.tentar('regra', 'percentual novo não altera comissão antiga', 'permite', $q$select 1 from public.comissoes where venda_id in ('40000000-0000-0000-0000-00000000000d','40000000-0000-0000-0000-00000000000e') having count(*) = 2 and bool_and(percentual_aplicado = 25)$q$);
+select tst.tentar('regra', 'venda F paga depois usa 30% gravado', 'permite', $q$update public.vendas set status = 'paga', data_pagamento = current_date, valor_fechado = 797 where id = '40000000-0000-0000-0000-00000000000f'$q$);
+select tst.tentar('regra', 'F: 30% de 797 = 239,10', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000f' and percentual_aplicado = 30 and valor = 239.10$q$);
+select tst.tentar('regra', 'repasse exige data', 'nega', $q$update public.comissoes set status_repasse = 'paga' where venda_id = '40000000-0000-0000-0000-00000000000e'$q$);
+select tst.tentar('regra', 'admin marca repasse de E como pago', 'permite', $q$update public.comissoes set status_repasse = 'paga', data_repasse = current_date where venda_id = '40000000-0000-0000-0000-00000000000e'$q$);
+select tst.tentar('regra', 'repasse grava o valor repassado', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000e' and valor_repassado = 192.50$q$);
+select tst.tentar('regra', 'admin desfaz o pagamento de D (volta a aguardando)', 'permite', $q$update public.vendas set status = 'aguardando_pagamento' where id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('regra', 'desfazer cancela a comissão (valor 0, histórico mantido)', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d' and cancelada and valor = 0 and cancelada_em is not null and base_calculo = 797$q$);
+select tst.tentar('regra', 'desfazer limpa data e líquido da venda', 'permite', $q$select 1 from public.vendas where id = '40000000-0000-0000-0000-00000000000d' and data_pagamento is null and valor_liquido_recebido is null$q$);
+select tst.tentar('regra', 'comissão cancelada não pode ser repassada', 'nega', $q$update public.comissoes set status_repasse = 'paga', data_repasse = current_date where venda_id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('regra', 'admin cancela E (repasse já pago)', 'permite', $q$update public.vendas set status = 'cancelada' where id = '40000000-0000-0000-0000-00000000000e'$q$);
+select tst.tentar('regra', 'repasse já pago vira "estornar"', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000e' and cancelada and valor = 0 and status_repasse = 'estornar' and valor_repassado = 192.50$q$);
+select tst.tentar('regra', 'D paga de novo (com config em 30%)', 'permite', $q$update public.vendas set status = 'paga', data_pagamento = current_date where id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('regra', 'reativada mantém o percentual gravado (25%)', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d' and not cancelada and percentual_aplicado = 25 and valor = 199.25$q$);
+select tst.tentar('regra', 'ainda uma comissão por venda', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d' having count(*) = 1$q$);
+select tst.tentar('regra', 'admin volta o percentual para 25%', 'permite', $q$update public.configuracoes set percentual_comissao = 25$q$);
+select tst.tentar('auditoria', 'auditoria registra status com autor', 'permite', $q$select 1 from public.auditoria_pagamentos where venda_id = '40000000-0000-0000-0000-00000000000d' and campo = 'status' and valor_novo = 'paga' and autor_id = '00000000-0000-0000-0000-000000000001'$q$);
+select tst.tentar('auditoria', 'auditoria registra líquido, repasse e percentual', 'permite', $q$select 1 from public.auditoria_pagamentos having count(*) filter (where campo = 'valor_liquido_recebido') > 0 and count(*) filter (where campo = 'status_repasse') > 0 and count(*) filter (where campo = 'percentual_comissao') > 0$q$);
+select tst.tentar('regra', 'admin desfaz o pagamento de F (nunca repassada)', 'permite', $q$update public.vendas set status = 'aguardando_pagamento' where id = '40000000-0000-0000-0000-00000000000f'$q$);
+-- vendedor B com venda paga, para o teste (d)
+select tst.tentar('pagamento', 'admin registra e paga venda do vendedor B', 'permite', $q$insert into public.vendas (id, lead_id, valor_combinado, valor_fechado, status, data_pagamento) values ('40000000-0000-0000-0000-0000000000b1', '10000000-0000-0000-0000-00000000000b', 797, 797, 'paga', current_date)$q$);
+
+-- ---------- de volta ao vendedor A ----------
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000002","role":"authenticated"}', false);
+select tst.tentar('(c) comissão de venda aguardando', 'ver comissão cancelada de F (voltou a aguardando)', 'nega', $q$select * from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000f'$q$);
+select tst.tentar('(c) comissão de venda aguardando', 'ver líquido/data de F na venda', 'nega', $q$select * from public.vendas where id = '40000000-0000-0000-0000-00000000000f' and (valor_liquido_recebido is not null or data_pagamento is not null)$q$);
+select tst.tentar('controle', 'A ainda vê a venda F (sem valores de pagamento)', 'permite', $q$select 1 from public.vendas where id = '40000000-0000-0000-0000-00000000000f' and status = 'aguardando_pagamento'$q$);
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000002","role":"authenticated"}', false);
+select tst.tentar('controle', 'A vê a comissão da venda paga D', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d' and valor = 199.25$q$);
+select tst.tentar('controle', 'A vê o estorno pendente de E', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000e' and status_repasse = 'estornar'$q$);
+select tst.tentar('(b) comissões', 'criar comissão para venda paga', 'nega', $q$insert into public.comissoes (venda_id, vendedor_id, percentual_aplicado, base_calculo) values ('40000000-0000-0000-0000-00000000000f', auth.uid(), 100, 9999)$q$);
+select tst.tentar('(b) comissões', 'editar valor/percentual da própria comissão', 'nega', $q$update public.comissoes set percentual_aplicado = 100, base_calculo = 9999 where venda_id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('(b) comissões', 'marcar o próprio repasse como pago', 'nega', $q$update public.comissoes set status_repasse = 'paga', data_repasse = current_date where venda_id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('(b) comissões', 'cancelar o próprio estorno', 'nega', $q$update public.comissoes set status_repasse = 'a_pagar' where venda_id = '40000000-0000-0000-0000-00000000000e'$q$);
+select tst.tentar('(b) comissões', 'apagar comissão', 'nega', $q$delete from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('(d) outro vendedor', 'ler comissão paga do vendedor B', 'nega', $q$select * from public.comissoes where venda_id = '40000000-0000-0000-0000-0000000000b1'$q$);
+select tst.tentar('(d) outro vendedor', 'ler venda paga do vendedor B', 'nega', $q$select * from public.vendas where id = '40000000-0000-0000-0000-0000000000b1'$q$);
+select tst.tentar('(e) auditoria', 'ler a tabela de auditoria', 'nega', 'select * from public.auditoria_pagamentos');
+select tst.tentar('(e) auditoria', 'escrever na auditoria', 'nega', $q$insert into public.auditoria_pagamentos (tabela, campo) values ('x', 'y')$q$);
+select tst.tentar('(e) auditoria', 'apagar a auditoria', 'nega', 'delete from public.auditoria_pagamentos');
+
+-- ---------- conta desativada ----------
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000004","role":"authenticated"}', false);
+select tst.tentar('(g) conta desativada', 'ler comissões', 'nega', 'select * from public.comissoes');
+select tst.tentar('(g) conta desativada', 'ler auditoria', 'nega', 'select * from public.auditoria_pagamentos');
+select tst.tentar('(g) conta desativada', 'ler vendas', 'nega', 'select * from public.vendas');
+
+-- ---------- sem login ----------
+reset role;
+select set_config('request.jwt.claims', '', false);
+set role anon;
+select tst.tentar('(f) sem login', 'ler comissões (pós-migração)', 'nega', 'select * from public.comissoes');
+select tst.tentar('(f) sem login', 'marcar venda como paga', 'nega', $q$update public.vendas set status = 'paga', data_pagamento = current_date$q$);
 reset role;
 \echo
 \echo '==================== RESULTADO DO TESTE DE SEGURANÇA ===================='

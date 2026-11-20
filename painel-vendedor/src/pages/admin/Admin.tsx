@@ -5,14 +5,18 @@ import Contas from './Contas'
 import Config from './Config'
 import Exportar from './Exportar'
 import Fila from './Fila'
+import Auditoria from './Auditoria'
 import Pagamentos from './Pagamentos'
+import Repasses from './Repasses'
 
 const abas = [
   { slug: 'fila', rotulo: 'Rascunhos', comp: Fila },
-  { slug: 'pagamentos', rotulo: 'Pagamentos', comp: Pagamentos },
+  { slug: 'vendas', rotulo: 'Vendas', comp: Pagamentos },
+  { slug: 'repasses', rotulo: 'Comissões a repassar', comp: Repasses },
   { slug: 'contas', rotulo: 'Contas', comp: Contas },
   { slug: 'config', rotulo: 'Configurações', comp: Config },
   { slug: 'exportar', rotulo: 'Exportar', comp: Exportar },
+  { slug: 'auditoria', rotulo: 'Auditoria', comp: Auditoria },
 ]
 
 export default function Admin() {

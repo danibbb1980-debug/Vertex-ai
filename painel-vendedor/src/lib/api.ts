@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from './supabase'
 import type {
-  Comissao, Configuracoes, Lead, Ligacao, Profile, Reuniao, Venda,
+  Auditoria, Comissao, Configuracoes, Lead, Ligacao, Profile, Reuniao, StatusVenda, Venda,
 } from './types'
 
 async function lista<T>(promessa: PromiseLike<{ data: unknown; error: unknown }>): Promise<T[]> {
@@ -87,7 +87,7 @@ export function useVendas(vendedorId: string | null) {
         await lista<Venda>(
           supabase.from('vendas').select('*').eq('vendedor_id', vendedorId!).is('deleted_at', null).order('created_at', { ascending: false }),
         ),
-        ['valor_combinado', 'valor_fechado'],
+        ['valor_combinado', 'valor_fechado', 'valor_liquido_recebido'],
       ),
   })
 }
@@ -101,7 +101,7 @@ export function useComissoes(vendedorId: string | null) {
         await lista<Comissao>(
           supabase.from('comissoes').select('*').eq('vendedor_id', vendedorId!).order('created_at', { ascending: false }),
         ),
-        ['percentual', 'base_calculo', 'valor'],
+        ['percentual_aplicado', 'base_calculo', 'valor', 'valor_repassado'],
       ),
   })
 }
@@ -129,7 +129,7 @@ export function useTodasVendas(habilitado: boolean) {
     queryFn: async () =>
       num(
         await lista<Venda>(supabase.from('vendas').select('*').is('deleted_at', null).order('created_at', { ascending: false })),
-        ['valor_combinado', 'valor_fechado'],
+        ['valor_combinado', 'valor_fechado', 'valor_liquido_recebido'],
       ),
   })
 }
@@ -138,7 +138,7 @@ export function useTodasComissoes(habilitado: boolean) {
     queryKey: ['comissoes', 'todas'],
     enabled: habilitado,
     queryFn: async () =>
-      num(await lista<Comissao>(supabase.from('comissoes').select('*').order('created_at', { ascending: false })), ['percentual', 'base_calculo', 'valor']),
+      num(await lista<Comissao>(supabase.from('comissoes').select('*').order('created_at', { ascending: false })), ['percentual_aplicado', 'base_calculo', 'valor', 'valor_repassado']),
   })
 }
 
@@ -213,20 +213,42 @@ export function useSalvarVenda() {
   })
 }
 
-export function useRegistrarPagamento() {
+/**
+ * Admin: muda o status do pagamento do cliente. Ao marcar "paga", o
+ * trigger do banco cria (ou recalcula) a comissão; ao sair de "paga",
+ * cancela. Nada de comissão é calculado aqui no navegador.
+ */
+export function useAlterarPagamento() {
   const inv = useInvalidar()
   return useMutation({
-    mutationFn: (p: { venda_id: string; valor_fechado: number; base_liquida: number; data_pagamento: string; percentual: number }) =>
-      exec<Comissao>(
-        supabase.rpc('registrar_pagamento', {
-          p_venda_id: p.venda_id,
-          p_valor_fechado: p.valor_fechado,
-          p_base_liquida: p.base_liquida,
-          p_data_pagamento: p.data_pagamento,
-          p_percentual: p.percentual,
-        }),
-      ),
-    onSuccess: () => inv('vendas', 'comissoes'),
+    mutationFn: (p: {
+      venda_id: string
+      status: StatusVenda
+      data_pagamento?: string | null
+      valor_fechado?: number | null
+      valor_liquido_recebido?: number | null
+    }) => {
+      const dados: Partial<Venda> =
+        p.status === 'paga'
+          ? {
+              status: 'paga',
+              data_pagamento: p.data_pagamento ?? null,
+              valor_fechado: p.valor_fechado ?? null,
+              valor_liquido_recebido: p.valor_liquido_recebido ?? null,
+            }
+          : { status: p.status }
+      return exec<Venda>(supabase.from('vendas').update(dados).eq('id', p.venda_id).select().single())
+    },
+    onSuccess: () => inv('vendas', 'comissoes', 'auditoria'),
+  })
+}
+
+export function useAuditoria(habilitado: boolean) {
+  return useQuery({
+    queryKey: ['auditoria'],
+    enabled: habilitado,
+    queryFn: () =>
+      lista<Auditoria>(supabase.from('auditoria_pagamentos').select('*').order('criado_em', { ascending: false }).limit(200)),
   })
 }
 
@@ -235,7 +257,7 @@ export function useSalvarComissao() {
   return useMutation({
     mutationFn: ({ id, dados }: { id: string; dados: Partial<Comissao> }) =>
       exec(supabase.from('comissoes').update(dados).eq('id', id)),
-    onSuccess: () => inv('comissoes'),
+    onSuccess: () => inv('comissoes', 'auditoria'),
   })
 }
 
@@ -252,6 +274,6 @@ export function useSalvarConfig() {
   const inv = useInvalidar()
   return useMutation({
     mutationFn: (dados: Partial<Configuracoes>) => exec(supabase.from('configuracoes').update(dados).eq('id', 1)),
-    onSuccess: () => inv('config'),
+    onSuccess: () => inv('config', 'auditoria'),
   })
 }

@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import {
-  calcularComissao, calcularFunil, checklistPacote, comissaoPorMes, contarTentativas,
+  baseDaComissao, calcularComissao, calcularFunil, checklistPacote, comissaoPorMes, contarTentativas,
+  gruposDeRepasse, situacaoComissao, totaisDoMes, valorComissao,
   listaHoje, mapaTentativas, motivosDePerda, pacoteCompleto, pendenciasPacote,
   proximoRetorno, statusTentativas, textoPacote,
 } from './regras'
 import { fmtMoeda, lerMoeda, telefoneE164 } from './formato'
 import { fmtData, hojeSP, localSPparaISO, proximoDiaUtil } from './datas'
-import type { Lead, Ligacao, Reuniao, Venda } from './types'
+import type { Comissao, Lead, Ligacao, Reuniao, Venda } from './types'
 
 // Todos os dados abaixo são FALSOS e existem só neste arquivo de teste.
 const leadBase: Lead = {
@@ -29,7 +30,7 @@ const reu = (p: Partial<Reuniao>): Reuniao => ({
 })
 const ven = (p: Partial<Venda>): Venda => ({
   id: 'S1', lead_id: 'L1', vendedor_id: 'V1', valor_combinado: 797, valor_fechado: null,
-  forma_pagamento: 'pix', parcelas: 1, status: 'aguardando_aprovacao', data_pagamento: null,
+  forma_pagamento: 'pix', parcelas: 1, status: 'aguardando_pagamento', valor_liquido_recebido: null, data_pagamento: null,
   observacao: null, deleted_at: null, created_at: '2026-11-20T13:00:00Z', updated_at: '2026-11-20T13:00:00Z', ...p,
 })
 
@@ -91,29 +92,65 @@ describe('pacote completo', () => {
 })
 
 describe('comissão', () => {
-  it('25% sobre a base líquida informada pelo admin', () => {
-    expect(calcularComissao(797, 25, 'paga')).toBe(199.25)
-    // base líquida menor que o preço (ex.: taxa do cartão)
-    expect(calcularComissao(760.43, 25, 'paga')).toBe(190.11)
+  const com = (p: Partial<Comissao>): Comissao => ({
+    id: 'C1', venda_id: 'S1', vendedor_id: 'V1', percentual_aplicado: 25, base_calculo: 797, cancelada: false,
+    cancelada_em: null, valor: 199.25, status_repasse: 'a_pagar', data_repasse: null, valor_repassado: null,
+    created_at: '2026-11-10T12:00:00Z', ...p,
   })
-  it('venda cancelada ou reembolsada zera', () => {
+  it('25% de R$ 797 = R$ 199,25; líquido R$ 770,00 a 25% = R$ 192,50', () => {
+    expect(valorComissao(797, 25)).toBe(199.25)
+    expect(valorComissao(770, 25)).toBe(192.5)
+    expect(valorComissao(760.43, 25)).toBe(190.11)
+  })
+  it('líquido em branco usa o valor fechado (e, sem ele, o combinado)', () => {
+    const v = ven({ valor_combinado: 697, valor_fechado: 797, valor_liquido_recebido: null })
+    expect(baseDaComissao(v, null)).toBe(797)
+    expect(baseDaComissao(v, 770)).toBe(770)
+    expect(baseDaComissao(ven({ valor_combinado: 697, valor_fechado: null }))).toBe(697)
+  })
+  it('venda cancelada zera; venda não paga não gera comissão', () => {
     expect(calcularComissao(797, 25, 'cancelada')).toBe(0)
-  })
-  it('venda ainda não paga não gera comissão', () => {
-    expect(calcularComissao(797, 25, 'aguardando_aprovacao')).toBeNull()
     expect(calcularComissao(797, 25, 'aguardando_pagamento')).toBeNull()
+    expect(calcularComissao(797, 25, 'paga')).toBe(199.25)
   })
-  it('soma por mês, separando a receber e paga, sem contar canceladas', () => {
-    const r = comissaoPorMes([
-      { valor: 199.25, status: 'paga', data_pagamento: '2026-11-05', created_at: '2026-10-30T12:00:00Z', cancelada: false },
-      { valor: 199.25, status: 'a_pagar', data_pagamento: null, created_at: '2026-11-10T12:00:00Z', cancelada: false },
-      { valor: 0, status: 'a_pagar', data_pagamento: null, created_at: '2026-11-11T12:00:00Z', cancelada: true },
-      { valor: 150, status: 'paga', data_pagamento: '2026-10-02', created_at: '2026-10-01T12:00:00Z', cancelada: false },
-    ])
-    expect(r).toEqual([
-      { mes: '2026-11', aReceber: 199.25, recebida: 199.25 },
-      { mes: '2026-10', aReceber: 0, recebida: 150 },
-    ])
+  it('aguardando pagamento: vendedor não vê valor nenhum', () => {
+    const s = situacaoComissao(ven({ status: 'aguardando_pagamento' }), undefined)
+    expect(s).toEqual({ tipo: 'aguardando' })
+    expect('valor' in s).toBe(false)
+  })
+  it('paga: mostra o valor exato, o percentual gravado, a data e o repasse', () => {
+    const s = situacaoComissao(ven({ status: 'paga', data_pagamento: '2026-11-18' }), com({ percentual_aplicado: 25, base_calculo: 770, valor: 192.5 }))
+    expect(s).toEqual({ tipo: 'paga', valor: 192.5, percentual: 25, base: 770, dataPagamento: '2026-11-18', repasse: 'a_pagar', dataRepasse: null })
+  })
+  it('repasse pago e venda desfeita: vira "estornar" com o valor repassado', () => {
+    const s = situacaoComissao(ven({ status: 'cancelada' }), com({ cancelada: true, valor: 0, status_repasse: 'estornar', valor_repassado: 199.25, data_repasse: '2026-11-19' }))
+    expect(s).toEqual({ tipo: 'estornar', valorRepassado: 199.25, dataRepasse: '2026-11-19' })
+  })
+  it('totais do mês: a receber pelo mês do pagamento do cliente, recebido pelo mês do repasse', () => {
+    const vendas = [
+      { id: 'A', data_pagamento: '2026-11-05' }, { id: 'B', data_pagamento: '2026-10-28' },
+      { id: 'C', data_pagamento: '2026-11-12' }, { id: 'D', data_pagamento: null },
+    ]
+    const cs = [
+      com({ venda_id: 'A', valor: 199.25 }),
+      com({ venda_id: 'B', valor: 192.5, status_repasse: 'paga', data_repasse: '2026-11-03', valor_repassado: 192.5 }),
+      com({ venda_id: 'C', valor: 0, cancelada: true }),
+      com({ venda_id: 'D', valor: 0, cancelada: true, status_repasse: 'estornar', valor_repassado: 199.25, data_repasse: '2026-10-30' }),
+    ]
+    expect(totaisDoMes(cs, vendas, '2026-11')).toEqual({ aReceber: 199.25, recebido: 192.5 })
+    expect(totaisDoMes(cs, vendas, '2026-10')).toEqual({ aReceber: 0, recebido: 0 })
+    expect(comissaoPorMes(cs, vendas)).toEqual([{ mes: '2026-11', aReceber: 199.25, recebida: 192.5 }])
+  })
+  it('admin: agrupa por vendedor e mês, separando a repassar e repassadas', () => {
+    const vendas = [{ id: 'A', data_pagamento: '2026-11-05' }, { id: 'B', data_pagamento: '2026-11-10' }, { id: 'C', data_pagamento: '2026-11-11' }]
+    const cs = [
+      com({ id: '1', venda_id: 'A', valor: 199.25 }),
+      com({ id: '2', venda_id: 'B', valor: 192.5, status_repasse: 'paga', data_repasse: '2026-11-15', valor_repassado: 192.5 }),
+      com({ id: '3', venda_id: 'C', vendedor_id: 'V2', valor: 199.25 }),
+    ]
+    const g = gruposDeRepasse(cs, vendas)
+    expect(g).toHaveLength(2)
+    expect(g.find((x) => x.vendedorId === 'V1')).toMatchObject({ mes: '2026-11', totalARepassar: 199.25, totalRepassado: 192.5 })
   })
 })
 

@@ -5,7 +5,7 @@
  */
 import { diaSP, proximoDiaUtil } from './datas'
 import type {
-  Lead, Ligacao, ResultadoLigacao, Reuniao, StatusVenda, Venda,
+  Comissao, Lead, Ligacao, ResultadoLigacao, Reuniao, StatusVenda, Venda,
 } from './types'
 
 // ---------------------------------------------------------------------
@@ -117,21 +117,136 @@ export function pacoteCompleto(...args: Parameters<typeof checklistPacote>): boo
 }
 
 // ---------------------------------------------------------------------
-// Comissão
+// Comissão (a regra que vale é a do banco; estas funções a espelham
+// para prévia e exibição)
 // ---------------------------------------------------------------------
+/** Percentual sobre a base, arredondado ao centavo. */
+export function valorComissao(base: number, percentual: number): number {
+  return Math.round(base * percentual) / 100
+}
+
 /**
- * Valor da comissão em reais: percentual sobre a base líquida recebida
- * pelo Pedro, arredondado ao centavo. Venda cancelada/reembolsada = 0.
- * Venda que ainda não foi paga não gera comissão (null).
+ * Valor da comissão de uma venda: percentual sobre a base líquida.
+ * Venda cancelada/reembolsada = 0. Venda ainda não paga não gera comissão (null).
  */
-export function calcularComissao(
-  baseLiquida: number,
-  percentual: number,
-  statusVenda: StatusVenda,
-): number | null {
+export function calcularComissao(base: number, percentual: number, statusVenda: StatusVenda): number | null {
   if (statusVenda === 'cancelada') return 0
   if (statusVenda !== 'paga') return null
-  return Math.round(baseLiquida * percentual) / 100
+  return valorComissao(base, percentual)
+}
+
+/** Líquido informado; em branco usa o valor fechado (ou, sem ele, o combinado). */
+export function baseDaComissao(
+  venda: Pick<Venda, 'valor_liquido_recebido' | 'valor_fechado' | 'valor_combinado'>,
+  liquidoInformado?: number | null,
+): number {
+  return liquidoInformado ?? venda.valor_liquido_recebido ?? venda.valor_fechado ?? venda.valor_combinado
+}
+
+export type SituacaoComissao =
+  | { tipo: 'aguardando' }
+  | { tipo: 'cancelada' }
+  | { tipo: 'paga'; valor: number; percentual: number; base: number; dataPagamento: string | null; repasse: 'a_pagar' | 'paga'; dataRepasse: string | null }
+  | { tipo: 'estornar'; valorRepassado: number; dataRepasse: string | null }
+
+/** O que o vendedor vê sobre a comissão de uma venda. */
+export function situacaoComissao(
+  venda: Pick<Venda, 'status' | 'data_pagamento'>,
+  comissao: Pick<Comissao, 'valor' | 'percentual_aplicado' | 'base_calculo' | 'cancelada' | 'status_repasse' | 'data_repasse' | 'valor_repassado'> | undefined,
+): SituacaoComissao {
+  if (comissao?.status_repasse === 'estornar') {
+    return { tipo: 'estornar', valorRepassado: Number(comissao.valor_repassado ?? 0), dataRepasse: comissao.data_repasse }
+  }
+  if (venda.status === 'paga' && comissao && !comissao.cancelada) {
+    return {
+      tipo: 'paga',
+      valor: Number(comissao.valor),
+      percentual: Number(comissao.percentual_aplicado),
+      base: Number(comissao.base_calculo),
+      dataPagamento: venda.data_pagamento,
+      repasse: comissao.status_repasse === 'paga' ? 'paga' : 'a_pagar',
+      dataRepasse: comissao.data_repasse,
+    }
+  }
+  if (venda.status === 'cancelada') return { tipo: 'cancelada' }
+  return { tipo: 'aguardando' }
+}
+
+type ComissaoTotal = Pick<Comissao, 'venda_id' | 'valor' | 'cancelada' | 'status_repasse' | 'data_repasse' | 'valor_repassado' | 'created_at'>
+type VendaTotal = Pick<Venda, 'id' | 'data_pagamento'>
+
+const cent = (n: number) => Math.round(n * 100) / 100
+
+/**
+ * Totais de um mês (yyyy-MM):
+ * - a receber: comissões vivas ainda não repassadas, pelo mês em que o cliente pagou;
+ * - recebido: repasses feitos, pelo mês do repasse.
+ */
+export function totaisDoMes(comissoes: ComissaoTotal[], vendas: VendaTotal[], mes: string): { aReceber: number; recebido: number } {
+  const pagoEm = new Map(vendas.map((v) => [v.id, v.data_pagamento]))
+  let aReceber = 0
+  let recebido = 0
+  for (const c of comissoes) {
+    if (!c.cancelada && c.status_repasse === 'a_pagar' && (pagoEm.get(c.venda_id) ?? '').startsWith(mes)) aReceber += Number(c.valor)
+    if (c.status_repasse === 'paga' && (c.data_repasse ?? '').startsWith(mes)) recebido += Number(c.valor_repassado ?? c.valor)
+  }
+  return { aReceber: cent(aReceber), recebido: cent(recebido) }
+}
+
+export interface ResumoMes {
+  mes: string // yyyy-MM
+  aReceber: number
+  recebida: number
+}
+
+/** Uma linha por mês com movimento, do mais recente para o mais antigo. */
+export function comissaoPorMes(comissoes: ComissaoTotal[], vendas: VendaTotal[]): ResumoMes[] {
+  const pagoEm = new Map(vendas.map((v) => [v.id, v.data_pagamento]))
+  const meses = new Set<string>()
+  for (const c of comissoes) {
+    const p = pagoEm.get(c.venda_id)
+    if (!c.cancelada && c.status_repasse === 'a_pagar' && p) meses.add(p.slice(0, 7))
+    if (c.status_repasse === 'paga' && c.data_repasse) meses.add(c.data_repasse.slice(0, 7))
+  }
+  return [...meses]
+    .sort((a, b) => b.localeCompare(a))
+    .map((mes) => {
+      const t = totaisDoMes(comissoes, vendas, mes)
+      return { mes, aReceber: t.aReceber, recebida: t.recebido }
+    })
+}
+
+export interface GrupoRepasse<C> {
+  vendedorId: string
+  mes: string // mês em que o cliente pagou
+  aRepassar: C[]
+  repassadas: C[]
+  totalARepassar: number
+  totalRepassado: number
+}
+
+/** Admin: comissões vivas agrupadas por vendedor e mês do pagamento do cliente. */
+export function gruposDeRepasse<C extends ComissaoTotal & Pick<Comissao, 'vendedor_id'>>(
+  comissoes: C[],
+  vendas: VendaTotal[],
+): GrupoRepasse<C>[] {
+  const pagoEm = new Map(vendas.map((v) => [v.id, v.data_pagamento]))
+  const grupos = new Map<string, GrupoRepasse<C>>()
+  for (const c of comissoes) {
+    if (c.cancelada) continue
+    const mes = (pagoEm.get(c.venda_id) ?? c.created_at).slice(0, 7)
+    const chave = `${c.vendedor_id}|${mes}`
+    const g = grupos.get(chave) ?? { vendedorId: c.vendedor_id, mes, aRepassar: [], repassadas: [], totalARepassar: 0, totalRepassado: 0 }
+    if (c.status_repasse === 'paga') {
+      g.repassadas.push(c)
+      g.totalRepassado = cent(g.totalRepassado + Number(c.valor_repassado ?? c.valor))
+    } else {
+      g.aRepassar.push(c)
+      g.totalARepassar = cent(g.totalARepassar + Number(c.valor))
+    }
+    grupos.set(chave, g)
+  }
+  return [...grupos.values()].sort((a, b) => b.mes.localeCompare(a.mes) || a.vendedorId.localeCompare(b.vendedorId))
 }
 
 // ---------------------------------------------------------------------
@@ -290,28 +405,4 @@ export function textoPacote(lead: Lead, reuniao: Reuniao, fmt: {
   linhas.push(linha('Reunião', reuniao.data_hora ? `${fmt.dataHora} (${fmt.formato})` : null))
   if (lead.observacoes?.trim()) linhas.push('', `*Observações:* ${lead.observacoes.trim()}`)
   return linhas.join('\n')
-}
-
-// ---------------------------------------------------------------------
-// Somas por mês (comissão)
-// ---------------------------------------------------------------------
-export interface ResumoMes {
-  mes: string // yyyy-MM
-  aReceber: number
-  recebida: number
-}
-
-export function comissaoPorMes(
-  comissoes: { valor: number; status: 'a_pagar' | 'paga'; data_pagamento: string | null; created_at: string; cancelada: boolean }[],
-): ResumoMes[] {
-  const m = new Map<string, ResumoMes>()
-  for (const c of comissoes) {
-    if (c.cancelada) continue
-    const mes = (c.status === 'paga' && c.data_pagamento ? c.data_pagamento : diaSP(c.created_at)).slice(0, 7)
-    const r = m.get(mes) ?? { mes, aReceber: 0, recebida: 0 }
-    if (c.status === 'paga') r.recebida = Math.round((r.recebida + Number(c.valor)) * 100) / 100
-    else r.aReceber = Math.round((r.aReceber + Number(c.valor)) * 100) / 100
-    m.set(mes, r)
-  }
-  return [...m.values()].sort((a, b) => b.mes.localeCompare(a.mes))
 }

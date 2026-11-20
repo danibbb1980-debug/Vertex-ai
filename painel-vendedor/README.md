@@ -23,7 +23,8 @@ Outros comandos: `npm test` (testes de regras), `npm run typecheck`, `npm run bu
 
 ### 1. Supabase
 1. Em [supabase.com](https://supabase.com), crie um projeto **novo**, só para este app (região São Paulo).
-2. Abra **SQL Editor**, cole o conteúdo inteiro de `supabase/schema.sql` e clique em **Run**. Rode uma vez só.
+2. Abra **SQL Editor**, cole o conteúdo inteiro de `supabase/schema.sql` e clique em **Run**. Depois rode, em ordem de data,
+   cada arquivo de `supabase/migrations/` que **não** termina em `_reverter.sql` (veja "Migrações" abaixo). Cada arquivo roda uma vez só.
 3. **Desative o cadastro público:** Authentication > Sign In / Providers > Email: desligue
    **Allow new users to sign up** (em versões antigas do painel: Authentication > Settings > "Enable sign ups").
    Deixe o provedor Email ligado: é por ele que vocês entram.
@@ -94,6 +95,8 @@ Os textos ficam em `src/content/`, um arquivo Markdown por página:
    ```sql
    begin;
    with v as (select id from auth.users where email = 'vendedor@exemplo.com')
+   delete from public.auditoria_pagamentos where venda_id in (select id from public.vendas where vendedor_id in (select id from v));
+   with v as (select id from auth.users where email = 'vendedor@exemplo.com')
    delete from public.comissoes where vendedor_id in (select id from v);
    with v as (select id from auth.users where email = 'vendedor@exemplo.com')
    delete from public.vendas    where vendedor_id in (select id from v);
@@ -107,6 +110,50 @@ Os textos ficam em `src/content/`, um arquivo Markdown por página:
    ```
    Depois, apague o usuário em Authentication > Users (o perfil some junto).
 
+## Migrações
+
+O banco começa com `supabase/schema.sql` e evolui com os arquivos de `supabase/migrations/`, aplicados em ordem de data.
+Cada migração tem um par `_reverter.sql` que a desfaz.
+
+### 20261120_comissao_pagamento (pagamento da venda e comissão)
+
+**Aplicar** (banco que já está em uso, sem perder dados):
+1. Faça um backup antes: Database > Backups, ou exporte as tabelas `vendas` e `comissoes` em Table Editor > Export.
+2. SQL Editor > New query > cole o conteúdo inteiro de `supabase/migrations/20261120_comissao_pagamento.sql` > **Run**.
+   O arquivo roda numa transação: ou aplica tudo, ou nada.
+3. Confira: `select status, count(*) from public.vendas group by 1;` (só `aguardando_pagamento`, `paga` ou `cancelada`)
+   e `select * from public.auditoria_pagamentos limit 1;` (a tabela existe).
+4. Só então publique a versão nova do app (merge na `main`). O app novo não funciona com o banco antigo, e o antigo não funciona com o banco novo.
+
+**Reverter**: SQL Editor > cole `supabase/migrations/20261120_comissao_pagamento_reverter.sql` > **Run**, e volte o app
+para a versão anterior. Perde a tabela de auditoria, o campo `valor_liquido_recebido` (o líquido continua em
+`comissoes.base_calculo`) e o "estornar" (vira "repasse pago").
+
+## Regra de comissão
+
+- **Quem muda o pagamento:** só o admin, em Admin > Vendas, no seletor "Pagamento do cliente":
+  *Aguardando pagamento*, *Paga* ou *Cancelada ou reembolsada*. O vendedor nunca altera esse status.
+- **Marcar como paga:** pede a data em que o dinheiro caiu e o **valor líquido** recebido (depois das taxas do Asaas
+  ou do Mercado Pago). Líquido em branco = usa o valor fechado. O diálogo mostra a prévia antes de confirmar.
+- **Criação automática:** ao confirmar, um trigger no banco cria a comissão: `percentual vigente × base líquida`,
+  arredondado ao centavo. Exemplos: R$ 797,00 a 25% = R$ 199,25; líquido R$ 770,00 a 25% = R$ 192,50.
+- **Percentual gravado:** o percentual de Admin > Configurações no momento do pagamento fica gravado na comissão.
+  Mudar a configuração depois só vale para as próximas. Marcar "Paga" de novo (ou corrigir o líquido) recalcula a
+  base, nunca duplica a comissão e mantém o percentual gravado.
+- **Reversão:** se uma venda paga volta para *Aguardando pagamento* ou vai para *Cancelada ou reembolsada*, a comissão
+  é cancelada (valor zerado, histórico mantido). Se o repasse já tinha sido pago, ela fica em **Estornar** e aparece em
+  destaque em Admin > Vendas e em Admin > Comissões a repassar até você clicar em "Marcar estorno como resolvido".
+- **O que o vendedor vê:** venda aguardando = "comissão disponível após o pagamento", sem valor nenhum (o banco nem
+  devolve a linha). Venda paga = valor exato, data do pagamento e status do repasse. Só então entra nos totais do mês.
+- **Auditoria:** cada mudança de status, valor fechado, líquido, data, percentual (da comissão ou da configuração) e
+  repasse fica em `auditoria_pagamentos`, com autor e horário. Só o admin lê (Admin > Auditoria).
+
+## Marcar um repasse como pago
+
+Depois de transferir a comissão ao vendedor: Admin > **Comissões a repassar** > filtre por vendedor e mês se quiser >
+informe a **data do repasse** na comissão > **Marcar repasse como pago**. O valor repassado fica gravado e passa a contar
+em "Recebido" no painel do vendedor (no mês do repasse). O repasse é independente do pagamento do cliente.
+
 ## Regras que o banco garante
 
 | Quem | Pode |
@@ -117,10 +164,12 @@ Os textos ficam em `src/content/`, um arquivo Markdown por página:
 | Admin | Tudo: contas, configurações, rascunhos, pagamentos, comissões, exclusões (soft delete). |
 
 Campos que só o admin altera, mesmo nas linhas do vendedor: `rascunho_status`, `rascunho_link`,
-`valor_fechado`, `data_pagamento`, status "paga"/"cancelada" da venda e `deleted_at`.
-A comissão só nasce de venda paga (`registrar_pagamento`), vale `percentual × base líquida`,
-e é zerada quando a venda é cancelada ou reembolsada.
+o status do pagamento da venda, `valor_fechado`, `valor_liquido_recebido`, `data_pagamento` e `deleted_at`.
+Comissões só são criadas pelo trigger (nem o admin cria à mão), só o admin atualiza o repasse, ninguém apaga.
+O vendedor lê só as próprias comissões de vendas pagas (ou em estorno); a auditoria é só do admin.
 
 O teste `npm run test:rls` sobe um Postgres descartável, aplica o `schema.sql` com um stub mínimo do
-`auth` do Supabase, insere dados **falsos** e executa 63 tentativas reais (leitura de outro vendedor,
-alteração de campos do admin, comissões, perfil, acesso sem login, conta desativada). Tudo é apagado no fim.
+`auth` do Supabase, insere dados **falsos** no formato antigo, aplica as migrações e executa 118 verificações
+reais: tentativas do vendedor (outro vendedor, campos do admin, status do pagamento, comissões, auditoria, perfil),
+acesso sem login, conta desativada e as regras de comissão. No fim reverte a migração, confere que os dados
+ficaram intactos, reaplica e apaga tudo.

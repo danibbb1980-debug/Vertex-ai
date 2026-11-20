@@ -278,17 +278,11 @@ function VendaDoLead({ lead, vendedorId }: { lead: Lead; vendedorId: string }) {
           <div className="flex justify-between py-2.5"><dt className="text-tinta-2">Pagamento</dt><dd>{FORMA_PAGAMENTO[existente.forma_pagamento]}{existente.forma_pagamento === 'cartao' ? ` em ${existente.parcelas}x` : ''}</dd></div>
           <div className="flex justify-between py-2.5"><dt className="text-tinta-2">Status</dt><dd>{STATUS_VENDA[existente.status]}</dd></div>
         </dl>
-        {podeEditar && existente.status === 'aguardando_aprovacao' && (
-          <button type="button" className="botao-secundario mt-3" disabled={salvar.isPending}
-            onClick={async () => {
-              try {
-                await salvar.mutateAsync({ id: existente.id, dados: { status: 'aguardando_pagamento' } })
-                avisar('Site aprovado. Aguardando pagamento.')
-              } catch (e) { avisar(mensagemErro(e), 'erro') }
-            }}>
-            Cliente aprovou o site
-          </button>
-        )}
+        <p className="mt-2 text-[0.9375rem] text-tinta-2">
+          {existente.status === 'paga'
+            ? 'Pago pelo cliente. Veja a comissão na aba Comissão.'
+            : 'O Pedro confirma o pagamento depois que o cliente aprovar o site. A comissão aparece depois disso.'}
+        </p>
       </Secao>
     )
   }

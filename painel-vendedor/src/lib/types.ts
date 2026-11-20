@@ -13,8 +13,8 @@ export type Formato = 'video' | 'presencial'
 export type RascunhoStatus = 'aguardando_pacote' | 'em_producao' | 'pronto' | 'enviado'
 export type ResultadoReuniao = 'fechou' | 'pediu_tempo' | 'recusou' | 'faltou' | 'remarcou'
 export type FormaPagamento = 'pix' | 'cartao' | 'boleto' | 'outro'
-export type StatusVenda = 'aguardando_aprovacao' | 'aguardando_pagamento' | 'paga' | 'cancelada'
-export type StatusComissao = 'a_pagar' | 'paga'
+export type StatusVenda = 'aguardando_pagamento' | 'paga' | 'cancelada'
+export type StatusRepasse = 'a_pagar' | 'paga' | 'estornar'
 
 export interface Profile {
   user_id: string
@@ -85,6 +85,8 @@ export interface Venda {
   vendedor_id: string
   valor_combinado: number
   valor_fechado: number | null
+  /** líquido que caiu para o Pedro (só admin); null = usa o valor fechado */
+  valor_liquido_recebido: number | null
   forma_pagamento: FormaPagamento
   parcelas: number
   status: StatusVenda
@@ -99,13 +101,28 @@ export interface Comissao {
   id: string
   venda_id: string
   vendedor_id: string
-  percentual: number
+  /** percentual vigente no momento do pagamento, gravado na comissão */
+  percentual_aplicado: number
   base_calculo: number
   cancelada: boolean
+  cancelada_em: string | null
   valor: number
-  status: StatusComissao
-  data_pagamento: string | null
+  status_repasse: StatusRepasse
+  data_repasse: string | null
+  valor_repassado: number | null
   created_at: string
+}
+
+export interface Auditoria {
+  id: number
+  criado_em: string
+  autor_id: string | null
+  tabela: string
+  registro_id: string | null
+  venda_id: string | null
+  campo: string
+  valor_anterior: string | null
+  valor_novo: string | null
 }
 
 export interface Configuracoes {
