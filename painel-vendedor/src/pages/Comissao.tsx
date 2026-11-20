@@ -62,7 +62,7 @@ export default function Comissao() {
                 return (
                   <li key={v.id} className="border-b border-fio py-3">
                     <div className="flex items-baseline justify-between gap-3">
-                      <span className="min-w-0 truncate font-semibold">{nomes.get(v.lead_id) ?? 'Lead'}</span>
+                      <span className="min-w-0 truncate font-semibold">{nomes.get(v.lead_id) ?? 'Lead excluído'}</span>
                       <Etiqueta tom={v.status === 'paga' ? 'verde' : v.status === 'cancelada' ? 'vermelho' : 'neutro'}>{STATUS_VENDA[v.status]}</Etiqueta>
                     </div>
                     <p className="num text-[0.9375rem] text-tinta-2">

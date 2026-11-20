@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlvo } from '../auth/Alvo'
-import { useLeads, useLigacoes } from '../lib/api'
+import { useLeads, useLigacoes, useVendas } from '../lib/api'
 import { fmtDataCurta, hojeSP } from '../lib/datas'
 import { RESULTADO_LIGACAO, RESULTADOS_LIGACAO, SEGMENTOS } from '../lib/rotulos'
 import { leadAtivo, mapaTentativas } from '../lib/regras'
 import type { Ligacao, Segmento } from '../lib/types'
+import ExcluirLead from '../components/ExcluirLead'
 import { Cabecalho, Carregando, Erro, Etiqueta, Tentativas, Vazio } from '../components/ui'
 
 type FiltroRetorno = '' | 'vencido' | 'futuro' | 'sem'
@@ -17,6 +18,8 @@ export default function Leads() {
   const { vendedorId, podeEditar } = useAlvo()
   const leads = useLeads(vendedorId)
   const ligacoes = useLigacoes(vendedorId)
+  const vendas = useVendas(vendedorId)
+  const comVenda = useMemo(() => new Set((vendas.data ?? []).filter((v) => v.status !== 'cancelada').map((v) => v.lead_id)), [vendas.data])
   const [busca, setBusca] = useState('')
   const [segmento, setSegmento] = useState<'' | Segmento>('')
   const [cidade, setCidade] = useState('')
@@ -147,8 +150,8 @@ export default function Leads() {
           {filtrados.map((l) => {
             const u = ultima.get(l.id)
             return (
-              <li key={l.id}>
-                <Link to={`/leads/${l.id}`} className="grid grid-cols-[1fr_auto] gap-x-3 border-b border-fio py-3 hover:bg-superficie">
+              <li key={l.id} className="flex items-stretch border-b border-fio">
+                <Link to={`/leads/${l.id}`} className="grid min-w-0 flex-1 grid-cols-[1fr_auto] gap-x-3 py-3 hover:bg-superficie">
                   <span className="min-w-0">
                     <span className="block truncate font-semibold">{l.nome}</span>
                     <span className="block truncate text-[0.9375rem] text-tinta-2">
@@ -172,6 +175,16 @@ export default function Leads() {
                     ) : null}
                   </span>
                 </Link>
+                {podeEditar && (
+                  <div className="flex items-center pl-1">
+                    <ExcluirLead
+                      compacto
+                      lead={l}
+                      temVenda={comVenda.has(l.id)}
+                      ligacoes={tentativas.get(l.id) ?? 0}
+                    />
+                  </div>
+                )}
               </li>
             )
           })}

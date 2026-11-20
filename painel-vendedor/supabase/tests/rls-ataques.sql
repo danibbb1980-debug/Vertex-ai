@@ -86,7 +86,7 @@ select tst.tentar('(e) perfis alheios', 'ler perfis de outros usuários', 'nega'
 
 -- apagar dados (soft delete é do admin)
 select tst.tentar('soft delete', 'DELETE físico de lead', 'nega', $q$delete from public.leads$q$);
-select tst.tentar('soft delete', 'marcar deleted_at no próprio lead', 'nega', $q$update public.leads set deleted_at = now() where id = '10000000-0000-0000-0000-00000000000a'$q$);
+select tst.tentar('soft delete', 'excluir o próprio lead que tem venda', 'nega', $q$select public.excluir_lead('10000000-0000-0000-0000-00000000000a')$q$);
 select tst.tentar('soft delete', 'DELETE físico de ligação', 'nega', $q$delete from public.ligacoes$q$);
 
 -- ============ (f) SEM LOGIN (anon) ============
@@ -218,6 +218,49 @@ select set_config('request.jwt.claims', '', false);
 set role anon;
 select tst.tentar('(f) sem login', 'ler comissões (pós-migração)', 'nega', 'select * from public.comissoes');
 select tst.tentar('(f) sem login', 'marcar venda como paga', 'nega', $q$update public.vendas set status = 'paga', data_pagamento = current_date$q$);
+
+-- =====================================================================
+-- EXCLUIR LEAD (migração 20261120_excluir_lead) e EXCLUIR VENDA (admin)
+-- =====================================================================
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000002","role":"authenticated"}', false);
+select tst.tentar('excluir lead', 'A cria lead sem venda, com reunião e ligação', 'permite', $q$with l as (insert into public.leads (id, nome, segmento) values ('10000000-0000-0000-0000-0000000000e1', 'TESTE Lead para excluir', 'outro') returning id), g as (insert into public.ligacoes (lead_id, resultado) select id, 'reuniao_marcada' from l returning 1) insert into public.reunioes (id, lead_id, data_hora) select '20000000-0000-0000-0000-0000000000e1', id, now() + interval '2 days' from l$q$);
+select tst.tentar('excluir lead', 'vendedor exclui reunião direto (continua proibido)', 'nega', $q$update public.reunioes set deleted_at = now() where id = '20000000-0000-0000-0000-0000000000e1'$q$);
+select tst.tentar('excluir lead', 'vendedor exclui o próprio lead sem venda', 'permite', $q$select public.excluir_lead('10000000-0000-0000-0000-0000000000e1')$q$);
+select tst.tentar('excluir lead', 'lead excluído some para o vendedor', 'nega', $q$select * from public.leads where id = '10000000-0000-0000-0000-0000000000e1'$q$);
+select tst.tentar('excluir lead', 'reuniões do lead excluído somem (cascata)', 'nega', $q$select * from public.reunioes_pacote where lead_id = '10000000-0000-0000-0000-0000000000e1'$q$);
+select tst.tentar('excluir lead', 'ligações do lead excluído somem (cascata)', 'nega', $q$select * from public.ligacoes where lead_id = '10000000-0000-0000-0000-0000000000e1'$q$);
+select tst.tentar('excluir lead', 'vendedor restaura lead excluído', 'nega', $q$update public.leads set deleted_at = null where id = '10000000-0000-0000-0000-0000000000e1'$q$);
+select tst.tentar('excluir lead', 'vendedor exclui lead de outro vendedor', 'nega', $q$select public.excluir_lead('10000000-0000-0000-0000-00000000000b')$q$);
+select tst.tentar('excluir lead', 'vendedor marca deleted_at direto na tabela', 'nega', $q$update public.leads set deleted_at = now() where id = '10000000-0000-0000-0000-00000000000a'$q$);
+select tst.tentar('excluir lead', 'DELETE físico continua proibido', 'nega', $q$delete from public.leads where id = '10000000-0000-0000-0000-00000000000a'$q$);
+
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000001","role":"authenticated"}', false);
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000004","role":"authenticated"}', false);
+select tst.tentar('excluir lead', 'conta desativada exclui o próprio lead', 'nega', $q$select public.excluir_lead('10000000-0000-0000-0000-00000000000c')$q$);
+reset role;
+select set_config('request.jwt.claims', '', false);
+set role anon;
+select tst.tentar('excluir lead', 'sem login chama excluir_lead', 'nega', $q$select public.excluir_lead('10000000-0000-0000-0000-00000000000c')$q$);
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000001","role":"authenticated"}', false);
+select tst.tentar('excluir lead', 'admin vê o lead e a reunião marcados como excluídos', 'permite', $q$select 1 from public.leads l join public.reunioes r on r.lead_id = l.id where l.id = '10000000-0000-0000-0000-0000000000e1' and l.deleted_at is not null and r.deleted_at is not null$q$);
+select tst.tentar('excluir venda', 'admin exclui venda paga D', 'permite', $q$update public.vendas set deleted_at = now() where id = '40000000-0000-0000-0000-00000000000d'$q$);
+select tst.tentar('excluir venda', 'venda excluída cancela a comissão', 'permite', $q$select 1 from public.comissoes where venda_id = '40000000-0000-0000-0000-00000000000d' and cancelada and valor = 0$q$);
+select tst.tentar('excluir venda', 'exclusão fica na auditoria', 'permite', $q$select 1 from public.auditoria_pagamentos where venda_id = '40000000-0000-0000-0000-00000000000d' and campo = 'deleted_at' and valor_novo is not null$q$);
+select tst.tentar('excluir lead', 'admin exclui lead com venda', 'permite', $q$select public.excluir_lead('10000000-0000-0000-0000-00000000000c')$q$);
+
+reset role;
+set role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-000000000002","role":"authenticated"}', false);
+select tst.tentar('excluir venda', 'vendedor exclui venda', 'nega', $q$update public.vendas set deleted_at = now() where id = '40000000-0000-0000-0000-00000000000f'$q$);
+select tst.tentar('excluir venda', 'venda excluída some para o vendedor', 'nega', $q$select * from public.vendas where id = '40000000-0000-0000-0000-00000000000d'$q$);
 reset role;
 \echo
 \echo '==================== RESULTADO DO TESTE DE SEGURANÇA ===================='

@@ -20,7 +20,7 @@ export default function Repasses() {
   const [mes, setMes] = useState('')
 
   const nomeVend = useMemo(() => new Map(perfis.map((p) => [p.user_id, p.nome])), [perfis])
-  const nomeLead = useMemo(() => new Map((leads.data ?? []).map((l) => [l.id, l.nome])), [leads.data])
+  const nomeLead = useMemo(() => new Map((leads.data ?? []).map((l) => [l.id, l.deleted_at ? `${l.nome} (lead excluído)` : l.nome])), [leads.data])
   const vendaPorId = useMemo(() => new Map((vendas.data ?? []).map((v) => [v.id, v])), [vendas.data])
   const grupos = useMemo(() => gruposDeRepasse(comissoes.data ?? [], vendas.data ?? []), [comissoes.data, vendas.data])
   const meses = [...new Set(grupos.map((g) => g.mes))]

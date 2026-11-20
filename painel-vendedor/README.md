@@ -129,6 +129,22 @@ Cada migração tem um par `_reverter.sql` que a desfaz.
 para a versão anterior. Perde a tabela de auditoria, o campo `valor_liquido_recebido` (o líquido continua em
 `comissoes.base_calculo`) e o "estornar" (vira "repasse pago").
 
+### 20261120_excluir_lead (excluir lead)
+
+Aplique **depois** da migração de comissão, do mesmo jeito: SQL Editor > cole
+`supabase/migrations/20261120_excluir_lead.sql` > **Run**. Para desfazer: `20261120_excluir_lead_reverter.sql`.
+
+## Excluir lead e venda
+
+- **Excluir lead** (admin e vendedor): em Leads (botão "Excluir" em cada linha) ou na página do lead, com confirmação.
+  O lead some das listas junto com as reuniões e ligações dele. A exclusão é lógica: tudo continua no banco e na
+  exportação CSV do admin. O vendedor só exclui os próprios leads e **não** exclui lead com venda em aberto ou paga
+  (para tirar da lista, use "Arquivar"); o admin exclui qualquer lead e a venda continua em Admin > Vendas.
+- **Excluir venda** (só admin): em Admin > Vendas, "Excluir venda". A comissão é cancelada automaticamente; se já tinha
+  sido repassada, vai para "Estornar". Fica registrado na auditoria.
+- **Restaurar** (raro, só pelo SQL Editor): `update public.leads set deleted_at = null where id = '...';` (e o mesmo em
+  `reunioes`/`ligacoes` com o `lead_id`, se quiser trazê-las de volta).
+
 ## Regra de comissão
 
 - **Quem muda o pagamento:** só o admin, em Admin > Vendas, no seletor "Pagamento do cliente":
@@ -159,7 +175,7 @@ em "Recebido" no painel do vendedor (no mês do repasse). O repasse é independe
 | Quem | Pode |
 |---|---|
 | Sem login | Nada (todas as tabelas negam acesso ao papel `anon`). |
-| Vendedor ativo | Ler e editar só os próprios leads, ligações, reuniões e vendas; ler as próprias comissões e as configurações. Arquiva leads, não apaga nada. |
+| Vendedor ativo | Ler e editar só os próprios leads, ligações, reuniões e vendas; ler as próprias comissões e as configurações. Arquiva e exclui (exclusão lógica) os próprios leads sem venda. |
 | Vendedor desativado | Nada. |
 | Admin | Tudo: contas, configurações, rascunhos, pagamentos, comissões, exclusões (soft delete). |
 
@@ -169,7 +185,7 @@ Comissões só são criadas pelo trigger (nem o admin cria à mão), só o admin
 O vendedor lê só as próprias comissões de vendas pagas (ou em estorno); a auditoria é só do admin.
 
 O teste `npm run test:rls` sobe um Postgres descartável, aplica o `schema.sql` com um stub mínimo do
-`auth` do Supabase, insere dados **falsos** no formato antigo, aplica as migrações e executa 118 verificações
+`auth` do Supabase, insere dados **falsos** no formato antigo, aplica as migrações e executa 137 verificações
 reais: tentativas do vendedor (outro vendedor, campos do admin, status do pagamento, comissões, auditoria, perfil),
 acesso sem login, conta desativada e as regras de comissão. No fim reverte a migração, confere que os dados
 ficaram intactos, reaplica e apaga tudo.

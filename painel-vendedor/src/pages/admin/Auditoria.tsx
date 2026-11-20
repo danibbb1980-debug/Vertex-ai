@@ -40,7 +40,7 @@ export default function Auditoria() {
   const { data: perfis = [] } = useProfiles()
   const nome = useMemo(() => new Map(perfis.map((p) => [p.user_id, p.nome])), [perfis])
   const leadDaVenda = useMemo(() => {
-    const nl = new Map((leads.data ?? []).map((l) => [l.id, l.nome]))
+    const nl = new Map((leads.data ?? []).map((l) => [l.id, l.deleted_at ? `${l.nome} (lead excluído)` : l.nome]))
     return new Map((vendas.data ?? []).map((v) => [v.id, nl.get(v.lead_id) ?? 'Lead']))
   }, [vendas.data, leads.data])
 

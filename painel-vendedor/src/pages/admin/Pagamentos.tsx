@@ -1,6 +1,6 @@
 import { useMemo, useState, type FormEvent } from 'react'
 import {
-  useAlterarPagamento, useConfig, useProfiles, useSalvarComissao, useTodasComissoes, useTodasVendas, useTodosLeads,
+  useAlterarPagamento, useConfig, useExcluirVenda, useProfiles, useSalvarComissao, useTodasComissoes, useTodasVendas, useTodosLeads,
 } from '../../lib/api'
 import { fmtData, hojeSP } from '../../lib/datas'
 import { fmtMoeda, lerMoeda } from '../../lib/formato'
@@ -27,7 +27,7 @@ export default function Pagamentos() {
   const leads = useTodosLeads(true)
   const { data: perfis = [] } = useProfiles()
   const [filtro, setFiltro] = useState<Filtro>('aguardando_pagamento')
-  const nomeLead = useMemo(() => new Map((leads.data ?? []).map((l) => [l.id, l.nome])), [leads.data])
+  const nomeLead = useMemo(() => new Map((leads.data ?? []).map((l) => [l.id, l.deleted_at ? `${l.nome} (lead excluído)` : l.nome])), [leads.data])
   const nomeVend = useMemo(() => new Map(perfis.map((p) => [p.user_id, p.nome])), [perfis])
   const porVenda = useMemo(() => new Map((comissoes.data ?? []).map((c) => [c.venda_id, c])), [comissoes.data])
 
@@ -103,6 +103,7 @@ export default function Pagamentos() {
 function LinhaVenda({ v, comissao, lead, vendedor }: { v: Venda; comissao?: Comissao; lead: string; vendedor: string }) {
   const [destino, setDestino] = useState<StatusVenda | null>(null)
   const [corrigindo, setCorrigindo] = useState(false)
+  const [excluindo, setExcluindo] = useState(false)
   const idSel = `pg-${v.id}`
   const comissaoViva = comissao && !comissao.cancelada
 
@@ -161,6 +162,12 @@ function LinhaVenda({ v, comissao, lead, vendedor }: { v: Venda; comissao?: Comi
         </div>
       </div>
 
+      <div className="mt-1 flex justify-end">
+        <button type="button" className="botao-texto !min-h-10 text-[0.9375rem] !text-vermelho" onClick={() => setExcluindo(true)}>
+          Excluir venda
+        </button>
+      </div>
+      {excluindo && <ExcluirVenda v={v} lead={lead} comissao={comissao} onFechar={() => setExcluindo(false)} />}
       {(destino === 'paga' || corrigindo) && <MarcarPaga
         aberto
         corrigindo={corrigindo}
@@ -312,6 +319,54 @@ function ConfirmarStatus({
           {desfazendo ? 'Desfazer pagamento' : 'Confirmar'}
         </button>
         <button type="button" className="botao-secundario !min-h-12" onClick={onFechar}>Manter como está</button>
+      </div>
+    </Dialogo>
+  )
+}
+
+function ExcluirVenda({ v, lead, comissao, onFechar }: { v: Venda; lead: string; comissao?: Comissao; onFechar: () => void }) {
+  const excluir = useExcluirVenda()
+  const { avisar } = useAviso()
+  const viva = comissao && !comissao.cancelada
+  const repassada = comissao?.status_repasse === 'paga'
+  return (
+    <Dialogo aberto onFechar={onFechar} titulo="Excluir venda?">
+      <p>
+        {lead}: <span className="num">{fmtMoeda(v.valor_fechado ?? v.valor_combinado)}</span>, {STATUS_VENDA[v.status].toLowerCase()}.
+      </p>
+      <p className="mt-2 text-[0.9375rem] text-tinta-2">
+        A venda some das listas (fica guardada no banco, na auditoria e na exportação). Não dá para desfazer pelo app.
+      </p>
+      {viva && (
+        <div className="mt-3">
+          <Faixa tom={repassada ? 'vermelho' : 'ambar'}>
+            <p className="num">A comissão de <strong>{fmtMoeda(comissao.valor)}</strong> será cancelada.</p>
+            {repassada && (
+              <p className="num mt-1 font-semibold">
+                Ela já foi repassada em {fmtData(comissao.data_repasse)}: vai ficar como "Estornar" até você resolver com o vendedor.
+              </p>
+            )}
+          </Faixa>
+        </div>
+      )}
+      <div className="mt-4 flex gap-2">
+        <button
+          type="button"
+          className="botao !min-h-12 flex-1 bg-vermelho text-white sm:flex-none"
+          disabled={excluir.isPending}
+          onClick={async () => {
+            try {
+              await excluir.mutateAsync(v.id)
+              avisar(viva ? (repassada ? 'Venda excluída. Comissão em "Estornar".' : 'Venda excluída. Comissão cancelada.') : 'Venda excluída.')
+              onFechar()
+            } catch (e) {
+              avisar(mensagemErro(e), 'erro')
+            }
+          }}
+        >
+          {excluir.isPending ? 'Excluindo…' : 'Excluir venda'}
+        </button>
+        <button type="button" className="botao-secundario !min-h-12" onClick={onFechar}>Cancelar</button>
       </div>
     </Dialogo>
   )

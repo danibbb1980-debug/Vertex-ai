@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAlvo } from '../auth/Alvo'
 import { useLeads, useLigacoes, useReunioes, useSalvarLead, useVendas } from '../lib/api'
 import { fmtData, fmtDataHora, hojeSP } from '../lib/datas'
@@ -8,6 +8,7 @@ import { RASCUNHO_STATUS, RESULTADO_LIGACAO, RESULTADO_REUNIAO, SEGMENTOS, STATU
 import { leadAtivo } from '../lib/regras'
 import { mensagemErro } from '../lib/supabase'
 import { useAviso } from '../components/Aviso'
+import ExcluirLead from '../components/ExcluirLead'
 import LinhaLigacao from '../components/LinhaLigacao'
 import { Cabecalho, Carregando, Etiqueta, Secao, Vazio } from '../components/ui'
 import type { Lead } from '../lib/types'
@@ -21,6 +22,7 @@ export default function LeadDetalhe() {
   const vendas = useVendas(vendedorId)
   const salvar = useSalvarLead()
   const { avisar } = useAviso()
+  const navigate = useNavigate()
   const lead = leads.data?.find((l) => l.id === id)
   const hoje = hojeSP()
 
@@ -114,6 +116,13 @@ export default function LeadDetalhe() {
                     Não ligar mais
                   </button>
                 )}
+                <ExcluirLead
+                  lead={lead}
+                  temVenda={vds.some((v) => v.status !== 'cancelada')}
+                  reunioes={reus.length}
+                  ligacoes={ligs.length}
+                  onExcluido={() => navigate('/leads', { replace: true })}
+                />
               </div>
             </Secao>
           )}

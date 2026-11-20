@@ -119,7 +119,8 @@ export function useTodosLeads(habilitado: boolean) {
   return useQuery({
     queryKey: ['leads', 'todos'],
     enabled: habilitado,
-    queryFn: () => lista<Lead>(supabase.from('leads').select('*').is('deleted_at', null)),
+    // inclui os excluídos: vendas e comissões continuam mostrando o nome
+    queryFn: () => lista<Lead>(supabase.from('leads').select('*')),
   })
 }
 export function useTodasVendas(habilitado: boolean) {
@@ -239,6 +240,25 @@ export function useAlterarPagamento() {
           : { status: p.status }
       return exec<Venda>(supabase.from('vendas').update(dados).eq('id', p.venda_id).select().single())
     },
+    onSuccess: () => inv('vendas', 'comissoes', 'auditoria'),
+  })
+}
+
+/** Exclui o lead (soft delete) pela função do banco, que confere dono e venda. */
+export function useExcluirLead() {
+  const inv = useInvalidar()
+  return useMutation({
+    mutationFn: (leadId: string) => exec(supabase.rpc('excluir_lead', { p_lead_id: leadId })),
+    onSuccess: () => inv('leads', 'reunioes', 'ligacoes'),
+  })
+}
+
+/** Admin: exclui a venda (soft delete); o banco cancela a comissão. */
+export function useExcluirVenda() {
+  const inv = useInvalidar()
+  return useMutation({
+    mutationFn: (vendaId: string) =>
+      exec(supabase.from('vendas').update({ deleted_at: new Date().toISOString() }).eq('id', vendaId)),
     onSuccess: () => inv('vendas', 'comissoes', 'auditoria'),
   })
 }
