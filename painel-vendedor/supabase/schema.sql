@@ -208,7 +208,9 @@ create index comissoes_vendedor_idx on public.comissoes (vendedor_id);
 -- =====================================================================
 
 create or replace function app_private.touch_updated_at()
-returns trigger language plpgsql as $$
+returns trigger language plpgsql
+set search_path = ''
+as $$
 begin
   new.updated_at := now();
   return new;

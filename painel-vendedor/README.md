@@ -44,7 +44,7 @@ Outros comandos: `npm test` (testes de regras), `npm run typecheck`, `npm run bu
    ```
    (Se as linhas de `profiles` não aparecerem, insira manualmente:
    `insert into public.profiles (user_id, nome, papel, ativo) select id, 'Nome', 'vendedor', true from auth.users where email = '...';`)
-7. Em **Project Settings > API**, copie a **Project URL** e a chave **anon / publishable**.
+7. Em **Project Settings > API Keys**, copie a **Project URL** e a chave **publishable** (`sb_publishable_...`; a "anon" legada também funciona).
    Nunca use a chave `service_role` neste app.
 
 ### 2. Vercel
