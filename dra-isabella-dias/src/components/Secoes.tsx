@@ -15,6 +15,7 @@ export function Header() {
     CONFIG.secoes.comoFunciona && { href: "#como-funciona", t: "Como funciona" },
     CONFIG.secoes.duvidas && { href: "#duvidas", t: "Dúvidas" },
     CONFIG.secoes.local && { href: "#contato", t: "Contato" },
+    CONFIG.secoes.agendar && modoWhatsapp() && { href: "#agendar", t: "Agendar" },
   ].filter(Boolean) as { href: string; t: string }[];
 
   useEffect(() => {
@@ -144,8 +145,8 @@ export function Atendimentos() {
             O que é atendido no <em>consultório</em>.
           </h2>
           <p>
-            Cada indicação começa por uma avaliação individual. Abra um item para ler como ele funciona e agende pelo
-            telefone.
+            Cada indicação começa por uma avaliação individual. Abra um item para ler como ele funciona e agende
+            {modoWhatsapp() ? " pelo WhatsApp ou pelo telefone." : " pelo telefone."}
           </p>
         </div>
         <ol className="atend-lista">
@@ -316,7 +317,12 @@ export function Casos() {
 
 /* ---------------- Como funciona ---------------- */
 const ETAPAS = [
-  ["Contato e agendamento", "Você liga, escolhe um horário dentro da agenda e já pode tirar as primeiras dúvidas."],
+  [
+    "Contato e agendamento",
+    modoWhatsapp()
+      ? "Você chama no WhatsApp ou liga, escolhe um horário dentro da agenda e já pode tirar as primeiras dúvidas."
+      : "Você liga, escolhe um horário dentro da agenda e já pode tirar as primeiras dúvidas.",
+  ],
   ["Avaliação individual", "Conversa sobre o que motivou a visita, histórico de saúde e exame clínico. Se for preciso, exames complementares são pedidos."],
   ["Planejamento explicado", "A Dra. Isabella apresenta o que observou, as opções possíveis e cada etapa, antes de começar qualquer procedimento."],
   ["Acompanhamento", "Retornos combinados com você para acompanhar o tratamento e orientar os cuidados em casa."],

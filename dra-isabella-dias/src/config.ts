@@ -34,9 +34,12 @@ export interface Caso {
   depois: Foto;
 }
 
-// Permite testar o modo WhatsApp sem editar este arquivo:
-// VITE_WHATSAPP=5519999999999 npm run build
-const whatsappTeste = (import.meta.env?.VITE_WHATSAPP as string | undefined) ?? "";
+// Permite trocar o número do WhatsApp no build sem editar este arquivo:
+// VITE_WHATSAPP=5519999999999 npm run build   (VITE_WHATSAPP=off desliga o WhatsApp)
+const whatsappEnv = (import.meta.env?.VITE_WHATSAPP as string | undefined) ?? "";
+/** Número do WhatsApp Business da clínica (mesmo do telefone fixo). Confirmar com a clínica. */
+const WHATSAPP_PADRAO = "551938923894";
+const whatsappNumero = whatsappEnv === "off" ? "" : whatsappEnv || WHATSAPP_PADRAO;
 
 export const CONFIG = {
   /** Faixa de rascunho + noindex. Mude para false na publicação definitiva. */
@@ -76,9 +79,9 @@ export const CONFIG = {
   telefone: "551938923894",
   telefoneExibicao: "(19) 3892-3894",
   /** Só dígitos com DDI. Vazio = sem WhatsApp. */
-  whatsapp: whatsappTeste,
-  /** true somente se a clínica confirmar que o número atende por WhatsApp */
-  usarWhatsapp: whatsappTeste !== "",
+  whatsapp: whatsappNumero,
+  /** true = botões abrem o WhatsApp (com "Ligar" como secundário) e o formulário de agendamento aparece */
+  usarWhatsapp: whatsappNumero !== "",
   mensagemWhatsapp: "Olá! Vi o site da Dra. Isabella Dias e gostaria de agendar uma avaliação.",
 
   instagram: "https://www.instagram.com/draisabelladias/",

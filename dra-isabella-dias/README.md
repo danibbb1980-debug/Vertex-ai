@@ -28,9 +28,12 @@ Todos os dados ficam em `src/config.ts`. Campo vazio = bloco não aparece.
 
 ### WhatsApp
 
-Hoje o único número é o fixo (19) 3892-3894, então todos os botões **ligam** e a seção "Solicitar agendamento" não aparece.
-Se a clínica confirmar WhatsApp, preencha `whatsapp: "55DDNNNNNNNNN"` e `usarWhatsapp: true`: os botões passam a abrir o WhatsApp (com "Ligar" como opção secundária) e o formulário aparece.
-Para testar sem editar: `VITE_WHATSAPP=5519999999999 npm run build`.
+O agendamento pelo WhatsApp está **ligado** com o número (19) 3892-3894 (`551938923894`), o mesmo do telefone fixo, usado no WhatsApp Business da clínica:
+os botões abrem o WhatsApp (com "Ligar" como opção secundária) e a seção "Solicitar agendamento" (`#agendar`) aparece.
+O formulário só monta a mensagem e abre `wa.me`; nada é enviado a servidor nem guardado no navegador.
+
+- Outro número: troque `WHATSAPP_PADRAO` em `src/config.ts` (só dígitos, com 55 e DDD).
+- Desligar o WhatsApp (tudo volta a "Ligar para agendar" e o formulário some): `WHATSAPP_PADRAO = ""`, ou `VITE_WHATSAPP=off npm run build`.
 
 ## Origem dos arquivos
 
@@ -48,4 +51,5 @@ Para testar sem editar: `VITE_WHATSAPP=5519999999999 npm run build`.
 4. **Registros clínicos (antes e depois)**: entraram a pedido. A publicação exige termo de consentimento por escrito de cada paciente e caráter educativo (Res. CFO 196/2019). Sem esses termos, desligue `secoes.casos`.
 5. **Fotos**: confirmar autorização de uso das duas fotos da profissional.
 6. **Logotipo**: o atual foi extraído de uma captura de tela. Pedir o arquivo original (vetor ou PNG grande).
-7. **Lista real de procedimentos** e **WhatsApp**.
+7. **Lista real de procedimentos**.
+8. **WhatsApp**: confirmar que (19) 3892-3894 recebe mensagens pelo WhatsApp Business.
