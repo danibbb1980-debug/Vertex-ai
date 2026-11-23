@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Logo } from "@/components/ui/Logo";
+import { LogoBadge } from "@/components/ui/Logo";
 import { NewsletterForm } from "@/components/ui/forms";
 import { Arrow } from "@/components/ui/primitives";
 import { centralWhatsappHref, nav, site } from "@/lib/site";
@@ -11,13 +11,13 @@ export function Footer() {
       <div className="container-x border-b border-bone/10 pb-16 pt-24 md:pb-24 md:pt-32">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
-            <p className="eyebrow text-gold">Liberdade é se sentir bem</p>
+            <p className="eyebrow text-green">Liberdade é se sentir bem</p>
             <p className="mt-6 font-display text-[clamp(2.6rem,6vw,5.75rem)] leading-[0.95] tracking-[-0.02em]">
-              Sua próxima sessão <em className="text-gold">começa aqui.</em>
+              Sua próxima sessão <em className="text-green">começa aqui.</em>
             </p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row lg:col-span-5 lg:justify-end">
-            <a href={centralWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn btn-solid-light">
+            <a href={centralWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn btn-green">
               <span>Agendar pelo WhatsApp</span>
               <Arrow />
             </a>
@@ -30,7 +30,7 @@ export function Footer() {
 
       <div className="container-x grid gap-14 py-16 md:grid-cols-2 md:py-20 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-4">
-          <Logo className="h-8 w-auto" />
+          <LogoBadge className="w-24" />
           <p className="mt-8 max-w-xs text-sm leading-relaxed text-mist">
             Fique por dentro das novidades: promoções exclusivas, dicas de cuidados com a pele e novidades da Não+Pelo.
           </p>

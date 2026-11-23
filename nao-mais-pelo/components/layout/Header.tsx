@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { Logo } from "@/components/ui/Logo";
+import { LogoBadge } from "@/components/ui/Logo";
 import { Arrow } from "@/components/ui/primitives";
 import { centralWhatsappHref, nav, site } from "@/lib/site";
 
@@ -75,7 +75,7 @@ export function Header({ over = "light" }: { over?: "light" | "dark" | "none" })
           }`}
         >
           <Link href="/" className="relative z-10 shrink-0" aria-label="Não+Pelo — página inicial">
-            <Logo className={`w-auto transition-[height] duration-700 ease-[var(--ease-out-expo)] ${scrolled ? "h-[22px]" : "h-[26px] md:h-[30px]"}`} />
+            <LogoBadge className={`transition-[width] duration-700 ease-[var(--ease-out-expo)] ${scrolled ? "w-11" : "w-14 md:w-16"}`} />
           </Link>
 
           <nav aria-label="Principal" className="hidden xl:block">
@@ -99,7 +99,7 @@ export function Header({ over = "light" }: { over?: "light" | "dark" | "none" })
               href={centralWhatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className={`btn hidden min-h-11 px-5 sm:inline-flex ${onDark || open ? "btn-outline-light" : "btn-solid-dark"}`}
+              className="btn btn-green hidden min-h-11 px-5 sm:inline-flex"
             >
               <span>Agendar</span>
               <Arrow />
@@ -152,7 +152,7 @@ export function Header({ over = "light" }: { over?: "light" | "dark" | "none" })
                   style={{ transitionDelay: open ? `${180 + i * 60}ms` : "0ms" } as CSSProperties}
                   aria-current={isActive(item.href) ? "page" : undefined}
                 >
-                  <span className="eyebrow w-6 text-gold">0{i + 1}</span>
+                  <span className="eyebrow w-6 text-green">0{i + 1}</span>
                   <span>{item.label}</span>
                 </Link>
               </li>
@@ -162,7 +162,7 @@ export function Header({ over = "light" }: { over?: "light" | "dark" | "none" })
         <div
           className={`container-x grid gap-6 border-t border-bone/10 py-8 transition-opacity duration-700 ${open ? "opacity-100 delay-500" : "opacity-0"}`}
         >
-          <a href={centralWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn btn-solid-light w-full">
+          <a href={centralWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn btn-green w-full">
             <span>Agendar pelo WhatsApp</span>
             <Arrow />
           </a>

@@ -56,7 +56,7 @@ export function Manifesto() {
           </Reveal>
           <Reveal delay={300} className="mt-5 flex items-baseline justify-between gap-6 lg:ml-auto lg:w-[92%]">
             <p className="eyebrow shrink-0 text-stone">Madri, 2007</p>
-            <p className="font-display text-lg italic text-ink/80">a marca que revolucionou a depilação no mundo</p>
+            <p className="font-display text-lg text-ink/80">a marca que revolucionou a depilação no mundo</p>
           </Reveal>
         </div>
       </div>
@@ -95,7 +95,7 @@ export function Technology() {
               lines={[<span key="a" id="tecnologia-title">Sun&amp;Safe</span>]}
             />
             <Reveal delay={150}>
-              <p className="mt-6 font-display text-2xl italic text-gold md:text-3xl">Tecnologia exclusiva Não+Pelo.</p>
+              <p className="mt-6 font-display text-2xl text-green md:text-3xl">Tecnologia exclusiva Não+Pelo.</p>
             </Reveal>
           </div>
           <Reveal delay={200} className="lg:col-span-4 lg:col-start-9">
@@ -125,7 +125,7 @@ export function Technology() {
               title="Vídeo — Nossa tecnologia"
               className="group absolute bottom-0 left-0 flex items-center gap-4 bg-ink py-4 pl-0 pr-6 text-left md:pr-8"
             >
-              <span className="flex h-14 w-14 items-center justify-center border border-bone/30 transition-colors duration-500 group-hover:border-gold group-hover:bg-gold group-hover:text-ink">
+              <span className="flex h-14 w-14 items-center justify-center border border-bone/30 transition-colors duration-500 group-hover:border-green group-hover:bg-green group-hover:text-ink">
                 <PlayIcon className="ml-0.5 h-3.5 w-3.5" />
               </span>
               <span>
@@ -157,7 +157,7 @@ export function Technology() {
           ].map(([t, d], i) => (
             <Reveal key={t} delay={i * 120} className={`group border-b border-bone/15 py-10 md:border-b-0 md:px-8 ${i ? "md:border-l" : "md:pl-0"}`}>
               <dt className="flex items-baseline gap-4">
-                <span className="eyebrow text-gold">0{i + 1}</span>
+                <span className="eyebrow text-green">0{i + 1}</span>
                 <span className="font-display text-[1.75rem] leading-tight transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-1">
                   {t}
                 </span>
@@ -208,7 +208,7 @@ export function Treatments() {
               <Link href={item.href} className="group flex items-end justify-between gap-6 py-10 md:px-10 md:py-14 md:first:pl-0">
                 <span>
                   <span className="eyebrow block text-stone">{item.kicker}</span>
-                  <span className="mt-3 block font-display text-[clamp(2rem,3.6vw,3.25rem)] leading-none transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-2 group-hover:italic">
+                  <span className="mt-3 block font-display text-[clamp(2rem,3.6vw,3.25rem)] leading-none transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-2">
                     {item.title}
                   </span>
                 </span>
@@ -256,7 +256,7 @@ export function Differentials() {
         <ol className="lg:col-span-6 lg:col-start-7">
           {differentials.map((d, i) => (
             <Reveal as="li" key={d.title} delay={60} className="group border-t border-ink/15 py-12 first:border-t-0 first:pt-0 md:py-16 lg:first:pt-[11rem]">
-              <p className="font-display text-[4.5rem] leading-none tracking-[-0.04em] text-ink/15 transition-colors duration-700 group-hover:text-gold-deep md:text-[6.5rem]">
+              <p className="font-display text-[4.5rem] leading-none tracking-[-0.04em] text-ink/15 transition-colors duration-700 group-hover:text-green-deep md:text-[6.5rem]">
                 {String(i + 1).padStart(2, "0")}
               </p>
               <h3 className="mt-2 font-display text-[clamp(1.9rem,3vw,2.75rem)] leading-tight">{d.title}</h3>
@@ -312,7 +312,7 @@ export function LocatorSection() {
             </Reveal>
             <RevealTitle
               className="mt-10 text-title tracking-[-0.02em] md:text-headline"
-              lines={[<span key="a" id="unidades-title">Encontre a</span>, <>unidade mais</>, <em key="c" className="text-gold">próxima.</em>]}
+              lines={[<span key="a" id="unidades-title">Encontre a</span>, <>unidade mais</>, <em key="c" className="text-green">próxima.</em>]}
             />
             <Reveal delay={150}>
               <p className="mt-8 max-w-sm text-[1.0625rem] leading-relaxed text-mist">
@@ -376,8 +376,8 @@ function FirstSessionArt() {
   return (
     <div className="absolute inset-0 flex flex-col justify-between p-8 text-bone md:p-12">
       <div aria-hidden="true" className="absolute inset-0">
-        <span className="absolute left-1/2 top-[12%] bottom-[12%] w-px -translate-x-1/2 bg-gold/35" />
-        <span className="absolute top-1/2 left-[12%] right-[12%] h-px -translate-y-1/2 bg-gold/35" />
+        <span className="absolute left-1/2 top-[12%] bottom-[12%] w-px -translate-x-1/2 bg-green/35" />
+        <span className="absolute top-1/2 left-[12%] right-[12%] h-px -translate-y-1/2 bg-green/35" />
         <span className="absolute left-1/2 top-1/2 aspect-square w-[min(58%,22rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bone/10" />
       </div>
       <div className="relative flex items-center justify-between">
@@ -386,7 +386,7 @@ function FirstSessionArt() {
       </div>
       <div className="relative max-w-sm">
         <p className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.05]">
-          A primeira sessão <em className="text-gold">é por nossa conta.</em>
+          A primeira sessão <em className="text-green">é por nossa conta.</em>
         </p>
       </div>
     </div>

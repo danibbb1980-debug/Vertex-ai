@@ -2,14 +2,15 @@
 
 /*
   Não+Pelo — sistema visual "Luz sobre a pele".
-  Preto profundo, off-white quente, neutros de areia e um champanhe usado com parcimônia.
+  Preto profundo, off-white quente, neutros de areia e o verde da marca (#95D400) como acento.
 
   Contrastes (WCAG, texto normal ≥ 4,5:1):
     ink   #12110F sobre bone #F4EFE7 → 17,1:1
     stone #6B645A sobre bone #F4EFE7 →  5,2:1  (texto secundário em fundo claro)
     mist  #B9B1A4 sobre ink  #12110F →  9,0:1  (texto secundário em fundo escuro)
-    gold  #C9AE7E sobre ink  #12110F →  8,9:1  (acento em fundo escuro)
-    gold-deep #8A6D3E sobre bone     →  4,6:1  (acento em fundo claro)
+    green #95D400 sobre ink  #12110F → 10,5:1  (acento em fundo escuro; fundo de botões com texto ink)
+    green-deep #467300 sobre bone    →  4,9:1  (acento em texto sobre fundo claro)
+  O verde puro sobre off-white fica em 1,6:1: nunca use-o como cor de texto em fundo claro.
 */
 @theme {
   --color-ink: #12110f;
@@ -21,20 +22,21 @@
   --color-sand-2: #d9cfbf;
   --color-stone: #6b645a;
   --color-mist: #b9b1a4;
-  --color-gold: #c9ae7e;
-  --color-gold-deep: #8a6d3e;
+  --color-green: #95d400;
+  --color-green-deep: #467300;
+  --color-white: #ffffff;
 
-  --font-display: var(--font-bodoni), "Didot", "Bodoni 72", Georgia, serif;
-  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
 
-  --text-display: clamp(3.6rem, 8.6vw, 9.25rem);
-  --text-display--line-height: 0.92;
-  --text-headline: clamp(2.4rem, 5.4vw, 5.5rem);
-  --text-headline--line-height: 0.98;
-  --text-title: clamp(1.9rem, 3.4vw, 3.25rem);
+  --text-display: clamp(3rem, 7.6vw, 8.25rem);
+  --text-display--line-height: 0.95;
+  --text-headline: clamp(2.15rem, 4.6vw, 4.75rem);
+  --text-headline--line-height: 1.02;
+  --text-title: clamp(1.75rem, 3vw, 2.9rem);
   --text-title--line-height: 1.04;
 }
 
@@ -63,22 +65,33 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 500;
     text-wrap: balance;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.025em;
+  }
+
+  .font-display {
+    font-weight: 500;
+    letter-spacing: -0.02em;
   }
 
   p {
     text-wrap: pretty;
   }
 
+  /* Destaque das palavras-chave: o verde da marca, sem itálico. */
   em {
-    font-style: italic;
+    font-style: normal;
+    color: var(--em-color, var(--color-green-deep));
+  }
+  .bg-ink,
+  .bg-ink-2 {
+    --em-color: var(--color-green);
   }
 
   ::selection {
-    background: var(--color-ink);
-    color: var(--color-bone);
+    background: var(--color-green);
+    color: var(--color-ink);
   }
 
   :focus-visible {
@@ -176,7 +189,7 @@
     color: var(--color-bone);
   }
   .btn-solid-dark::before {
-    background: var(--color-ink-3);
+    background: var(--color-green-deep);
   }
 
   .btn-solid-light {
@@ -184,7 +197,19 @@
     color: var(--color-ink);
   }
   .btn-solid-light::before {
-    background: var(--color-gold);
+    background: var(--color-green);
+  }
+
+  /* CTA principal: verde da marca com texto preto (10,5:1). */
+  .btn-green {
+    background: var(--color-green);
+    color: var(--color-ink);
+  }
+  .btn-green::before {
+    background: var(--color-ink);
+  }
+  .btn-green:hover {
+    color: var(--color-green);
   }
 
   .btn-outline-light {

@@ -25,7 +25,7 @@ export default function UnidadesPage() {
           <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
               <p className="hero-fade eyebrow flex items-center gap-3 text-stone" style={{ "--d": "100ms" } as CSSProperties}>
-                <span className="plus-mark text-gold-deep" aria-hidden="true" />
+                <span className="plus-mark text-green-deep" aria-hidden="true" />
                 Onde estamos
               </p>
               <h1 id="unidades-titulo" className="mt-8 text-display tracking-[-0.035em]">

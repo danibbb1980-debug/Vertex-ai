@@ -24,8 +24,8 @@ export default async function OpenGraphImage() {
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 64, position: "relative", color: "#12110f" }}>
           <div style={{ fontSize: 22, letterSpacing: 6, textTransform: "uppercase" }}>Não+Pelo</div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 96, lineHeight: 1, fontFamily: "serif" }}>Liberdade,</div>
-            <div style={{ fontSize: 96, lineHeight: 1.05, fontFamily: "serif", fontStyle: "italic" }}>na sua pele.</div>
+            <div style={{ fontSize: 96, lineHeight: 1, fontFamily: "sans-serif" }}>Liberdade,</div>
+            <div style={{ fontSize: 96, lineHeight: 1.05, fontFamily: "sans-serif", color: "#467300" }}>na sua pele.</div>
             <div style={{ marginTop: 28, fontSize: 26, color: "#3a3631" }}>Depilação com tecnologia exclusiva Sun&Safe</div>
           </div>
         </div>

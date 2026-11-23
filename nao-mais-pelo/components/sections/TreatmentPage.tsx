@@ -54,7 +54,7 @@ export function TreatmentPage({ gender }: { gender: Gender }) {
           <div className="grid lg:min-h-[100svh] lg:grid-cols-12">
             <div className="container-x flex flex-col justify-end pb-12 pt-10 lg:col-span-6 lg:max-w-none lg:pb-20 lg:pl-16 lg:pt-40 xl:pl-24">
               <p className="hero-fade eyebrow flex items-center gap-3 text-stone" style={{ "--d": "150ms" } as CSSProperties}>
-                <span className="plus-mark text-gold-deep" aria-hidden="true" />
+                <span className="plus-mark text-green-deep" aria-hidden="true" />
                 Depilação {gender === "feminino" ? "feminina" : "masculina"}
               </p>
               <h1 id="pagina-titulo" className="mt-8 text-[clamp(3.2rem,7.4vw,7.75rem)] leading-[0.92] tracking-[-0.03em]">
@@ -77,7 +77,7 @@ export function TreatmentPage({ gender }: { gender: Gender }) {
                   em sua ponteira.
                 </p>
                 <div className="flex flex-col gap-3 sm:flex-row">
-                  <a href="#agendar" className="btn btn-solid-dark">
+                  <a href="#agendar" className="btn btn-green">
                     <span>Agendar minha sessão</span>
                     <Arrow />
                   </a>
@@ -105,7 +105,7 @@ export function TreatmentPage({ gender }: { gender: Gender }) {
                 </Reveal>
                 <RevealTitle
                   className="mt-10 text-headline tracking-[-0.025em]"
-                  lines={[<span key="a" id="areas-title">Escolha a área</span>, <em key="b" className="text-gold">e conheça o tratamento.</em>]}
+                  lines={[<span key="a" id="areas-title">Escolha a área</span>, <em key="b" className="text-green">e conheça o tratamento.</em>]}
                 />
               </div>
             </div>
@@ -134,7 +134,7 @@ export function TreatmentPage({ gender }: { gender: Gender }) {
               {differentials.map((d, i) => (
                 <Reveal key={d.title} delay={i * 90} className="bg-paper p-0 py-10 sm:p-8 sm:first:pl-0 lg:p-10">
                   <dt>
-                    <span className="eyebrow text-gold-deep">0{i + 1}</span>
+                    <span className="eyebrow text-green-deep">0{i + 1}</span>
                     <span className="mt-4 block font-display text-[1.9rem] leading-tight">{d.title}</span>
                   </dt>
                   <dd className="mt-4 text-[0.9375rem] leading-relaxed text-stone">{d.text}</dd>
@@ -150,7 +150,7 @@ export function TreatmentPage({ gender }: { gender: Gender }) {
           <Link href={c.other.href} className="group container-x flex items-center justify-between gap-6 border-t border-ink/12 py-14 md:py-20">
             <span>
               <span className="eyebrow block text-stone">Veja também</span>
-              <span className="mt-3 block font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-none transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-2 group-hover:italic">
+              <span className="mt-3 block font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-none transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-2">
                 {c.other.label}
               </span>
             </span>

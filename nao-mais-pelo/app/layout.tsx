@@ -1,21 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Jost } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { ClientEnhancements } from "@/components/ui/ClientEnhancements";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const bodoni = Bodoni_Moda({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  axes: ["opsz"],
-  variable: "--font-bodoni",
-  display: "swap",
-});
-
-const jost = Jost({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jost",
+  weight: ["400", "500", "600"],
+  variable: "--font-jakarta",
   display: "swap",
 });
 
@@ -49,14 +41,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#12110f",
+  themeColor: "#95d400",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${bodoni.variable} ${jost.variable}`} suppressHydrationWarning>
+    <html lang="pt-BR" className={jakarta.variable} suppressHydrationWarning>
       <body>
         {/* Habilita as animações de revelação antes da primeira pintura (ver globals.css). */}
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.dataset.js="1"` }} />

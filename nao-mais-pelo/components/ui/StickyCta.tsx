@@ -46,7 +46,7 @@ export function StickyCta({ href = "#agendar", label = "Agendar minha sessão" }
       aria-hidden={!visible}
       inert={!visible}
     >
-      <a href={href} className="btn btn-solid-dark flex-1">
+      <a href={href} className="btn btn-green flex-1">
         <span>{label}</span>
         <Arrow />
       </a>

@@ -74,12 +74,12 @@ export function BodyMap({
                   aria-controls={`${uid}-desc`}
                   className="group flex w-full items-baseline gap-5 py-3.5 text-left md:py-4"
                 >
-                  <span className={`eyebrow w-6 tabular-nums transition-colors ${isActive ? (dark ? "text-gold" : "text-gold-deep") : dark ? "text-mist" : "text-stone"}`}>
+                  <span className={`eyebrow w-6 tabular-nums transition-colors ${isActive ? (dark ? "text-green" : "text-green-deep") : dark ? "text-mist" : "text-stone"}`}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span
                     className={`font-display text-[1.65rem] leading-none transition-[transform,opacity] duration-500 ease-[var(--ease-out-expo)] md:text-[2rem] ${
-                      isActive ? "translate-x-2 italic opacity-100" : "opacity-55 group-hover:translate-x-1 group-hover:opacity-90"
+                      isActive ? "translate-x-2 opacity-100" : "opacity-55 group-hover:translate-x-1 group-hover:opacity-90"
                     }`}
                   >
                     {a.label}
@@ -125,10 +125,10 @@ export function BodyMap({
                     style={{ left: `${x}%`, top: `${y}%` }}
                   >
                     <span className="relative block h-2.5 w-2.5">
-                      {isActive ? <span className="pin-ping absolute inset-0 rounded-full bg-gold" /> : null}
+                      {isActive ? <span className="pin-ping absolute inset-0 rounded-full bg-green" /> : null}
                       <span
                         className={`absolute inset-0 rounded-full border transition-all duration-500 ${
-                          isActive ? "scale-125 border-gold bg-gold" : "border-ink/50 bg-bone/80"
+                          isActive ? "scale-125 border-green bg-green" : "border-ink/50 bg-bone/80"
                         }`}
                       />
                     </span>
@@ -143,8 +143,8 @@ export function BodyMap({
         </div>
 
         <div id={`${uid}-desc`} aria-live="polite" className="sm:self-end sm:pb-6">
-          <p className={`eyebrow mb-4 ${dark ? "text-gold" : "text-gold-deep"}`}>Área selecionada</p>
-          <p key={area.id} className="font-display text-4xl italic leading-none animate-[fade-up_0.8s_var(--ease-out-expo)_both] md:text-5xl">
+          <p className={`eyebrow mb-4 ${dark ? "text-green" : "text-green-deep"}`}>Área selecionada</p>
+          <p key={area.id} className="font-display text-4xl leading-none animate-[fade-up_0.8s_var(--ease-out-expo)_both] md:text-5xl">
             {area.label}
           </p>
           <p key={`${area.id}-t`} className={`mt-5 max-w-xs text-[0.9375rem] animate-[fade-up_0.8s_var(--ease-out-expo)_80ms_both] ${dark ? "text-mist" : "text-stone"}`}>

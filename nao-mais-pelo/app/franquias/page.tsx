@@ -51,7 +51,7 @@ export default function FranquiasPage() {
           <div className="container-x relative grid gap-16 pb-20 pt-36 md:pt-44 lg:min-h-[100svh] lg:grid-cols-12 lg:items-end lg:gap-8 lg:pb-24">
             <div className="lg:col-span-7">
               <p className="hero-fade eyebrow flex items-center gap-3 text-mist" style={{ "--d": "150ms" } as CSSProperties}>
-                <span className="plus-mark text-gold" aria-hidden="true" />
+                <span className="plus-mark text-green" aria-hidden="true" />
                 Seja um franqueado
               </p>
               <h1 id="franquia-titulo" className="mt-8 text-[clamp(2.8rem,6.2vw,6.5rem)] leading-[0.95] tracking-[-0.03em]">
@@ -60,7 +60,7 @@ export default function FranquiasPage() {
                 </span>
                 <span className="hero-line line-mask">
                   <span style={{ "--i": 1 } as CSSProperties}>
-                    <em className="text-gold">R$ 1,5 milhão</em> por ano
+                    <em className="text-green">R$ 1,5 milhão</em> por ano
                   </span>
                 </span>
                 <span className="hero-line line-mask">
@@ -82,7 +82,7 @@ export default function FranquiasPage() {
               className="hero-fade scroll-mt-28 border border-bone/15 bg-ink/70 p-7 backdrop-blur-md md:p-10 lg:col-span-5 lg:col-start-8"
               style={{ "--d": "700ms" } as CSSProperties}
             >
-              <p className="eyebrow text-gold">Receber apresentação</p>
+              <p className="eyebrow text-green">Receber apresentação</p>
               <p className="mb-6 mt-3 font-display text-3xl leading-tight">Preencha o cadastro.</p>
               <FranquiaForm />
             </div>
@@ -172,7 +172,7 @@ export default function FranquiasPage() {
                 </Reveal>
                 <RevealTitle
                   className="mt-10 text-headline tracking-[-0.025em]"
-                  lines={[<span key="a" id="rennova-titulo">Duas gigantes</span>, <>da estética,</>, <em key="c" className="text-gold">agora unidas.</em>]}
+                  lines={[<span key="a" id="rennova-titulo">Duas gigantes</span>, <>da estética,</>, <em key="c" className="text-green">agora unidas.</em>]}
                 />
               </div>
               <Reveal delay={150} className="lg:col-span-4 lg:col-start-9 lg:self-end">
@@ -243,7 +243,7 @@ export default function FranquiasPage() {
                   lines={[<span key="a" id="motivos-titulo">Motivos para ser</span>, <em key="b">um franqueado.</em>]}
                 />
                 <Reveal delay={120}>
-                  <a href="#apresentacao" className="btn btn-solid-dark mt-12">
+                  <a href="#apresentacao" className="btn btn-green mt-12">
                     <span>Entre para esse time</span>
                     <Arrow />
                   </a>
@@ -253,7 +253,7 @@ export default function FranquiasPage() {
             <ol className="border-t border-ink/15 lg:col-span-6 lg:col-start-7">
               {franchiseReasons.map((r, i) => (
                 <Reveal as="li" key={r} className="group flex gap-6 border-b border-ink/15 py-8 md:gap-10 md:py-10">
-                  <span className="eyebrow pt-2 text-gold-deep">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="eyebrow pt-2 text-green-deep">{String(i + 1).padStart(2, "0")}</span>
                   <span className="font-display text-[clamp(1.5rem,2.4vw,2.1rem)] leading-snug transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:translate-x-1">
                     {r}
                   </span>
@@ -325,7 +325,7 @@ export default function FranquiasPage() {
                 </Eyebrow>
               </Reveal>
               <Reveal delay={100}>
-                <p className="mt-8 font-display text-3xl italic leading-tight">Visão estratégica e força no mercado da beleza.</p>
+                <p className="mt-8 font-display text-3xl leading-tight">Visão estratégica e força no mercado da beleza.</p>
               </Reveal>
             </div>
             <div className="flex flex-col gap-8 sm:flex-row sm:items-start lg:col-span-7 lg:col-start-6">

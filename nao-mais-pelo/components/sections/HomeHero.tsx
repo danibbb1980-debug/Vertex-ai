@@ -34,7 +34,7 @@ export function HomeHero() {
       <div className="container-x relative -mt-16 pb-14 lg:absolute lg:inset-x-0 lg:bottom-0 lg:top-0 lg:mt-0 lg:flex lg:flex-col lg:justify-center lg:pb-0">
         <div className="max-w-[46rem] lg:pt-16">
           <p className="hero-fade eyebrow flex items-center gap-3 text-ink/70" style={{ "--d": "200ms" } as CSSProperties}>
-            <span className="plus-mark text-gold-deep" aria-hidden="true" />
+            <span className="plus-mark text-green-deep" aria-hidden="true" />
             Depilação · Tecnologia Sun&amp;Safe
           </p>
 
@@ -55,7 +55,7 @@ export function HomeHero() {
           </p>
 
           <div className="hero-fade mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4" style={{ "--d": "1050ms" } as CSSProperties}>
-            <a href="#agendar" className="btn btn-solid-dark">
+            <a href="#agendar" className="btn btn-green">
               <span>Agendar minha sessão</span>
               <Arrow />
             </a>

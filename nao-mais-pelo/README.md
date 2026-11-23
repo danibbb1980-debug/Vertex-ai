@@ -29,9 +29,9 @@ Root Directory = `nao-mais-pelo`. Variáveis (ver `.env.example`):
 
 ## Direção criativa — "Luz sobre a pele"
 
-- **Paleta:** preto profundo `#12110F`, off-white quente `#F4EFE7`, areia `#E7DFD2`, champanhe `#C9AE7E`
-  (só em acentos). O verde da marca fica restrito ao logotipo e às fotos reais dos equipamentos/lojas.
-- **Tipografia:** Bodoni Moda (títulos, itálico editorial) + Jost (texto e interface).
+- **Paleta:** preto profundo `#12110F`, off-white quente `#F4EFE7`, areia `#E7DFD2` e o verde da marca `#95D400`
+  em CTAs e destaques (texto verde sobre claro usa `#467300` para manter contraste). Logo empilhado em selo verde.
+- **Tipografia:** Plus Jakarta Sans em títulos e textos (sans moderna, alinhada ao desenho arredondado do logo).
 - **Assinaturas:** rótulos de revista ("N° 02 — Tecnologia"), linhas finas, o "+" da marca como ornamento,
   botões retos com preenchimento de baixo para cima, títulos revelados por máscara.
 - Cada seção tem composição própria (hero de campanha, manifesto assimétrico, tecnologia escura com parallax,

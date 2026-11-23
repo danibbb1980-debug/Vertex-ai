@@ -166,7 +166,7 @@ export function CadastroForm() {
   if (status.state === "done") {
     return (
       <div role="status" className="animate-[fade-up_0.9s_var(--ease-out-expo)_both]">
-        <p className="eyebrow text-gold-deep">Cadastro recebido</p>
+        <p className="eyebrow text-green-deep">Cadastro recebido</p>
         <p className="mt-5 font-display text-4xl leading-tight md:text-5xl">
           Obrigado. <em>Agora é só combinar o horário.</em>
         </p>
@@ -243,7 +243,7 @@ export function CadastroForm() {
       </label>
 
       <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <button type="submit" disabled={status.state === "sending"} className="btn btn-solid-dark w-full disabled:opacity-60 sm:w-auto">
+        <button type="submit" disabled={status.state === "sending"} className="btn btn-green w-full disabled:opacity-60 sm:w-auto">
           <span>{status.state === "sending" ? "Enviando…" : "Garantir minha sessão"}</span>
           <Arrow />
         </button>
@@ -286,7 +286,7 @@ export function NewsletterForm() {
 
   if (status.state === "done") {
     return (
-      <p role="status" className="font-display text-2xl italic">
+      <p role="status" className="font-display text-2xl">
         Inscrição confirmada. Até breve.
       </p>
     );
@@ -340,7 +340,7 @@ export function FranquiaForm() {
   if (status.state === "done") {
     return (
       <div role="status" className="animate-[fade-up_0.9s_var(--ease-out-expo)_both]">
-        <p className="eyebrow text-gold">Recebemos seu cadastro</p>
+        <p className="eyebrow text-green">Recebemos seu cadastro</p>
         <p className="mt-5 font-display text-4xl leading-tight">
           Obrigado. <em>Nossa equipe de expansão vai entrar em contato.</em>
         </p>
@@ -357,7 +357,7 @@ export function FranquiaForm() {
       <p className="mt-2 text-[0.8125rem] leading-relaxed text-mist">
         Ao enviar os dados acima, eu concordo em receber contatos e mensagens por meio do WhatsApp, telefones e e-mails.
       </p>
-      <button type="submit" disabled={status.state === "sending"} className="btn btn-solid-light mt-2 w-full disabled:opacity-60">
+      <button type="submit" disabled={status.state === "sending"} className="btn btn-green mt-2 w-full disabled:opacity-60">
         <span>{status.state === "sending" ? "Enviando…" : "Receber apresentação"}</span>
         <Arrow />
       </button>
