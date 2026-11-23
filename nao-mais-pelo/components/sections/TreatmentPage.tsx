@@ -14,14 +14,14 @@ const content = {
     kicker: "Depilação para",
     title: ["todas as", "mulheres."],
     hero: {
-      src: "/img/tecnologia/sessao-pernas.jpg",
-      alt: "Profissional da Não+Pelo realizando sessão de depilação nas pernas de uma cliente",
-      position: "object-[45%_50%]",
+      src: "/img/pirassununga/praia-leitura.jpg",
+      alt: "Mulher lendo deitada na areia da praia, com chapéu de palha",
+      position: "object-[60%_50%]",
     },
     second: {
-      src: "/img/editorial/tons-de-pele.jpg",
-      alt: "Quatro mulheres de diferentes tons de pele sorrindo juntas",
-      position: "object-[50%_40%]",
+      src: "/img/pirassununga/buco-labios.jpg",
+      alt: "Detalhe do rosto de uma mulher, com a pele lisa acima dos lábios",
+      position: "object-[50%_55%]",
     },
     other: { href: "/depilacao-masculina", label: "Depilação masculina" },
   },
@@ -29,14 +29,14 @@ const content = {
     kicker: "Depilação para",
     title: ["todos os", "homens."],
     hero: {
-      src: "/img/editorial/masculino-sol.jpg",
-      alt: "Homem sem camisa sob um guarda-sol de palha na praia",
-      position: "object-[60%_30%]",
+      src: "/img/pirassununga/masculino-estudio.jpg",
+      alt: "Torso masculino sem camisa em fundo claro de estúdio",
+      position: "object-[50%_8%]",
     },
     second: {
-      src: "/img/editorial/retratos-masculinos.jpg",
-      alt: "Retratos aproximados de homens com diferentes tons de pele",
-      position: "object-[50%_40%]",
+      src: "/img/pirassununga/sessao-costas.jpg",
+      alt: "Sessão de depilação nas costas de um homem com a ponteira do equipamento",
+      position: "object-[55%_50%]",
     },
     other: { href: "/depilacao-feminina", label: "Depilação feminina" },
   },
@@ -88,7 +88,7 @@ export function TreatmentPage({ gender }: { gender: Gender }) {
               </div>
             </div>
             <div className="relative h-[62svh] overflow-hidden lg:col-span-6 lg:h-auto">
-              <Image src={c.hero.src} alt={c.hero.alt} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className={`hero-image object-cover ${c.hero.position} saturate-[0.85]`} />
+              <Image src={c.hero.src} alt={c.hero.alt} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className={`hero-image object-cover ${c.hero.position}`} />
             </div>
           </div>
         </section>

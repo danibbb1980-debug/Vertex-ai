@@ -138,11 +138,11 @@ export function Technology() {
           <div className="lg:col-span-4 lg:pt-32">
             <Reveal kind="image" delay={150} className="relative hidden aspect-[4/5] overflow-hidden lg:block">
               <Image
-                src="/img/tecnologia/sessao-pernas.jpg"
-                alt="Profissional da Não+Pelo realizando sessão nas pernas de uma cliente"
+                src="/img/pirassununga/sessao-perna-ponteira.jpg"
+                alt="Profissional da Não+Pelo aplicando a ponteira verde na coxa de uma cliente"
                 fill
                 sizes="(min-width: 1024px) 30vw, 100vw"
-                className="object-cover object-[40%_50%] saturate-[0.78]"
+                className="object-cover object-[62%_50%]"
               />
             </Reveal>
           </div>
@@ -335,7 +335,7 @@ export function FirstSession({ index = "07" }: { index?: string }) {
   return (
     <section id="agendar" aria-labelledby="agendar-title" className="bg-bone">
       <div className="grid lg:grid-cols-2">
-        <div className="relative min-h-[46svh] overflow-hidden bg-ink lg:min-h-0">
+        <div className="relative min-h-[70svh] overflow-hidden bg-ink lg:min-h-0">
           <FirstSessionArt />
         </div>
         <div className="container-x py-20 md:py-28 lg:max-w-none lg:px-16 xl:px-24">
@@ -368,25 +368,22 @@ export function FirstSession({ index = "07" }: { index?: string }) {
   );
 }
 
-/**
- * Composição gráfica ao lado do formulário: o "+" da marca, desenhado em linhas
- * finas de champanhe, ocupa o painel escuro como um selo.
- */
+/** Fotografia da campanha ao lado do formulário de cadastro. */
 function FirstSessionArt() {
   return (
-    <div className="absolute inset-0 flex flex-col justify-between p-8 text-bone md:p-12">
-      <div aria-hidden="true" className="absolute inset-0">
-        <span className="absolute left-1/2 top-[12%] bottom-[12%] w-px -translate-x-1/2 bg-green/35" />
-        <span className="absolute top-1/2 left-[12%] right-[12%] h-px -translate-y-1/2 bg-green/35" />
-        <span className="absolute left-1/2 top-1/2 aspect-square w-[min(58%,22rem)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bone/10" />
-      </div>
-      <div className="relative flex items-center justify-between">
-        <span className="eyebrow text-mist">Não+Pelo</span>
-        <span className="eyebrow text-mist">Primeira sessão</span>
-      </div>
-      <div className="relative max-w-sm">
-        <p className="font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.05]">
-          A primeira sessão <em className="text-green">é por nossa conta.</em>
+    <div className="absolute inset-0 text-bone">
+      <Image
+        src="/img/pirassununga/liberdade-bracos-abertos.jpg"
+        alt="Mulher sorrindo de braços abertos ao sol"
+        fill
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        className="object-cover object-[50%_12%]"
+      />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_top,rgb(18_17_15/0.85)_0%,rgb(18_17_15/0.15)_55%,transparent_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 p-8 md:p-12">
+        <p className="eyebrow mb-4 text-green">Primeira sessão</p>
+        <p className="max-w-sm font-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[1.05]">
+          A primeira sessão <em>é por nossa conta.</em>
         </p>
       </div>
     </div>
@@ -402,14 +399,14 @@ export function FranchiseTeaser() {
         <div className="relative lg:col-span-5">
           <Reveal kind="image" className="relative aspect-[3/4] overflow-hidden">
             <Image
-              src="/img/franquia/loja-4.jpg"
-              alt="Recepção de uma unidade Não+Pelo, com balcão e prateleiras iluminadas"
+              src="/img/pirassununga/sala-atendimento.jpg"
+              alt="Sala de atendimento da unidade Não+Pelo de Pirassununga, com maca e equipamento"
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"
               className="object-cover"
             />
           </Reveal>
-          <p className="eyebrow mt-4 text-stone">Unidade da rede Não+Pelo</p>
+          <p className="eyebrow mt-4 text-stone">Sala de atendimento — unidade Pirassununga</p>
         </div>
         <div className="lg:col-span-6 lg:col-start-7">
           <Reveal>

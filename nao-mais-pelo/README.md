@@ -81,7 +81,9 @@ Os dois JSON de unidades são instantâneos de novembro de 2026. Para atualizar,
   vêm da página de franquias. O site antigo também diz "mais de 100 unidades" e, no rodapé, "+ de 18 países";
   esta última não foi usada por conflitar com "16 países".
 - **Números financeiros** da franquia sempre acompanham o aviso legal da própria marca.
-- **Imagens:** somente fotos publicadas pela marca. Fotos de lojas aparecem apenas na área de franquias e
+- **Imagens:** somente fotos publicadas pela marca. As de `public/img/pirassununga/` são fotos oficiais da unidade de
+  Pirassununga, recortadas de capturas de tela (sem textos e logos sobrepostos); os originais em alta resolução
+  deixariam o resultado ainda melhor. Fotos de lojas aparecem apenas na área de franquias e
   identificadas como "Unidade da rede Não+Pelo". Os selos "prêmios" do rodapé antigo (álcool etílico,
   antibacteriano etc.) não são prêmios e foram removidos.
 - 4 unidades não publicaram WhatsApp (Santa Inês 2, Poços de Caldas, Santa Luzia, Dois Irmãos): o botão leva
