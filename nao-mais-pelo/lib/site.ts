@@ -1,6 +1,6 @@
 /**
- * Fonte única dos dados institucionais da Não+Pelo.
- * Tudo aqui foi copiado do site original (naomaispelo.com.br, novembro de 2026).
+ * Fonte única dos dados do site da Não+Pelo Pirassununga.
+ * Conteúdo da marca copiado de naomaispelo.com.br; dados da unidade informados por ela.
  * Não acrescente números, promessas ou contatos que não estejam publicados pela marca.
  */
 
@@ -16,39 +16,55 @@ export function whatsappLink(phone: string, message = WHATSAPP_DEFAULT_MESSAGE) 
   return `https://wa.me/${withCountry}?text=${encodeURIComponent(message)}`;
 }
 
+/**
+ * Unidade Não+Pelo Pirassununga — dados informados pela unidade (novembro de 2026).
+ * O site é exclusivo desta clínica.
+ */
+export const unit = {
+  name: "Não+Pelo Pirassununga",
+  city: "Pirassununga",
+  state: "SP",
+  street: "R. Duque de Caxias, 1942",
+  district: "Centro",
+  postalCode: "13630-095",
+  addressLine: "R. Duque de Caxias, 1942 - Centro, Pirassununga - SP, 13630-095",
+  whatsapp: "551935626669",
+  whatsappDisplay: "(19) 3562-6669",
+  instagram: "naomaispelo.pirassununga",
+  instagramHref: "https://www.instagram.com/naomaispelo.pirassununga/",
+  mapsHref: "https://maps.app.goo.gl/s2dbbVypGUHAQ4eT8",
+  mapsEmbed:
+    "https://www.google.com/maps?q=" +
+    encodeURIComponent("Não+Pelo, R. Duque de Caxias, 1942 - Centro, Pirassununga - SP, 13630-095") +
+    "&output=embed",
+  /** Nome da unidade como o CRM da rede espera receber no formulário de cadastro. */
+  crmName: "SP - PIRASSUNUNGA",
+  /** Horário de funcionamento. Dia 0 = domingo. Horas no fuso de São Paulo. */
+  hours: [
+    { day: 1, label: "Segunda-feira", open: "08:00", close: "18:00" },
+    { day: 2, label: "Terça-feira", open: "08:00", close: "18:00" },
+    { day: 3, label: "Quarta-feira", open: "08:00", close: "18:00" },
+    { day: 4, label: "Quinta-feira", open: "08:00", close: "18:00" },
+    { day: 5, label: "Sexta-feira", open: "08:00", close: "18:00" },
+    { day: 6, label: "Sábado", open: "08:00", close: "12:00" },
+    { day: 0, label: "Domingo", open: null, close: null },
+  ],
+} as const;
+
 export const site = {
-  name: "Não+Pelo",
-  legalName: "Não Mais Pelo Brasil Beauty Franchising Serviços Estéticos LTDA",
-  cnpj: "34.425.351/0001-66",
+  name: unit.name,
   url: envUrl ?? "https://naomaispelo.com.br",
   hasOfficialDomain: Boolean(envUrl),
-  originalUrl: "https://naomaispelo.com.br",
 
-  /** WhatsApp central de agendamento (botão "Agendamento" do site original). */
-  centralWhatsapp: "11918372669",
+  /** WhatsApp de agendamento da unidade. */
+  centralWhatsapp: unit.whatsapp,
 
-  contacts: [
-    {
-      label: "Informações São Paulo",
-      phones: ["(11) 2667-1194", "(11) 2659-9861", "(11) 97317-1661"],
-      email: "expansao.sp@naomaispelo.com.br",
-    },
-    {
-      label: "Informações Brasil",
-      phones: ["(11) 2667-1194", "(11) 2659-9861"],
-      email: "franquias@naomaispelo.com.br",
-    },
-  ],
+  social: [{ label: "Instagram", href: unit.instagramHref }],
 
-  social: [
-    { label: "Instagram", href: "https://www.instagram.com/naomaispelobr/" },
-    { label: "Facebook", href: "https://www.facebook.com/naomaispelobr" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/company/n%C3%A3o-mais-pelo-brasil/" },
-  ],
-
-  /** Páginas que continuam no WordPress original. */
+  /** Páginas institucionais da marca, mantidas no site nacional. */
   external: {
-    blog: "https://naomaispelo.com.br/blog",
+    brand: "https://naomaispelo.com.br",
+    franchise: "https://naomaispelo.com.br/seja-um-franqueado",
     privacy: "https://naomaispelo.com.br/politica-de-privacidade",
   },
 } as const;
@@ -60,8 +76,8 @@ export const nav = [
   { label: "Tecnologia", href: "/#tecnologia" },
   { label: "Depilação feminina", href: "/depilacao-feminina" },
   { label: "Depilação masculina", href: "/depilacao-masculina" },
-  { label: "Unidades", href: "/unidades" },
-  { label: "Franquias", href: "/franquias" },
+  { label: "Depoimentos", href: "/#depoimentos" },
+  { label: "Localização", href: "/#localizacao" },
 ] as const;
 
 /** Vídeo institucional da seção "Nossa tecnologia" do site original. */

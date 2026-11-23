@@ -12,7 +12,6 @@ import { NextResponse } from "next/server";
 const FORMS = {
   cadastro: { id: 5, post: 2, fields: ["nome", "telefone", "email", "estado", "cidade", "unidade", "lgpd"], required: ["nome", "telefone", "email", "estado", "cidade", "unidade", "lgpd"] },
   newsletter: { id: 21, post: 2, fields: ["email"], required: ["email"] },
-  franquia: { id: 24, post: 19, fields: ["nome", "telefone", "email"], required: ["nome", "telefone", "email"] },
 } as const;
 
 type FormKey = keyof typeof FORMS;

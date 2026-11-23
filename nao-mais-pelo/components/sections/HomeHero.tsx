@@ -27,7 +27,7 @@ export function HomeHero() {
           className="hero-fade eyebrow absolute right-5 top-1/2 hidden origin-right -translate-y-1/2 rotate-90 text-ink/45 lg:right-8 lg:block"
           style={{ "--d": "1400ms" } as CSSProperties}
         >
-          Não+Pelo — Liberdade para sua pele
+          Não+Pelo Pirassununga — Liberdade para sua pele
         </p>
       </div>
 
@@ -35,7 +35,7 @@ export function HomeHero() {
         <div className="max-w-[46rem] lg:pt-16">
           <p className="hero-fade eyebrow flex items-center gap-3 text-ink/70" style={{ "--d": "200ms" } as CSSProperties}>
             <span className="plus-mark text-green-deep" aria-hidden="true" />
-            Depilação · Tecnologia Sun&amp;Safe
+            Não+Pelo Pirassununga
           </p>
 
           <h1 id="hero-title" className="mt-6 text-display tracking-[-0.03em] text-ink">
@@ -50,8 +50,8 @@ export function HomeHero() {
           </h1>
 
           <p className="hero-fade mt-7 max-w-[26rem] text-[1.0625rem] leading-relaxed text-ink/75" style={{ "--d": "900ms" } as CSSProperties}>
-            Depilação com a tecnologia exclusiva Sun&amp;Safe, para todos os tipos de pele — inclusive as bronzeadas. Em mais de 100 unidades
-            pelo Brasil.
+            Depilação com a tecnologia exclusiva Sun&amp;Safe, para todos os tipos de pele — inclusive as bronzeadas. Agora no Centro de
+            Pirassununga.
           </p>
 
           <div className="hero-fade mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4" style={{ "--d": "1050ms" } as CSSProperties}>
@@ -77,7 +77,7 @@ export function HomeHero() {
             <span className="eyebrow text-ink">02</span> Atendemos peles bronzeadas
           </li>
           <li className="flex items-center gap-3">
-            <span className="eyebrow text-ink">03</span> +100 unidades no Brasil
+            <span className="eyebrow text-ink">03</span> R. Duque de Caxias, 1942 · Centro
           </li>
         </ul>
       </div>

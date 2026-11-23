@@ -1,4 +1,10 @@
-# Não+Pelo — redesign premium
+# Não+Pelo Pirassununga — site da unidade
+
+> Site exclusivo da unidade Não+Pelo de Pirassununga (R. Duque de Caxias, 1942 - Centro). Dados da unidade —
+> endereço, WhatsApp (19) 3562-6669, Instagram @naomaispelo.pirassununga, Google Maps e horários — ficam em
+> `unit`, em `lib/site.ts`. O formulário de cadastro envia sempre para a unidade "SP - PIRASSUNUNGA".
+> As páginas nacionais (localizador de 131 unidades e franquias) foram removidas: `/unidades` leva à seção
+> de localização e `/franquias` à página de franquias do site nacional.
 
 Reconstrução de [naomaispelo.com.br](https://naomaispelo.com.br) como app Next.js independente dentro do
 repositório da Vertex (mesmo padrão de `vip-shape/`).

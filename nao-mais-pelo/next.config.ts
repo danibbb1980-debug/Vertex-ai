@@ -14,10 +14,12 @@ const nextConfig: NextConfig = {
   // Endereços do site antigo apontam para as páginas equivalentes.
   async redirects() {
     return [
-      { source: "/onde-estamos", destination: "/unidades", permanent: true },
-      { source: "/seja-um-franqueado", destination: "/franquias", permanent: true },
+      { source: "/onde-estamos", destination: "/#localizacao", permanent: true },
+      { source: "/unidades", destination: "/#localizacao", permanent: true },
+      { source: "/franquias", destination: "https://naomaispelo.com.br/seja-um-franqueado", permanent: false },
+      { source: "/seja-um-franqueado", destination: "https://naomaispelo.com.br/seja-um-franqueado", permanent: false },
       { source: "/quem-somos", destination: "/#manifesto", permanent: true },
-      { source: "/contato", destination: "/#agendar", permanent: true },
+      { source: "/contato", destination: "/#localizacao", permanent: true },
     ];
   },
   async headers() {

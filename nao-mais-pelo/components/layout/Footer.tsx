@@ -2,7 +2,7 @@ import Link from "next/link";
 import { LogoBadge } from "@/components/ui/Logo";
 import { NewsletterForm } from "@/components/ui/forms";
 import { Arrow } from "@/components/ui/primitives";
-import { centralWhatsappHref, nav, site } from "@/lib/site";
+import { centralWhatsappHref, nav, site, unit } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -21,9 +21,9 @@ export function Footer() {
               <span>Agendar pelo WhatsApp</span>
               <Arrow />
             </a>
-            <Link href="/unidades" className="btn btn-outline-light">
-              <span>Ver unidades</span>
-            </Link>
+            <a href={unit.mapsHref} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light">
+              <span>Como chegar</span>
+            </a>
           </div>
         </div>
       </div>
@@ -49,67 +49,57 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            <li>
-              <a href={site.external.blog} className="link-line" target="_blank" rel="noopener noreferrer">
-                Blog
-              </a>
-            </li>
           </ul>
         </nav>
 
         <div className="lg:col-span-3">
-          <p className="eyebrow mb-6 text-mist">Contato</p>
-          <div className="space-y-8 text-[0.9375rem]">
-            {site.contacts.map((c) => (
-              <div key={c.label}>
-                <p className="text-bone/60">{c.label}</p>
-                <ul className="mt-2 space-y-1">
-                  {c.phones.map((p) => (
-                    <li key={p}>
-                      <a href={`tel:+55${p.replace(/\D/g, "")}`} className="link-line tabular-nums">
-                        {p}
-                      </a>
-                    </li>
-                  ))}
-                  <li>
-                    <a href={`mailto:${c.email}`} className="link-line break-all">
-                      {c.email}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            ))}
-          </div>
+          <p className="eyebrow mb-6 text-mist">{unit.name}</p>
+          <address className="space-y-4 text-[0.9375rem] not-italic">
+            <a href={unit.mapsHref} target="_blank" rel="noopener noreferrer" className="link-line block">
+              {unit.street}
+              <br />
+              {unit.district}, {unit.city} - {unit.state}, {unit.postalCode}
+            </a>
+            <a href={centralWhatsappHref} target="_blank" rel="noopener noreferrer" className="link-line block tabular-nums">
+              WhatsApp {unit.whatsappDisplay}
+            </a>
+            <a href={unit.instagramHref} target="_blank" rel="noopener noreferrer" className="link-line block">
+              @{unit.instagram}
+            </a>
+          </address>
         </div>
 
         <div className="lg:col-span-2">
-          <p className="eyebrow mb-6 text-mist">Redes sociais</p>
-          <ul className="space-y-3 text-[0.9375rem]">
-            {site.social.map((s) => (
-              <li key={s.href}>
-                <a href={s.href} target="_blank" rel="noopener noreferrer" className="link-line">
-                  {s.label}
-                </a>
-              </li>
-            ))}
+          <p className="eyebrow mb-6 text-mist">Horários</p>
+          <ul className="space-y-2 text-[0.9375rem]">
+            <li>Seg a sex · 08:00 – 18:00</li>
+            <li>Sábado · 08:00 – 12:00</li>
+            <li className="text-mist">Domingo · Fechado</li>
           </ul>
-          <p className="eyebrow mb-6 mt-12 text-mist">Franquias</p>
-          <Link href="/franquias" className="link-line text-[0.9375rem]">
-            Seja um franqueado
-          </Link>
+          <p className="eyebrow mb-4 mt-10 text-mist">A marca</p>
+          <ul className="space-y-2 text-[0.9375rem]">
+            <li>
+              <a href={site.external.brand} target="_blank" rel="noopener noreferrer" className="link-line">
+                naomaispelo.com.br
+              </a>
+            </li>
+            <li>
+              <a href={site.external.franchise} target="_blank" rel="noopener noreferrer" className="link-line">
+                Seja um franqueado
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
 
       <div className="container-x flex flex-col gap-4 border-t border-bone/10 py-8 text-xs leading-relaxed text-mist md:flex-row md:items-center md:justify-between">
-        <p>
-          {site.legalName} · CNPJ {site.cnpj}
-        </p>
+        <p>{unit.name} · unidade da rede Não+Pelo</p>
         <div className="flex flex-wrap gap-x-6 gap-y-2">
           <a href={site.external.privacy} target="_blank" rel="noopener noreferrer" className="link-line">
             Política de privacidade
           </a>
           <p>
-            Não+Pelo © <span data-year>2026</span>
+            {unit.name} © <span data-year>2026</span>
           </p>
         </div>
       </div>

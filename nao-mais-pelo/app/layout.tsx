@@ -12,13 +12,13 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 const description =
-  "Depilação com a tecnologia Sun&Safe, exclusiva Não+Pelo, para todos os tipos de pele — inclusive bronzeadas. Mais de 100 unidades no Brasil. Cadastre-se e garanta sua primeira sessão gratuita.";
+  "Não+Pelo Pirassununga: depilação com a tecnologia Sun&Safe, exclusiva Não+Pelo, para todos os tipos de pele — inclusive bronzeadas. R. Duque de Caxias, 1942, Centro. Agende pelo WhatsApp (19) 3562-6669.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Não+Pelo | Depilação com tecnologia exclusiva Sun&Safe",
-    template: "%s | Não+Pelo",
+    default: "Não+Pelo Pirassununga | Depilação com tecnologia Sun&Safe",
+    template: "%s | Não+Pelo Pirassununga",
   },
   description,
   applicationName: site.name,
@@ -28,12 +28,12 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     url: "/",
     siteName: site.name,
-    title: "Não+Pelo — Liberdade, na sua pele.",
+    title: "Não+Pelo Pirassununga — Liberdade, na sua pele.",
     description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Não+Pelo — Liberdade, na sua pele.",
+    title: "Não+Pelo Pirassununga — Liberdade, na sua pele.",
     description,
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },

@@ -3,10 +3,10 @@ import Link from "next/link";
 import { BodyMap } from "@/components/ui/BodyMap";
 import { CadastroForm } from "@/components/ui/forms";
 import { Arrow, ButtonLink, Eyebrow, Reveal, RevealTitle } from "@/components/ui/primitives";
-import { UnitLocator } from "@/components/ui/UnitLocator";
+import { OpenStatus } from "@/components/ui/OpenStatus";
 import { PlayIcon, VideoDialog } from "@/components/ui/VideoDialog";
-import { networkNumbers } from "@/lib/franchise";
-import { differentials, technologyVideoId, testimonials } from "@/lib/site";
+import { networkNumbers } from "@/lib/brand";
+import { centralWhatsappHref, differentials, technologyVideoId, testimonials, unit } from "@/lib/site";
 import { TestimonialRail } from "@/components/ui/TestimonialRail";
 
 /* ───────────── N° 01 — Manifesto ───────────── */
@@ -71,7 +71,7 @@ export function Manifesto() {
             </Reveal>
           ))}
         </ul>
-        <p className="mt-5 text-xs text-stone">Números da rede Não+Pelo publicados na página de franquias.</p>
+        <p className="mt-5 text-xs text-stone">Números da rede Não+Pelo, da qual a unidade de Pirassununga faz parte.</p>
       </div>
     </section>
   );
@@ -273,7 +273,7 @@ export function Differentials() {
 
 export function Testimonials() {
   return (
-    <section aria-labelledby="depoimentos-title" className="overflow-hidden bg-bone py-24 md:py-36">
+    <section id="depoimentos" aria-labelledby="depoimentos-title" className="overflow-hidden bg-bone py-24 md:py-36">
       <div className="container-x grid gap-10 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-7">
           <Reveal>
@@ -288,7 +288,7 @@ export function Testimonials() {
         </div>
         <Reveal delay={150} className="lg:col-span-4 lg:col-start-9">
           <p className="text-[1.0625rem] leading-relaxed text-stone">
-            Clientes da rede contam, com as próprias palavras, como é a experiência Não+Pelo. Toque em um retrato para assistir.
+            Clientes da rede Não+Pelo contam, com as próprias palavras, como é a experiência. Toque em um retrato para assistir.
           </p>
         </Reveal>
       </div>
@@ -297,32 +297,124 @@ export function Testimonials() {
   );
 }
 
-/* ───────────── N° 06 — Unidades ───────────── */
+/* ───────────── N° 06 — A clínica ───────────── */
 
-export function LocatorSection() {
+export function Clinic() {
   return (
-    <section id="unidades" aria-labelledby="unidades-title" className="grain relative bg-ink-2 py-24 text-bone md:py-36">
-      <div className="container-x grid gap-16 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-32">
-            <Reveal>
-              <Eyebrow index="06" className="text-mist">
-                Perto de você
-              </Eyebrow>
-            </Reveal>
-            <RevealTitle
-              className="mt-10 text-title tracking-[-0.02em] md:text-headline"
-              lines={[<span key="a" id="unidades-title">Encontre a</span>, <>unidade mais</>, <em key="c" className="text-green">próxima.</em>]}
+    <section id="clinica" aria-labelledby="clinica-title" className="relative overflow-hidden bg-paper py-24 md:py-36">
+      <div className="container-x grid gap-14 lg:grid-cols-12 lg:items-center lg:gap-8">
+        <div className="relative lg:col-span-6">
+          <Reveal kind="image" className="relative aspect-[1/1] overflow-hidden">
+            <Image
+              quality={90}
+              src="/img/pirassununga/sala-atendimento.jpg"
+              alt="Sala de atendimento da Não+Pelo Pirassununga, com maca, toalhas e o equipamento da marca"
+              fill
+              sizes="(min-width: 1024px) 46vw, 100vw"
+              className="object-cover"
             />
-            <Reveal delay={150}>
-              <p className="mt-8 max-w-sm text-[1.0625rem] leading-relaxed text-mist">
-                De norte a sul, somos mais de 100 unidades no Brasil com excelência no atendimento. Você merece o melhor.
-              </p>
-            </Reveal>
-          </div>
+          </Reveal>
+          <p className="eyebrow mt-4 text-stone">Sala de atendimento — Não+Pelo Pirassununga</p>
         </div>
-        <Reveal delay={100} className="lg:col-span-8">
-          <UnitLocator compact tone="dark" />
+        <div className="lg:col-span-5 lg:col-start-8">
+          <Reveal>
+            <Eyebrow index="06" className="text-stone">
+              A clínica
+            </Eyebrow>
+          </Reveal>
+          <RevealTitle
+            className="mt-10 text-headline tracking-[-0.025em]"
+            lines={[<span key="a" id="clinica-title">No Centro de</span>, <em key="b">Pirassununga.</em>]}
+          />
+          <Reveal delay={150}>
+            <p className="mt-8 max-w-lg text-[1.0625rem] leading-relaxed text-stone">
+              A unidade de Pirassununga traz a tecnologia e o padrão de atendimento da rede Não+Pelo para a cidade, num endereço fácil de
+              chegar, na Rua Duque de Caxias.
+            </p>
+          </Reveal>
+          <Reveal delay={250} className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <ButtonLink href={centralWhatsappHref} variant="green">
+              Agendar pelo WhatsApp
+            </ButtonLink>
+            <ButtonLink href={unit.instagramHref} variant="outline-dark" arrow={false}>
+              @{unit.instagram}
+            </ButtonLink>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ───────────── N° 07 — Localização ───────────── */
+
+export function LocationSection() {
+  return (
+    <section id="localizacao" aria-labelledby="localizacao-title" className="grain relative bg-ink-2 py-24 text-bone md:py-36">
+      <div className="container-x grid gap-16 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-5">
+          <Reveal>
+            <Eyebrow index="07" className="text-mist">
+              Localização e horários
+            </Eyebrow>
+          </Reveal>
+          <RevealTitle
+            className="mt-10 text-headline tracking-[-0.025em]"
+            lines={[<span key="a" id="localizacao-title">Venha nos</span>, <em key="b">visitar.</em>]}
+          />
+          <Reveal delay={120}>
+            <address className="mt-10 not-italic">
+              <p className="text-[1.25rem] leading-snug">{unit.street}</p>
+              <p className="mt-1 text-mist">
+                {unit.district}, {unit.city} - {unit.state} · CEP {unit.postalCode}
+              </p>
+            </address>
+          </Reveal>
+
+          <Reveal delay={180} className="mt-10">
+            <div className="flex items-center justify-between border-b border-bone/15 pb-4">
+              <p className="eyebrow text-mist">Horário de funcionamento</p>
+              <OpenStatus />
+            </div>
+            <dl className="divide-y divide-bone/10">
+              {unit.hours.map((h) => (
+                <div key={h.day} className="flex justify-between py-3 text-[0.9375rem]">
+                  <dt className="text-bone/80">{h.label}</dt>
+                  <dd className={`tabular-nums ${h.open ? "" : "text-mist"}`}>{h.open ? `${h.open} – ${h.close}` : "Fechado"}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+
+          <Reveal delay={240} className="mt-10 grid gap-3 sm:grid-cols-2">
+            <a href={centralWhatsappHref} target="_blank" rel="noopener noreferrer" className="btn btn-green">
+              <span>WhatsApp</span>
+              <Arrow />
+            </a>
+            <a href={unit.mapsHref} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light">
+              <span>Como chegar</span>
+            </a>
+          </Reveal>
+          <p className="mt-6 text-sm text-mist">
+            WhatsApp{" "}
+            <a href={centralWhatsappHref} target="_blank" rel="noopener noreferrer" className="link-line text-bone">
+              {unit.whatsappDisplay}
+            </a>{" "}
+            · Instagram{" "}
+            <a href={unit.instagramHref} target="_blank" rel="noopener noreferrer" className="link-line text-bone">
+              @{unit.instagram}
+            </a>
+          </p>
+        </div>
+
+        <Reveal kind="image" delay={100} className="relative min-h-[420px] overflow-hidden bg-ink lg:col-span-6 lg:col-start-7 lg:min-h-0">
+          <iframe
+            title={`Mapa: ${unit.addressLine}`}
+            src={unit.mapsEmbed}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="absolute inset-0 h-full w-full border-0 grayscale-[35%]"
+          />
         </Reveal>
       </div>
     </section>
@@ -331,7 +423,7 @@ export function LocatorSection() {
 
 /* ───────────── N° 07 — Primeira sessão ───────────── */
 
-export function FirstSession({ index = "07" }: { index?: string }) {
+export function FirstSession({ index = "08" }: { index?: string }) {
   return (
     <section id="agendar" aria-labelledby="agendar-title" className="bg-bone">
       <div className="grid lg:grid-cols-2">
@@ -356,7 +448,7 @@ export function FirstSession({ index = "07" }: { index?: string }) {
           />
           <Reveal delay={150}>
             <p className="mb-10 mt-6 max-w-md text-stone">
-              Escolha a unidade mais próxima. Depois do cadastro, você continua pelo WhatsApp da unidade para combinar o horário.
+              Deixe seus dados. Depois do cadastro, você continua pelo WhatsApp da Não+Pelo Pirassununga para combinar o horário.
             </p>
           </Reveal>
           <Reveal delay={200}>
@@ -387,51 +479,5 @@ function FirstSessionArt() {
         </p>
       </div>
     </div>
-  );
-}
-
-/* ───────────── N° 08 — Franquias ───────────── */
-
-export function FranchiseTeaser() {
-  return (
-    <section aria-labelledby="franquia-teaser-title" className="relative overflow-hidden bg-paper py-24 md:py-36">
-      <div className="container-x grid gap-14 lg:grid-cols-12 lg:items-center lg:gap-8">
-        <div className="relative lg:col-span-5">
-          <Reveal kind="image" className="relative aspect-[3/4] overflow-hidden">
-            <Image quality={90}
-              src="/img/pirassununga/sala-atendimento.jpg"
-              alt="Sala de atendimento da unidade Não+Pelo de Pirassununga, com maca e equipamento"
-              fill
-              sizes="(min-width: 1024px) 40vw, 100vw"
-              className="object-cover"
-            />
-          </Reveal>
-          <p className="eyebrow mt-4 text-stone">Sala de atendimento — unidade Pirassununga</p>
-        </div>
-        <div className="lg:col-span-6 lg:col-start-7">
-          <Reveal>
-            <Eyebrow index="08" className="text-stone">
-              Seja um franqueado
-            </Eyebrow>
-          </Reveal>
-          <RevealTitle
-            className="mt-10 text-headline tracking-[-0.025em]"
-            lines={[<span key="a" id="franquia-teaser-title">Um negócio</span>, <>enxuto, com uma</>, <em key="c">marca global.</em>]}
-          />
-          <Reveal delay={150}>
-            <p className="mt-8 max-w-lg text-[1.0625rem] leading-relaxed text-stone">
-              Um modelo de negócio simples, com operação fácil de gerenciar — para quem busca o primeiro negócio próprio ou quer diversificar sem
-              precisar de presença integral.
-            </p>
-          </Reveal>
-          <Reveal delay={250} className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href="/franquias">Conhecer a franquia</ButtonLink>
-            <ButtonLink href="/franquias#apresentacao" variant="outline-dark" arrow={false}>
-              Receber apresentação
-            </ButtonLink>
-          </Reveal>
-        </div>
-      </div>
-    </section>
   );
 }

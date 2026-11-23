@@ -1,36 +1,33 @@
-import { site } from "./site";
-import { units } from "./units";
+import { site, unit } from "./site";
 
-export function organizationJsonLd() {
+/** Dados estruturados da clínica (LocalBusiness) para o Google. */
+export function localBusinessJsonLd() {
+  const opening = unit.hours
+    .filter((h) => h.open)
+    .map((h) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: `https://schema.org/${["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][h.day]}`,
+      opens: h.open,
+      closes: h.close,
+    }));
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: site.name,
-    legalName: site.legalName,
-    taxID: site.cnpj,
+    "@type": "BeautySalon",
+    name: unit.name,
     url: site.url,
-    logo: `${site.url}/icon.png`,
-    email: site.contacts[1].email,
-    telephone: "+55-11-2667-1194",
-    sameAs: site.social.map((s) => s.href),
-  };
-}
-
-/** Lista das unidades como estabelecimentos (para a página /unidades). */
-export function unitsJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "Unidades Não+Pelo",
-    itemListElement: units.map((u, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      item: {
-        "@type": "BeautySalon",
-        name: `Não+Pelo ${u.nome}`,
-        address: { "@type": "PostalAddress", streetAddress: u.endereco, addressLocality: u.cidade, addressRegion: u.uf, addressCountry: "BR" },
-        ...(u.telefone ? { telephone: u.telefone } : {}),
-      },
-    })),
+    image: `${site.url}/img/pirassununga/sala-atendimento.jpg`,
+    telephone: "+55-19-3562-6669",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: unit.street,
+      addressLocality: unit.city,
+      addressRegion: unit.state,
+      postalCode: unit.postalCode,
+      addressCountry: "BR",
+    },
+    hasMap: unit.mapsHref,
+    openingHoursSpecification: opening,
+    sameAs: [unit.instagramHref],
+    brand: { "@type": "Brand", name: "Não+Pelo" },
   };
 }

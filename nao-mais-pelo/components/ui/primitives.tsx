@@ -79,7 +79,7 @@ export function Eyebrow({
 type ButtonProps = {
   href: string;
   children: ReactNode;
-  variant?: "solid-dark" | "solid-light" | "outline-light" | "outline-dark";
+  variant?: "solid-dark" | "solid-light" | "outline-light" | "outline-dark" | "green";
   className?: string;
   external?: boolean;
   arrow?: boolean;
