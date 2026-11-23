@@ -45,16 +45,16 @@ export function Manifesto() {
         </div>
 
         <div className="relative lg:col-span-5">
-          <Reveal kind="image" className="relative aspect-[4/5] overflow-hidden lg:ml-auto lg:mt-24 lg:w-[92%]">
-            <Image
-              src="/img/editorial/manifesto-mar.jpg"
-              alt="Mulher sorrindo com as mãos nos cabelos, à beira-mar"
+          <Reveal kind="image" className="relative aspect-[4/5] overflow-hidden lg:ml-auto lg:mt-24 lg:w-[80%]">
+            <Image quality={90}
+              src="/img/pirassununga/praia-leitura.jpg"
+              alt="Mulher lendo um livro deitada na areia, à beira-mar"
               fill
-              sizes="(min-width: 1024px) 38vw, 100vw"
-              className="object-cover object-[82%_30%]"
+              sizes="(min-width: 1024px) 32vw, 100vw"
+              className="object-cover object-[62%_50%]"
             />
           </Reveal>
-          <Reveal delay={300} className="mt-5 flex items-baseline justify-between gap-6 lg:ml-auto lg:w-[92%]">
+          <Reveal delay={300} className="mt-5 flex items-baseline justify-between gap-6 lg:ml-auto lg:w-[80%]">
             <p className="eyebrow shrink-0 text-stone">Madri, 2007</p>
             <p className="font-display text-lg text-ink/80">a marca que revolucionou a depilação no mundo</p>
           </Reveal>
@@ -111,7 +111,7 @@ export function Technology() {
           <div className="relative self-start lg:col-span-8">
             <Reveal kind="image" className="relative aspect-[16/10] overflow-hidden lg:aspect-[16/9]">
               <div data-parallax="36" className="absolute -inset-y-[6%] inset-x-0">
-                <Image
+                <Image quality={90}
                   src="/img/tecnologia/sessao-axila.jpg"
                   alt="Sessão de depilação na axila com o equipamento da Não+Pelo"
                   fill
@@ -137,7 +137,7 @@ export function Technology() {
 
           <div className="lg:col-span-4 lg:pt-32">
             <Reveal kind="image" delay={150} className="relative hidden aspect-[4/5] overflow-hidden lg:block">
-              <Image
+              <Image quality={90}
                 src="/img/pirassununga/sessao-perna-ponteira.jpg"
                 alt="Profissional da Não+Pelo aplicando a ponteira verde na coxa de uma cliente"
                 fill
@@ -242,7 +242,7 @@ export function Differentials() {
               lines={[<span key="a" id="diferenciais-title">Para os mais</span>, <>variados tipos</>, <em key="c">de pele e pelo.</em>]}
             />
             <Reveal kind="image" delay={150} className="relative mt-14 aspect-[17/10] overflow-hidden">
-              <Image
+              <Image quality={90}
                 src="/img/editorial/tons-de-pele.jpg"
                 alt="Quatro mulheres de diferentes tons de pele sorrindo juntas"
                 fill
@@ -372,7 +372,7 @@ export function FirstSession({ index = "07" }: { index?: string }) {
 function FirstSessionArt() {
   return (
     <div className="absolute inset-0 text-bone">
-      <Image
+      <Image quality={90}
         src="/img/pirassununga/liberdade-bracos-abertos.jpg"
         alt="Mulher sorrindo de braços abertos ao sol"
         fill
@@ -398,7 +398,7 @@ export function FranchiseTeaser() {
       <div className="container-x grid gap-14 lg:grid-cols-12 lg:items-center lg:gap-8">
         <div className="relative lg:col-span-5">
           <Reveal kind="image" className="relative aspect-[3/4] overflow-hidden">
-            <Image
+            <Image quality={90}
               src="/img/pirassununga/sala-atendimento.jpg"
               alt="Sala de atendimento da unidade Não+Pelo de Pirassununga, com maca e equipamento"
               fill

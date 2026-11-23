@@ -11,7 +11,7 @@ export function HomeHero() {
   return (
     <section aria-labelledby="hero-title" className="relative bg-bone lg:h-[100svh] lg:min-h-[720px]">
       <div className="relative h-[68svh] min-h-[440px] overflow-hidden lg:absolute lg:inset-0 lg:h-auto">
-        <Image
+        <Image quality={90}
           src="/img/editorial/hero-luz-dourada.jpg"
           alt="Mulher de olhos fechados sob a luz dourada do fim de tarde, com o mar ao fundo"
           fill

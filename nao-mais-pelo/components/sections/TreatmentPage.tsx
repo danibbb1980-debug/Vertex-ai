@@ -88,7 +88,7 @@ export function TreatmentPage({ gender }: { gender: Gender }) {
               </div>
             </div>
             <div className="relative h-[62svh] overflow-hidden lg:col-span-6 lg:h-auto">
-              <Image src={c.hero.src} alt={c.hero.alt} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className={`hero-image object-cover ${c.hero.position}`} />
+              <Image quality={90} src={c.hero.src} alt={c.hero.alt} fill priority sizes="(min-width: 1024px) 50vw, 100vw" className={`hero-image object-cover ${c.hero.position}`} />
             </div>
           </div>
         </section>
@@ -127,7 +127,7 @@ export function TreatmentPage({ gender }: { gender: Gender }) {
                 lines={[<span key="a" id="dif-title">Depilação para os mais</span>, <>variados tipos</>, <em key="c">de peles e pelos.</em>]}
               />
               <Reveal kind="image" delay={120} className="relative mt-12 aspect-[4/5] overflow-hidden">
-                <Image src={c.second.src} alt={c.second.alt} fill sizes="(min-width: 1024px) 40vw, 100vw" className={`object-cover ${c.second.position}`} />
+                <Image quality={90} src={c.second.src} alt={c.second.alt} fill sizes="(min-width: 1024px) 40vw, 100vw" className={`object-cover ${c.second.position}`} />
               </Reveal>
             </div>
             <dl className="grid self-start content-start gap-px bg-ink/12 sm:grid-cols-2 lg:col-span-6 lg:col-start-7 lg:mt-48">

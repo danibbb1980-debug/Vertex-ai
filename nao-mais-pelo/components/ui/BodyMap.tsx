@@ -102,7 +102,7 @@ export function BodyMap({
         <div className={`relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden ${dark ? "bg-ink-2" : "bg-sand/60"}`}>
           <div className="absolute inset-x-0 bottom-[3%] top-[5%] flex justify-center">
             <div className="relative h-full" style={{ aspectRatio: `${fig.w} / ${fig.h}` }}>
-              <Image
+              <Image quality={90}
                 key={gender}
                 src={fig.src}
                 alt={fig.alt}

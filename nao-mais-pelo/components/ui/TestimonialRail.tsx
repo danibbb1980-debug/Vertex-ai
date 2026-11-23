@@ -51,7 +51,7 @@ export function TestimonialRail({ items }: { items: readonly Item[] }) {
           <li key={t.videoId} className={`w-[72vw] shrink-0 snap-start sm:w-[42vw] lg:w-[26vw] xl:w-[22vw] ${i % 2 ? "md:mt-16" : ""}`}>
             <VideoDialog videoId={t.videoId} title={`Depoimento — ${t.name}`} className="group block w-full text-left">
               <span className="relative block aspect-[3/4] overflow-hidden bg-sand">
-                <Image
+                <Image quality={90}
                   src={t.image}
                   alt={`Retrato de ${t.name}, cliente Não+Pelo`}
                   fill

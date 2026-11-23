@@ -38,7 +38,7 @@ export default function FranquiasPage() {
         {/* Hero escuro: promessa de faturamento da página original, com remissão ao aviso legal. */}
         <section aria-labelledby="franquia-titulo" className="grain relative overflow-hidden bg-ink text-bone">
           <div className="absolute inset-0">
-            <Image
+            <Image quality={90}
               src="/img/franquia/loja-5.jpg"
               alt=""
               fill
@@ -153,7 +153,7 @@ export default function FranquiasPage() {
             </div>
             <div className="lg:col-span-5 lg:col-start-8 lg:pt-24">
               <Reveal kind="image" className="relative aspect-[4/5] overflow-hidden">
-                <Image src="/img/franquia/loja-1.jpg" alt="Fachada de vidro de uma unidade Não+Pelo" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
+                <Image quality={90} src="/img/franquia/loja-1.jpg" alt="Fachada de vidro de uma unidade Não+Pelo" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
               </Reveal>
               <p className="eyebrow mt-4 text-stone">Unidade da rede Não+Pelo</p>
             </div>
@@ -186,10 +186,10 @@ export default function FranquiasPage() {
 
             <div className="mt-16 grid gap-6 md:mt-24 md:grid-cols-12 md:gap-8">
               <Reveal kind="image" className="relative aspect-[16/9] overflow-hidden md:col-span-8 md:aspect-auto md:min-h-[26rem]">
-                <Image src="/img/franquia/rennova-sede.jpg" alt="Sede do Grupo Rennova" fill sizes="(min-width: 768px) 64vw, 100vw" className="object-cover saturate-[0.8]" />
+                <Image quality={90} src="/img/franquia/rennova-sede.jpg" alt="Sede do Grupo Rennova" fill sizes="(min-width: 768px) 64vw, 100vw" className="object-cover saturate-[0.8]" />
               </Reveal>
               <Reveal kind="image" delay={150} className="relative aspect-square overflow-hidden md:col-span-4">
-                <Image src="/img/franquia/rennova-equipe.jpg" alt="Equipe do Grupo Rennova reunida em frente à sede" fill sizes="(min-width: 768px) 32vw, 100vw" className="object-cover saturate-[0.8]" />
+                <Image quality={90} src="/img/franquia/rennova-equipe.jpg" alt="Equipe do Grupo Rennova reunida em frente à sede" fill sizes="(min-width: 768px) 32vw, 100vw" className="object-cover saturate-[0.8]" />
               </Reveal>
             </div>
 
@@ -221,7 +221,7 @@ export default function FranquiasPage() {
             {storePhotos.map((p, i) => (
               <li key={p.src} className={`shrink-0 snap-start ${p.w > p.h ? "w-[86vw] md:w-[46vw]" : "w-[64vw] md:w-[26vw]"} ${i % 2 ? "md:mt-20" : ""}`}>
                 <div className="relative overflow-hidden bg-sand" style={{ aspectRatio: `${p.w} / ${p.h}` }}>
-                  <Image src={p.src} alt={p.alt} fill sizes="(min-width: 768px) 46vw, 86vw" className="object-cover saturate-[0.85]" />
+                  <Image quality={90} src={p.src} alt={p.alt} fill sizes="(min-width: 768px) 46vw, 86vw" className="object-cover saturate-[0.85]" />
                 </div>
               </li>
             ))}
@@ -330,7 +330,7 @@ export default function FranquiasPage() {
             </div>
             <div className="flex flex-col gap-8 sm:flex-row sm:items-start lg:col-span-7 lg:col-start-6">
               <Reveal kind="image" className="relative h-40 w-40 shrink-0 overflow-hidden bg-sand">
-                <Image src="/img/lideranca/leonardo-rezende.jpg" alt="Leonardo Rezende" fill sizes="160px" className="object-cover grayscale" />
+                <Image quality={90} src="/img/lideranca/leonardo-rezende.jpg" alt="Leonardo Rezende" fill sizes="160px" className="object-cover grayscale" />
               </Reveal>
               <Reveal delay={120}>
                 <h2 id="lideranca-titulo" className="font-display text-[clamp(2.2rem,4vw,3.5rem)] leading-none">
