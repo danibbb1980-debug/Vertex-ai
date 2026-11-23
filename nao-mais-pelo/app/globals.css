@@ -1,0 +1,463 @@
+@import "tailwindcss";
+
+/*
+  Não+Pelo — sistema visual "Luz sobre a pele".
+  Preto profundo, off-white quente, neutros de areia e um champanhe usado com parcimônia.
+
+  Contrastes (WCAG, texto normal ≥ 4,5:1):
+    ink   #12110F sobre bone #F4EFE7 → 17,1:1
+    stone #6B645A sobre bone #F4EFE7 →  5,2:1  (texto secundário em fundo claro)
+    mist  #B9B1A4 sobre ink  #12110F →  9,0:1  (texto secundário em fundo escuro)
+    gold  #C9AE7E sobre ink  #12110F →  8,9:1  (acento em fundo escuro)
+    gold-deep #8A6D3E sobre bone     →  4,6:1  (acento em fundo claro)
+*/
+@theme {
+  --color-ink: #12110f;
+  --color-ink-2: #1b1a17;
+  --color-ink-3: #262420;
+  --color-bone: #f4efe7;
+  --color-paper: #faf7f2;
+  --color-sand: #e7dfd2;
+  --color-sand-2: #d9cfbf;
+  --color-stone: #6b645a;
+  --color-mist: #b9b1a4;
+  --color-gold: #c9ae7e;
+  --color-gold-deep: #8a6d3e;
+
+  --font-display: var(--font-bodoni), "Didot", "Bodoni 72", Georgia, serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --text-display: clamp(3.6rem, 8.6vw, 9.25rem);
+  --text-display--line-height: 0.92;
+  --text-headline: clamp(2.4rem, 5.4vw, 5.5rem);
+  --text-headline--line-height: 0.98;
+  --text-title: clamp(1.9rem, 3.4vw, 3.25rem);
+  --text-title--line-height: 1.04;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+    interpolate-size: allow-keywords;
+  }
+
+  body {
+    background-color: var(--color-bone);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+    font-feature-settings: "kern", "liga";
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bone);
+  }
+
+  :focus-visible {
+    outline: 1.5px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  img {
+    -webkit-user-drag: none;
+  }
+
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 92rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-x {
+      padding-inline: 2.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container-x {
+      padding-inline: 4rem;
+    }
+  }
+
+  /* Rótulo editorial: "N° 02 — Tecnologia" */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .hairline {
+    height: 1px;
+    background: currentColor;
+    opacity: 0.18;
+  }
+
+  /* Botões: retangulares, sem cantos arredondados, com a seta deslizando no hover. */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    min-height: 3.25rem;
+    padding: 0 1.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      color 0.5s var(--ease-out-expo),
+      border-color 0.5s var(--ease-out-expo),
+      background-color 0.5s var(--ease-out-expo);
+  }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+  .btn:hover::before {
+    transform: scaleY(1);
+  }
+  .btn .btn-arrow {
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+  .btn:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+
+  .btn-solid-dark {
+    background: var(--color-ink);
+    color: var(--color-bone);
+  }
+  .btn-solid-dark::before {
+    background: var(--color-ink-3);
+  }
+
+  .btn-solid-light {
+    background: var(--color-bone);
+    color: var(--color-ink);
+  }
+  .btn-solid-light::before {
+    background: var(--color-gold);
+  }
+
+  .btn-outline-light {
+    border: 1px solid rgb(244 239 231 / 0.45);
+    color: var(--color-bone);
+  }
+  .btn-outline-light::before {
+    background: var(--color-bone);
+  }
+  .btn-outline-light:hover {
+    color: var(--color-ink);
+    border-color: var(--color-bone);
+  }
+
+  .btn-outline-dark {
+    border: 1px solid rgb(18 17 15 / 0.35);
+    color: var(--color-ink);
+  }
+  .btn-outline-dark::before {
+    background: var(--color-ink);
+  }
+  .btn-outline-dark:hover {
+    color: var(--color-bone);
+    border-color: var(--color-ink);
+  }
+
+  /* Link sublinhado que cresce da esquerda. */
+  .link-line {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.6s var(--ease-out-expo);
+    padding-bottom: 2px;
+  }
+  .link-line:hover,
+  .link-line[aria-current="page"] {
+    background-size: 100% 1px;
+  }
+
+  /* Campos de formulário: linha inferior, sem caixas. */
+  .field {
+    width: 100%;
+    min-height: 3.25rem;
+    border: 0;
+    border-bottom: 1px solid rgb(18 17 15 / 0.25);
+    background: transparent;
+    padding: 1.1rem 0 0.5rem;
+    font-size: 1rem;
+    color: inherit;
+    border-radius: 0;
+    transition: border-color 0.4s var(--ease-out-expo);
+    appearance: none;
+  }
+  .field:focus {
+    outline: none;
+    border-bottom-color: currentColor;
+  }
+  .field::placeholder {
+    color: transparent;
+  }
+  .field-dark {
+    border-bottom-color: rgb(244 239 231 / 0.28);
+  }
+  select.field {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%236B645A' stroke-width='1.2'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.25rem center;
+    padding-right: 1.5rem;
+    cursor: pointer;
+  }
+  select.field:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* Rótulo flutuante: fica sobre a linha e sobe quando há foco ou valor. */
+  .float-label {
+    position: absolute;
+    left: 0;
+    top: 1.15rem;
+    font-size: 1rem;
+    color: var(--color-stone);
+    pointer-events: none;
+    transform-origin: left top;
+    transition:
+      transform 0.45s var(--ease-out-expo),
+      color 0.45s var(--ease-out-expo);
+  }
+  .field:focus + .float-label,
+  .field:not(:placeholder-shown) + .float-label,
+  .float-label.is-up {
+    transform: translateY(-1.05rem) scale(0.72);
+  }
+
+  /* Marca "+" — o sinal da não+pelo, usado como ornamento discreto. */
+  .plus-mark {
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Grão fotográfico muito sutil sobre as seções escuras. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+}
+
+/* ───────────────────────── Motion ───────────────────────── */
+
+/* Revelação ao rolar: só esconde quando o JS está ativo (data-js no <html>). */
+:root[data-js] .reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 1.1s var(--ease-out-expo),
+    transform 1.1s var(--ease-out-expo);
+  transition-delay: var(--d, 0ms);
+}
+:root[data-js] .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Linhas de título que sobem de dentro de uma máscara. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+:root[data-js] .reveal-lines .line-mask > span {
+  display: block;
+  transform: translate3d(0, 105%, 0);
+  transition: transform 1.25s var(--ease-out-expo);
+  transition-delay: calc(var(--d, 0ms) + var(--i, 0) * 110ms);
+}
+:root[data-js] .reveal-lines.is-in .line-mask > span {
+  transform: none;
+}
+
+/* Imagem que se abre como uma cortina. */
+:root[data-js] .reveal-image {
+  clip-path: inset(12% 0 12% 0);
+  transition: clip-path 1.5s var(--ease-out-expo);
+  transition-delay: var(--d, 0ms);
+}
+:root[data-js] .reveal-image img {
+  transform: scale(1.12);
+  transition: transform 1.8s var(--ease-out-expo);
+  transition-delay: var(--d, 0ms);
+}
+:root[data-js] .reveal-image.is-in {
+  clip-path: inset(0 0 0 0);
+}
+:root[data-js] .reveal-image.is-in img {
+  transform: scale(1);
+}
+
+/* Hero: entrada cinematográfica na primeira pintura (sem esperar JS). */
+@keyframes hero-image {
+  from {
+    transform: scale(1.12);
+    filter: brightness(0.6);
+  }
+  to {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+@keyframes rise {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.hero-image {
+  animation: hero-image 2.6s var(--ease-out-expo) both;
+}
+.hero-line > span {
+  display: block;
+  animation: rise 1.4s var(--ease-out-expo) both;
+  animation-delay: calc(300ms + var(--i, 0) * 120ms);
+}
+.hero-fade {
+  animation: fade-up 1.2s var(--ease-out-expo) both;
+  animation-delay: var(--d, 700ms);
+}
+.hero-rule {
+  transform-origin: left;
+  animation: grow-x 1.6s var(--ease-out-expo) both;
+  animation-delay: 900ms;
+}
+
+/* Pulso do ponto ativo no mapa do corpo. */
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+.pin-ping {
+  animation: ping 2s var(--ease-out-expo) infinite;
+}
+
+/* Parallax sutil controlado por --p (ver ClientEnhancements). */
+[data-parallax] {
+  transform: translate3d(0, calc(var(--p, 0) * 1px), 0);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  :root[data-js] .reveal,
+  :root[data-js] .reveal-lines .line-mask > span,
+  :root[data-js] .reveal-image,
+  :root[data-js] .reveal-image img {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+  [data-parallax] {
+    transform: none !important;
+  }
+}
