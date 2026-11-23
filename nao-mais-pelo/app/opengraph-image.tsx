@@ -8,17 +8,17 @@ export const contentType = "image/png";
 
 /** Imagem de compartilhamento: a foto do hero com o título da campanha. */
 export default async function OpenGraphImage() {
-  const photo = await readFile(join(process.cwd(), "public/img/editorial/hero-luz-dourada.jpg"));
+  const photo = await readFile(join(process.cwd(), "public/img/editorial/hero-pele.jpg"));
   const src = `data:image/jpeg;base64,${photo.toString("base64")}`;
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", position: "relative", background: "#f4efe7" }}>
+      <div style={{ width: "100%", height: "100%", display: "flex", position: "relative", background: "#ecedf2" }}>
         <img src={src} alt="" width={1386} height={630} style={{ position: "absolute", right: -260, top: 0, height: 630, objectFit: "cover" }} />
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(90deg, rgba(244,239,231,0.92) 0%, rgba(244,239,231,0.55) 45%, rgba(244,239,231,0) 70%)",
+            background: "linear-gradient(90deg, rgba(236,237,242,0.95) 0%, rgba(236,237,242,0.6) 45%, rgba(236,237,242,0) 70%)",
           }}
         />
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 64, position: "relative", color: "#12110f" }}>

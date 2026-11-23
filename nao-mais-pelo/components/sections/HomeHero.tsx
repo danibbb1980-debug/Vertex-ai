@@ -9,29 +9,29 @@ import { Arrow } from "@/components/ui/primitives";
  */
 export function HomeHero() {
   return (
-    <section aria-labelledby="hero-title" className="relative bg-bone lg:h-[100svh] lg:min-h-[720px]">
+    <section aria-labelledby="hero-title" className="relative bg-[#ecedf2] lg:h-[100svh] lg:min-h-[720px]">
       <div className="relative h-[68svh] min-h-[440px] overflow-hidden lg:absolute lg:inset-0 lg:h-auto">
         <Image quality={90}
-          src="/img/editorial/hero-luz-dourada.jpg"
-          alt="Mulher de olhos fechados sob a luz dourada do fim de tarde, com o mar ao fundo"
+          src="/img/editorial/hero-pele.jpg"
+          alt="Mulher de olhos fechados tocando o pescoço, com a pele lisa, em fundo claro"
           fill
           priority
           sizes="100vw"
-          className="hero-image object-cover object-[80%_40%] lg:object-[70%_40%]"
+          className="hero-image object-cover object-[64%_30%] lg:object-[12%_30%]"
         />
         {/* Véu claro para o título no desktop; escurecimento leve na base do mobile. */}
-        <div aria-hidden="true" className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgb(244_239_231/0.72)_0%,rgb(244_239_231/0.35)_34%,transparent_58%)] lg:block" />
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(to_top,rgb(244_239_231)_0%,transparent_100%)] lg:hidden" />
+        <div aria-hidden="true" className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgb(236_237_242/0.85)_0%,rgb(236_237_242/0.4)_34%,transparent_55%)] lg:block" />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3 bg-[linear-gradient(to_top,rgb(236_237_242)_0%,transparent_100%)] lg:hidden" />
 
         <p
-          className="hero-fade eyebrow absolute right-5 top-1/2 hidden origin-right -translate-y-1/2 rotate-90 text-bone/80 lg:right-8 lg:block"
+          className="hero-fade eyebrow absolute right-5 top-1/2 hidden origin-right -translate-y-1/2 rotate-90 text-ink/45 lg:right-8 lg:block"
           style={{ "--d": "1400ms" } as CSSProperties}
         >
           Não+Pelo — Liberdade para sua pele
         </p>
       </div>
 
-      <div className="container-x relative -mt-16 pb-14 lg:absolute lg:inset-x-0 lg:bottom-0 lg:top-0 lg:mt-0 lg:flex lg:flex-col lg:justify-center lg:pb-0">
+      <div className="container-x relative -mt-16 pb-14 lg:max-w-none lg:absolute lg:inset-x-0 lg:bottom-0 lg:top-0 lg:mt-0 lg:flex lg:flex-col lg:justify-center lg:pb-0">
         <div className="max-w-[46rem] lg:pt-16">
           <p className="hero-fade eyebrow flex items-center gap-3 text-ink/70" style={{ "--d": "200ms" } as CSSProperties}>
             <span className="plus-mark text-green-deep" aria-hidden="true" />
@@ -67,7 +67,7 @@ export function HomeHero() {
       </div>
 
       {/* Faixa inferior com os fatos publicados pela marca. */}
-      <div className="container-x relative pb-10 lg:absolute lg:inset-x-0 lg:bottom-0 lg:pb-8">
+      <div className="container-x relative pb-10 lg:max-w-none lg:absolute lg:inset-x-0 lg:bottom-0 lg:pb-8">
         <div className="hero-rule h-px bg-ink/20 lg:bg-ink/25" />
         <ul className="hero-fade mt-5 grid gap-3 text-[0.8125rem] text-ink/70 sm:grid-cols-3 lg:max-w-[44rem]" style={{ "--d": "1300ms" } as CSSProperties}>
           <li className="flex items-center gap-3">
