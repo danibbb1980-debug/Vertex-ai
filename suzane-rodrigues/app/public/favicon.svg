@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="62 62 376 376" role="img" aria-label="Monograma SR de Suzane Rodrigues">
+<defs>
+<radialGradient id="bg" cx="40%" cy="35%" r="78%"><stop offset="0" stop-color="#C9A09A"/><stop offset="1" stop-color="#AC7E78"/></radialGradient>
+<linearGradient id="au" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FAEFCB"/><stop offset=".3" stop-color="#E6C27C"/><stop offset=".55" stop-color="#C08A40"/><stop offset=".75" stop-color="#E9CB8E"/><stop offset="1" stop-color="#8E5A25"/></linearGradient>
+</defs>
+<circle cx="250" cy="250" r="188" fill="url(#bg)"/>
+<circle cx="250" cy="250" r="172" fill="none" stroke="url(#au)" stroke-width="2.2"/>
+<g fill="url(#au)">
+<path d="M162 180 L180 180 L179 292 Q171 308 163 292 Z"/>
+<path d="M214 175 C268 175 277 199 273 215 C269 239 241 249 203 249 L203 246 C236 246 256 237 260 215 C263 197 253 179 214 179 Z"/>
+<path d="M207 247 L217 247 C238 272 257 300 274 318 L263 322 C247 300 229 273 207 247 Z"/>
+</g>
+<g fill="none" stroke="url(#au)" stroke-linecap="round" stroke-linejoin="round">
+<path d="M146 177 L216 177" stroke-width="2.2"/>
+<path d="M266 320 C280 342 300 352 330 352 C350 352 362 346 368 334" stroke-width="2.4"/>
+<path d="M152 194 C149 180 134 178 129 191 C124 205 140 219 172 232 C205 246 223 262 219 290 C215 316 189 326 158 322 C128 318 108 300 112 280 C115 265 128 258 141 262" stroke-width="2"/>
+<path d="M146 222 C162 230 184 239 204 250" stroke-width="6"/>
+<path d="M114 300 C124 316 140 322 156 323" stroke-width="4.5"/>
+</g>
+<g fill="none" stroke="url(#au)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
+<path d="M306 198 C306 209 302 216 294 221 C288 225 285 232 285 241 C282 257 284 273 282 293"/>
+<path d="M327 198 C327 209 331 216 338 221 C344 226 346 234 345 244 C353 252 353 266 343 272 C339 286 341 300 352 314 C366 330 362 348 340 350"/>
+<path d="M321 250 C321 264 331 272 343 272"/>
+<path d="M300 252 C296 272 300 290 312 304 C322 316 326 330 324 346"/>
+</g>
+</svg>
