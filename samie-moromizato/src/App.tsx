@@ -230,7 +230,7 @@ function Profissional({ n }: { n: string }) {
         </span>
         <span className="mask-line pro__name-2">
           <span className="mask-line__in" style={{ ["--i" as string]: 1 }}>
-            Moro<span className="pro__cut">mizato</span>
+            Moromizato
           </span>
         </span>
       </h2>
@@ -512,19 +512,19 @@ function Contato({ n }: { n: string }) {
           <ul className="links">
             <li>
               <a className="link" href={e.rotaUrl} target="_blank" rel="noopener noreferrer">
-                <span className="link__m" aria-hidden="true">↗</span>Como chegar
+                <span className="link__m" aria-hidden="true"><svg className="arrow" viewBox="0 0 12 12" width="12" height="12"><path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg></span>Como chegar
                 <span className="sr-only"> (abre em nova aba)</span>
               </a>
             </li>
             <li>
               <a className="link" href={e.mapsUrl} target="_blank" rel="noopener noreferrer">
-                <span className="link__m" aria-hidden="true">↗</span>Ver no Google Maps
+                <span className="link__m" aria-hidden="true"><svg className="arrow" viewBox="0 0 12 12" width="12" height="12"><path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg></span>Ver no Google Maps
                 <span className="sr-only"> (abre em nova aba)</span>
               </a>
             </li>
             <li>
               <a className="link" href={e.mapsUrl} target="_blank" rel="noopener noreferrer">
-                <span className="link__m" aria-hidden="true">↗</span>Ver avaliações no Google
+                <span className="link__m" aria-hidden="true"><svg className="arrow" viewBox="0 0 12 12" width="12" height="12"><path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8" fill="none" stroke="currentColor" strokeWidth="1.2" /></svg></span>Ver avaliações no Google
                 <span className="sr-only"> (abre em nova aba)</span>
               </a>
             </li>
