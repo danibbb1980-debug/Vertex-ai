@@ -64,8 +64,8 @@ export const CONFIG = {
   telefone: "551937135233",
   telefoneExibicao: "(19) 3713-5233",
   /** número com DDI, só dígitos. Preencha e ligue usarWhatsapp quando confirmado. */
-  whatsapp: "",
-  usarWhatsapp: false,
+  whatsapp: "551937135233",
+  usarWhatsapp: true,
   email: "",
 
   instagram: { usuario: "@samiemoromizato", url: "https://www.instagram.com/samiemoromizato/" },

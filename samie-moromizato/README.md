@@ -32,7 +32,7 @@ Tudo vem de `src/config.ts`. Campo vazio (`""`, `null`, `[]`) ou `ativo: false` 
    autorização da Samie. **Duas delas (`cesto`, `sala`) foram publicadas por uma cliente numa
    avaliação do Google** (`origem: "cliente"` no config): pedir autorização ou removê-las.
    Ideal: receber os arquivos originais em alta resolução (as capturas têm ~1170 px de largura).
-2. **Telefone**: (19) 3713-5233 é fixo. Confirmar se tem WhatsApp.
+2. **WhatsApp**: confirmado que (19) 3713-5233 tem WhatsApp; `usarWhatsapp = true`.
 3. **Método INTEGRAR©**: confirmar o uso do nome e do símbolo ©.
 4. **"Desde 2011"**: o perfil traz números que não batem entre si (anos de atuação, número de clientes). Confirmar.
 5. **Atendimentos anunciáveis**: cuidados capilares, laser e luz intensa pulsada estão desligados. Ligar só com confirmação e descrição dela.

@@ -17,7 +17,7 @@ const robots = ssr.rascunho
   : "";
 const title = "Samie Moromizato | Estética e Bem-estar em Limeira - SP";
 const desc =
-  "Estética e bem-estar com atendimento individual e horário marcado em Limeira - SP. Limpeza de pele e massagem. Agendamento por telefone.";
+  "Estética e bem-estar com atendimento individual e horário marcado em Limeira - SP. Limpeza de pele e massagem. Agendamento pelo WhatsApp ou por telefone.";
 const seo = [
   `<link rel="canonical" href="${url}/" />`,
   `<meta property="og:type" content="website" />`,
