@@ -1,0 +1,77 @@
+/* Tokens do sistema. Use somente estas variáveis. */
+@font-face {
+  font-family: 'Brygada Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 96%;
+  ascent-override: 98%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Schibsted Fallback';
+  src: local('Arial'), local('Helvetica');
+  size-adjust: 101%;
+  ascent-override: 96%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Cor */
+  --papel: #f4f6f9;
+  --papel-2: #e9edf3;
+  --branco: #ffffff;
+  --tinta: #10213f;
+  --apoio: #4a5870;
+  --cobalto: #0b45a6;
+  --cobalto-fundo: #082f73;
+  --turquesa: #3cc8c0;
+  --turquesa-escuro: #0e7c78;
+  --filete: #c5cfdd;
+  --filete-forte: #8c9ab0;
+  --sobre-azul: #ffffff;
+  --sobre-azul-apoio: #c4d3ee;
+  --filete-azul: rgba(255, 255, 255, 0.28);
+  --erro: #a3262a;
+
+  /* Tipografia */
+  --serifa: 'Brygada 1918', 'Brygada Fallback', Georgia, serif;
+  --sans: 'Schibsted Grotesk Variable', 'Schibsted Fallback', Arial, sans-serif;
+  --t-1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);   /* rótulo */
+  --t0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);     /* texto */
+  --t1: clamp(1.2rem, 1.12rem + 0.35vw, 1.375rem);
+  --t2: clamp(1.5rem, 1.3rem + 0.9vw, 1.95rem);
+  --t3: clamp(1.9rem, 1.5rem + 1.8vw, 2.9rem);
+  --t4: clamp(2.4rem, 1.7rem + 3.2vw, 4.4rem);
+  --t5: clamp(3rem, 1.6rem + 6.4vw, 7.2rem);
+  --t-gigante: clamp(6rem, 3rem + 14vw, 17rem);
+  --rastreio-titulo: -0.022em;
+  --rastreio-rotulo: 0.14em;
+
+  /* Espaço (múltiplos de 8) */
+  --e1: 0.5rem;
+  --e2: 1rem;
+  --e3: 1.5rem;
+  --e4: 2rem;
+  --e5: 3rem;
+  --e6: 4rem;
+  --e7: 6rem;
+  --secao: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --largura: 82rem;
+  --leitura: 36rem;
+  --header-h: 4.5rem;
+  --faixa-h: 2rem;
+
+  /* Linhas e raio */
+  --linha: 1px;
+  --raio: 0;
+
+  /* Movimento */
+  --d1: 160ms;
+  --d2: 320ms;
+  --d3: 640ms;
+  --d4: 1100ms;
+  --saida: cubic-bezier(0.16, 1, 0.3, 1);
+  --entra-sai: cubic-bezier(0.65, 0, 0.35, 1);
+}

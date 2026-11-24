@@ -1,0 +1,7 @@
+.topo, .barra-agendar, .contato-mapa, .faixa-rascunho, .pular, .assinatura { display: none !important; }
+body { background: #fff !important; color: #000 !important; padding: 0 !important; }
+.azul, .rodape, .como, .contato { background: #fff !important; color: #000 !important; }
+.azul *, .rodape * { color: #000 !important; }
+.acc-painel[hidden] { display: block !important; }
+.hero { padding-top: 1rem !important; }
+a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; word-break: break-all; }
