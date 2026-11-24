@@ -1,0 +1,94 @@
+/* Sistema de design: use somente estes tokens. */
+
+@font-face {
+  font-family: "Bodoni Moda";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/bodoni-moda.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "Bodoni Moda";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/bodoni-moda-italic.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "Hanken Grotesk";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/hanken-grotesk.woff2") format("woff2-variations");
+}
+/* fallbacks com métrica ajustada para não haver salto ao trocar a fonte */
+@font-face {
+  font-family: "Bodoni Fallback";
+  src: local("Times New Roman"), local("Liberation Serif"), local("Tinos"), local("DejaVu Serif");
+  size-adjust: 96%;
+  ascent-override: 104%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Hanken Fallback";
+  src: local("Arial"), local("Liberation Sans"), local("Arimo"), local("Helvetica");
+  size-adjust: 97%;
+  ascent-override: 98%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* cor */
+  --paper: #f6f4ef;
+  --paper-deep: #ece9e2;
+  --ink: #131313;
+  --red: #c23b22;        /* acento: marcas de revisão, letras INTE */
+  --red-dark: #9a2b17;   /* acento para texto pequeno sobre papel (7:1) */
+  --red-on-ink: #e5674f; /* acento sobre bloco preto (5,6:1) */
+  --gray: #6b665e;       /* texto de apoio sobre papel (5,2:1) */
+  --gray-soft: #8c867d;  /* texto grande secundário sobre papel (3,3:1) */
+  --gray-on-ink: #b3ada3;/* texto de apoio sobre preto (8,3:1) */
+  --rule: #d6d1c7;
+  --rule-on-ink: #3a3835;
+
+  /* tipo */
+  --font-display: "Bodoni Moda", "Bodoni Fallback", "Times New Roman", serif;
+  --font-text: "Hanken Grotesk", "Hanken Fallback", Arial, sans-serif;
+
+  /* escala fluida, razão ~1.3 */
+  --step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.17rem + 0.4vw, 1.5rem);
+  --step-2: clamp(1.625rem, 1.45rem + 0.85vw, 2.125rem);
+  --step-3: clamp(2.125rem, 1.8rem + 1.6vw, 3.25rem);
+  --step-4: clamp(2.75rem, 2.1rem + 3.2vw, 5rem);
+  --step-5: clamp(3.5rem, 2.2rem + 6.4vw, 8.5rem);
+
+  /* espaço: múltiplos de 8 */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-5: 3rem;
+  --s-6: 4rem;
+  --s-7: 6rem;
+  --section: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --max: 90rem;
+  --measure: 62ch;
+
+  --hair: 1px;
+  --radius: 0;
+  --header-h: 4.5rem;
+  --draft-h: 1.75rem;
+
+  /* movimento */
+  --d-1: 160ms;
+  --d-2: 320ms;
+  --d-3: 640ms;
+  --d-4: 1100ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+}

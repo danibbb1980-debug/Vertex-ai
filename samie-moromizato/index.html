@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Samie Moromizato | Estética e Bem-estar em Limeira - SP</title>
+    <meta name="description" content="Estética e bem-estar com atendimento individual e horário marcado em Limeira - SP. Limpeza de pele e massagem. Agendamento por telefone." />
+    <!--robots-->
+    <meta name="theme-color" content="#f6f4ef" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin />
+    <!--seo-->
+    <script>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        var done = false;
+        function go() { if (!done) { done = true; d.classList.add("fonts-ready"); } }
+        setTimeout(go, 1200);
+        if (document.fonts && document.fonts.load) {
+          Promise.all([
+            document.fonts.load('400 1em "Bodoni Moda"'),
+            document.fonts.load('italic 400 1em "Bodoni Moda"')
+          ]).then(go, go);
+        } else { go(); }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
