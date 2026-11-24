@@ -18,9 +18,12 @@ WhatsApp e abrir o mapa.
 >    estão desligados (`ativo: false`).
 > 3. **Bairro do endereço.** O Google Maps diz *Vila Cristovam* (usado no site); uma arte
 >    do Instagram diz *Vila Claudia*. Confirme qual é o correto.
-> 4. **Logo em alta resolução** (vetor ou PNG grande, de preferência com fundo
->    transparente). O atual é um recorte de 533 px do perfil do Instagram.
-> 5. **Fotos autorizadas** do espaço (nunca de clientes, nunca antes e depois).
+> 4. **Aprovação do logo redesenhado.** O logo foi refeito em vetor (ver "Logo" abaixo),
+>    fiel ao original. Se a cliente tiver o arquivo vetorial oficial, prefira-o.
+> 5. **Fotos.** A fachada usa um recorte do post de endereço do Instagram (baixa
+>    resolução, ~690 px). Uma foto original da fachada e do interior melhora muito.
+>    Fotos de clientes e de antes e depois NÃO foram usadas: exigem autorização por
+>    escrito de cada pessoa e esbarram nas regras de publicidade em saúde.
 > 6. **Testar o link do WhatsApp**: abra `https://wa.me/5519991992594` e confirme que
 >    cai na conta da clínica.
 
@@ -63,11 +66,23 @@ Coloque os arquivos em `public/fotos/` (guarde os originais em `referencias/foto
 liste em `fotos`: `{ src: '/fotos/recepcao.jpg', alt: 'Recepção da clínica', largura: 1200, altura: 1500 }`.
 Elas aparecem em recortes 4:5 na seção "A avaliação".
 
-### Trocar o logo
-Salve o arquivo novo em `public/` e atualize `logo` em `src/config.ts`. Gere também
-`public/logo-112.png` (cabeçalho, 2× de 56 px) e `public/logo-208.png` (rodapé, 2× de
-104 px), e os ícones `favicon.ico`, `favicon-32.png`, `apple-touch-icon.png`,
-`icon-192.png`, `icon-512.png` (hoje recortados do monograma do logo).
+### Logo
+O logo foi redesenhado em vetor a partir do original: monograma "FD" (com o ponto e o
+laço), "FACE DOCTOR" e "LIMEIRA", desenhados com Bodoni Moda (licença OFL) e
+convertidos em curvas, sem depender de fonte.
+
+- `public/marca/monograma*.svg` — só o "FD" (`-tinta` = ameixa, `-perola` = claro;
+  sem sufixo = `currentColor`). `monograma-pequeno` é a versão encorpada para tamanhos
+  pequenos (favicon).
+- `public/marca/logo-completo*.svg` — monograma + nome, para materiais.
+- `src/components/Logo.tsx` — os mesmos desenhos em React (cabeçalho e rodapé).
+- `scripts/marca/` — geradores (Python + fontTools). `scripts/gerar-marca.cjs` gera
+  favicons, ícones e a imagem de compartilhamento (`public/marca/og-face-doctor-limeira.png`)
+  a partir dos SVGs (precisa de Playwright).
+
+### Foto da fachada
+Em `CONFIG.endereco.fachada`. Para trocar por uma foto nova, salve em `public/fotos/`
+(versão grande e uma de ~460 px) e atualize os caminhos e o `alt`.
 
 ## Tirar do modo rascunho
 1. `rascunho: false` em `src/config.ts` (some a faixa e as metas viram `index, follow`).

@@ -15,8 +15,8 @@ export const jsonLd = () => {
     name: CONFIG.nome,
     description: `${CONFIG.descritor} com avaliação personalizada em ${CONFIG.cidade} - ${e.uf}.`,
     url: CONFIG.siteUrl + '/',
-    image: CONFIG.siteUrl + CONFIG.logo.src,
-    logo: CONFIG.siteUrl + CONFIG.logo.src,
+    image: [CONFIG.siteUrl + CONFIG.logo.src, CONFIG.endereco.fachada?.src && CONFIG.siteUrl + CONFIG.endereco.fachada.src].filter(Boolean),
+    logo: CONFIG.siteUrl + CONFIG.logoQuadrado,
     address: {
       '@type': 'PostalAddress',
       streetAddress: `${e.rua}, ${e.numero} - ${e.bairro}`,

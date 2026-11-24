@@ -358,22 +358,17 @@ main:focus {
   align-items: center;
   gap: 0.875rem;
 }
-.marca-quadro {
+.marca-mono {
   display: block;
-  width: 2.75rem;
-  height: 2.75rem;
-  outline: var(--filete) solid var(--filete-papel);
-  outline-offset: 3px;
+  height: 2.5rem;
+  width: auto;
+  aspect-ratio: 2275 / 2029;
+  color: var(--tinta);
 }
 @media (min-width: 64rem) {
-  .marca-quadro {
-    width: 3rem;
-    height: 3rem;
+  .marca-mono {
+    height: 2.75rem;
   }
-}
-.marca--g .marca-quadro {
-  width: 6.5rem;
-  height: 6.5rem;
 }
 .marca-nome {
   display: flex;
@@ -393,13 +388,6 @@ main:focus {
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--apoio);
-}
-.marca--g .marca-nome-1 {
-  font-size: var(--t3);
-}
-.marca--g .marca-nome-2 {
-  font-size: var(--t-1);
-  margin-top: 0.5rem;
 }
 
 .cab-nav ul {
@@ -1114,6 +1102,26 @@ html:not(.js) .como-trilho-cheio {
 .cont-acoes {
   margin-top: var(--e4);
 }
+.cont-foto {
+  grid-column: 1 / -1;
+  margin: var(--e5) 0 0;
+}
+.cont-foto img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 691 / 921;
+  object-fit: cover;
+  background: var(--papel-2);
+}
+.cont-foto figcaption {
+  margin-top: var(--e2);
+  padding-top: var(--e2);
+  border-top: var(--filete) solid var(--framboesa);
+  font-size: 0.875rem;
+  color: var(--apoio);
+  max-width: 28em;
+}
 .cont-mapa {
   margin-top: var(--e5);
   aspect-ratio: 4 / 5;
@@ -1133,13 +1141,24 @@ html:not(.js) .como-trilho-cheio {
     aspect-ratio: 4 / 3;
   }
 }
+@media (min-width: 40rem) and (max-width: 63.99rem) {
+  .cont-foto {
+    max-width: 30rem;
+  }
+}
 @media (min-width: 64rem) {
   .cont-cab {
     grid-column: 1 / 6;
   }
-  .cont-mapa {
+  .cont-foto {
     grid-column: 7 / -1;
+    grid-row: 1;
     margin-top: 0;
+  }
+  .cont-mapa {
+    grid-column: 1 / -1;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    aspect-ratio: 21 / 8;
     max-height: none;
   }
 }
@@ -1381,6 +1400,12 @@ html:not(.js) .como-trilho-cheio {
 }
 .rod-grade > * {
   grid-column: 1 / -1;
+}
+.rod-logo {
+  display: block;
+  width: clamp(13rem, 30vw, 15rem);
+  height: auto;
+  color: var(--tinta);
 }
 .rod-linha {
   margin: var(--e3) 0 0;

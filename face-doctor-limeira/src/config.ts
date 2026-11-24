@@ -41,9 +41,10 @@ export const CONFIG = {
   cidade: 'Limeira',
   descritor: 'Estética facial e corporal',
 
-  /** Logo atual: recorte quadrado do perfil do Instagram (533 px).
-   *  Troque por um arquivo em alta resolução em public/ e atualize aqui. */
-  logo: { src: '/logo-face-doctor-limeira.png', largura: 533, altura: 533 },
+  /** Logo redesenhado em vetor (public/marca/*.svg). Este é o PNG de compartilhamento
+   *  (Open Graph), gerado por scripts/gerar-marca.cjs. */
+  logo: { src: '/marca/og-face-doctor-limeira.png', largura: 1200, altura: 630 },
+  logoQuadrado: '/icon-512.png',
 
   /** Profissional responsável. Vazio = não aparece. Preencha SÓ depois de confirmar
    *  nome, conselho e número de registro com a cliente. */
@@ -62,6 +63,14 @@ export const CONFIG = {
     mapsUrl: 'https://maps.app.goo.gl/fBBXXuyuQM6dgo2x8',
     rotaUrl:
       'https://www.google.com/maps/dir/?api=1&destination=R.%20Bahia%2C%20884%2C%20Vila%20Cristovam%2C%20Limeira%20-%20SP%2C%2013480-520',
+    /** Foto da fachada (recorte do post de endereço do Instagram). Vazio = não aparece. */
+    fachada: {
+      src: '/fotos/fachada.webp',
+      srcPequena: '/fotos/fachada-460.webp',
+      largura: 691,
+      altura: 921,
+      alt: 'Fachada da Face Doctor na Rua Bahia: placa com o nome da clínica sobre a porta de entrada.',
+    },
     embedUrl:
       'https://www.google.com/maps?q=R.%20Bahia%2C%20884%2C%20Vila%20Cristovam%2C%20Limeira%20-%20SP%2C%2013480-520&output=embed',
   },

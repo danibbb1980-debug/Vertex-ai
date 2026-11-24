@@ -337,6 +337,24 @@ export function Contato({ n }: { n: number }) {
             </div>
           )}
         </div>
+        {e.fachada?.src && (
+          <figure className="cont-foto">
+            <picture>
+              <source media="(max-width: 40rem)" srcSet={e.fachada.srcPequena} />
+              <img
+                src={e.fachada.src}
+                width={e.fachada.largura}
+                height={e.fachada.altura}
+                alt={e.fachada.alt}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+            <figcaption>
+              {e.rua}, {e.numero}. A entrada fica sob a placa com o nome da clínica.
+            </figcaption>
+          </figure>
+        )}
         <div className="cont-mapa">
           <iframe
             title={`Mapa: ${enderecoLinha()}`}

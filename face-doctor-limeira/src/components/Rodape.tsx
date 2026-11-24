@@ -1,6 +1,6 @@
 import { CONFIG } from '../config'
 import { waUrl } from '../lib/whatsapp'
-import { Marca } from './Cabecalho'
+import { LogoCompleto } from './Logo'
 
 export function Rodape() {
   const e = CONFIG.endereco
@@ -8,7 +8,7 @@ export function Rodape() {
     <footer className="rod">
       <div className="grade rod-grade">
         <div className="rod-marca">
-          <Marca tamanho="g" />
+          <LogoCompleto className="rod-logo" titulo={CONFIG.nome} />
           <p className="rod-linha">
             {CONFIG.nome} · {CONFIG.descritor} · {CONFIG.cidade}/{e.uf}
           </p>

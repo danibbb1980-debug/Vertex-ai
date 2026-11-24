@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { CONFIG } from '../config'
 import { waUrl } from '../lib/whatsapp'
+import { Monograma } from './Logo'
 
 const LINKS = [
   { href: '#atendimentos', txt: 'Atendimentos', secao: 'atendimentos' },
@@ -9,19 +10,10 @@ const LINKS = [
   { href: '#contato', txt: 'Contato', secao: 'contato' },
 ] as const
 
-export function Marca({ tamanho = 'p' }: { tamanho?: 'p' | 'g' }) {
-  const g = tamanho === 'g'
+export function Marca() {
   return (
-    <span className={`marca marca--${tamanho}`}>
-      <img
-        className="marca-quadro"
-        src={g ? '/logo-208.png' : '/logo-112.png'}
-        width={g ? 104 : 48}
-        height={g ? 104 : 48}
-        alt=""
-        decoding="async"
-        {...(g ? { loading: 'lazy' as const } : { fetchPriority: 'high' as const })}
-      />
+    <span className="marca">
+      <Monograma className="marca-mono" />
       <span className="marca-nome">
         <span className="marca-nome-1">{CONFIG.nomeCurto}</span>
         <span className="marca-nome-2">{CONFIG.cidade}</span>
