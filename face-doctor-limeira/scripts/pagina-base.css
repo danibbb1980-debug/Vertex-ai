@@ -1,0 +1,23 @@
+@font-face{font-family:Newsreader;src:url(/fonts/newsreader.woff2) format("woff2");font-weight:200 800;font-display:swap}
+@font-face{font-family:Hanken Grotesk;src:url(/fonts/hanken-grotesk.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{--papel:#f7f2f1;--tinta:#2b1620;--apoio:#6b5a5e;--framboesa:#c8516d;--framboesa-texto:#9b3550}
+*{box-sizing:border-box}
+html{background:var(--papel);color:var(--tinta)}
+body{margin:0;font:400 1.0625rem/1.65 "Hanken Grotesk",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+::selection{background:var(--framboesa-texto);color:var(--papel)}
+:focus-visible{outline:2px solid var(--framboesa-texto);outline-offset:3px}
+.faixa{background:var(--tinta);color:#c9b8bc;font-size:.8125rem;text-align:center;padding:.4rem 1rem}
+.topo{display:flex;align-items:center;gap:.875rem;padding:1.25rem clamp(1rem,4vw,3rem);border-bottom:1px solid rgb(43 22 32 / .16);text-decoration:none;color:inherit}
+.topo img{width:44px;height:44px;outline:1px solid rgb(43 22 32 / .16);outline-offset:3px}
+.topo b{display:block;font:420 1.375rem/1 Newsreader,"Times New Roman",serif}
+.topo small{display:block;margin-top:.3rem;font-size:.6875rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--apoio)}
+main{max-width:44rem;margin:0 auto;padding:clamp(3rem,10vw,7rem) clamp(1rem,4vw,3rem)}
+h1{font:380 clamp(2.5rem,1.6rem + 4vw,5rem)/1 Newsreader,"Times New Roman",serif;letter-spacing:-.03em;margin:0 0 2rem;text-wrap:balance}
+h1 em{font-style:italic}
+h2{font:420 1.5rem/1.2 Newsreader,"Times New Roman",serif;margin:2.5rem 0 .5rem}
+.eixo{height:1px;background:var(--framboesa);margin:0 0 2.5rem}
+p,li{text-wrap:pretty;max-width:36em}
+a{color:inherit}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:.75rem 1.5rem;background:var(--tinta);color:var(--papel);text-decoration:none;font-weight:600;margin-top:1.5rem}
+.btn:hover{background:var(--framboesa-texto)}
+.apoio{color:var(--apoio);font-size:.9375rem}

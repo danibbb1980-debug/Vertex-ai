@@ -1,0 +1,122 @@
+/* ==========================================================================
+   TOKENS — Face Doctor Limeira
+   Use SOMENTE estas variáveis no resto do CSS. Contrastes conferidos (WCAG AA):
+   tinta/papel 15.3 · apoio/papel 5.8 · framboesa-texto/papel 6.3
+   papel/ameixa 15.3 · apoio-escuro/ameixa 8.9 · framboesa-clara/ameixa 5.9
+   framboesa (filetes, não-texto) ≥ 3.9 sobre papel e sobre ameixa
+   ========================================================================== */
+
+/* Fontes auto-hospedadas (subconjunto latin, que cobre todo o português). */
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('./assets/fonts/newsreader-latin-wght-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('./assets/fonts/newsreader-latin-wght-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('./assets/fonts/hanken-grotesk-latin-wght-normal.woff2') format('woff2');
+}
+/* Fallbacks com métrica ajustada (medidos contra Times New Roman / Arial):
+   a troca de fonte não desloca o layout. */
+@font-face {
+  font-family: 'Newsreader Fallback';
+  src: local('Times New Roman'), local('Liberation Serif'), local('Noto Serif'), local('Georgia');
+  size-adjust: 104.6%;
+  ascent-override: 70.3%;
+  descent-override: 25.3%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Hanken Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Helvetica'), local('Roboto');
+  size-adjust: 101.1%;
+  ascent-override: 99%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Cor */
+  --papel: #f7f2f1;          /* pérola fria: superfície */
+  --papel-2: #efe7e6;        /* pérola um tom abaixo: campos */
+  --tinta: #2b1620;          /* ameixa quase preta: texto e blocos */
+  --tinta-2: #3a2029;        /* ameixa um tom acima: superfície sobre bloco */
+  --apoio: #6b5a5e;          /* cinza-quente: texto de apoio sobre papel */
+  --apoio-escuro: #c9b8bc;   /* texto de apoio sobre ameixa */
+  --framboesa: #c8516d;      /* acento: filetes, eixo do espelho, detalhes */
+  --framboesa-texto: #9b3550;/* acento para texto pequeno sobre papel */
+  --framboesa-clara: #e0798f;/* acento para texto pequeno sobre ameixa */
+  --erro: #9b3550;
+  --filete-papel: rgb(43 22 32 / 0.16);
+  --filete-ameixa: rgb(247 242 241 / 0.18);
+
+  /* Tipografia */
+  --serif: 'Newsreader', 'Newsreader Fallback', 'Times New Roman', serif;
+  --sans: 'Hanken Grotesk', 'Hanken Fallback', Arial, sans-serif;
+
+  /* Escala fluida, razão 1.333 (quarta justa), 7 degraus */
+  --t-1: clamp(0.75rem, 0.73rem + 0.1vw, 0.8125rem);  /* rótulos */
+  --t0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);      /* texto */
+  --t1: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);    /* lead */
+  --t2: clamp(1.5rem, 1.3rem + 0.9vw, 1.875rem);       /* h3 */
+  --t3: clamp(2rem, 1.6rem + 1.9vw, 3.125rem);         /* h2 */
+  --t4: clamp(2.5rem, 1.8rem + 3.6vw, 5.5rem);         /* h2 grande */
+  --t5: clamp(2.125rem, 0.9rem + 7.4vw, 8.25rem);      /* display / hero */
+  --t-gigante: clamp(4.5rem, 1rem + 17vw, 17rem);      /* tipografia cortada */
+
+  --track-titulo: -0.022em;
+  --track-display: -0.035em;
+  --track-rotulo: 0.16em;
+  --entrelinha-texto: 1.6;
+  --entrelinha-titulo: 1.02;
+
+  /* Espaço (múltiplos de 8 px) */
+  --e1: 0.5rem;
+  --e2: 1rem;
+  --e3: 1.5rem;
+  --e4: 2rem;
+  --e5: 3rem;
+  --e6: 4rem;
+  --e7: 6rem;
+  --e8: 8rem;
+  --secao: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+  --coluna-gap: clamp(1rem, 0.5rem + 1.5vw, 2rem);
+  --largura-max: 90rem;
+  --medida: 34em; /* ~62 caracteres */
+
+  /* Filetes, raios */
+  --filete: 1px;
+  --raio: 0;
+
+  /* Alturas fixas */
+  --faixa-h: 2rem;
+  --header-h: 4.5rem;
+  --alvo: 3rem; /* 48 px */
+
+  /* Movimento */
+  --d1: 160ms;
+  --d2: 320ms;
+  --d3: 640ms;
+  --d4: 1100ms;
+  --saida: cubic-bezier(0.16, 1, 0.3, 1);
+  --entrada-saida: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --header-h: 5rem;
+  }
+}
