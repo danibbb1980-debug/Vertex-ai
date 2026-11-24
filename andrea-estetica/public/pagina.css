@@ -1,0 +1,14 @@
+@font-face{font-family:Gloock;src:url(/fonts/gloock.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Schibsted Grotesk";src:url(/fonts/schibsted.woff2) format("woff2-variations");font-weight:400 700;font-display:swap}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#F2ECE1;color:#26262A;font:17px/1.65 "Schibsted Grotesk",system-ui,sans-serif}
+.faixa{background:#26262A;color:#F2ECE1;font-size:.72rem;text-align:center;padding:6px 16px;letter-spacing:.02em}
+main{max-width:42rem;margin:0 auto;padding:72px 20px 96px}
+h1{font:400 clamp(2.6rem,8vw,4rem)/1 Gloock,serif;letter-spacing:-.02em;margin:0 0 32px}
+h2{font:400 1.6rem/1.15 Gloock,serif;margin:40px 0 10px}
+p,li{color:#3a3a3f}
+a{color:#26262A;text-underline-offset:3px}
+a:focus-visible{outline:2px solid #8A5220;outline-offset:3px}
+.voltar{display:inline-flex;align-items:center;min-height:48px;margin-bottom:24px}
+.nota{font-size:.85rem;color:#67615a;border-top:1px solid rgba(38,38,42,.25);padding-top:16px;margin-top:48px}
