@@ -11,6 +11,11 @@
   --color-rose-ink: #8f5f53;
   --color-perola: #ddd2c1;
   --color-champagne: #c8b79c;
+  --color-noite: #111a2b;
+  --color-noite-2: #1a2539;
+  --color-noite-3: #24314a;
+  --color-perola-claro: #f2ede5;
+  --color-champagne-claro: #e6d4b2;
 
   --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -56,6 +61,7 @@
     border-radius: 4px;
   }
   .bg-tinta :focus-visible,
+  .bg-noite :focus-visible,
   .on-dark :focus-visible {
     outline-color: var(--color-rose);
   }
@@ -129,6 +135,79 @@
 }
 .hero-fade {
   animation: heroFade 0.9s var(--ease-suave) both;
+}
+
+/* Luz que percorre a moldura em arco uma vez, na entrada (referência: "Border Beam Panel", 21st.dev). */
+@property --feixe {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.moldura-feixe {
+  padding: 1px;
+  background: conic-gradient(
+    from var(--feixe),
+    transparent 0deg,
+    transparent 250deg,
+    rgba(230, 212, 178, 0.15) 290deg,
+    #f1e2c4 340deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: feixe 3.4s var(--ease-suave) 0.5s 1 both;
+}
+@keyframes feixe {
+  from {
+    --feixe: -40deg;
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  to {
+    --feixe: 320deg;
+    opacity: 0;
+  }
+}
+
+/* Opções do agendamento: rádios nativos (teclado e leitor de tela) com visual próprio. */
+.opcao input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.opcao span {
+  transition:
+    background-color 0.3s var(--ease-suave),
+    border-color 0.3s var(--ease-suave),
+    color 0.3s var(--ease-suave);
+}
+.opcao input:checked + span {
+  background: var(--color-champagne-claro);
+  border-color: var(--color-champagne-claro);
+  color: var(--color-noite);
+}
+.opcao input:focus-visible + span {
+  outline: 2px solid var(--color-rose);
+  outline-offset: 3px;
+}
+
+/* Balão do WhatsApp: entra de leve quando a mensagem muda (resposta a uma ação). */
+@keyframes balao {
+  from {
+    opacity: 0.4;
+    transform: translateY(4px);
+  }
+}
+.balao-anima {
+  animation: balao 0.45s var(--ease-suave);
 }
 
 /* Único efeito de rolagem: os cartões de tratamento surgem em sequência (só com JS ativo). */

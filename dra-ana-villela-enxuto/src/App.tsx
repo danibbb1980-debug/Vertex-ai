@@ -1,6 +1,7 @@
 import { DraftBanner, Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import { Contato, Rodape, Sobre, Tratamentos, WhatsappFixo, useRevealGroups } from "./components/Blocos";
+import { Agendamento } from "./components/Agendamento";
+import { BarraAgendar, Rodape, Sobre, Tratamentos, useRevealGroups } from "./components/Blocos";
 
 export default function App() {
   useRevealGroups();
@@ -12,10 +13,10 @@ export default function App() {
         <Hero />
         <Tratamentos />
         <Sobre />
-        <Contato />
+        <Agendamento />
       </main>
       <Rodape />
-      <WhatsappFixo />
+      <BarraAgendar />
     </>
   );
 }

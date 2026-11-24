@@ -3,25 +3,28 @@
 Segunda versão, curta e direcionada, do site da Dra. Ana Villela. A versão longa continua em `../dra-ana-villela/`.
 Objetivo único: em 5 segundos a pessoa entende quem é a doutora e toca em "Agendar avaliação" (WhatsApp).
 
-## Estrutura (5 blocos)
+## Estrutura
 
-1. Header mínimo (assinatura + botão "Agendar avaliação").
-2. Hero com foto, título, uma frase, botão e CRO.
-3. Tratamentos: 3 cartões compactos, cada um abre o WhatsApp com mensagem do tratamento.
+1. Header mínimo: assinatura + botão "Agendar avaliação" (leva ao agendamento).
+2. Hero em azul-noite (a cor do blazer e do jaleco da doutora): foto em arco com um feixe de luz champanhe que percorre a moldura uma vez, título revelado palavra a palavra, botão para o agendamento e atalho direto para o WhatsApp. Nome e CRO na legenda da foto.
+3. Tratamentos: lista editorial. "Agendar" em cada linha leva ao agendamento já com o tratamento escolhido.
 4. Sobre: foto e duas frases, com CRO e especialidade a confirmar.
-5. Contato: endereço, horários com almoço, WhatsApp, Como chegar e Instagram. Rodapé de uma linha.
+5. Agendamento pelo WhatsApp (`src/components/Agendamento.tsx`): a pessoa escolhe tratamento, um dos próximos 5 dias úteis e o período (manhã ou tarde, nos horários da ficha), vê a mensagem montada em forma de conversa e toca em "Enviar pelo WhatsApp". O site não guarda nem envia nada: a mensagem só sai quando a pessoa envia no próprio WhatsApp, e o horário é confirmado na conversa. Endereço, horários com almoço, "Como chegar" e Instagram ficam ao lado.
+
+Referências do 21st.dev: "Vertical Cut Reveal" (título), "Border Beam Panel" (feixe na moldura) e "Time Slot Picker" (faixa de dias e períodos como grupos de rádio). Todas reescritas em CSS e React, sem bibliotecas extras.
 
 ## Medições (build atual)
 
 | Largura | Telas de rolagem | Limite |
 |---|---|---|
-| 375 x 812 | 3,7 | 4 |
-| 768 x 1024 | 2,6 | — |
-| 1280 x 820 | 2,8 | 3 |
+| 375 x 812 | 3,8 | 4 |
+| 375 x 667 | 4,6 | — |
+| 768 x 1024 | 3,1 | — |
+| 1280 x 820 | 2,97 | 3 |
 
-- Palavras visíveis (header + conteúdo, sem rodapé): ~145 (limite ~170).
 - Botão "Agendar minha avaliação" na primeira tela em 375 x 667 e 375 x 812.
-- Efeitos: um de entrada (título palavra a palavra, adaptado do "Vertical Cut Reveal" do 21st.dev, em CSS) e um de rolagem (cartões de tratamento).
+- Palavras visíveis: ~205, das quais ~40 são as opções do agendamento e a prévia da mensagem. Antes do agendamento eram ~145.
+- Lighthouse (celular): desempenho 99, acessibilidade 100, boas práticas 100.
 
 ## Comandos
 
