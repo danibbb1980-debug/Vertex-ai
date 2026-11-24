@@ -1,16 +1,19 @@
-import { DraftBanner, Header } from "./components/Header";
+import { Abertura, DraftBanner, Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { Agendamento } from "./components/Agendamento";
-import { BarraAgendar, Rodape, Sobre, Tratamentos, useRevealGroups } from "./components/Blocos";
+import { BarraAgendar, Faixa, Rodape, Sobre, Tratamentos } from "./components/Blocos";
+import { useMotionSystem } from "./motion";
 
 export default function App() {
-  useRevealGroups();
+  useMotionSystem();
   return (
     <>
+      <Abertura />
       <DraftBanner />
       <Header />
       <main id="conteudo">
         <Hero />
+        <Faixa />
         <Tratamentos />
         <Sobre />
         <Agendamento />

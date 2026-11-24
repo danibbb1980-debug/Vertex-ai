@@ -11,7 +11,7 @@ function CutReveal({ words, delay = 0.1 }: { words: { t: string; em?: boolean }[
       <span aria-hidden className="flex flex-wrap">
         {words.map((w, i) => (
           <span key={i} className="cut-word inline-flex overflow-hidden pb-[0.12em] -mb-[0.12em]">
-            <span className={`inline-block ${w.em ? "font-[300] italic text-rose" : ""}`} style={{ animationDelay: `${delay + i * 0.07}s` }}>
+            <span className={`inline-block ${w.em ? "font-[300] italic text-rose" : ""}`} style={{ animationDelay: `calc(var(--intro) + ${(delay + i * 0.08).toFixed(2)}s)` }}>
               {w.t}
             </span>
             {i < words.length - 1 && <span>&nbsp;</span>}
@@ -27,14 +27,15 @@ export function Hero() {
     <section
       id="inicio"
       aria-labelledby="hero-titulo"
-      className={`bg-noite relative overflow-hidden text-perola-claro ${CONFIG.rascunho ? "pt-[7rem]" : "pt-[5rem]"} pb-14 lg:flex lg:min-h-[min(100svh,48rem)] lg:items-center lg:pb-14 lg:pt-[7.5rem]`}
+      className={`bg-noite relative overflow-hidden text-perola-claro ${CONFIG.rascunho ? "pt-[7rem]" : "pt-[5rem]"} pb-14 lg:flex lg:min-h-[min(100svh,43rem)] lg:items-center lg:pb-14 lg:pt-[7.5rem]`}
     >
       {/* Luz ambiente fria, como a do consultório na foto */}
       <div aria-hidden className="pointer-events-none absolute -right-[10rem] -top-[14rem] h-[46rem] w-[46rem] rounded-full bg-[radial-gradient(closest-side,rgba(64,86,128,0.55),rgba(17,26,43,0))]" />
       <div aria-hidden className="pointer-events-none absolute -bottom-[18rem] -left-[14rem] h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(closest-side,rgba(230,201,190,0.12),rgba(17,26,43,0))]" />
 
       <div className="container-site relative grid items-center gap-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-20">
-        <figure className="relative mx-auto w-full max-w-[24rem] lg:order-last lg:max-w-[25.5rem]">
+        <figure className="relative mx-auto w-full max-w-[24rem] lg:order-last lg:max-w-[23rem]">
+          <div data-parallax="0.08" className="relative">
           {/* Moldura fina fixa + feixe de luz que a percorre uma vez */}
           <div aria-hidden className="absolute -inset-[9px] rounded-t-[999px] rounded-b-[1.9rem] border border-champagne-claro/25" />
           <div aria-hidden className="moldura-feixe absolute -inset-[9px] rounded-t-[999px] rounded-b-[1.9rem]" />
@@ -42,13 +43,13 @@ export function Hero() {
             <img
               src={CONFIG.fotos.retrato}
               srcSet={CONFIG.fotos.retratoSrcSet}
-              sizes="(min-width: 1024px) 408px, min(384px, calc(100vw - 40px))"
+              sizes="(min-width: 1024px) 368px, min(384px, calc(100vw - 40px))"
               alt={`${CONFIG.nome}, de blazer azul-marinho, sorrindo`}
               width={1015}
               height={1726}
               fetchPriority="high"
               decoding="async"
-              className="h-full w-full object-cover object-[50%_42%]"
+              className="hero-foto-img h-full w-full object-cover object-[50%_42%]"
             />
             <div aria-hidden className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-noite/80 to-transparent" />
             {/* CONFIRMAR COM A DOUTORA: número do CRO */}
@@ -57,10 +58,11 @@ export function Hero() {
               <span className="text-[0.72rem] text-perola-claro/70">{croTexto}</span>
             </figcaption>
           </div>
+          </div>
         </figure>
 
         <div>
-          <p className="hero-fade eyebrow flex items-center gap-3 !tracking-[0.18em] text-champagne-claro/85 sm:!tracking-[0.24em]">
+          <p style={{ animationDelay: "var(--intro)" }} className="hero-fade eyebrow flex items-center gap-3 !tracking-[0.18em] text-champagne-claro/85 sm:!tracking-[0.24em]">
             <span aria-hidden className="h-px w-8 shrink-0 bg-champagne-claro/50" />
             Estética dental em Poços de Caldas
           </p>
@@ -78,14 +80,15 @@ export function Hero() {
             />
           </h1>
 
-          <p className="hero-fade mt-5 max-w-[34rem] text-[1.05rem] text-perola-claro/75 sm:text-xl lg:mt-7" style={{ animationDelay: "0.45s" }}>
+          <p className="hero-fade mt-5 max-w-[34rem] text-[1.05rem] text-perola-claro/75 sm:text-xl lg:mt-7" style={{ animationDelay: "calc(var(--intro) + 0.55s)" }}>
             Estética natural, planejada para combinar com o seu rosto.
           </p>
 
-          <div className="hero-fade mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7 lg:mt-10" style={{ animationDelay: "0.55s" }}>
+          <div className="hero-fade mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-7 lg:mt-10" style={{ animationDelay: "calc(var(--intro) + 0.7s)" }}>
             <a
               href="#agendar"
-              className="inline-flex min-h-[3.25rem] items-center justify-center rounded-full bg-champagne-claro px-8 text-[0.98rem] font-medium text-noite transition-[background-color,transform] duration-300 hover:-translate-y-px hover:bg-perola-claro"
+              data-magnetic
+              className="brilho inline-flex min-h-[3.25rem] items-center justify-center rounded-full bg-champagne-claro px-8 text-[0.98rem] font-medium text-noite transition-[background-color,transform] duration-300 hover:-translate-y-px hover:bg-perola-claro"
             >
               Agendar minha avaliação
             </a>

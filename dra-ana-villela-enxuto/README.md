@@ -13,18 +13,32 @@ Objetivo único: em 5 segundos a pessoa entende quem é a doutora e toca em "Age
 
 Referências do 21st.dev: "Vertical Cut Reveal" (título), "Border Beam Panel" (feixe na moldura) e "Time Slot Picker" (faixa de dias e períodos como grupos de rádio). Todas reescritas em CSS e React, sem bibliotecas extras.
 
+## Movimento
+
+Tudo fica em `src/motion.ts` (um único laço de animação) e no fim de `src/index.css`:
+
+- Abertura com a assinatura desenhada e uma cortina que sobe (só na primeira visita da sessão).
+- Título do hero palavra a palavra, foto que "assenta" e feixe de luz na moldura em arco.
+- Rolagem suave (Lenis) com mouse e trackpad; no celular fica a rolagem nativa.
+- Parallax nas fotos, títulos revelados linha a linha, foto do "Sobre" revelada como cortina.
+- Faixa de palavras (Naturalidade, Proporção, Harmonia...) que acelera com a rolagem.
+- Tratamentos: a linha se enche de azul-noite e uma etiqueta "Agendar" segue o cursor.
+- Agendamento: marcador que desliza até a opção escolhida e "digitando..." antes da mensagem nova.
+- Botões magnéticos, brilho no botão principal, linha de progresso de leitura no header e assinatura grande no rodapé.
+- Com "reduzir movimento" ativado no sistema, a abertura, a rolagem suave, o parallax e a faixa são desligados.
+
 ## Medições (build atual)
 
 | Largura | Telas de rolagem | Limite |
 |---|---|---|
-| 375 x 812 | 3,8 | 4 |
-| 375 x 667 | 4,6 | — |
-| 768 x 1024 | 3,1 | — |
-| 1280 x 820 | 2,97 | 3 |
+| 375 x 812 | 3,9 | 4 |
+| 375 x 667 | 4,8 | — |
+| 768 x 1024 | 3,2 | — |
+| 1280 x 820 | 2,99 | 3 |
 
 - Botão "Agendar minha avaliação" na primeira tela em 375 x 667 e 375 x 812.
-- Palavras visíveis: ~205, das quais ~40 são as opções do agendamento e a prévia da mensagem. Antes do agendamento eram ~145.
-- Lighthouse (celular): desempenho 99, acessibilidade 100, boas práticas 100.
+- Palavras visíveis: ~215, das quais ~40 são as opções do agendamento e a prévia da mensagem e 10 são a faixa de palavras.
+- Lighthouse (celular), com todas as animações: desempenho 98 a 99, acessibilidade 100, boas práticas 100.
 
 ## Comandos
 

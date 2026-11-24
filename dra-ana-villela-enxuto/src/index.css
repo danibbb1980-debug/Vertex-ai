@@ -117,27 +117,144 @@
   }
 }
 
-/* Entrada (único efeito de entrada): palavras do título sobem de dentro de uma máscara,
-   adaptado do "Vertical Cut Reveal" do 21st.dev. CSS puro, roda já na primeira pintura. */
+/* ================= MOVIMENTO =================
+   --intro: duração da abertura. Na segunda visita da sessão (classe .sem-intro, ver index.html)
+   e com "reduzir movimento", vale 0 e a página aparece direto. */
+:root {
+  --intro: 1.25s;
+}
+.sem-intro {
+  --intro: 0s;
+}
+
+/* Abertura: assinatura desenhada da esquerda para a direita e cortina que sobe. Só CSS. */
+.abertura {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--color-noite);
+  pointer-events: none;
+  animation: aberturaSobe 0.9s cubic-bezier(0.76, 0, 0.24, 1) 1.15s forwards;
+}
+.sem-intro .abertura {
+  display: none;
+}
+.abertura-assinatura {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2.6rem, 9vw, 5rem);
+  color: var(--color-perola-claro);
+  clip-path: inset(0 100% 0 0);
+  animation: assinatura 1s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards;
+}
+.abertura-linha {
+  display: block;
+  height: 1px;
+  margin-top: 0.9rem;
+  background: var(--color-champagne-claro);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: linha 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.35s forwards;
+}
+@keyframes assinatura {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes linha {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes aberturaSobe {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
+/* Hero: palavras sobem de uma máscara (referência "Vertical Cut Reveal", 21st.dev), depois do resto. */
 @keyframes cutUp {
   from {
-    transform: translateY(100%);
+    transform: translateY(105%);
   }
 }
 @keyframes heroFade {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(14px);
+  }
+}
+@keyframes assenta {
+  from {
+    transform: scale(1.14);
   }
 }
 .cut-word > span:first-child {
-  animation: cutUp 0.9s var(--ease-suave) both;
+  animation: cutUp 1s var(--ease-suave) both;
 }
 .hero-fade {
-  animation: heroFade 0.9s var(--ease-suave) both;
+  animation: heroFade 1s var(--ease-suave) both;
+}
+.hero-foto-img {
+  animation: assenta 2.2s var(--ease-suave) var(--intro) both;
 }
 
-/* Luz que percorre a moldura em arco uma vez, na entrada (referência: "Border Beam Panel", 21st.dev). */
+/* Revelações ao rolar (só com JS ativo; sem JS tudo fica visível). */
+.js [data-reveal="palavras"] .rw > span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 1s var(--ease-suave);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.js [data-reveal="palavras"].is-in .rw > span {
+  transform: none;
+}
+.js [data-reveal="sobe"] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s var(--ease-suave),
+    transform 0.9s var(--ease-suave);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.js [data-reveal="sobe"].is-in {
+  opacity: 1;
+  transform: none;
+}
+.js [data-reveal="cortina"] {
+  clip-path: inset(100% 0 0 0 round 1.5rem);
+  transition: clip-path 1.3s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.js [data-reveal="cortina"] img {
+  transform: scale(1.18);
+  transition: transform 1.8s var(--ease-suave);
+}
+.js [data-reveal="cortina"].is-in {
+  clip-path: inset(0 0 0 0 round 1.5rem);
+}
+.js [data-reveal="cortina"].is-in img {
+  transform: scale(1);
+}
+.js [data-reveal="linha"] {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s var(--ease-suave);
+}
+.js [data-reveal="linha"].is-in {
+  transform: none;
+}
+
+/* Linha de progresso de leitura no header */
+.progresso {
+  transform: scaleX(var(--sp, 0));
+  transform-origin: left;
+}
+
+/* Luz que percorre a moldura em arco uma vez (referência "Border Beam Panel", 21st.dev). */
 @property --feixe {
   syntax: "<angle>";
   inherits: false;
@@ -161,7 +278,7 @@
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite: exclude;
-  animation: feixe 3.4s var(--ease-suave) 0.5s 1 both;
+  animation: feixe 3.4s var(--ease-suave) calc(var(--intro) + 0.4s) 1 both;
 }
 @keyframes feixe {
   from {
@@ -177,63 +294,171 @@
   }
 }
 
-/* Opções do agendamento: rádios nativos (teclado e leitor de tela) com visual próprio. */
+/* Faixa de palavras: o JS move; sem JS fica parada. */
+[data-marquee] {
+  will-change: transform;
+}
+
+/* Tratamentos: a linha se enche de azul-noite da esquerda para a direita. */
+.trat-linha {
+  position: relative;
+  isolation: isolate;
+}
+.trat-linha::before {
+  content: "";
+  position: absolute;
+  inset: 0 -1.25rem;
+  z-index: -1;
+  background: var(--color-noite);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .trat-linha:hover::before,
+  .trat-linha:focus-visible::before {
+    transform: scaleY(1);
+  }
+  .trat-linha:hover .trat-nome,
+  .trat-linha:focus-visible .trat-nome {
+    color: var(--color-perola-claro);
+    transform: translateX(1rem);
+  }
+  .trat-linha:hover .trat-desc,
+  .trat-linha:focus-visible .trat-desc {
+    color: rgba(242, 237, 229, 0.7);
+    transform: translateX(1rem);
+  }
+  .trat-acao {
+    opacity: 0;
+  }
+  .trat-linha:focus-visible .trat-acao {
+    opacity: 1;
+    color: var(--color-champagne-claro);
+  }
+}
+.trat-nome,
+.trat-desc {
+  transition:
+    color 0.5s var(--ease-suave),
+    transform 0.6s var(--ease-suave);
+}
+.etiqueta-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 70;
+  pointer-events: none;
+  transform: scale(0);
+  transition: none;
+}
+
+/* Agendamento: opções com marcador que desliza entre as escolhas. */
 .opcao input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
-.opcao span {
+.opcao > span {
+  position: relative;
+  z-index: 1;
   transition:
-    background-color 0.3s var(--ease-suave),
     border-color 0.3s var(--ease-suave),
-    color 0.3s var(--ease-suave);
+    color 0.35s var(--ease-suave);
 }
 .opcao input:checked + span {
-  background: var(--color-champagne-claro);
-  border-color: var(--color-champagne-claro);
   color: var(--color-noite);
+  border-color: transparent;
+}
+html:not(.js) .opcao input:checked + span {
+  background: var(--color-champagne-claro);
 }
 .opcao input:focus-visible + span {
   outline: 2px solid var(--color-rose);
   outline-offset: 3px;
 }
+.marcador {
+  position: absolute;
+  z-index: 0;
+  border-radius: 999px;
+  background: var(--color-champagne-claro);
+  opacity: 0;
+  transition:
+    transform 0.55s cubic-bezier(0.65, 0, 0.35, 1),
+    width 0.55s cubic-bezier(0.65, 0, 0.35, 1),
+    height 0.55s cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 0.3s;
+}
 
-/* Balão do WhatsApp: entra de leve quando a mensagem muda (resposta a uma ação). */
+/* Balão: "digitando" e entrada da mensagem nova */
 @keyframes balao {
   from {
-    opacity: 0.4;
-    transform: translateY(4px);
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
   }
 }
 .balao-anima {
-  animation: balao 0.45s var(--ease-suave);
+  animation: balao 0.5s var(--ease-suave);
+  transform-origin: bottom right;
+}
+@keyframes pontinho {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+.digitando i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-noite);
+  animation: pontinho 1s infinite;
+}
+.digitando i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.digitando i:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
-/* Único efeito de rolagem: os cartões de tratamento surgem em sequência (só com JS ativo). */
-.js .reveal-group .reveal-item {
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 0.7s var(--ease-suave),
-    transform 0.7s var(--ease-suave);
+/* Brilho que atravessa o botão principal ao passar o mouse */
+.brilho {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
-.js .reveal-group.is-visible .reveal-item {
-  opacity: 1;
-  transform: none;
+.brilho::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
 }
-
-/* Detalhe sutil dos cartões: filete rosé que se desenha no topo ao passar o mouse ou focar. */
-.card-filete {
-  transform: scaleX(0);
-  transition: transform 0.6s var(--ease-suave);
+@media (hover: hover) {
+  .brilho:hover::after {
+    transform: translateX(120%);
+    transition: transform 0.9s var(--ease-suave);
+  }
 }
-.card-trat:hover .card-filete,
-.card-trat:focus-visible .card-filete {
-  transform: scaleX(1);
+[data-magnetic] {
+  transition: transform 0.5s var(--ease-suave);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    --intro: 0s;
+  }
+  .abertura {
+    display: none;
+  }
   html {
     scroll-behavior: auto;
   }

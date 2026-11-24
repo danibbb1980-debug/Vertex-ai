@@ -12,6 +12,18 @@ export function DraftBanner() {
   );
 }
 
+/** Abertura: assinatura desenhada e cortina que sobe (CSS puro, só na primeira visita da sessão). */
+export function Abertura() {
+  return (
+    <div aria-hidden className="abertura">
+      <div className="text-center">
+        <span className="abertura-assinatura block leading-none">{CONFIG.nomeCurto}</span>
+        <span className="abertura-linha mx-auto w-40" />
+      </div>
+    </div>
+  );
+}
+
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <span className="flex flex-col leading-none">
@@ -38,11 +50,14 @@ export function Header() {
         </a>
         <a
           href="#agendar"
+          data-magnetic
           className="inline-flex min-h-11 items-center rounded-full border border-champagne-claro/40 px-5 text-[0.85rem] font-medium text-perola-claro transition-colors hover:border-champagne-claro hover:bg-champagne-claro hover:text-noite"
         >
           Agendar avaliação
         </a>
       </div>
+      {/* Progresso de leitura */}
+      <span aria-hidden className="progresso absolute inset-x-0 bottom-0 h-px bg-champagne-claro/70" />
     </header>
   );
 }
