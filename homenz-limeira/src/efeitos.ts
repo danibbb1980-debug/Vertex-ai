@@ -18,6 +18,23 @@ export function iniciarEfeitos() {
     alvos.forEach((el) => io.observe(el))
   }
 
+  // Ficha do hero acompanha o ponteiro em 3D (só com mouse, sem movimento reduzido)
+  const ficha = document.querySelector<HTMLElement>('.hero-ficha .ficha')
+  if (ficha && !reduz && window.matchMedia('(pointer: fine)').matches) {
+    const hero = document.querySelector<HTMLElement>('.hero')!
+    hero.addEventListener('pointermove', (e) => {
+      const r = ficha.getBoundingClientRect()
+      const x = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width * 1.5)))
+      const y = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height * 1.5)))
+      ficha.style.setProperty('--ry', `${x * 12}deg`)
+      ficha.style.setProperty('--rx', `${-y * 9}deg`)
+    })
+    hero.addEventListener('pointerleave', () => {
+      ficha.style.removeProperty('--ry')
+      ficha.style.removeProperty('--rx')
+    })
+  }
+
   const linha = document.querySelector<HTMLElement>('[data-progresso]')
   if (!linha) return
   if (reduz) {

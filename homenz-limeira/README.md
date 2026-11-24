@@ -22,15 +22,20 @@ Tudo o que aparece no site vem daí. Campo vazio = o bloco não aparece.
 
 ## Fotos e logo
 
-- **Fotos autorizadas** (ambiente, fachada; nunca clientes, nunca antes e depois): coloque em `public/fotos/` e liste em `CONFIG.fotos` (`src`, `alt`, `largura`, `altura`). Hoje a lista está vazia e nenhuma foto aparece.
-- **Logo**: `referencias/logo.png` foi recortado da foto de perfil do Instagram (resolução limitada). Para trocar por uma versão em alta, substitua `public/logo-88.png`, `public/logo-192.png`, `public/icon-512.png`, `public/apple-touch-icon.png` e `public/favicon-32.png` pelo novo arquivo nos mesmos tamanhos.
-- `referencias/instagram/` guarda as capturas do perfil enviadas como referência de identidade. Elas **não** são usadas no site.
+- **Fotos do espaço**: `CONFIG.fotos` (galeria em anel 3D) e `CONFIG.fotoFachada` (ao lado do mapa). Os arquivos ficam em `public/fotos/` em três tamanhos (`-360`, `-640`, `-1100.webp`). Lista vazia ou `secoes.espaco: false` = a galeria some.
+- **Antes e depois**: `CONFIG.antesDepois`. Para tirar do ar, use `secoes.antesDepois: false`. As fotos foram recortadas dos posts do Instagram, sem o nome da profissional e sem os textos dos posts. **Antes de publicar, confirme com a clínica e com a profissional responsável se a divulgação de antes e depois é permitida pelo conselho dela** (biomedicina, medicina etc.) e se cada cliente autorizou o uso no site, não só no Instagram.
+- **Logo**: refeito em vetor (`public/logo.svg`, caminhos em `src/logoPaths.ts`), traçado a partir do original e nas cores da marca (anel branco, Z turquesa). Os PNGs de ícone (`logo-88`, `logo-192`, `icon-512`, `apple-touch-icon`, `favicon-32`) foram gerados a partir dele. Se a clínica enviar o arquivo oficial, substitua os caminhos.
+- `referencias/instagram/` guarda as capturas originais enviadas.
+
+## Animações 3D
+
+Tudo em CSS 3D (sem biblioteca pesada): o logo como peça sólida girando (seção A clínica), a ficha do hero que entra girando e acompanha o mouse, o anel de fotos que gira com a rolagem e com os botões, os títulos que viram por linha, os números da linha do tempo e os cartões de antes e depois. Com “reduzir movimento” ligado no aparelho, tudo fica parado no estado final.
 
 ## O que falta para publicar de forma definitiva
 
 1. **Profissional responsável pelos cuidados capilares e o registro dele**: muda as regras de publicidade dos cuidados capilares. Preencher `responsavel` só depois de confirmar.
 2. **Marca Homenz**: confirmar com a cliente se a marca exige identidade visual ou site padronizados entre unidades.
 3. **Atendimentos anunciáveis**: quais podem aparecer e com que descrição.
-4. **Logo em alta resolução** (vetor ou PNG grande).
-5. **Fotos autorizadas** do ambiente.
+4. **Logo oficial** em vetor, se existir (o atual foi redesenhado a partir da foto de perfil).
+5. **Autorização de uso das fotos** no site, principalmente as de antes e depois.
 6. **Testar o link wa.me** e desligar o rascunho/noindex.

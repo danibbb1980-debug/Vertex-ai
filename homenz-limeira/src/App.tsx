@@ -1,6 +1,8 @@
 import { CONFIG, atendimentosAtivos } from './config'
 import { SelecaoProvider } from './estado'
 import { Agendar } from './components/Agendar'
+import { AntesDepois, Espaco } from './components/Galeria'
+import { LogoDefs } from './components/Logo3D'
 import {
   Atendimentos, BarraAgendar, Clinica, ComoFunciona, Contato, CtaFinal, Duvidas, Header, Hero, Rodape,
 } from './components/Secoes'
@@ -48,6 +50,7 @@ export function App() {
   const s = CONFIG.secoes
   return (
     <SelecaoProvider>
+      <LogoDefs />
       <a className="pular" href="#conteudo">
         Pular para o conteúdo
       </a>
@@ -56,7 +59,9 @@ export function App() {
         <Hero />
         {s.atendimentos && <Atendimentos />}
         {s.clinica && <Clinica />}
+        {s.espaco && <Espaco n="03" />}
         {s.comoFunciona && <ComoFunciona />}
+        {s.antesDepois && <AntesDepois n="05" />}
         {s.duvidas && <Duvidas />}
         {s.contato && <Contato />}
         {s.agendar && CONFIG.usarWhatsapp && <Agendar />}

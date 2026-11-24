@@ -77,7 +77,7 @@ export function Agendar() {
     <section className="agendar" id="agendar" aria-labelledby="agendar-titulo">
       <div className="grade agendar-grade">
         <div className="agendar-texto">
-          <NumSecao n="06" rotulo="Praticidade" />
+          <NumSecao n="08" rotulo="Praticidade" />
           <Titulo
             id="agendar-titulo"
             className="titulo-secao"

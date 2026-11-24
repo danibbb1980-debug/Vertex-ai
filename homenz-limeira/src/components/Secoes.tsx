@@ -4,6 +4,8 @@ import { juntar, linhasHorario, linkArea, linkGeral } from '../lib'
 import { Ficha } from './Ficha'
 import { Logo, NumSecao } from './Marca'
 import { Titulo } from './Reveal'
+import { Logo3D } from './Logo3D'
+import { Img } from './Galeria'
 
 const novaAba = { target: '_blank', rel: 'noopener noreferrer' } as const
 
@@ -30,6 +32,7 @@ export function Header() {
 
   const links = [
     CONFIG.secoes.atendimentos && ['#atendimentos', 'Atendimentos'],
+    CONFIG.secoes.espaco && CONFIG.fotos.length > 0 && ['#espaco', 'O espaço'],
     CONFIG.secoes.comoFunciona && ['#como-funciona', 'Como funciona'],
     CONFIG.secoes.duvidas && ['#duvidas', 'Dúvidas'],
     CONFIG.secoes.contato && ['#contato', 'Contato'],
@@ -238,6 +241,9 @@ export function Clinica() {
     <section className="clinica" id="clinica" aria-labelledby="clinica-titulo">
       <div className="grade clinica-grade">
         <NumSecao n="02" rotulo="A clínica" />
+        <div className="clinica-emblema">
+          <Logo3D />
+        </div>
         <h2 className="clinica-frase" id="clinica-titulo" data-io>
           Estética para homens, em Limeira.{' '}
           {lista && (
@@ -290,7 +296,7 @@ export function ComoFunciona() {
     <section className="como" id="como-funciona" aria-labelledby="como-titulo">
       <div className="grade">
         <div className="como-cabeca">
-          <NumSecao n="03" rotulo="Como funciona" />
+          <NumSecao n="04" rotulo="Como funciona" />
           <Titulo
             id="como-titulo"
             className="titulo-secao titulo-grande"
@@ -364,7 +370,7 @@ export function Duvidas() {
     <section className="duvidas" id="duvidas" aria-labelledby="duvidas-titulo">
       <div className="grade duvidas-grade">
         <div className="duvidas-lateral">
-          <NumSecao n="04" rotulo="Dúvidas" />
+          <NumSecao n="06" rotulo="Dúvidas" />
           <Titulo
             id="duvidas-titulo"
             className="titulo-secao"
@@ -410,7 +416,7 @@ export function Contato() {
     <section className="contato" id="contato" aria-labelledby="contato-titulo">
       <div className="grade contato-grade">
         <div className="contato-texto">
-          <NumSecao n="05" rotulo="Localização e contato" />
+          <NumSecao n="07" rotulo="Localização e contato" />
           <Titulo id="contato-titulo" className="titulo-secao" linhas={[<>Venha nos <em>visitar</em>.</>]} />
           <address className="contato-end">
             {CONFIG.endereco.rua}, {CONFIG.endereco.numero}
@@ -445,6 +451,13 @@ export function Contato() {
             <SrNovaAba />
           </a>
         </div>
+        <div className="contato-visual">
+        {CONFIG.fotoFachada && (
+          <figure className="contato-fachada">
+            <Img f={CONFIG.fotoFachada} sizes="(max-width: 960px) 92vw, 46vw" />
+            <figcaption>A fachada azul, na Avenida Antonio Ometto.</figcaption>
+          </figure>
+        )}
         <div className="contato-mapa" id="mapa-lugar">
           <a className="mapa-fundo" href={CONFIG.mapsUrl} {...novaAba} tabIndex={-1} aria-hidden="true">
             Carregando o mapa…
@@ -462,6 +475,7 @@ export function Contato() {
               <SrNovaAba />
             </a>
           )}
+        </div>
         </div>
       </div>
     </section>
@@ -498,7 +512,7 @@ export function Rodape() {
     <footer className="rodape">
       <div className="grade rodape-grade">
         <div className="rodape-marca">
-          <Logo tamanho={96} carregar="lazy" />
+          <Logo tamanho={96} />
           <p className="rodape-desc">Homenz Limeira · Estética para homens · Limeira/SP</p>
         </div>
         <ul className="rodape-links">

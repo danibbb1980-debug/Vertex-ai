@@ -23,7 +23,9 @@ export interface Horario {
 }
 
 export interface Foto {
+  /** Nome base em public/fotos (gera -640.webp e -1100.webp). */
   src: string
+  legenda: string
   alt: string
   largura: number
   altura: number
@@ -119,12 +121,33 @@ export const CONFIG = {
     },
   ] as Atendimento[],
 
-  // Fotos autorizadas pela clínica (ambiente, fachada). Vazio = nenhuma foto aparece.
-  fotos: [] as Foto[],
+  // Fotos do espaço (em public/fotos). Lista vazia = a galeria não aparece.
+  fotos: [
+    { src: 'recepcao', legenda: 'Recepção', alt: 'Caderno, celular e mousepad com a marca Homenz sobre a mesa da recepção', largura: 1170, altura: 1621 },
+    { src: 'sala-facial', legenda: 'Sala de estética facial', alt: 'Sala com poltrona branca de atendimento facial e o símbolo da Homenz na parede', largura: 1170, altura: 774 },
+    { src: 'poltrona', legenda: 'Poltrona de atendimento', alt: 'Poltrona branca de atendimento com equipamentos ao fundo', largura: 1170, altura: 1621 },
+    { src: 'limpeza-de-pele', legenda: 'Cuidado facial', alt: 'Cliente deitado durante um atendimento facial', largura: 1170, altura: 1451 },
+    { src: 'sala-atendimento', legenda: 'Sala de atendimento', alt: 'Sala com maca, bancada com pia e armários de madeira, em luz azul', largura: 1170, altura: 1621 },
+    { src: 'sala-corporal', legenda: 'Sala de atendimento corporal', alt: 'Sala com maca, equipamento ao fundo e o símbolo da Homenz na parede, em luz azul', largura: 1170, altura: 1621 },
+    { src: 'equipamento', legenda: 'Equipamento de depilação', alt: 'Profissional segurando a ponteira de um equipamento de depilação', largura: 1170, altura: 1621 },
+    { src: 'produtos', legenda: 'Produtos', alt: 'Produtos de cuidado com a pele em uma prateleira de madeira iluminada', largura: 1170, altura: 1621 },
+    { src: 'cafe', legenda: 'Café para quem espera', alt: 'Máquina de café e xícaras com a marca Homenz sobre uma bandeja', largura: 1170, altura: 774 },
+  ] as Foto[],
+  fotoFachada: { src: 'fachada', legenda: 'Fachada', alt: 'Fachada azul da Homenz, com o letreiro e vidros espelhados, na Avenida Antonio Ometto', largura: 1170, altura: 633 } as Foto | null,
+
+  // Antes e depois dos cuidados capilares, publicados pela clínica com autorização. Lista vazia = a seção não aparece.
+  antesDepois: [
+    { src: 'capilar-1', legenda: 'Topo da cabeça', alt: 'Antes e depois do topo da cabeça de um cliente, com mais fios na foto de depois', largura: 1139, altura: 766 },
+    { src: 'capilar-2', legenda: 'Topo da cabeça', alt: 'Antes e depois do topo da cabeça de um cliente de cabelo escuro', largura: 1139, altura: 766 },
+    { src: 'capilar-3', legenda: 'Entradas', alt: 'Antes e depois da lateral e das entradas de um cliente de cabelo claro', largura: 1139, altura: 763 },
+    { src: 'capilar-4', legenda: 'Lateral e topo', alt: 'Antes e depois da lateral da cabeça de um cliente grisalho', largura: 1139, altura: 763 },
+  ] as Foto[],
 
   secoes: {
     atendimentos: true,
     clinica: true,
+    espaco: true,
+    antesDepois: true,
     comoFunciona: true,
     duvidas: true,
     contato: true,

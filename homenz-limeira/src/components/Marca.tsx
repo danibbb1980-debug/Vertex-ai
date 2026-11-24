@@ -1,3 +1,5 @@
+import { LogoQuadro } from './Logo3D'
+
 /** Traço de marcação: desenhado como um risco de caneta. */
 export function Traco() {
   return (
@@ -20,19 +22,10 @@ export function NumSecao({ n, rotulo, claro = false }: { n: string; rotulo: stri
   )
 }
 
-export function Logo({ tamanho = 56, carregar = 'eager' }: { tamanho?: number; carregar?: 'eager' | 'lazy' }) {
-  const src = tamanho > 56 ? '/logo-192.png' : '/logo-88.png'
+export function Logo({ tamanho = 56 }: { tamanho?: number }) {
   return (
     <span className="marca">
-      <img
-        className="marca-quadro"
-        src={src}
-        width={tamanho}
-        height={tamanho}
-        alt=""
-        loading={carregar}
-        decoding="async"
-      />
+      <LogoQuadro tamanho={tamanho} />
       <span className="marca-nome">
         <span className="marca-homenz">Homenz</span>
         <span className="marca-cidade">Limeira</span>
