@@ -7,12 +7,11 @@ WhatsApp e abrir o mapa.
 
 > ## ⚠️ ANTES DE PUBLICAR DE VERDADE
 >
-> 1. **Quem é o profissional responsável e qual o registro dele (conselho + número).**
->    O perfil do Instagram cita lasers, microagulhamento, carboxiterapia, ultrassom
->    microfocado e harmonização: procedimentos que exigem profissional de saúde
->    habilitado e que mudam as regras de publicidade. Um dos stories mostra um cartão
->    de "Responsabilidade técnica" com nome e CRBM; **não foi usado** porque não veio
->    nos dados confirmados. Confirme com a cliente e preencha `CONFIG.responsavel`.
+> 1. **Responsabilidade técnica:** preenchida em `CONFIG.responsavel` com os dados do
+>    cartão publicado no Instagram da clínica (Hellena Serradas Marques, CRBM 36440,
+>    registro de RT 2024-10985). Confirme com a cliente que os dados estão atualizados.
+>    Os procedimentos citados no perfil continuam desligados até a cliente dizer quais
+>    podem ser anunciados e como.
 > 2. **Quais atendimentos podem ser anunciados e como descrevê-los.** Hoje só
 >    "Estética facial" e "Estética corporal" estão ligados. Todos os procedimentos
 >    estão desligados (`ativo: false`).
@@ -20,8 +19,10 @@ WhatsApp e abrir o mapa.
 >    do Instagram diz *Vila Claudia*. Confirme qual é o correto.
 > 4. **Aprovação do logo redesenhado.** O logo foi refeito em vetor (ver "Logo" abaixo),
 >    fiel ao original. Se a cliente tiver o arquivo vetorial oficial, prefira-o.
-> 5. **Fotos.** A fachada usa um recorte do post de endereço do Instagram (baixa
->    resolução, ~690 px). Uma foto original da fachada e do interior melhora muito.
+> 5. **Fotos.** Entraram a fachada (recorte do post de endereço, ~690 px), a recepção
+>    e a sala de atendimento (fotos publicadas pela clínica, ~1100 px, sem a marca
+>    d'água do fotógrafo). A foto da recepção mostra pessoas: confirme com a cliente
+>    que pode usá-la e se o fotógrafo autoriza o uso sem crédito. Uma foto original da fachada e do interior melhora muito.
 >    Fotos de clientes e de antes e depois NÃO foram usadas: exigem autorização por
 >    escrito de cada pessoa e esbarram nas regras de publicidade em saúde.
 > 6. **Testar o link do WhatsApp**: abra `https://wa.me/5519991992594` e confirme que
@@ -51,7 +52,7 @@ Não existem placeholders.
 | Atendimentos | `atendimentos` (cada um com `ativo`) |
 | Seções inteiras | `secoes` (true/false) |
 | Mensagens pré-escritas do WhatsApp | `mensagens` |
-| Profissional responsável | `responsavel` (aparece no rodapé só com nome **e** registro) |
+| Responsabilidade técnica | `responsavel` (bloco no rodapé; some com `nome` vazio) |
 | Fotos | `fotos` |
 | Abertura (cortina) | `intro` (padrão `false`) |
 | Faixa de rascunho | `rascunho` |
@@ -61,10 +62,10 @@ Mude `ativo: false` para `true` **e** escreva `descricao` (geral, sem promessa, 
 aparelho, sem marca, sem preço, sem prazo). Atendimento sem descrição não aparece.
 Ligado, ele entra no índice, no formulário, nas dúvidas e no JSON-LD automaticamente.
 
-### Fotos autorizadas
-Coloque os arquivos em `public/fotos/` (guarde os originais em `referencias/fotos/`) e
-liste em `fotos`: `{ src: '/fotos/recepcao.jpg', alt: 'Recepção da clínica', largura: 1200, altura: 1500 }`.
-Elas aparecem em recortes 4:5 na seção "A avaliação".
+### Fotos do espaço
+Ficam em `public/fotos/` e são listadas em `CONFIG.fotos`
+(`src`, `pequena` para celular, `largura`, `altura`, `alt`, `legenda`).
+Aparecem na seção "A avaliação", em composição assimétrica no desktop.
 
 ### Logo
 O logo foi redesenhado em vetor a partir do original: monograma "FD" (com o ponto e o

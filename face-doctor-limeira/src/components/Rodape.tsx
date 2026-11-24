@@ -6,6 +6,7 @@ export function Rodape() {
   const e = CONFIG.endereco
   return (
     <footer className="rod">
+      <ResponsabilidadeTecnica />
       <div className="grade rod-grade">
         <div className="rod-marca">
           <LogoCompleto className="rod-logo" titulo={CONFIG.nome} />
@@ -42,11 +43,6 @@ export function Rodape() {
             </a>
           </li>
         </ul>
-        {CONFIG.responsavel.nome && CONFIG.responsavel.registro && (
-          <p className="rod-resp">
-            Responsabilidade técnica: {CONFIG.responsavel.nome} · {CONFIG.responsavel.registro}
-          </p>
-        )}
         <p className="rod-aviso">
           Conteúdo informativo, sem finalidade de diagnóstico ou promessa de resultado. A indicação de cada
           atendimento depende de avaliação individual.
@@ -56,5 +52,33 @@ export function Rodape() {
         <span>{CONFIG.nomeCurto}</span>
       </p>
     </footer>
+  )
+}
+
+/** Bloco de responsabilidade técnica. Só aparece com nome preenchido. */
+function ResponsabilidadeTecnica() {
+  const r = CONFIG.responsavel
+  if (!r.nome) return null
+  const linhas = [
+    { rotulo: r.cargo, valor: r.nome, nome: true },
+    r.conselho && r.registro && { rotulo: r.conselho, valor: r.registro },
+    r.registroRT && { rotulo: 'Registro de responsabilidade técnica', valor: r.registroRT },
+  ].filter(Boolean) as { rotulo: string; valor: string; nome?: boolean }[]
+  return (
+    <section className="rt" aria-labelledby="rt-t">
+      <div className="grade rt-grade">
+        <h2 className="rotulo rt-t" id="rt-t">
+          Responsabilidade técnica
+        </h2>
+        <dl className="rt-lista">
+          {linhas.map((l) => (
+            <div className="rt-linha linha-viva" key={l.rotulo}>
+              <dt>{l.rotulo}</dt>
+              <dd className={l.nome ? 'rt-nome' : 'rt-num'}>{l.valor}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
   )
 }

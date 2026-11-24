@@ -86,7 +86,11 @@ export function Avaliacao({ n }: { n: number }) {
           <div className="fotos">
             {CONFIG.fotos.map((f) => (
               <figure className="foto" key={f.src}>
-                <img src={f.src} alt={f.alt} width={f.largura} height={f.altura} loading="lazy" decoding="async" />
+                <picture>
+                  {f.pequena && <source media="(max-width: 40rem)" srcSet={f.pequena} />}
+                  <img src={f.src} alt={f.alt} width={f.largura} height={f.altura} loading="lazy" decoding="async" />
+                </picture>
+                {f.legenda && <figcaption>{f.legenda}</figcaption>}
               </figure>
             ))}
           </div>

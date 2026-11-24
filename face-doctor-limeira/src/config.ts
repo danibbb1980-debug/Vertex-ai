@@ -46,12 +46,36 @@ export const CONFIG = {
   logo: { src: '/marca/og-face-doctor-limeira.png', largura: 1200, altura: 630 },
   logoQuadrado: '/icon-512.png',
 
-  /** Profissional responsável. Vazio = não aparece. Preencha SÓ depois de confirmar
-   *  nome, conselho e número de registro com a cliente. */
-  responsavel: { nome: '', registro: '' },
+  /** Responsabilidade técnica (fonte: cartão publicado no Instagram da clínica,
+   *  confirmado pelo vendedor). Campo vazio = linha não aparece; nome vazio = bloco some. */
+  responsavel: {
+    cargo: 'Responsável técnica',
+    nome: 'Hellena Serradas Marques',
+    conselho: 'CRBM',
+    registro: '36440',
+    registroRT: '2024-10985',
+  },
 
-  /** Fotos autorizadas (caminhos em public/). Vazio = nenhuma foto no site. */
-  fotos: [] as { src: string; alt: string; largura: number; altura: number }[],
+  /** Fotos do espaço (publicadas pela própria clínica). Vazio = nenhuma foto no site.
+   *  `pequena` = versão de ~640 px para celular. */
+  fotos: [
+    {
+      src: '/fotos/recepcao.webp',
+      pequena: '/fotos/recepcao-640.webp',
+      largura: 1095,
+      altura: 677,
+      alt: 'Recepção da Face Doctor: balcão branco, poltronas e o nome da clínica na parede, com pessoas reunidas.',
+      legenda: 'Recepção',
+    },
+    {
+      src: '/fotos/sala.webp',
+      pequena: '/fotos/sala-640.webp',
+      largura: 1095,
+      altura: 678,
+      alt: 'Sala de atendimento: maca branca reclinável, luminária articulada, espelho e bancada de mármore.',
+      legenda: 'Sala de atendimento',
+    },
+  ] as { src: string; pequena?: string; alt: string; largura: number; altura: number; legenda?: string }[],
 
   endereco: {
     rua: 'Rua Bahia',
