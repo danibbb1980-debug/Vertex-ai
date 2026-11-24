@@ -28,6 +28,13 @@ WhatsApp e abrir o mapa.
 > 6. **Testar o link do WhatsApp**: abra `https://wa.me/5519991992594` e confirme que
 >    cai na conta da clínica.
 
+## Onde está publicado
+- **Netlify (atual):** https://face-doctor-limeira-rascunho.netlify.app — usa `netlify.toml`
+  (build `npm run build`, pasta `dist`). É a URL em `CONFIG.siteUrl`.
+- **Vercel (anterior):** https://face-doctor-limeira-rascunho.vercel.app — ficou numa versão
+  antiga porque o plano gratuito bateu o limite diário de deploys. Se voltar a usar a
+  Vercel, troque `siteUrl` e publique de novo.
+
 ## Rodar
 
 ```bash

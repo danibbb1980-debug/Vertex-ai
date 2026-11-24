@@ -34,7 +34,7 @@ export const CONFIG = {
   intro: false,
 
   /** URL pública definitiva (sem barra no fim). Usada em canonical, og:url e JSON-LD. */
-  siteUrl: 'https://face-doctor-limeira-rascunho.vercel.app',
+  siteUrl: 'https://face-doctor-limeira-rascunho.netlify.app',
 
   nome: 'Face Doctor Limeira',
   nomeCurto: 'Face Doctor',
