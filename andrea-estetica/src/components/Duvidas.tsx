@@ -1,7 +1,7 @@
 import { useId, useState } from "react";
 import { atendimentosAtivos, CONFIG, enderecoLinha } from "../config";
 import { horaFala } from "../tempo";
-import { Hora } from "./ui";
+import { Arco, Hora } from "./ui";
 
 function lista(itens: string[]) {
   if (itens.length <= 1) return itens.join("");
@@ -73,8 +73,9 @@ export default function Duvidas({ hora }: { hora: string }) {
   const id = useId();
 
   return (
-    <section id="duvidas" aria-labelledby="t-duvidas" className="border-t border-grafite/20 bg-linho-2/60">
-      <div className="mx-auto grid max-w-[1240px] gap-y-12 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-12 lg:gap-x-10">
+    <section id="duvidas" aria-labelledby="t-duvidas" className="tema-entardecer">
+      <Arco className="mx-auto max-w-[1240px] px-5 sm:px-8" />
+      <div className="mx-auto grid max-w-[1240px] gap-y-12 px-5 pb-24 pt-14 sm:px-8 sm:pb-32 lg:grid-cols-12 lg:gap-x-10">
         <div className="lg:col-span-4">
           <Hora hora={hora} />
           <h2 id="t-duvidas" className="titulo mt-6 text-[clamp(2.6rem,5.4vw,4.2rem)]">

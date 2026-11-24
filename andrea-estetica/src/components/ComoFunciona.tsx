@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Arco, Hora } from "./ui";
+import { Hora } from "./ui";
 
 const ETAPAS = [
   {
@@ -64,9 +64,8 @@ export default function ComoFunciona({ hora }: { hora: string }) {
   }, []);
 
   return (
-    <section id="como-funciona" aria-labelledby="t-como" className="relative">
-      <Arco className="mx-auto max-w-[1240px] px-5 sm:px-8" />
-      <div className="mx-auto grid max-w-[1240px] gap-y-14 px-5 pb-24 pt-16 sm:px-8 sm:pb-32 lg:grid-cols-12 lg:gap-x-10">
+    <section id="como-funciona" aria-labelledby="t-como" className="tema-tarde relative border-t border-grafite/15">
+      <div className="mx-auto grid max-w-[1240px] gap-y-14 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-12 lg:gap-x-10">
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-40">
             <Hora hora={hora} />
@@ -91,7 +90,7 @@ export default function ComoFunciona({ hora }: { hora: string }) {
             <li key={e.t} className="relative grid grid-cols-[2.3rem_1fr] gap-x-6 pb-14 last:pb-0">
               <span
                 aria-hidden="true"
-                className="titulo relative z-10 flex size-[2.3rem] items-center justify-center border border-grafite/40 bg-linho text-lg tab"
+                className="titulo relative z-10 flex size-[2.3rem] items-center justify-center border border-grafite/40 bg-[var(--fundo)] text-lg tab"
               >
                 {i + 1}
               </span>

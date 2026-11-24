@@ -18,26 +18,26 @@ export default function Atendimentos({ hora }: { hora: string }) {
   const qtd = n <= 10 ? EXTENSO[n] : String(n);
 
   return (
-    <section id="atendimentos" className="no-escuro grao relative bg-ardosia text-linho" aria-labelledby="t-atend">
+    <section id="atendimentos" className="tema-manha relative border-t border-grafite/15" aria-labelledby="t-atend">
       <div className="mx-auto grid max-w-[1240px] gap-y-12 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-12 lg:gap-x-10">
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-40">
-            <Hora hora={hora} escuro />
+            <Hora hora={hora} />
             <h2 id="t-atend" className="titulo mt-6 text-[clamp(2.6rem,5.4vw,4.2rem)]">
               Atendimentos de <span className="enfase">estética</span> e <span className="whitespace-nowrap">bem-estar</span>
             </h2>
-            <p className="mt-6 max-w-[22rem] text-nevoa">
+            <p className="mt-6 max-w-[22rem] text-cinza">
               {qtd} {n === 1 ? "atendimento" : "atendimentos"}, todos com horário marcado e uma conversa antes de
               começar.
             </p>
           </div>
         </div>
 
-        <ol className="border-b border-linho/25 lg:col-span-7">
+        <ol className="border-b border-grafite/25 lg:col-span-7">
           {lista.map((a, i) => {
             const open = aberto === i;
             return (
-              <li key={a.id} className="border-t border-linho/25">
+              <li key={a.id} className="border-t border-grafite/25">
                 <h3>
                   <button
                     type="button"
@@ -47,7 +47,7 @@ export default function Atendimentos({ hora }: { hora: string }) {
                     onClick={() => setAberto(open ? -1 : i)}
                     className="group flex w-full items-center gap-4 py-6 text-left sm:gap-8 sm:py-8"
                   >
-                    <span className="tab w-8 shrink-0 text-sm text-nevoa sm:w-10">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="tab w-8 shrink-0 text-sm text-cinza sm:w-10">{String(i + 1).padStart(2, "0")}</span>
                     <span
                       className={`titulo flex-1 text-[clamp(1.9rem,4.2vw,3.1rem)] transition-transform duration-300 ease-[var(--ease-lento)] ${
                         open ? "translate-x-2" : "group-hover:translate-x-2"
@@ -56,9 +56,9 @@ export default function Atendimentos({ hora }: { hora: string }) {
                       {a.nome}
                     </span>
                     <span aria-hidden="true" className="relative size-5 shrink-0">
-                      <span className="absolute left-0 top-1/2 h-px w-5 bg-ocre-claro" />
+                      <span className="absolute left-0 top-1/2 h-px w-5 bg-ocre-escuro" />
                       <span
-                        className={`absolute left-1/2 top-0 h-5 w-px bg-ocre-claro transition-transform duration-300 ${
+                        className={`absolute left-1/2 top-0 h-5 w-px bg-ocre-escuro transition-transform duration-300 ${
                           open ? "scale-y-0" : ""
                         }`}
                       />
@@ -78,12 +78,12 @@ export default function Atendimentos({ hora }: { hora: string }) {
                     <div className="grid gap-6 pb-9 pl-12 sm:grid-cols-[1fr_auto] sm:items-end sm:pl-[4.5rem]">
                       <div className="max-w-[30rem]">
                         <p className="text-[1.08rem]">{a.descricao}</p>
-                        <p className="mt-3 text-sm text-nevoa">A indicação depende de avaliação individual.</p>
+                        <p className="mt-3 text-sm text-cinza">A indicação depende de avaliação individual.</p>
                       </div>
                       <BotaoWhats
                         texto="Agendar"
                         mensagem={msgAtendimento(a.nome)}
-                        variante="btn-claro"
+                        variante="btn-cheio"
                         rotuloAria={`Agendar ${a.nome.toLowerCase()} pelo WhatsApp`}
                       />
                     </div>

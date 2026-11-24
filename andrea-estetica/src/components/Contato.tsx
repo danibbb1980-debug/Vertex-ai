@@ -5,7 +5,8 @@ import { BotaoWhats, Externo, Hora } from "./ui";
 export default function Contato({ hora }: { hora: string }) {
   const e = CONFIG.endereco;
   return (
-    <section id="contato" aria-labelledby="t-contato" className="mx-auto max-w-[1240px] px-5 py-24 sm:px-8 sm:py-32">
+    <section id="contato" aria-labelledby="t-contato" className="tema-entardecer border-t border-grafite/20">
+      <div className="mx-auto max-w-[1240px] px-5 py-24 sm:px-8 sm:py-32">
       <div className="grid gap-y-12 lg:grid-cols-12 lg:gap-x-10">
         <div className="lg:col-span-5">
           <Hora hora={hora} />
@@ -58,7 +59,7 @@ export default function Contato({ hora }: { hora: string }) {
 
         <div className="lg:col-span-6 lg:col-start-7">
           {e.embedUrl && (
-            <div className="relative aspect-[4/5] w-full border border-grafite/30 bg-linho-2 sm:aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[520px]">
+            <div className="relative aspect-[4/5] w-full border border-grafite/30 bg-white/30 sm:aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[520px]">
               {/* Fica por trás do mapa: aparece só se o Google Maps não carregar. */}
               <div className="absolute inset-0 flex flex-col items-start justify-end gap-2 p-8" aria-hidden="true">
                 <span className="titulo text-2xl">{e.bairro}</span>
@@ -76,6 +77,7 @@ export default function Contato({ hora }: { hora: string }) {
             </div>
           )}
         </div>
+      </div>
       </div>
     </section>
   );

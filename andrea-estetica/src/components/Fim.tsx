@@ -3,12 +3,12 @@ import { BotaoWhats, Externo, IconeWhats, Marca } from "./ui";
 
 export function CtaFinal() {
   return (
-    <section aria-labelledby="t-cta" className="no-escuro grao relative overflow-hidden bg-ardosia text-linho">
+    <section aria-labelledby="t-cta" className="no-escuro grao noite-funda relative overflow-hidden border-t border-linho/10 text-linho">
       {/* Arco do relógio, grande e quase apagado */}
       <svg
         aria-hidden="true"
         viewBox="0 0 400 210"
-        className="pointer-events-none absolute -bottom-2 left-1/2 w-[860px] max-w-none -translate-x-1/2 sm:w-[1100px]"
+        className="pointer-events-none absolute -bottom-1 -right-40 w-[520px] max-w-none sm:-right-24 sm:w-[640px] lg:right-[-60px] lg:w-[760px]"
       >
         <path d="M24 206 A176 176 0 0 1 376 206" fill="none" stroke="var(--color-nevoa)" strokeOpacity=".35" strokeWidth=".6" />
         {Array.from({ length: 14 }, (_, i) => {
@@ -41,12 +41,12 @@ export function CtaFinal() {
 
 export function Rodape() {
   return (
-    <footer className="bg-linho pb-28 lg:pb-0">
+    <footer className="no-escuro noite-funda border-t border-linho/15 pb-28 text-linho lg:pb-0">
       <div className="mx-auto grid max-w-[1240px] gap-10 px-5 py-16 sm:px-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
-          <Marca tamanho="rodape" />
+          <Marca tamanho="rodape" escuro />
           {CONFIG.nomeCompleto.trim() && <p className="mt-6 text-[0.95rem]">{CONFIG.nomeCompleto}</p>}
-          <p className={`${CONFIG.nomeCompleto.trim() ? "mt-1" : "mt-6"} text-sm text-cinza`}>
+          <p className={`${CONFIG.nomeCompleto.trim() ? "mt-1" : "mt-6"} text-sm text-nevoa`}>
             {CONFIG.nome} · {CONFIG.descritor} · {CONFIG.cidade}/{CONFIG.uf}
           </p>
         </div>
@@ -74,7 +74,7 @@ export function Rodape() {
             </li>
           </ul>
         </div>
-        <p className="text-xs leading-relaxed text-cinza lg:col-span-3">
+        <p className="text-xs leading-relaxed text-nevoa lg:col-span-3">
           Conteúdo informativo, sem finalidade de diagnóstico ou promessa de resultado. A indicação de cada
           atendimento depende de avaliação individual.
         </p>

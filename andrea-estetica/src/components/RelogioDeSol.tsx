@@ -1,126 +1,152 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CONFIG } from "../config";
-import { escala, status, type Status } from "../tempo";
+import { agoraSP, escala, horaNum, status, type Status } from "../tempo";
 
 /**
- * Momento de assinatura: um relógio de sol em meia-volta (08 a 21).
- * A haste parte da marca das 08 e desliza (só transform) até a hora atual em
- * São Paulo; fora do expediente, pousa na próxima abertura.
+ * Momento de assinatura: o relógio de sol como paisagem.
+ * Um arco de horizonte a horizonte (08 a 21), com marcas de 15 em 15 minutos.
+ * O trecho do expediente de hoje é mais grosso. A haste (e o "sol" na ponta)
+ * parte das 08 e desliza até a hora atual em São Paulo; fora do expediente,
+ * pousa na próxima abertura. Animação só de transform, via atributo rotate.
  */
-const W = 400;
-const H = 230;
-const CX = W / 2;
-const CY = 206;
-const R = 168;
 
-export default function RelogioDeSol({ className = "" }: { className?: string }) {
-  const { ini, fim } = escala();
-  const [st, setSt] = useState<Status>(() => status());
-  const [pronto, setPronto] = useState(false);
+type Geo = { w: number; h: number; rx: number; ry: number; fs: number; sol: number; base: number };
+const LARGO: Geo = { w: 1200, h: 392, rx: 548, ry: 330, fs: 21, sol: 15, base: 372 };
+const ESTREITO: Geo = { w: 400, h: 268, rx: 168, ry: 200, fs: 12.5, sol: 11, base: 250 };
 
+function useGiro(alvo: number) {
+  const [g, setG] = useState(0);
+  const atual = useRef(0);
   useEffect(() => {
     const reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Dois frames: garante que a posição inicial (08) foi pintada antes de mover.
-    let id2 = 0;
-    const id = requestAnimationFrame(() => {
-      id2 = requestAnimationFrame(() => setPronto(true));
-    });
-    if (reduz) setPronto(true);
-    const t = window.setInterval(() => setSt(status()), 60_000);
-    return () => {
-      cancelAnimationFrame(id);
-      cancelAnimationFrame(id2);
-      clearInterval(t);
+    if (reduz) {
+      atual.current = alvo;
+      setG(alvo);
+      return;
+    }
+    const de = atual.current;
+    const dur = 2500;
+    let ini = 0;
+    let raf = 0;
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3.2);
+    const passo = (ts: number) => {
+      if (!ini) ini = ts;
+      const t = Math.min(1, (ts - ini) / dur);
+      const v = de + (alvo - de) * ease(t);
+      atual.current = v;
+      setG(v);
+      if (t < 1) raf = requestAnimationFrame(passo);
     };
-  }, []);
+    // Espera um frame para a posição 08 ser pintada antes de mover.
+    raf = requestAnimationFrame(() => (raf = requestAnimationFrame(passo)));
+    return () => cancelAnimationFrame(raf);
+  }, [alvo]);
+  return g;
+}
 
-  // 08 = 180° (esquerda), 21 = 360° (direita).
-  const ang = (h: number) => 180 + ((h - ini) / (fim - ini)) * 180;
-  const pt = (a: number, r: number) => {
-    const rad = (a * Math.PI) / 180;
-    return [CX + r * Math.cos(rad), CY + r * Math.sin(rad)];
+function Arco({ geo, giro, hoje, className }: { geo: Geo; giro: number; hoje: [number, number] | null; className: string }) {
+  const { ini, fim } = escala();
+  const cx = geo.w / 2;
+  const cy = geo.base;
+  const ang = (h: number) => Math.PI + ((h - ini) / (fim - ini)) * Math.PI;
+  const pt = (h: number, k: number) => {
+    const a = ang(h);
+    return [cx + k * geo.rx * Math.cos(a), cy + k * geo.ry * Math.sin(a)] as const;
   };
-  const giro = ang(Math.min(Math.max(st.hasteEm, ini), fim)) - 180;
+  const arcoEntre = (h1: number, h2: number) => {
+    const [x1, y1] = pt(h1, 1);
+    const [x2, y2] = pt(h2, 1);
+    return `M ${x1} ${y1} A ${geo.rx} ${geo.ry} 0 0 1 ${x2} ${y2}`;
+  };
 
   const marcas = [];
-  for (let h = ini; h <= fim; h++) {
-    const a = ang(h);
-    const [x1, y1] = pt(a, R);
-    const [x2, y2] = pt(a, R - (h % 3 === 2 ? 14 : 8));
-    const [tx, ty] = pt(a, R + 16);
+  for (let q = ini * 4; q <= fim * 4; q++) {
+    const h = q / 4;
+    const cheia = q % 4 === 0;
+    const [x1, y1] = pt(h, 1);
+    const [x2, y2] = pt(h, cheia ? 0.93 : 0.975);
     marcas.push(
-      <g key={h}>
-        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeWidth="1" />
+      <line key={q} x1={x1} y1={y1} x2={x2} y2={y2} stroke="currentColor" strokeOpacity={cheia ? 1 : 0.45} strokeWidth="1" />,
+    );
+    if (cheia) {
+      const [tx, ty] = pt(h, 1.085);
+      marcas.push(
         <text
+          key={`t${q}`}
           x={tx}
           y={ty}
           textAnchor="middle"
           dominantBaseline="middle"
-          fontSize="10.5"
+          fontSize={geo.fs}
           fill="currentColor"
-          style={{ fontVariantNumeric: "tabular-nums", letterSpacing: "0.04em" }}
+          fontFamily="var(--font-display)"
+          style={{ fontVariantNumeric: "tabular-nums" }}
         >
           {String(h).padStart(2, "0")}
-        </text>
-      </g>,
-    );
+        </text>,
+      );
+    }
   }
 
-  // Cunha de sombra: um setor estreito atrás da haste, apontando para 180°.
-  const [sx1, sy1] = pt(180, R - 22);
-  const [sx2, sy2] = pt(187, R - 30);
+  const k = geo.ry / geo.rx;
+  const L = geo.rx;
+  // cunha de sombra (no espaço não escalado do grupo)
+  const w1 = [-(L * 0.86), 0];
+  const a2 = (183 * Math.PI) / 180;
+  const w2 = [L * 0.8 * Math.cos(a2), L * 0.8 * Math.sin(a2)];
+
+  return (
+    <svg viewBox={`0 -8 ${geo.w} ${geo.h + 8}`} className={`${className} h-auto w-full overflow-visible text-grafite`} aria-hidden="true">
+      <path d={arcoEntre(ini, fim)} fill="none" stroke="currentColor" strokeWidth="1" />
+      {hoje && <path d={arcoEntre(hoje[0], hoje[1])} fill="none" stroke="currentColor" strokeWidth="3.5" />}
+      {marcas}
+      <line x1="0" y1={cy} x2={geo.w} y2={cy} stroke="currentColor" strokeWidth="1" />
+      <g transform={`translate(${cx} ${cy}) scale(1 ${k})`}>
+        <g transform={`rotate(${giro})`}>
+          <path d={`M 0 0 L ${w1[0]} ${w1[1]} L ${w2[0]} ${w2[1]} Z`} fill="var(--color-ardosia)" opacity="0.1" />
+          <line x1="0" y1="0" x2={-(L * 0.965)} y2="0" stroke="var(--color-ocre)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+          {/* "sol": linha de comprimento zero com ponta redonda = círculo que não deforma */}
+          <line
+            x1={-L}
+            y1="0"
+            x2={-L}
+            y2="0.001"
+            stroke="var(--color-ocre)"
+            strokeWidth={geo.sol}
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </g>
+      </g>
+      <rect x={cx - 5} y={cy - 5} width="10" height="10" fill="var(--color-grafite)" />
+    </svg>
+  );
+}
+
+export default function RelogioDeSol({ className = "" }: { className?: string }) {
+  const { ini, fim } = escala();
+  const [st, setSt] = useState<Status>(() => status());
+  useEffect(() => {
+    const t = window.setInterval(() => setSt(status()), 60_000);
+    return () => clearInterval(t);
+  }, []);
+  const giro = useGiro(((Math.min(Math.max(st.hasteEm, ini), fim) - ini) / (fim - ini)) * 180);
+  const f = CONFIG.horarios.dias[agoraSP().dia];
+  const hoje: [number, number] | null = f ? [horaNum(f.abre), horaNum(f.fecha)] : null;
 
   return (
     <figure className={className} aria-labelledby="relogio-status">
-      <svg
-        viewBox={`0 -14 ${W} ${H + 14}`}
-        className="w-full h-auto text-grafite overflow-visible"
-        role="img"
-        aria-label={`Relógio de sol do expediente, das ${String(ini).padStart(2, "0")} às ${fim} horas. ${st.texto}.`}
-      >
-        <path
-          d={`M ${CX - R} ${CY} A ${R} ${R} 0 0 1 ${CX + R} ${CY}`}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1"
-        />
-        <line x1={CX - R - 12} y1={CY} x2={CX + R + 12} y2={CY} stroke="currentColor" strokeWidth="1" />
-        {marcas}
-        <g
-          style={{
-            transformOrigin: `${CX}px ${CY}px`,
-            transformBox: "view-box",
-            transform: `rotate(${pronto ? giro : 0}deg)`,
-            transition: "transform 2.5s cubic-bezier(0.33, 0, 0.12, 1)",
-          }}
-        >
-          <path
-            d={`M ${CX} ${CY} L ${sx1} ${sy1} L ${sx2} ${sy2} Z`}
-            fill="var(--color-ardosia)"
-            opacity="0.16"
-          />
-          <line
-            x1={CX}
-            y1={CY}
-            x2={CX - (R - 22)}
-            y2={CY}
-            stroke="var(--color-ocre)"
-            strokeWidth="2.25"
-            strokeLinecap="square"
-          />
-          <circle cx={CX - (R - 22)} cy={CY} r="3" fill="var(--color-ocre)" />
-        </g>
-        <circle cx={CX} cy={CY} r="4.5" fill="var(--color-grafite)" />
-      </svg>
-      <figcaption className="mt-5 flex flex-col items-start gap-1 sm:items-center">
-        <span id="relogio-status" className="flex items-center gap-2.5 text-[1.02rem] font-medium" aria-live="polite">
-          <span
-            aria-hidden="true"
-            className={`inline-block size-2 ${st.aberto ? "bg-ocre" : "border border-grafite"}`}
-          />
+      <div role="img" aria-label={`Relógio de sol do expediente, das 08 às ${fim} horas. ${st.texto}.`}>
+        <Arco geo={ESTREITO} giro={giro} hoje={hoje} className="block sm:hidden" />
+        <Arco geo={LARGO} giro={giro} hoje={hoje} className="hidden sm:block" />
+      </div>
+      <figcaption className="mt-4 flex flex-col items-center gap-1 text-center">
+        <span id="relogio-status" className="flex items-center gap-2.5 text-[1.05rem] font-medium" aria-live="polite">
+          <span aria-hidden="true" className={`inline-block size-2.5 rounded-full ${st.aberto ? "bg-ocre" : "border border-grafite"}`} />
           {st.texto}
         </span>
         <span className="text-sm text-cinza">
+          {hoje ? "O traço grosso no arco é o horário de hoje. " : ""}
           {CONFIG.horarios.aviso}
         </span>
       </figcaption>

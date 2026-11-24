@@ -72,7 +72,7 @@ export function Arco({ escuro = false, className = "" }: { escuro?: boolean; cla
         <path
           d="M0 59 Q600 -40 1200 59"
           fill="none"
-          stroke={escuro ? "var(--color-nevoa)" : "var(--color-grafite)"}
+          stroke={escuro ? "var(--color-nevoa)" : "currentColor"}
           strokeOpacity={escuro ? 0.6 : 0.45}
           strokeWidth="1"
           vectorEffect="non-scaling-stroke"
@@ -80,7 +80,7 @@ export function Arco({ escuro = false, className = "" }: { escuro?: boolean; cla
       </svg>
       <div
         className={`absolute inset-0 origin-right transition-transform duration-[1800ms] ease-[var(--ease-lento)] ${
-          escuro ? "bg-ardosia" : "bg-linho"
+          escuro ? "bg-ardosia" : "bg-[var(--fundo,var(--color-linho))]"
         }`}
         style={{ transform: visto ? "scaleX(0)" : "scaleX(1)" }}
       />

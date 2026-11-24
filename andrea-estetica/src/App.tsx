@@ -9,6 +9,7 @@ import Hero from "./components/Hero";
 import Horarios from "./components/Horarios";
 import Fotos from "./components/Fotos";
 import { Cabecalho, FaixaRascunho } from "./components/Topo";
+import Trilho from "./components/Trilho";
 
 export default function App() {
   const s = CONFIG.secoes;
@@ -35,6 +36,7 @@ export default function App() {
       </a>
       <FaixaRascunho />
       <Cabecalho />
+      <Trilho />
       <main id="conteudo">
         <Hero />
         {ordem.includes("atendimentos") && <Atendimentos hora={h("atendimentos")} />}

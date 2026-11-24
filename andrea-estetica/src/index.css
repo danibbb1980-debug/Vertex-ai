@@ -206,7 +206,7 @@
     padding-bottom: calc(0.6rem - 1px);
   }
   .campo[aria-invalid="true"] {
-    border-bottom-color: #a3361f;
+    border-bottom-color: var(--cor-erro, #a3361f);
   }
   select.campo {
     background: no-repeat right 4px center / 12px
@@ -229,4 +229,60 @@
 }
 .revela {
   animation: revela 1.1s var(--ease-lento) both;
+}
+
+/* ── O dia inteiro: a página anoitece em degraus sólidos (sem degradê). ── */
+.tema-manha {
+  --fundo: #f2ece1;
+  background: var(--fundo);
+}
+.tema-tarde {
+  --fundo: #dde2e1;
+  --color-cinza: #55504a;
+  background: var(--fundo);
+}
+.tema-entardecer {
+  --fundo: #c4cfd4;
+  --color-cinza: #3f3c38;
+  --color-ocre-escuro: #6b3d12;
+  background: var(--fundo);
+  color: var(--color-grafite);
+}
+/* Noite: as cores trocam de papel; os componentes continuam os mesmos. */
+.tema-noite {
+  --fundo: #2d4a5b;
+  --color-grafite: #f2ece1;
+  --color-linho: #25404f;
+  --color-ardosia: #f2ece1;
+  --color-cinza: #c3cdd1;
+  --color-ocre-escuro: #e2ac6c;
+  --cor-erro: #f3a58f;
+  background: var(--fundo);
+  color: var(--color-grafite);
+}
+.tema-noite .btn-cheio {
+  color: #1b2e39;
+}
+.tema-noite .btn-cheio::before {
+  background: #ffffff;
+}
+.tema-noite .btn-cheio:hover {
+  color: #1b2e39;
+}
+.tema-noite select.campo {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23F2ECE1' stroke-width='1.3'/%3E%3C/svg%3E");
+}
+.tema-noite select.campo option {
+  background: #25404f;
+  color: #f2ece1;
+}
+.tema-noite input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+.campo::placeholder {
+  color: var(--color-cinza);
+  opacity: 0.85;
+}
+.noite-funda {
+  background: #1b2e39;
 }

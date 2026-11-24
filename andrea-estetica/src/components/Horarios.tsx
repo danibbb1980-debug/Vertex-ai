@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CONFIG } from "../config";
 import { agoraSP, DIAS, escala, horaFala, horaNum } from "../tempo";
-import { Hora, useNaTela } from "./ui";
+import { Arco, Hora, useNaTela } from "./ui";
 
 const ORDEM = [1, 2, 3, 4, 5, 6, 0];
 const NOME = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
@@ -19,7 +19,9 @@ export default function Horarios({ hora }: { hora: string }) {
   const horas = Array.from({ length: fim - ini + 1 }, (_, i) => ini + i);
 
   return (
-    <section id="horarios" aria-labelledby="t-horarios" className="mx-auto max-w-[1240px] px-5 py-24 sm:px-8 sm:py-32">
+    <section id="horarios" aria-labelledby="t-horarios" className="tema-tarde">
+      <Arco className="mx-auto max-w-[1240px] px-5 sm:px-8" />
+      <div className="mx-auto max-w-[1240px] px-5 pb-24 pt-14 sm:px-8 sm:pb-32">
       <div className="grid gap-y-8 lg:grid-cols-12 lg:gap-x-10">
         <div className="lg:col-span-5">
           <Hora hora={hora} />
@@ -59,7 +61,7 @@ export default function Horarios({ hora }: { hora: string }) {
               <li
                 key={d}
                 className={`grid grid-cols-[5.5rem_1fr] items-center gap-y-1 border-t border-grafite/20 py-4 sm:grid-cols-[8rem_1fr_7.5rem] sm:py-5 ${
-                  hoje ? "bg-linho-2/70" : ""
+                  hoje ? "bg-white/35" : ""
                 }`}
               >
                 <span className="pl-1 text-[0.98rem]">
@@ -102,6 +104,7 @@ export default function Horarios({ hora }: { hora: string }) {
           })}
         </ul>
         <p className="mt-5 text-sm text-cinza">{CONFIG.horarios.aviso}</p>
+      </div>
       </div>
     </section>
   );
