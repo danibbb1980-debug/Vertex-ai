@@ -1,0 +1,4 @@
+.rascunho,.header,.fixo,.indice,.progresso,.mapa,form,.casos-grade{display:none!important}
+body{background:#fff;color:#000;padding:0!important}
+.escuro{background:#fff!important;color:#000!important}
+a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em}

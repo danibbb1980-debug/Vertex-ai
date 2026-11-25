@@ -1,0 +1,51 @@
+/* Sistema de design: Dra. Ise Shinkawa. Use somente estes tokens. */
+:root {
+  /* cor */
+  --papel: #F5F2EC;
+  --papel-2: #ECE7DE;
+  --tinta: #0E1626;
+  --aco: #2A3955;
+  --aco-claro: #3A4B6C;
+  --champagne: #B58E6A;
+  --champagne-claro: #D8BFA3;
+  --champagne-texto: #7A5A3C; /* texto pequeno sobre papel: 6,3:1 */
+  --apoio: #4F5A6B;           /* texto de apoio sobre papel: 6,6:1 */
+  --apoio-escuro: #A9B2C3;    /* texto de apoio sobre marinho: 8,4:1 */
+  --erro: #8E2F25;
+  --erro-escuro: #F0A796;
+
+  /* tipo */
+  --f-display: 'Italiana', 'Italiana Fallback', 'Didot', 'Bodoni 72', serif;
+  --f-texto: 'Hanken Grotesk', 'Hanken Fallback', system-ui, sans-serif;
+  /* escala 1.333, base 17px */
+  --t--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.82rem);
+  --t-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --t-1: clamp(1.25rem, 1.18rem + 0.3vw, 1.42rem);
+  --t-2: clamp(1.6rem, 1.45rem + 0.7vw, 1.89rem);
+  --t-3: clamp(2rem, 1.7rem + 1.4vw, 2.52rem);
+  --t-4: clamp(2.5rem, 1.9rem + 2.6vw, 3.36rem);
+  --t-5: clamp(3rem, 2rem + 4.4vw, 4.47rem);
+  --t-hero: clamp(4.4rem, 0.5rem + 19vw, 22rem);
+  --t-gigante: clamp(4.2rem, 1rem + 13vw, 14rem);
+  --track-titulo: -0.015em;
+  --track-rotulo: 0.16em;
+
+  /* espaço: múltiplos de 8 */
+  --e-1: 0.5rem; --e-2: 1rem; --e-3: 1.5rem; --e-4: 2rem; --e-5: 3rem; --e-6: 4rem; --e-7: 6rem; --e-8: 8rem;
+  --secao: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --max: 90rem;
+  --texto-max: 36rem;
+
+  /* traço e cantos */
+  --filete: 1px;
+  --raio: 0;
+  --alvo: 48px;
+
+  /* movimento */
+  --d-1: 160ms; --d-2: 320ms; --d-3: 640ms; --d-4: 1100ms;
+  --saida: cubic-bezier(.16,1,.3,1);
+  --io: cubic-bezier(.65,0,.35,1);
+
+  --header-h: 4.5rem;
+}
