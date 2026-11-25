@@ -64,7 +64,8 @@ function Header() {
   ].filter(Boolean) as { href: string; label: string }[]
 
   return (
-    <header className="site-header" data-solid={solid || open}>
+    <>
+    <header className="site-header" data-solid={solid || open} data-open={open}>
       <div className="wrap">
         <Brand />
         <nav className="nav" aria-label="Principal">
@@ -89,21 +90,22 @@ function Header() {
           </button>
         </div>
       </div>
+    </header>
       {open && (
-        <nav id="menu-movel" className="mobile-menu" aria-label="Menu">
+        <nav id="menu-movel" className="mobile-menu on-ink" aria-label="Menu">
           {links.map((l) => (
             <a key={l.href} className="big" href={l.href} onClick={() => setOpen(false)}>
               {l.label}
             </a>
           ))}
-          <div style={{ marginTop: 'var(--s-4)' }}>
+          <div style={{ marginTop: 'var(--s-4)', position: 'relative', zIndex: 1 }}>
             <WaButton text={MSG_GERAL} ariaLabel="Agendar consulta">
               Agendar consulta
             </WaButton>
           </div>
         </nav>
       )}
-    </header>
+    </>
   )
 }
 

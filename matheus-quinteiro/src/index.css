@@ -266,13 +266,31 @@ img {
 .mobile-menu {
   position: fixed;
   inset: calc(var(--header-h) + var(--draft-h)) 0 0 0;
-  background: var(--paper);
+  background: var(--ink);
+  color: var(--paper);
   z-index: 49;
-  padding: var(--s-4) var(--gutter);
+  padding: var(--s-4) var(--gutter) calc(var(--s-5) + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
   gap: var(--s-1);
-  border-top: var(--hair) solid var(--rule);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.mobile-menu::after {
+  /* o anel da marca, discreto, no canto do menu */
+  content: '';
+  position: absolute;
+  width: 22rem;
+  aspect-ratio: 1;
+  right: -9rem;
+  bottom: -7rem;
+  border: 1px solid var(--accent-on-ink);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.site-header[data-open='true'] {
+  background: var(--paper);
+  backdrop-filter: none;
 }
 .mobile-menu a.big {
   font-family: var(--font-display);
@@ -280,8 +298,14 @@ img {
   letter-spacing: var(--tracking-tight);
   font-weight: 600;
   text-decoration: none;
-  padding-block: var(--s-1);
-  border-bottom: var(--hair) solid var(--rule);
+  padding-block: var(--s-2);
+  border-bottom: var(--hair) solid var(--rule-on-ink);
+  position: relative;
+  z-index: 1;
+}
+.mobile-menu a.big:hover,
+.mobile-menu a.big:focus-visible {
+  color: var(--accent-on-ink);
 }
 .btn.header-cta {
   display: none;
