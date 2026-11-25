@@ -1,0 +1,117 @@
+/* =========================================================
+   Tokens — Matheus Quinteiro · "além do prato"
+   Use somente estes valores no restante do CSS.
+   ========================================================= */
+
+@font-face {
+  font-family: 'Bricolage';
+  src: url('/fonts/bricolage-latin.woff2') format('woff2-variations'),
+    url('/fonts/bricolage-latin.woff2') format('woff2');
+  font-weight: 200 800;
+  font-stretch: 75% 100%;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+@font-face {
+  font-family: 'Hanken';
+  src: url('/fonts/hanken-latin.woff2') format('woff2-variations'),
+    url('/fonts/hanken-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+@font-face {
+  font-family: 'Hanken';
+  src: url('/fonts/hanken-latin-italic.woff2') format('woff2-variations'),
+    url('/fonts/hanken-latin-italic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+2000-206F;
+}
+/* Fallbacks com métrica ajustada: o texto não "pula" quando a fonte chega */
+@font-face {
+  font-family: 'Bricolage Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 96%;
+  ascent-override: 96%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Hanken Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 99%;
+  ascent-override: 100%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Cor */
+  --paper: #f3efe8; /* osso quente */
+  --paper-2: #ebe5db; /* osso um tom abaixo, para faixas */
+  --ink: #1e1b19; /* carvão quente */
+  --ink-2: #2a2623; /* carvão elevado */
+  --accent: #b24a2e; /* terracota queimada: anel, filetes, seleção */
+  --accent-ink: #8f3822; /* terracota escura: texto pequeno sobre osso (AA 6.3:1) */
+  --accent-on-ink: #e3876a; /* terracota clara: texto pequeno sobre carvão (AA 6.1:1) */
+  --clay: #6b625b; /* cinza-argila: texto de apoio sobre osso (AA 5.2:1) */
+  --clay-on-ink: #b5aba2; /* cinza-argila sobre carvão (AA 7.6:1) */
+  --rule: #cfc6ba; /* filete sobre osso */
+  --rule-on-ink: #4a433e; /* filete sobre carvão */
+  --outline: #a89d92; /* contorno do nome no hero */
+
+  /* Tipografia */
+  --font-display: 'Bricolage', 'Bricolage Fallback', Arial, sans-serif;
+  --font-text: 'Hanken', 'Hanken Fallback', Arial, sans-serif;
+
+  /* Escala fluida, razão 1.25 (7 degraus) */
+  --step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.16rem + 0.45vw, 1.5rem);
+  --step-2: clamp(1.5625rem, 1.38rem + 0.9vw, 2.125rem);
+  --step-3: clamp(1.953rem, 1.6rem + 1.75vw, 3rem);
+  --step-4: clamp(2.441rem, 1.8rem + 3.2vw, 4.5rem);
+  --step-5: clamp(3.052rem, 1.9rem + 5.8vw, 7rem);
+  --hero: clamp(3.25rem, 17vw, 10.25rem);
+
+  --tracking-tight: -0.035em;
+  --tracking-display: -0.045em;
+  --tracking-label: 0.16em;
+  --leading-tight: 0.92;
+  --leading-title: 1.02;
+  --leading-text: 1.6;
+
+  /* Espaço (múltiplos de 8px) */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-5: 3rem;
+  --s-6: 4rem;
+  --s-7: 6rem;
+  --s-8: 8rem;
+  --section: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --maxw: 90rem;
+  --measure: 62ch;
+
+  /* Linhas e cantos */
+  --hair: 1px;
+  --radius: 0;
+  --tap: 3rem; /* 48px */
+
+  /* Movimento */
+  --d-1: 160ms;
+  --d-2: 320ms;
+  --d-3: 640ms;
+  --d-4: 1100ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --header-h: 4.5rem;
+  --draft-h: 1.75rem;
+}
