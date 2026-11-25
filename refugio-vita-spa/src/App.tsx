@@ -42,12 +42,7 @@ const Header = () => {
     <header className={`header ${solido || aberto ? 'is-solido' : ''}`}>
       <div className="wrap header__in">
         <a href="#inicio" className="selo" aria-label={`${CONFIG.nome}, voltar ao início`}>
-          <img
-            src={CONFIG.logo.src224}
-            width={112}
-            height={63}
-            alt={`Logo do ${CONFIG.nome}`}
-          />
+          <img src={CONFIG.logo.horizontal} width={212} height={60} alt={CONFIG.nome} />
         </a>
         <nav className="nav" aria-label="Principal">
           {LINKS.map((l) => (

@@ -172,7 +172,12 @@ export const CONFIG = {
     'viviane-martins': [1038, 1719],
   } as Record<string, [number, number]>,
 
-  logo: { src224: '/logo-224.webp', src400: '/logo-400.webp', largura: 1280, altura: 723 },
+  /** Logo vetorizado a partir do original (scripts/vetorizar-logo.py). */
+  logo: {
+    horizontal: '/logo-horizontal-escuro.svg', // header, sobre o branco
+    vertical: '/logo-vertical-escuro.svg', // hero, sobre o branco
+    verticalOuro: '/logo-vertical-ouro.svg', // rodapé e blocos verdes
+  },
 
   secoes: {
     atendimentos: true,

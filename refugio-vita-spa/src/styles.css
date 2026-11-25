@@ -18,15 +18,15 @@ body {
   overflow-x: clip;
 }
 ::selection {
-  background: var(--tangerina);
+  background: var(--dourado);
   color: var(--papel);
 }
 :focus-visible {
-  outline: 2px solid var(--tangerina-escura);
+  outline: 2px solid var(--dourado-escuro);
   outline-offset: 3px;
 }
 .sobre-verde :focus-visible {
-  outline-color: var(--tangerina-clara);
+  outline-color: var(--dourado-claro);
 }
 h1,
 h2,
@@ -125,17 +125,17 @@ section[id],
   display: block;
   width: 2px;
   height: 100%;
-  background: var(--tangerina);
+  background: var(--dourado);
   transform-origin: 50% 100%;
 }
 .marca-secao {
   display: inline-flex;
   align-items: center;
   gap: var(--e1);
-  color: var(--tangerina-escura);
+  color: var(--dourado-escuro);
 }
 .sobre-verde .marca-secao {
-  color: var(--tangerina-clara);
+  color: var(--dourado-claro);
 }
 /* mecanismo (c): a pausa se desenha ao entrar na tela */
 .js .marca-secao .pausa i {
@@ -214,7 +214,7 @@ section[id],
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--tangerina-escura);
+  background: var(--dourado-escuro);
   transform: scaleX(0);
   transform-origin: 0 50%;
   transition: transform var(--d2) var(--saida);
@@ -245,7 +245,7 @@ section[id],
   border-color: var(--linha-clara);
 }
 .sobre-verde .btn::before {
-  background: var(--tangerina);
+  background: var(--dourado);
 }
 .sobre-verde .btn:hover {
   color: var(--verde-marca);
@@ -304,13 +304,12 @@ section[id],
 .selo {
   display: block;
   flex: none;
-  border: var(--filete) solid var(--linha-forte);
   line-height: 0;
 }
 .selo img {
-  width: 96px;
+  width: 190px;
   height: auto;
-  aspect-ratio: 1280 / 723;
+  aspect-ratio: 1575 / 445;
 }
 .nav {
   display: none;
@@ -329,7 +328,7 @@ section[id],
   right: 0;
   bottom: 4px;
   height: 1px;
-  background: var(--tangerina);
+  background: var(--dourado);
   transform: scaleX(0);
   transform-origin: 0 50%;
   transition: transform var(--d2) var(--saida);
@@ -381,7 +380,7 @@ section[id],
 }
 @media (min-width: 900px) {
   .selo img {
-    width: 112px;
+    width: 220px;
   }
   .nav {
     display: flex;
@@ -424,7 +423,7 @@ section[id],
   font-variation-settings: 'opsz' 72;
 }
 .hero__titulo em {
-  color: var(--tangerina-escura);
+  color: var(--dourado-escuro);
 }
 .hero__base {
   display: grid;
@@ -450,19 +449,24 @@ section[id],
 .status--aberto .ponto {
   width: 8px;
   height: 8px;
-  background: var(--tangerina);
+  background: var(--dourado);
 }
-.hero__nome {
+.hero__logo {
   display: grid;
-  gap: 2px;
+  gap: var(--e1);
+  justify-items: start;
   margin-top: auto;
   padding-top: var(--e5);
 }
-.nome-texto {
-  font-family: var(--serif);
-  font-size: var(--t2);
-  letter-spacing: var(--tracking-titulo);
-  line-height: 1.1;
+.hero__logo-svg {
+  display: block;
+  width: min(56vw, 13rem);
+  aspect-ratio: 680 / 612;
+}
+.hero__logo-svg svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* linha do tempo do hero (assinatura) */
@@ -513,7 +517,7 @@ section[id],
   width: 2px;
   height: 44px;
   margin-left: -1px;
-  background: var(--tangerina);
+  background: var(--dourado);
 }
 .tl__pausa {
   position: absolute;
@@ -574,18 +578,28 @@ section[id],
     grid-column: 1 / -1;
   }
   .hero__titulo {
-    grid-column: 1 / 13;
-    font-size: clamp(5rem, 1rem + 8.6vw, 11rem);
+    grid-column: 1 / 9;
+    grid-row: 2;
+    font-size: clamp(4.5rem, 0.5rem + 7.4vw, 9.5rem);
     max-width: none;
   }
   .hero__base {
-    grid-column: 1 / 6;
-  }
-  .hero__nome {
-    grid-column: 9 / 13;
+    grid-column: 1 / 7;
     grid-row: 3;
-    align-self: end;
-    text-align: right;
+    margin-top: var(--e4);
+  }
+  .hero__logo {
+    grid-column: 9 / 13;
+    grid-row: 2 / 4;
+    align-self: center;
+    justify-items: center;
+    margin-top: 0;
+    padding-top: 0;
+    text-align: center;
+  }
+  .hero__logo-svg {
+    width: 100%;
+    max-width: 23rem;
   }
 }
 
@@ -600,10 +614,10 @@ section[id],
   max-width: 16ch;
 }
 .titulo-secao em {
-  color: var(--tangerina-escura);
+  color: var(--dourado-escuro);
 }
 .sobre-verde .titulo-secao em {
-  color: var(--tangerina-clara);
+  color: var(--dourado-claro);
 }
 
 /* ---------- atendimentos: índice editorial ---------- */
@@ -635,7 +649,7 @@ section[id],
   right: 0;
   bottom: -1px;
   height: 2px;
-  background: var(--tangerina);
+  background: var(--dourado);
   transform: scaleX(0);
   transform-origin: 0 50%;
   transition: transform var(--d3) var(--saida);
@@ -652,7 +666,7 @@ section[id],
   font-family: var(--serif);
   font-size: var(--t2);
   font-variant-numeric: tabular-nums;
-  color: var(--tangerina-clara);
+  color: var(--dourado-claro);
   font-style: italic;
 }
 .item__nome {
@@ -851,7 +865,7 @@ section[id],
   user-select: none;
 }
 .horarios__gigante em {
-  color: var(--tangerina);
+  color: var(--dourado);
 }
 .semana {
   display: grid;
@@ -890,7 +904,7 @@ section[id],
   color: var(--tinta-apoio);
 }
 .dia__hoje {
-  color: var(--tangerina-escura);
+  color: var(--dourado-escuro);
   margin-left: var(--e1);
   vertical-align: 0.4em;
 }
@@ -927,7 +941,7 @@ section[id],
   width: 2px;
   height: 26px;
   margin-left: -1px;
-  background: var(--tangerina);
+  background: var(--dourado);
 }
 .semana__regua {
   display: none;
@@ -1069,7 +1083,7 @@ section[id],
 .passos__progresso {
   position: absolute;
   inset: 0;
-  background: var(--tangerina);
+  background: var(--dourado);
   transform-origin: 50% 0;
   transform: scaleY(var(--progresso, 1));
 }
@@ -1090,14 +1104,14 @@ section[id],
   width: 9px;
   height: 9px;
   background: var(--papel);
-  border: var(--filete) solid var(--tangerina-escura);
+  border: var(--filete) solid var(--dourado-escuro);
 }
 .passo__num {
   font-family: var(--serif);
   font-style: italic;
   font-size: var(--t3);
   line-height: 1;
-  color: var(--tangerina-escura);
+  color: var(--dourado-escuro);
   font-variant-numeric: tabular-nums;
 }
 .passo h3 {
@@ -1167,7 +1181,7 @@ section[id],
   right: 0;
   bottom: -1px;
   height: 2px;
-  background: var(--tangerina);
+  background: var(--dourado);
   transform: scaleX(0);
   transform-origin: 0 50%;
   transition: transform var(--d3) var(--saida);
@@ -1216,11 +1230,11 @@ section[id],
   font-weight: 600;
   letter-spacing: var(--tracking-rotulo);
   text-transform: uppercase;
-  color: var(--tangerina-escura);
+  color: var(--dourado-escuro);
   min-width: 6.5rem;
 }
 .sobre-verde .marcador {
-  color: var(--tangerina-clara);
+  color: var(--dourado-claro);
 }
 .mapa {
   position: relative;
@@ -1315,7 +1329,7 @@ section[id],
   padding: 0.7rem 0.9rem;
   border: var(--filete) solid var(--linha-forte);
   border-radius: var(--raio);
-  background: #fbf8ef;
+  background: var(--campo);
   color: var(--tinta);
   font: inherit;
   transition:
@@ -1342,15 +1356,15 @@ section[id],
 .campo textarea:focus {
   outline: none;
   border-color: var(--verde-marca);
-  box-shadow: inset 0 -2px 0 var(--tangerina);
+  box-shadow: inset 0 -2px 0 var(--dourado);
 }
 .campo [aria-invalid='true'] {
-  border-color: var(--tangerina-escura);
-  box-shadow: inset 3px 0 0 var(--tangerina-escura);
+  border-color: var(--dourado-escuro);
+  box-shadow: inset 3px 0 0 var(--dourado-escuro);
 }
 .erro {
   font-size: 0.875rem;
-  color: var(--tangerina-escura);
+  color: var(--dourado-escuro);
   font-weight: 600;
 }
 .campo__dica {
@@ -1370,7 +1384,7 @@ section[id],
   width: 100%;
 }
 .pronto {
-  border-left: 2px solid var(--tangerina);
+  border-left: 2px solid var(--dourado);
   padding-left: var(--e2);
   display: grid;
   gap: var(--e1);
@@ -1390,7 +1404,7 @@ section[id],
   font-variation-settings: 'opsz' 72;
 }
 .cta__titulo em {
-  color: var(--tangerina-clara);
+  color: var(--dourado-claro);
 }
 
 /* ---------- rodapé ---------- */
@@ -1403,9 +1417,9 @@ section[id],
   gap: var(--e5);
 }
 .rodape__logo img {
-  width: 200px;
+  width: 260px;
   height: auto;
-  aspect-ratio: 1280 / 723;
+  aspect-ratio: 680 / 612;
   display: block;
 }
 .rodape__col {
@@ -1429,7 +1443,7 @@ section[id],
   color: var(--papel);
 }
 .assinatura em {
-  color: var(--tangerina-clara);
+  color: var(--dourado-claro);
 }
 .rodape__base {
   display: grid;
@@ -1447,10 +1461,10 @@ section[id],
   .rodape__marca {
     grid-column: 1 / 5;
   }
-  .rodape__col:nth-of-type(1) {
+  .rodape__col--endereco {
     grid-column: 6 / 9;
   }
-  .rodape__col:nth-of-type(2) {
+  .rodape__col--contato {
     grid-column: 10 / 13;
   }
   .rodape__base {

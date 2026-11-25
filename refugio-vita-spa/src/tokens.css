@@ -40,19 +40,21 @@
 
 :root {
   /* Cores (contraste conferido) */
-  --papel: #f4eedd; /* creme-manteiga, superfície */
-  --papel-2: #ece4cf; /* superfície alternativa */
+  /* As cores do logo: verde-garrafa e dourado, sobre base branca */
+  --papel: #ffffff; /* superfície principal */
+  --papel-2: #f7f4ec; /* superfície alternativa, branco quente */
+  --campo: #fcfbf7; /* fundo dos campos do formulário */
   --verde-marca: #162d27; /* amostrado do fundo do logo */
-  --verde-2: #1d3a33; /* blocos verdes, segundo plano */
-  --tangerina: #d1642e; /* acento: marca, traços de pausa, filetes */
-  --tangerina-escura: #a84a1d; /* texto pequeno sobre o claro: 4.95:1 */
-  --tangerina-clara: #e07a45; /* texto pequeno sobre o verde: 4.89:1 */
-  --tinta: var(--verde-marca); /* texto principal: 12.59:1 */
-  --tinta-apoio: #615a4f; /* cinza-quente: 5.88:1 */
+  --verde-2: #1d3a33;
+  --dourado: #b08a3e; /* acento gráfico: marca, traços de pausa, filetes (3.21:1 no branco) */
+  --dourado-escuro: #856526; /* texto sobre o branco: 5.4:1 */
+  --dourado-claro: #d4b66f; /* dourado do logo sobre o verde: 7.45:1 */
+  --tinta: var(--verde-marca); /* texto principal: 14.4:1 */
+  --tinta-apoio: #5e655f; /* cinza-esverdeado: 6:1 */
   --papel-apoio: #b9c2b6; /* texto de apoio sobre o verde: 7.96:1 */
-  --linha: rgb(22 45 39 / 0.2);
-  --linha-forte: rgb(22 45 39 / 0.45);
-  --linha-clara: rgb(244 238 221 / 0.22);
+  --linha: rgb(22 45 39 / 0.16);
+  --linha-forte: rgb(22 45 39 / 0.4);
+  --linha-clara: rgb(255 255 255 / 0.2);
 
   /* Tipografia */
   --serif: 'Newsreader', 'Newsreader Fallback', Georgia, serif;
@@ -93,5 +95,5 @@
   --entrada-saida: cubic-bezier(0.65, 0, 0.35, 1);
 
   --altura-faixa: 28px;
-  --altura-header: 76px;
+  --altura-header: 84px;
 }

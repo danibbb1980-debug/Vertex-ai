@@ -82,11 +82,3 @@ export const LinkExterno = ({
     {children}
   </a>
 )
-
-export const NomeTexto = () => (
-  <span className="nome-bloco">
-    <span className="nome-texto">{CONFIG.nomeCurto}</span>
-    <br />
-    <span className="rotulo">{CONFIG.descritor}</span>
-  </span>
-)

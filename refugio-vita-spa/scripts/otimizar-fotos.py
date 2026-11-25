@@ -18,8 +18,6 @@ for f in sorted(list(origem.glob('*.png')) + list(origem.glob('*.jpg')) + list(o
 print(json.dumps(info))
 logo = Image.open(raiz / 'referencias' / 'logo-refugio-vita-spa.jpg').convert('RGB')
 pub = raiz / 'public'
-for w in (224, 400):
-    logo.resize((w, round(logo.height * w / logo.width)), Image.LANCZOS).save(pub / f'logo-{w}.webp', 'WEBP', quality=90)
 logo.save(pub / 'og-logo.jpg', 'JPEG', quality=88)
 # ícone: recorte quadrado da própria árvore do logo, sem redesenho
 icone = logo.crop((420, 50, 860, 490))

@@ -13,6 +13,7 @@ import {
 } from '../lib/horarios'
 import { MSG_GERAL, msgAtendimento, waLink } from '../lib/wa'
 import { Foto, LinkExterno, MarcaSecao, Pausa, Titulo } from './ui'
+import logoVertical from '../../public/logo-vertical-escuro.svg?raw'
 
 const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
@@ -92,10 +93,15 @@ export const Hero = () => {
           </div>
           <Status />
         </div>
-        <p className="hero__nome">
-          <span className="nome-texto">{CONFIG.nomeCurto}</span>
-          <span className="rotulo apoio">{CONFIG.descritor}</span>
-        </p>
+        <div className="hero__logo">
+          {/* SVG embutido: aparece junto com o texto, sem esperar outra requisição */}
+          <span
+            className="hero__logo-svg"
+            role="img"
+            aria-label={`Logo do ${CONFIG.nome}`}
+            dangerouslySetInnerHTML={{ __html: logoVertical.replace('role="img" aria-label="Refúgio Vita Spa"', 'aria-hidden="true"') }}
+          />
+        </div>
       </div>
       <div className="wrap">
         <div className="tl" aria-hidden="true">
@@ -531,16 +537,16 @@ export const Rodape = () => (
         <div className="rodape__marca">
           <div className="rodape__logo">
             <img
-              src={CONFIG.logo.src400}
-              width={200}
-              height={113}
+              src={CONFIG.logo.verticalOuro}
+              width={260}
+              height={234}
               alt={`Logo do ${CONFIG.nome}`}
               loading="lazy"
               decoding="async"
             />
           </div>
         </div>
-        <div className="rodape__col">
+        <div className="rodape__col rodape__col--endereco">
           <p className="rotulo apoio">Endereço</p>
           <p>
             {CONFIG.endereco.rua}, {CONFIG.endereco.numero}
@@ -550,7 +556,7 @@ export const Rodape = () => (
             CEP {CONFIG.endereco.cep}
           </p>
         </div>
-        <div className="rodape__col">
+        <div className="rodape__col rodape__col--contato">
           <p className="rotulo apoio">Contato</p>
           {CONFIG.usarWhatsapp && (
             <LinkExterno href={waLink()} className="link-rodape">

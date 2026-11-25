@@ -32,7 +32,24 @@ As fotos vieram de capturas de tela: a resolução é limitada (~1.100 px). Os a
 
 ## Logo
 
-`referencias/logo-refugio-vita-spa.jpg` (1280 × 723). `npm run fotos` gera `public/logo-224.webp`, `logo-400.webp`, `og-logo.jpg` e os ícones (recorte da própria árvore, sem redesenho). Um arquivo em alta resolução (vetor ou PNG grande) melhora a nitidez: troque o JPG e rode o script de novo.
+O logo foi **vetorizado a partir do original** (`referencias/logo-refugio-vita-spa.jpg`), sem redesenhar: o dourado foi traçado e virou SVG sem fundo, com um contorno extra que deixa o traço mais encorpado.
+
+- `public/logo-horizontal-escuro.svg`: header (árvore ao lado do nome), dourado escuro sobre o branco.
+- `public/logo-vertical-escuro.svg`: hero (embutido no HTML, aparece junto com o texto).
+- `public/logo-vertical-ouro.svg`: rodapé, dourado do logo sobre o verde.
+- `public/logo-simbolo-ouro.svg`: só a árvore.
+
+Para regerar (por exemplo, com um arquivo do logo em resolução maior):
+
+```bash
+pip install potracer pillow numpy
+python3 scripts/vetorizar-logo.py   # cores e espessura do contorno no topo do script
+npx svgo -p 1 public/logo-*.svg     # reduz o tamanho dos arquivos
+```
+
+## Cores
+
+As do logo, sobre base branca: verde-garrafa `#162D27` (amostrado do logo) em textos e blocos, dourado `#B08A3E` nos detalhes gráficos, dourado escuro `#856526` para texto sobre o branco e dourado claro `#D4B66F` (o do logo) sobre o verde. Todas com contraste AA conferido; os tokens ficam em `src/tokens.css`.
 
 ## Fontes
 

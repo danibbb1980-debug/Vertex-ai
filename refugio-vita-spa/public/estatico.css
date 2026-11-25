@@ -1,7 +1,7 @@
 @font-face{font-family:'Newsreader';font-style:normal;font-display:swap;font-weight:200 800;src:url('/fonts/newsreader-normal.woff2') format('woff2-variations')}
 @font-face{font-family:'Newsreader';font-style:italic;font-display:swap;font-weight:200 800;src:url('/fonts/newsreader-italic.woff2') format('woff2-variations')}
 @font-face{font-family:'Hanken Grotesk';font-style:normal;font-display:swap;font-weight:100 900;src:url('/fonts/hanken-grotesk.woff2') format('woff2-variations')}
-:root{--papel:#f4eedd;--verde:#162d27;--tang:#d1642e;--tang-e:#a84a1d;--apoio:#615a4f;--linha:rgb(22 45 39 / .2)}
+:root{--papel:#ffffff;--verde:#162d27;--tang:#b08a3e;--tang-e:#856526;--apoio:#5e655f;--linha:rgb(22 45 39 / .2)}
 *{box-sizing:border-box;margin:0}
 html{background:var(--papel);color:var(--verde)}
 body{font-family:'Hanken Grotesk',Arial,sans-serif;font-size:1.05rem;line-height:1.65;padding:clamp(1.5rem,6vw,5rem) clamp(1rem,4vw,3rem)}
