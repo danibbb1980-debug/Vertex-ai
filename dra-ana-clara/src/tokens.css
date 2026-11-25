@@ -1,0 +1,92 @@
+/* Sistema de design: use somente estes tokens. */
+@font-face {
+  font-family: 'Bellefair';
+  src: url('/fonts/bellefair-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Red Hat Display';
+  src: url('/fonts/rhd-400.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Red Hat Display';
+  src: url('/fonts/rhd-500.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+/* Fallbacks com métrica ajustada para não haver salto de layout */
+@font-face {
+  font-family: 'Bellefair Fallback';
+  src: local('Times New Roman'), local('Liberation Serif'), local('DejaVu Serif');
+  size-adjust: 96%;
+  ascent-override: 92%;
+  descent-override: 26%;
+}
+@font-face {
+  font-family: 'RHD Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 99%;
+  ascent-override: 95%;
+  descent-override: 28%;
+}
+
+:root {
+  /* cor */
+  --nevoa: #efede9;
+  --nevoa-2: #e5e2dd;
+  --marfim: #f4f1ec;
+  --grafite: #221f21;
+  --grafite-2: #2e2a2c;
+  --vinho: #7a1f3a;
+  --vinho-escuro: #5a1328;
+  --vinho-luz: #c0587a; /* filete sobre grafite */
+  --erro-fundo: #f6e9ed;
+  --branco: #ffffff;
+  --cinza: #645d5a; /* 5.6:1 sobre névoa */
+  --cinza-claro: #b3aca7; /* 7.9:1 sobre grafite */
+  --linha: rgba(34, 31, 33, 0.18);
+  --linha-clara: rgba(244, 241, 236, 0.22);
+
+  /* tipografia */
+  --f-display: 'Bellefair', 'Bellefair Fallback', serif;
+  --f-texto: 'Red Hat Display', 'RHD Fallback', sans-serif;
+  /* escala fluida, razão ~1.333 */
+  --t-1: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem); /* rótulos */
+  --t0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem); /* texto */
+  --t1: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --t2: clamp(1.6rem, 1.35rem + 1.1vw, 2.25rem);
+  --t3: clamp(2.2rem, 1.6rem + 2.6vw, 3.75rem);
+  --t4: clamp(3rem, 1.9rem + 5vw, 6.5rem);
+  --t5: clamp(4rem, 1.8rem + 9vw, 11rem); /* nome no hero */
+
+  /* espaço (múltiplos de 8) */
+  --s1: 0.5rem;
+  --s2: 1rem;
+  --s3: 1.5rem;
+  --s4: 2rem;
+  --s5: 3rem;
+  --s6: 4rem;
+  --s7: 6rem;
+  --s8: 8rem;
+  --secao: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --max: 90rem;
+  --leitura: 36rem;
+
+  --filete: 1px;
+  --raio: 0;
+
+  /* movimento */
+  --d1: 160ms;
+  --d2: 320ms;
+  --d3: 640ms;
+  --d4: 1100ms;
+  --saida: cubic-bezier(0.16, 1, 0.3, 1);
+  --io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --header: 4.5rem;
+  --faixa: 2rem;
+}

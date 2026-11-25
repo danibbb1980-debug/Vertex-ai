@@ -1,0 +1,5 @@
+.faixa,.header,.gaveta,.barra-movel,.flutuante,.mapa,.compara,form,.skip{display:none!important}
+body{background:#fff;color:#000;padding:0!important}
+.escuro,.vinho-bloco{background:#fff!important;color:#000!important}
+a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em}
+.secao{padding-block:1.5rem!important;content-visibility:visible!important}
