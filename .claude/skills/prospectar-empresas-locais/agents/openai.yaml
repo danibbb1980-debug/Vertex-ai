@@ -1,0 +1,13 @@
+interface:
+  display_name: Prospectar empresas locais
+  short_description: Prospecte negócios com pesquisa e sete passos comerciais
+  default_prompt: "Use $prospectar-empresas-locais em Itaitinga - CE, priorize demanda comprovável e prepare perguntas iniciais e próximos passos condicionados ao interesse."
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
