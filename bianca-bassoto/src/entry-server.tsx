@@ -39,8 +39,9 @@ export function head() {
     sameAs: [CONFIG.instagram.url],
   };
   if (temCrn()) ld.identifier = CONFIG.crn;
-  const fotoOg = CONFIG.fotoHero || CONFIG.foto;
-  const fotoOgAlt = CONFIG.fotoHero ? CONFIG.fotoHeroAlt : CONFIG.fotoAlt;
+  // og:image precisa de foto com fundo (o recorte do hero é transparente)
+  const fotoOg = CONFIG.foto || CONFIG.fotoConsulta;
+  const fotoOgAlt = CONFIG.foto ? CONFIG.fotoAlt : CONFIG.fotoConsultaAlt;
   if (fotoOg) ld.image = url + fotoOg.replace(/^\//, '') + '.jpg';
   const faqLd = {
     '@context': 'https://schema.org',

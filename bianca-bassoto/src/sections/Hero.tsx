@@ -1,6 +1,5 @@
 import { CONFIG, temCrn, waLink, atendimentosAtivos } from '../config';
 import { Markers } from '../components/Markers';
-import { Foto } from '../components/Foto';
 
 function Line({ text }: { text: string }) {
   return (
@@ -47,13 +46,20 @@ export function Hero() {
             )}
           </div>
         </div>
-        <Foto
-          base={CONFIG.fotoHero}
-          alt={CONFIG.fotoHeroAlt}
-          className="hero__foto"
-          sizes="(min-width: 64rem) 28vw, 90vw"
-          prioridade
-        />
+        {CONFIG.fotoHero && (
+          <figure className="hero__foto">
+            <img
+              src={`${CONFIG.fotoHero}-640.webp`}
+              srcSet={`${CONFIG.fotoHero}-400.webp 400w, ${CONFIG.fotoHero}-640.webp 640w, ${CONFIG.fotoHero}-900.webp 900w`}
+              sizes="(min-width: 64rem) 24vw, 80vw"
+              alt={CONFIG.fotoHeroAlt}
+              width={829}
+              height={1459}
+              decoding="async"
+              {...{ fetchpriority: 'high' }}
+            />
+          </figure>
+        )}
       </div>
     </section>
   );

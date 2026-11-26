@@ -14,4 +14,17 @@ for (const [nome, f] of Object.entries(fotos)) {
   }
   await base.clone().resize(1080).jpeg({ quality: 78, mozjpeg: true }).toFile(`public/fotos/${nome}.jpg`);
 }
+// Recorte com fundo transparente (hero). Gerado com rembg, modelo birefnet-portrait:
+//   rembg i -m birefnet-portrait <foto> referencias/fotos/bianca-verde-recorte.png
+{
+  const src = sharp('referencias/fotos/bianca-verde-recorte.png');
+  const { info } = await src.clone().trim({ threshold: 1 }).toBuffer({ resolveWithObject: true });
+  // margem de 24 px em cima e nas laterais; a base continua reta (corte da foto)
+  const base = sharp(await src.clone().trim({ threshold: 1 }).extend({ top: 24, left: 24, right: 24, background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer());
+  for (const w of [400, 640, 900]) {
+    await base.clone().resize(w).webp({ quality: 80, alphaQuality: 90, effort: 6 }).toFile(`public/fotos/bianca-verde-recorte-${w}.webp`);
+  }
+  const m = await base.metadata();
+  console.log('recorte', info.width, info.height, '→', m.width, m.height);
+}
 console.log(fs.readdirSync('public/fotos').map((f) => `${f} ${(fs.statSync('public/fotos/' + f).size / 1024).toFixed(0)}KB`).join('\n'));

@@ -35,7 +35,8 @@ Vite + React + TypeScript + Tailwind, estático, sem backend. O HTML é pré-ren
    **37701-023**. Confirmar.
 8. **Arquivo original do logo** (vetorial ou PNG grande). O logo atual foi **recriado
    em SVG a partir de um recorte de baixa resolução** de um post.
-9. **Fotos:** as duas fotos da Bianca (blusa verde no hero, jaleco rosa em "A
+9. **Fotos:** as duas fotos da Bianca (blusa verde no hero, recortada com fundo
+   transparente, e de novo na seção Sobre; jaleco rosa em "A
    consulta") foram **recortadas de prints de posts do Instagram dela**, enviados pelo
    vendedor. Antes de publicar: confirmar com ela a **autorização de uso** e pedir os
    **arquivos originais em alta resolução** (e o crédito do fotógrafo, se houver).
@@ -84,12 +85,16 @@ Tudo o que o site mostra vem de `src/config.ts`. Regra: **campo vazio ou
 
 ### Fotos
 
-`CONFIG.fotoHero` (hero e `og:image`), `CONFIG.foto` (seção Sobre, hoje vazia) e
+`CONFIG.fotoHero` (hero: recorte com fundo transparente, `-400/-640/-900.webp`),
+`CONFIG.foto` (seção Sobre e `og:image`) e
 `CONFIG.fotoConsulta` (seção A consulta)
 recebem a base do nome em `public/fotos/` — ex.: `'/fotos/bianca-verde'`. O site usa
 `-480.webp`, `-800.webp`, `-1120.webp` (proporção 4:5) e `.jpg` (og:image). Para trocar
 pelos originais, ajuste `scripts/build-fotos.mjs` (arquivo de origem e recorte) e rode
-`node scripts/build-fotos.mjs`. Campo vazio = a foto some e o layout se reorganiza.
+`node scripts/build-fotos.mjs`. O recorte do hero vem de
+`referencias/fotos/bianca-verde-recorte.png`, gerado com
+`rembg i -m birefnet-portrait <foto> referencias/fotos/bianca-verde-recorte.png`.
+Campo vazio = a foto some e o layout se reorganiza.
 **Nunca use foto de paciente nem antes e depois.**
 
 ### Trocar o logo recriado pelo original
