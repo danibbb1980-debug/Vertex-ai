@@ -4,3 +4,4 @@ dist-ssr/
 *.zip
 .vercel
 .DS_Store
+preview-*.png
