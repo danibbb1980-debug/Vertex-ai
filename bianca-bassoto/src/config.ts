@@ -48,9 +48,15 @@ export const CONFIG = {
   /** Ex.: "CRN-9 00000". Vazio = nenhuma menção a CRN no site. */
   crn: '',
 
-  /** Foto autorizada (retrato ou consultório) em /public/fotos. Vazio = sem foto. */
-  foto: '',
-  fotoAlt: '',
+  /**
+   * Fotos da profissional em /public/fotos (base do nome; o site usa -480/-800/-1120.webp).
+   * Vazio = sem foto. Nunca foto de paciente.
+   * Origem atual: prints de posts do Instagram dela enviados pelo vendedor (ver README).
+   */
+  foto: '/fotos/bianca-verde', // seção Sobre e og:image (usa o .jpg)
+  fotoAlt: 'Retrato de Bianca Bassoto, nutricionista, de blusa verde',
+  fotoConsulta: '/fotos/bianca-rosa', // seção A consulta
+  fotoConsultaAlt: 'Bianca Bassoto, nutricionista, de jaleco rosa, apoiada em uma mesa',
 
   email: '',
 

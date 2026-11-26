@@ -39,14 +39,17 @@ export function head() {
     sameAs: [CONFIG.instagram.url],
   };
   if (temCrn()) ld.identifier = CONFIG.crn;
-  if (CONFIG.foto) ld.image = url + CONFIG.foto.replace(/^\//, '');
+  if (CONFIG.foto) ld.image = url + CONFIG.foto.replace(/^\//, '') + '.jpg';
   const faqLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqs().map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   };
   const og = CONFIG.foto
-    ? `<meta property="og:image" content="${esc(url + CONFIG.foto.replace(/^\//, ''))}" />`
+    ? `<meta property="og:image" content="${esc(url + CONFIG.foto.replace(/^\//, '') + '.jpg')}" />
+    <meta property="og:image:width" content="1080" />
+    <meta property="og:image:height" content="1350" />
+    <meta property="og:image:alt" content="${esc(CONFIG.fotoAlt)}" />`
     : '';
   return `
     <title>${esc(title)}</title>

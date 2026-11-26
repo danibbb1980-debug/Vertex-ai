@@ -1,5 +1,6 @@
 import { Markers } from '../components/Markers';
 import { CONFIG } from '../config';
+import { Foto } from '../components/Foto';
 
 const passos = [
   'Você conta sua rotina e o que procura.',
@@ -26,6 +27,12 @@ export function Consulta({ num }: { num: string }) {
             </span>
           </span>
         </h2>
+        <Foto
+          base={CONFIG.fotoConsulta}
+          alt={CONFIG.fotoConsultaAlt}
+          className="consulta__foto"
+          sizes="(min-width: 64rem) 34vw, 90vw"
+        />
         <ol className="consulta__steps">
           {passos.map((p, i) => (
             <li className="row consulta__step" key={i}>

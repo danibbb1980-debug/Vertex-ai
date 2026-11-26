@@ -1,5 +1,6 @@
 import { CONFIG, formacaoAtiva, temCrn } from '../config';
 import { SectionHead } from '../components/SectionHead';
+import { Foto } from '../components/Foto';
 
 export function Sobre({ num }: { num: string }) {
   const f = formacaoAtiva();
@@ -7,19 +8,16 @@ export function Sobre({ num }: { num: string }) {
   return (
     <section className="sec sobre" id="sobre" aria-labelledby="sobre-h">
       <div className="wrap sobre__grid">
-        <SectionHead num={num} label="Sobre" id="sobre-h" lines={['Formação']} className="sobre__head" />
+        <div className="sobre__aside">
+          <SectionHead num={num} label="Sobre" id="sobre-h" lines={['Formação']} className="sobre__head" />
+          <Foto
+            base={CONFIG.foto}
+            alt={CONFIG.fotoAlt || `${CONFIG.nome}, ${CONFIG.descritor.toLowerCase()}`}
+            className="sobre__foto"
+            sizes="(min-width: 64rem) 30vw, 90vw"
+          />
+        </div>
         <div className="sobre__body">
-          {CONFIG.foto && (
-            <img
-              className="sobre__foto"
-              src={CONFIG.foto}
-              alt={CONFIG.fotoAlt || `${CONFIG.nome}, ${CONFIG.descritor.toLowerCase()}`}
-              width={800}
-              height={1000}
-              loading="lazy"
-              decoding="async"
-            />
-          )}
           {f.map((x) => (
             <p className="sobre__statement" key={x.texto}>
               {x.texto}
