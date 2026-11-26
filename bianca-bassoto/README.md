@@ -35,8 +35,8 @@ Vite + React + TypeScript + Tailwind, estático, sem backend. O HTML é pré-ren
    **37701-023**. Confirmar.
 8. **Arquivo original do logo** (vetorial ou PNG grande). O logo atual foi **recriado
    em SVG a partir de um recorte de baixa resolução** de um post.
-9. **Fotos:** as duas fotos da Bianca (blusa verde no hero, recortada com fundo
-   transparente, e de novo na seção Sobre; jaleco rosa em "A
+9. **Fotos:** as duas fotos da Bianca (blusa verde desfocada no fundo do hero e
+   nítida na seção Sobre; jaleco rosa em "A
    consulta") foram **recortadas de prints de posts do Instagram dela**, enviados pelo
    vendedor. Antes de publicar: confirmar com ela a **autorização de uso** e pedir os
    **arquivos originais em alta resolução** (e o crédito do fotógrafo, se houver).
@@ -87,7 +87,7 @@ Tudo o que o site mostra vem de `src/config.ts`. Regra: **campo vazio ou
 
 `CONFIG.fotoFundo` (fundo do hero em tela cheia, já desfocado no arquivo,
 `-480/-960/-1600.webp`; vazio = fundo creme), `CONFIG.fotoHero` (recorte com fundo
-transparente na frente, `-400/-640/-900.webp`),
+transparente na frente, `-400/-640/-900.webp`; hoje vazio, a pedido),
 `CONFIG.foto` (seção Sobre e `og:image`) e
 `CONFIG.fotoConsulta` (seção A consulta)
 recebem a base do nome em `public/fotos/` — ex.: `'/fotos/bianca-verde'`. O site usa

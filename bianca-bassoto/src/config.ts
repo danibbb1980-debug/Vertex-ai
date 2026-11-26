@@ -54,7 +54,7 @@ export const CONFIG = {
    * Origem atual: prints de posts do Instagram dela enviados pelo vendedor (ver README).
    */
   /** Hero: recorte com fundo transparente (-400/-640/-900.webp, proporção 829×1459). */
-  fotoHero: '/fotos/bianca-verde-recorte',
+  fotoHero: '', // vazio: o hero fica só com a foto desfocada ao fundo (recorte disponível: '/fotos/bianca-verde-recorte')
   fotoHeroAlt: 'Bianca Bassoto, nutricionista, de blusa verde, sorrindo',
   /** Fundo do hero em tela cheia: a foto inteira já desfocada (-480/-960/-1600.webp). Vazio = fundo creme. */
   fotoFundo: '/fotos/bianca-verde-desfoque',
