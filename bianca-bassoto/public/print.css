@@ -1,0 +1,6 @@
+.draft,.site-header,.mbar,.float-cta,.map,.card,.skip,.footer__sig{display:none!important}
+body{padding:0!important;background:#fff!important;color:#000!important}
+.sec--ink,.cta,.footer{background:#fff!important;color:#000!important}
+.acc-panel{display:block!important}
+.sec{content-visibility:visible!important;padding-block:1.5rem!important}
+a[href^="http"]::after{content:" (" attr(href) ")";font-size:.8em}

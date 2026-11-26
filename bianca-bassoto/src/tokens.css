@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Tokens — Bianca Bassoto. Use SOMENTE estas variáveis no resto do CSS.
+   Contrastes conferidos (WCAG 2.x):
+   ink   #17140F / paper #F5F0E8 = 16.6:1
+   clay  #675E53 / paper         =  5.6:1 (texto de apoio)
+   paper / ink                   = 16.6:1
+   haze  #ABA190 / ink           =  7.3:1 (texto de apoio em bloco de tinta)
+   Marcadores (m1–m4) nunca em texto: só barras de 3 px e filetes.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('/fonts/comfortaa-300.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/hanken-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/hanken-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Fallbacks com métrica ajustada: evitam salto de layout na troca de fonte. */
+@font-face {
+  font-family: 'Comfortaa Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 112%;
+  ascent-override: 78%;
+  descent-override: 21%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Hanken Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 96%;
+  ascent-override: 104%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Cor */
+  --paper: #f5f0e8;
+  --paper-2: #ede6da;
+  --ink: #17140f;
+  --ink-2: #221e18;
+  --clay: #675e53;
+  --clay-soft: #c9bfb1; /* contorno do nome no hero (decorativo) */
+  --haze: #aba190;
+  --rule: rgba(23, 20, 15, 0.16);
+  --rule-strong: rgba(23, 20, 15, 0.5);
+  --rule-inv: rgba(245, 240, 232, 0.18);
+  --m1: #c2306a; /* framboesa */
+  --m2: #17998a; /* turquesa */
+  --m3: #e0a21b; /* âmbar */
+  --m4: #3f4fb8; /* índigo */
+  --m-off: rgba(23, 20, 15, 0.12);
+  --m-off-inv: rgba(245, 240, 232, 0.16);
+  --error: #a3214f; /* texto de erro (m1 escurecido, 6.4:1 sobre paper) */
+
+  /* Tipografia */
+  --font-display: 'Comfortaa', 'Comfortaa Fallback', ui-rounded, sans-serif;
+  --font-text: 'Hanken Grotesk', 'Hanken Fallback', system-ui, sans-serif;
+  --w-light: 300;
+  --w-regular: 400;
+  --w-medium: 500;
+
+  /* Escala fluida — razão 1.333, 7 degraus */
+  --fs-label: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem); /* -1 */
+  --fs-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem); /* 0 */
+  --fs-lead: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem); /* 1 */
+  --fs-h3: clamp(1.5rem, 1.3rem + 0.9vw, 1.875rem); /* 2 */
+  --fs-h2: clamp(2rem, 1.6rem + 1.9vw, 3.25rem); /* 3 */
+  --fs-xl: clamp(2.75rem, 1.9rem + 4.2vw, 5.5rem); /* 4 */
+  --fs-xxl: clamp(3.25rem, 1.2rem + 10vw, 10.5rem); /* 5 */
+  --fs-hero: clamp(3.5rem, 0.4rem + 21.5vw, 15rem); /* nome */
+
+  --lh-tight: 1.02;
+  --lh-title: 1.12;
+  --lh-body: 1.6;
+  --track-hero: -0.045em;
+  --track-title: -0.025em;
+  --track-label: 0.16em;
+
+  /* Espaço (múltiplos de 8 px) */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-5: 3rem;
+  --s-6: 4rem;
+  --s-7: 6rem;
+  --s-8: 8rem;
+  --section: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 0.5rem + 2.4vw, 3rem);
+  --col-gap: clamp(1rem, 0.5rem + 1.6vw, 2rem);
+  --max: 90rem;
+  --measure: 34em;
+
+  /* Filetes, raios, alvos */
+  --hair: 1px;
+  --marker-h: 3px;
+  --radius-pill: 999px;
+  --radius-mark: 2px;
+  --tap: 3rem;
+  --header-h: 4.5rem;
+  --draft-h: 1.75rem;
+}
+@media (max-width: 35.99rem) {
+  :root {
+    --draft-h: 2.5rem;
+  }
+
+  /* Movimento */
+  --t-1: 160ms;
+  --t-2: 320ms;
+  --t-3: 640ms;
+  --t-4: 1100ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+}
