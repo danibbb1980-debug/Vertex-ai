@@ -5,6 +5,10 @@ por assinatura (R$197/mês) para negócios locais no Brasil.
 
 Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · pronto para Vercel.
 
+> A pasta `araujo-estetica/` é o rascunho do site da Araujo Estética Automotiva
+> (Vite + React, build próprio). Ver `araujo-estetica/README.md`. Também fica fora
+> do `tsconfig.json` e das fontes do Tailwind deste site.
+>
 > A pasta `vip-shape/` é outro app: o site da VIP Shape Academia, cliente da
 > Vertex, com build próprio. Ver `vip-shape/README.md`. Ela fica fora do
 > `tsconfig.json` e das fontes do Tailwind deste site.

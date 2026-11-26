@@ -1,0 +1,105 @@
+/* Araujo Estética Automotiva · tokens do sistema
+   Única fonte de cor, tipo, espaço e movimento. Nenhum hex fora deste arquivo. */
+
+@font-face {
+  font-family: "RHD Fallback";
+  src: local("Arial Bold"), local("Arial"), local("Liberation Sans Bold"), local("Helvetica Neue Bold"), local("Helvetica");
+  font-weight: 700;
+  size-adjust: 96.84%;
+  ascent-override: 105.12%;
+  descent-override: 31.5%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Hanken Fallback";
+  src: local("Arial"), local("Liberation Sans"), local("Helvetica Neue"), local("Helvetica");
+  size-adjust: 100.69%;
+  ascent-override: 99.31%;
+  descent-override: 30.09%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Cor: medida no logo (fundo #000000 puro) */
+  --c-black: #000000;          /* superfície principal, = fundo do logo */
+  --c-graphite: #1a1b1d;       /* blocos e cartões */
+  --c-graphite-2: #232427;     /* campos sobre grafite */
+  --c-ice: #f2f2ef;            /* texto sobre escuro; seções silenciosas */
+  --c-white: #ffffff;          /* hover do botão claro; faixa de luz */
+  --c-steel: #8a8d93;          /* apoio sobre preto (6.3:1) e grafite (5.2:1) */
+  --c-steel-ink: #5c5f65;      /* apoio sobre branco-gelo (5.7:1) */
+  --c-matte: #3a3c40;          /* camada fosca do nome (decorativa) */
+  --c-rule: #2e3034;           /* filetes sobre escuro */
+  --c-rule-light: #cfd0cc;     /* filetes sobre branco-gelo */
+  --c-error: #f2b8b5;          /* erro sobre escuro (contraste 11:1), sem depender só de cor */
+
+  /* Acento único: o metal do monograma */
+  --metal: linear-gradient(105deg, #8e9298 0%, #f4f5f7 22%, #a9adb3 46%, #e4e6e9 70%, #8a8e94 100%);
+  --metal-line: linear-gradient(90deg, #8e9298, #f4f5f7 30%, #a9adb3 55%, #e4e6e9 78%, #8a8e94);
+  --metal-line-v: linear-gradient(180deg, #8e9298, #f4f5f7 40%, #a9adb3 70%, #e4e6e9);
+
+  /* Diagonal: inclinação medida no monograma (≈ 43° da vertical) */
+  --diag: 43deg;
+
+  /* Tipo */
+  --f-display: "Red Hat Display Variable", "RHD Fallback", system-ui, sans-serif;
+  --f-text: "Hanken Grotesk Variable", "Hanken Fallback", system-ui, sans-serif;
+  --w-thin: 300;
+  --w-text: 400;
+  --w-bold: 700;
+
+  /* Escala fluida, razão 1.333, 7 degraus */
+  --fs--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --fs-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --fs-1: clamp(1.25rem, 1.18rem + 0.35vw, 1.5rem);
+  --fs-2: clamp(1.5rem, 1.35rem + 0.75vw, 2rem);
+  --fs-3: clamp(1.875rem, 1.6rem + 1.4vw, 2.666rem);
+  --fs-4: clamp(2.25rem, 1.8rem + 2.4vw, 3.553rem);
+  --fs-5: clamp(2.75rem, 2rem + 4vw, 4.736rem);
+  /* Display: escala de assinatura */
+  --fs-hero: min(32.5vw, 30rem);
+  --fs-giant: clamp(4.5rem, 15vw, 15rem);
+  --fs-index: clamp(3.5rem, 2rem + 8vw, 9rem);
+
+  --lh-tight: 0.92;
+  --lh-title: 1.04;
+  --lh-text: 1.6;
+  --tr-tight: -0.035em;
+  --tr-title: -0.02em;
+  --tr-label: 0.18em;
+
+  /* Espaço: múltiplos de 8 px */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-5: 3rem;
+  --s-6: 4rem;
+  --s-7: 6rem;
+  --s-8: 8rem;
+  --s-section: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --col-gap: clamp(1rem, 2vw, 1.5rem);
+
+  /* Larguras */
+  --w-page: 90rem;
+  --w-read: 38rem;
+  --w-form: 36rem;
+
+  --rule: 1px;
+  --radius: 0;
+  --tap: 3rem; /* 48 px */
+  --bar-h: 1.75rem; /* faixa de rascunho */
+  --header-h: 4.5rem;
+
+  /* Movimento */
+  --d-1: 160ms;
+  --d-2: 320ms;
+  --d-3: 640ms;
+  --d-4: 1100ms;
+  --d-sign: 1400ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  color-scheme: dark;
+}

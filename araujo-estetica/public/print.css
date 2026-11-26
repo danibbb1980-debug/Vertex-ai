@@ -1,0 +1,8 @@
+/* impressão: só o conteúdo, tinta preta em papel branco */
+html, body, section, footer { background: #fff !important; color: #000 !important; }
+.header, .draft, .mobile-bar, .float-cta, .signature, .sweep, .hero-diag, video, iframe, .map, form .btn { display: none !important; }
+.name-matte { color: #000 !important; }
+.cta-name { -webkit-text-fill-color: #000 !important; color: #000 !important; background: none !important; }
+a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; word-break: break-all; }
+.panel[hidden] { display: block !important; }
+.section { padding-block: 1.5rem !important; content-visibility: visible !important; }
