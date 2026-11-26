@@ -1,5 +1,6 @@
 import { CONFIG, temCrn, waLink, atendimentosAtivos } from '../config';
 import { Markers } from '../components/Markers';
+import { Foto } from '../components/Foto';
 
 function Line({ text }: { text: string }) {
   return (
@@ -15,7 +16,7 @@ function Line({ text }: { text: string }) {
 export function Hero() {
   const [first, ...rest] = CONFIG.nome.split(' ');
   return (
-    <section className="hero" id="topo" aria-labelledby="hero-h1">
+    <section className={`hero ${CONFIG.fotoHero ? 'hero--foto' : ''}`} id="topo" aria-labelledby="hero-h1">
       <div className="wrap hero__grid">
         <p className="eyebrow hero__eyebrow">
           {CONFIG.descritor} · {CONFIG.cidade}/{CONFIG.uf}
@@ -46,6 +47,13 @@ export function Hero() {
             )}
           </div>
         </div>
+        <Foto
+          base={CONFIG.fotoHero}
+          alt={CONFIG.fotoHeroAlt}
+          className="hero__foto"
+          sizes="(min-width: 64rem) 28vw, 90vw"
+          prioridade
+        />
       </div>
     </section>
   );

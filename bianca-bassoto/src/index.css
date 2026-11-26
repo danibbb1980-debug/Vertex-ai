@@ -701,15 +701,12 @@ html.js-motion .sec.is-in .mk-mini__bar .mk-bar__fill {
     grid-column: 7 / span 6;
   }
 }
+/* Sem foto: o texto de apoio ocupa o vazio ao lado de "Bianca" */
 @media (min-width: 75rem) {
-  /* o texto de apoio ocupa o vazio ao lado de "Bianca" */
-  .hero__grid {
-    position: relative;
-  }
-  .hero__name {
+  .hero:not(.hero--foto) .hero__name {
     grid-row: 2;
   }
-  .hero__aside {
+  .hero:not(.hero--foto) .hero__aside {
     grid-column: 9 / -1;
     grid-row: 2;
     align-self: start;
@@ -717,8 +714,44 @@ html.js-motion .sec.is-in .mk-mini__bar .mk-bar__fill {
     font-size: 1rem;
     max-width: none;
   }
-  .mk-hero {
+  .hero:not(.hero--foto) .mk-hero {
     grid-row: 3;
+  }
+}
+
+/* Com foto: no celular a foto vem depois dos botões (o nome e os marcadores
+   continuam na primeira tela); no desktop, nome em 8 colunas e retrato em 4. */
+.hero__foto {
+  grid-column: 1 / -1;
+  width: min(100%, 26rem);
+  margin-top: var(--s-5);
+}
+@media (min-width: 64rem) {
+  .hero--foto .hero__eyebrow {
+    grid-column: 1 / span 8;
+    grid-row: 1;
+  }
+  .hero--foto .hero__name {
+    grid-column: 1 / span 8;
+    grid-row: 2;
+    /* "Bassoto" mede ~3,9 em: cabe em 8 de 12 colunas */
+    font-size: min(var(--fs-hero), calc((min(100vw, var(--max)) - 2 * var(--gutter)) * 0.64 / 3.95));
+  }
+  .hero--foto .mk-hero {
+    grid-column: 1 / span 8;
+    grid-row: 3;
+  }
+  .hero--foto .hero__aside {
+    grid-column: 1 / span 7;
+    grid-row: 4;
+    margin-top: var(--s-5);
+  }
+  .hero--foto .hero__foto {
+    grid-column: 9 / -1;
+    grid-row: 1 / span 4;
+    align-self: start;
+    width: 100%;
+    margin-top: 0;
   }
 }
 

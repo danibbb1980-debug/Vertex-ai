@@ -1,5 +1,18 @@
 /** Foto com srcset WebP (480/800/1120) e proporção 4:5 reservada (sem salto de layout). */
-export function Foto({ base, alt, className = '', sizes }: { base: string; alt: string; className?: string; sizes: string }) {
+export function Foto({
+  base,
+  alt,
+  className = '',
+  sizes,
+  prioridade = false,
+}: {
+  base: string;
+  alt: string;
+  className?: string;
+  sizes: string;
+  /** true no hero: carrega já, com prioridade alta */
+  prioridade?: boolean;
+}) {
   if (!base) return null;
   return (
     <figure className={`foto ${className}`}>
@@ -10,8 +23,9 @@ export function Foto({ base, alt, className = '', sizes }: { base: string; alt: 
         alt={alt}
         width={800}
         height={1000}
-        loading="lazy"
+        loading={prioridade ? 'eager' : 'lazy'}
         decoding="async"
+        {...(prioridade ? { fetchpriority: 'high' } : {})}
       />
     </figure>
   );
