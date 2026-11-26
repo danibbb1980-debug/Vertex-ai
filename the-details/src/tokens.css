@@ -1,0 +1,78 @@
+/* The Details · tokens. Use somente estas variáveis. */
+@font-face {
+  font-family: 'Gloock Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 104%;
+  ascent-override: 92%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Hanken Fallback';
+  src: local('Arial'), local('Helvetica');
+  size-adjust: 98%;
+  ascent-override: 100%;
+  descent-override: 29%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* cor: grafite e branco-osso, como o logo */
+  --c-ink-0: #0c0d0f;   /* superfície principal */
+  --c-ink-1: #17181a;   /* blocos */
+  --c-ink-2: #222327;   /* filetes sobre escuro */
+  --c-seal: #1b1c1e;    /* cor do círculo do logo */
+  --c-bone: #eceae4;    /* texto e seções claras */
+  --c-bone-2: #d9d6ce;  /* filetes sobre claro */
+  --c-paper-ink: #0e0f11;
+  --c-steel: #8b8f96;   /* apoio sobre escuro (6,3:1 em ink-0) */
+  --c-steel-dark: #55585e; /* apoio sobre claro (6,2:1 em bone) */
+  --c-rule: rgb(236 234 228 / 0.14);
+  --c-rule-strong: rgb(236 234 228 / 0.32);
+  --c-error: #f0b4a8;   /* erro sobre escuro, sem vermelho saturado */
+
+  /* tipografia */
+  --f-display: 'Gloock', 'Gloock Fallback', Georgia, serif;
+  --f-text: 'Hanken Grotesk', 'Hanken Fallback', Arial, sans-serif;
+
+  /* escala fluida, razão ~1.333 */
+  --t-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+  --t-sm: clamp(0.875rem, 0.85rem + 0.12vw, 0.9375rem);
+  --t-md: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --t-lg: clamp(1.25rem, 1.12rem + 0.6vw, 1.625rem);
+  --t-xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem);
+  --t-2xl: clamp(2.5rem, 1.7rem + 3.6vw, 4.75rem);
+  --t-3xl: clamp(3.5rem, 2rem + 7vw, 9rem);
+
+  --track-tight: -0.025em;
+  --track-label: 0.28em;
+
+  /* espaço: múltiplos de 8 */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-5: 3rem;
+  --s-6: 4rem;
+  --s-7: 6rem;
+  --s-8: 8rem;
+  --s-section: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --max: 90rem;
+  --measure: 62ch;
+
+  --rule: 1px;
+  --radius: 0px;
+  --radius-pill: 999px;
+  --touch: 3rem;
+  --header-h: 4.5rem;
+  --draft-h: 1.75rem;
+
+  /* movimento */
+  --d-1: 160ms;
+  --d-2: 320ms;
+  --d-3: 640ms;
+  --d-4: 1100ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+}
