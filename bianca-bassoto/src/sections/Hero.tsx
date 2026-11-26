@@ -15,7 +15,22 @@ function Line({ text }: { text: string }) {
 export function Hero() {
   const [first, ...rest] = CONFIG.nome.split(' ');
   return (
-    <section className={`hero ${CONFIG.fotoHero ? 'hero--foto' : ''}`} id="topo" aria-labelledby="hero-h1">
+    <section
+      className={`hero ${CONFIG.fotoHero ? 'hero--foto' : ''} ${CONFIG.fotoFundo ? 'hero--fundo' : ''}`}
+      id="topo"
+      aria-labelledby="hero-h1"
+    >
+      {CONFIG.fotoFundo && (
+        <div className="hero__bg" aria-hidden="true">
+          <img
+            src={`${CONFIG.fotoFundo}-960.webp`}
+            srcSet={`${CONFIG.fotoFundo}-480.webp 480w, ${CONFIG.fotoFundo}-960.webp 960w, ${CONFIG.fotoFundo}-1600.webp 1600w`}
+            sizes="100vw"
+            alt=""
+            decoding="async"
+          />
+        </div>
+      )}
       <div className="wrap hero__grid">
         <p className="eyebrow hero__eyebrow">
           {CONFIG.descritor} · {CONFIG.cidade}/{CONFIG.uf}

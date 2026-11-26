@@ -85,7 +85,9 @@ Tudo o que o site mostra vem de `src/config.ts`. Regra: **campo vazio ou
 
 ### Fotos
 
-`CONFIG.fotoHero` (hero: recorte com fundo transparente, `-400/-640/-900.webp`),
+`CONFIG.fotoFundo` (fundo do hero em tela cheia, já desfocado no arquivo,
+`-480/-960/-1600.webp`; vazio = fundo creme), `CONFIG.fotoHero` (recorte com fundo
+transparente na frente, `-400/-640/-900.webp`),
 `CONFIG.foto` (seção Sobre e `og:image`) e
 `CONFIG.fotoConsulta` (seção A consulta)
 recebem a base do nome em `public/fotos/` — ex.: `'/fotos/bianca-verde'`. O site usa

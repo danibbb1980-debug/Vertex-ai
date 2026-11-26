@@ -719,6 +719,47 @@ html.js-motion .sec.is-in .mk-mini__bar .mk-bar__fill {
   }
 }
 
+/* Fundo em tela cheia: a foto desfocada + um véu creme (o nome continua em tinta).
+   O desfoque está no próprio arquivo; aqui só posicionamento. */
+.hero--fundo {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  margin-top: calc(-1 * var(--draft-h));
+  padding-top: calc(var(--draft-h) + var(--header-h) + clamp(2rem, 7vw, 6rem));
+  overflow: hidden;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--paper-2);
+}
+.hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  transform: scale(1.08); /* esconde a borda clara que o desfoque deixa */
+}
+.hero__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--veil);
+}
+.hero--fundo .hero__foto::after {
+  display: none;
+}
+/* sobre a foto, o texto de apoio passa a tinta (a cor argila não tem contraste AA ali) */
+.hero--fundo .hero__eyebrow,
+.hero--fundo .mk-hero__label {
+  color: var(--ink);
+}
+.hero--fundo .mk-bar {
+  background: rgba(23, 20, 15, 0.18);
+}
+
 /* Com foto: recorte de fundo transparente sobre o creme.
    Celular: depois dos botões, apoiado num filete com as quatro cores.
    Desktop: nome em 8 colunas, figura em 4, "em pé" sobre a linha dos marcadores,

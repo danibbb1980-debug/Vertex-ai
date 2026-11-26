@@ -27,4 +27,17 @@ for (const [nome, f] of Object.entries(fotos)) {
   const m = await base.metadata();
   console.log('recorte', info.width, info.height, '→', m.width, m.height);
 }
+// Fundo do hero: a foto inteira, já desfocada (o desfoque vai no arquivo, não em CSS:
+// arquivo minúsculo e nada de filtro caro no navegador)
+for (const w of [480, 960, 1600]) {
+  await sharp('referencias/fotos/bianca-verde-print.png')
+    .extract({ left: 0, top: 292, width: 1170, height: 1733 })
+    .resize(Math.round(w / 6))
+    .blur(2.2)
+    .resize(w, null, { kernel: 'cubic' })
+    .blur(Math.max(4, w / 120))
+    .modulate({ saturation: 0.85 })
+    .webp({ quality: 62 })
+    .toFile(`public/fotos/bianca-verde-desfoque-${w}.webp`);
+}
 console.log(fs.readdirSync('public/fotos').map((f) => `${f} ${(fs.statSync('public/fotos/' + f).size / 1024).toFixed(0)}KB`).join('\n'));

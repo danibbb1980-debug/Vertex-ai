@@ -56,6 +56,8 @@ export const CONFIG = {
   /** Hero: recorte com fundo transparente (-400/-640/-900.webp, proporção 829×1459). */
   fotoHero: '/fotos/bianca-verde-recorte',
   fotoHeroAlt: 'Bianca Bassoto, nutricionista, de blusa verde, sorrindo',
+  /** Fundo do hero em tela cheia: a foto inteira já desfocada (-480/-960/-1600.webp). Vazio = fundo creme. */
+  fotoFundo: '/fotos/bianca-verde-desfoque',
   foto: '/fotos/bianca-verde', // seção Sobre e og:image (usa o .jpg)
   fotoAlt: 'Retrato de Bianca Bassoto, nutricionista, de blusa verde',
   fotoConsulta: '/fotos/bianca-rosa', // seção A consulta

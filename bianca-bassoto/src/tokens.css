@@ -68,6 +68,7 @@
   --m4: #3f4fb8; /* índigo */
   --m-off: rgba(23, 20, 15, 0.12);
   --m-off-inv: rgba(245, 240, 232, 0.16);
+  --veil: rgba(245, 240, 232, 0.62); /* véu creme sobre a foto desfocada do hero */
   --error: #a3214f; /* texto de erro (m1 escurecido, 6.4:1 sobre paper) */
 
   /* Tipografia */
