@@ -1,0 +1,283 @@
+@import '@fontsource-variable/bricolage-grotesque/wght.css';
+@import '@fontsource-variable/hanken-grotesk/wght.css';
+@import 'tailwindcss';
+
+@theme {
+  /* Cores amostradas do logo oficial */
+  --color-teal: #0f908a; /* símbolo do logo: linhas e ênfases grandes */
+  --color-teal-forte: #0a6b66; /* botões e links (AA com branco e sobre o linho) */
+  --color-teal-claro: #7cc8c1; /* linhas sobre fundo escuro */
+  --color-ardosia: #184b4a; /* texto do logo: títulos e seção escura */
+  --color-ardosia-escuro: #123a39;
+  --color-tinta: #22403e; /* texto corrido */
+  --color-linho: #efebe3; /* fundo */
+  --color-papel: #f8f6f1;
+  --color-salvia: #d6ddd4; /* apoio */
+  --color-salvia-medio: #a9b8ad;
+  --color-salvia-escuro: #475a50; /* textos secundários (AA sobre linho) */
+  --color-cinza-logo: #9c9c9d;
+  --color-erro: #a3342a;
+
+  --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Hanken Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-calmo: cubic-bezier(0.22, 0.61, 0.24, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-linho);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-feature-settings: 'kern', 'liga', 'calt';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    color: var(--color-ardosia);
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-teal-forte);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .bg-escuro :focus-visible {
+    outline-color: var(--color-teal-claro);
+  }
+  ::selection {
+    background: var(--color-salvia);
+    color: var(--color-ardosia);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--color-ardosia);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+}
+.skip-link:focus {
+  top: 3rem;
+}
+
+@layer components {
+/* Rótulo em caixa-alta espaçada */
+.rotulo {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-salvia-escuro);
+}
+
+/* Títulos: grandes, leves e apertados */
+.titulo-hero {
+  font-weight: 300;
+  font-size: clamp(2.9rem, 8.2vw, 7.4rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+.titulo-secao {
+  font-weight: 300;
+  font-size: clamp(2.2rem, 4.6vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.enfase {
+  font-weight: 400;
+  color: var(--color-teal);
+}
+.bg-escuro .enfase {
+  color: var(--color-teal-claro);
+}
+
+/* Números tabulares para horários */
+.tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.2;
+  transition:
+    background-color 0.25s var(--ease-calmo),
+    color 0.25s var(--ease-calmo),
+    border-color 0.25s var(--ease-calmo);
+}
+.btn-primario {
+  background: var(--color-teal-forte);
+  color: #fff;
+}
+.btn-primario:hover {
+  background: var(--color-ardosia);
+}
+.btn-secundario {
+  border: 1.5px solid var(--color-ardosia);
+  color: var(--color-ardosia);
+}
+.btn-secundario:hover {
+  background: var(--color-ardosia);
+  color: var(--color-linho);
+}
+.bg-escuro .btn-primario {
+  background: var(--color-linho);
+  color: var(--color-ardosia);
+}
+.bg-escuro .btn-primario:hover {
+  background: #fff;
+}
+.bg-escuro .btn-secundario {
+  border-color: var(--color-salvia-medio);
+  color: var(--color-linho);
+}
+.bg-escuro .btn-secundario:hover {
+  background: var(--color-linho);
+  color: var(--color-ardosia);
+}
+
+/* Traço que acompanha o botão: estende levemente no hover */
+.btn .traco {
+  width: 1.4rem;
+  height: 0.75rem;
+  overflow: visible;
+  transition: transform 0.35s var(--ease-calmo);
+  transform-origin: left center;
+}
+.btn:hover .traco {
+  transform: translateX(3px);
+}
+
+/* Link de texto com sublinhado fino */
+.link-fino {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: color-mix(in oklab, currentColor 45%, transparent);
+  transition: text-decoration-color 0.2s;
+}
+.link-fino:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Revelação do título do hero (uma vez, no carregamento) */
+.linha-mascara {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.linha-mascara > span {
+  display: block;
+  animation: subir 0.9s var(--ease-calmo) both;
+}
+@keyframes subir {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Acordeão: altura animada via grid */
+.acordeao-painel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--ease-calmo);
+}
+.acordeao-painel[data-aberto='true'] {
+  grid-template-rows: 1fr;
+}
+.acordeao-painel > div {
+  overflow: hidden;
+}
+.acordeao-marca {
+  transition: transform 0.35s var(--ease-calmo);
+}
+[aria-expanded='true'] .acordeao-marca {
+  transform: rotate(45deg);
+}
+
+/* Campos do formulário */
+.campo {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 1.5px solid var(--color-salvia-medio);
+  background: #fff;
+  color: var(--color-tinta);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+.campo:hover {
+  border-color: var(--color-salvia-escuro);
+}
+.campo:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--color-teal-forte) 35%, transparent);
+  outline-offset: 0;
+  border-color: var(--color-teal-forte);
+}
+.campo[aria-invalid='true'] {
+  border-color: var(--color-erro);
+}
+.campo:disabled {
+  background: var(--color-papel);
+  color: var(--color-salvia-escuro);
+  cursor: not-allowed;
+}
+select.campo {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none' viewBox='0 0 14 9'%3E%3Cpath stroke='%23184B4A' stroke-width='1.6' d='m1 1 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.75rem;
+}
+textarea.campo {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
