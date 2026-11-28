@@ -177,16 +177,20 @@ html:not(.rascunho-off) .site-header { top: var(--draft-h); }
   position: relative; overflow: clip; background: var(--c-ink-0);
   padding-top: calc(var(--draft-h) + var(--header-h));
 }
-.stage { position: relative; width: 100%; aspect-ratio: 4 / 3.6; pointer-events: none; }
-.stage__car { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; }
-.stage__floor {
-  position: absolute; left: 50%; bottom: 2%; width: 150%; height: 26%; transform: translateX(-50%);
-  mix-blend-mode: screen;
-  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgb(236 234 228 / 0.30), rgb(236 234 228 / 0.10) 42%, transparent 70%);
+.stage { position: relative; width: 100%; aspect-ratio: 4 / 3.5; pointer-events: none; }
+.stage__car {
+  position: absolute; left: 50%; bottom: 6%; width: 74%; height: auto; transform: translateX(-50%);
 }
-.stage__seal { position: absolute; left: 50%; top: 0; width: 40px; height: 40px; margin-left: -20px; }
-.stage__word { position: absolute; left: 0; right: 0; top: 12%; width: 100%; height: 19%; overflow: visible; }
-.stage__word-t { font-family: var(--f-display); font-size: 270px; letter-spacing: -0.02em; fill: none; stroke-width: 2.4; }
+.stage__floor {
+  position: absolute; left: 50%; bottom: 0; width: 150%; height: 34%; transform: translateX(-50%);
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgb(236 234 228 / 0.22), rgb(236 234 228 / 0.07) 42%, transparent 70%);
+}
+.stage__shadow {
+  position: absolute; left: 50%; bottom: 4.5%; width: 84%; height: 9%; transform: translateX(-50%);
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgb(0 0 0 / 0.85), transparent 70%);
+}
+.stage__word { position: absolute; left: 7%; right: 7%; top: 3%; width: 86%; height: 20%; overflow: visible; }
+.stage__word-t { font-family: var(--f-display); font-size: 215px; letter-spacing: -0.02em; fill: none; stroke-width: 2.4; }
 .stage__leader { display: none; }
 
 .hero__grid { position: relative; display: grid; gap: var(--s-4); padding-bottom: var(--s-6); margin-top: var(--s-1); }
@@ -227,10 +231,10 @@ html:not(.rascunho-off) .site-header { top: var(--draft-h); }
     position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
     width: min(74vw, calc((100svh - var(--draft-h) - var(--header-h)) * 1.62), 1500px); aspect-ratio: 1800 / 1100;
   }
-  .stage__car { object-fit: contain; }
-  .stage__floor { bottom: 1%; width: 120%; height: 20%; }
-  .stage__seal { top: 0; }
-  .stage__word { top: 8%; height: 22%; }
+  .stage__car { width: 46%; bottom: 5%; }
+  .stage__floor { bottom: -2%; width: 110%; height: 26%; }
+  .stage__shadow { width: 50%; bottom: 3.5%; height: 7%; }
+  .stage__word { left: 21%; right: 21%; width: 58%; top: 9%; height: 20%; }
   .stage__leader {
     display: block; position: absolute; left: 70%; top: 34%; width: 16%; height: 22%; color: var(--c-rule-strong); overflow: visible;
   }
@@ -246,8 +250,8 @@ html:not(.rascunho-off) .site-header { top: var(--draft-h); }
 @media (prefers-reduced-motion: no-preference) {
   .stage__floor { animation: hero-fade 900ms var(--ease-out) 100ms both; }
   .stage__car--dark { animation: hero-fade 1000ms var(--ease-out) 150ms both; }
-  .stage__seal { animation: hero-fade 700ms var(--ease-out) 400ms both; }
-  .stage__word { animation: hero-rise 1000ms var(--ease-out) 650ms both; }
+  .stage__word { animation: hero-rise 1000ms var(--ease-out) 450ms both; }
+  .stage__shadow { animation: hero-fade 900ms var(--ease-out) 150ms both; }
   .stage__car--lit { animation: hero-fade 1100ms var(--ease-io) 1150ms both; }
   .stage__leader { animation: hero-fade 600ms var(--ease-out) 1900ms both; }
   .ui-in { animation: hero-rise 700ms var(--ease-out) calc(1750ms + var(--i, 0) * 90ms) both; }

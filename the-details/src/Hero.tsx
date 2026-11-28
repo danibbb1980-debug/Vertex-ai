@@ -1,7 +1,6 @@
 import { CONFIG, enderecoLinha } from './config';
 import { WaButton } from './ui';
 import { horaCurta } from './lib';
-import seal from './assets/selo.svg';
 
 /**
  * Hero em palco: o carro surge em silhueta sob a luz, o nome aparece em contorno
@@ -14,40 +13,40 @@ export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="stage" aria-hidden="true">
+        <div className="stage__floor" />
+        <svg className="stage__word" viewBox="0 0 1200 240" preserveAspectRatio="xMidYMax meet">
+          <defs>
+            <linearGradient id="word-metal" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="0.6" stopColor="#b9bcc1" stopOpacity="0.75" />
+              <stop offset="1" stopColor="#8b8f96" stopOpacity="0.15" />
+            </linearGradient>
+          </defs>
+          <text x="600" y="212" textAnchor="middle" className="stage__word-t" stroke="url(#word-metal)">
+            The Details
+          </text>
+        </svg>
+        <div className="stage__shadow" />
         <img
           className="stage__car stage__car--dark"
-          src="/media/hero-carro-escuro-1000.webp"
-          srcSet="/media/hero-carro-escuro-1000.webp 1000w, /media/hero-carro-escuro-1800.webp 1800w"
-          sizes="(min-width: 900px) 70vw, 160vw"
-          width={1800}
-          height={1100}
+          src="/media/hero-carro-escuro-640.webp"
+          srcSet="/media/hero-carro-escuro-640.webp 640w, /media/hero-carro-escuro-1100.webp 1100w"
+          sizes="(min-width: 900px) 34vw, 80vw"
+          width={1142}
+          height={984}
           alt=""
           fetchPriority="high"
         />
         <img
           className="stage__car stage__car--lit"
-          src="/media/hero-carro-1000.webp"
-          srcSet="/media/hero-carro-1000.webp 1000w, /media/hero-carro-1800.webp 1800w"
-          sizes="(min-width: 900px) 70vw, 160vw"
-          width={1800}
-          height={1100}
+          src="/media/hero-carro-640.webp"
+          srcSet="/media/hero-carro-640.webp 640w, /media/hero-carro-1100.webp 1100w"
+          sizes="(min-width: 900px) 34vw, 80vw"
+          width={1142}
+          height={984}
           alt=""
           fetchPriority="high"
         />
-        <div className="stage__floor" />
-        <svg className="stage__word" viewBox="0 0 1000 260" preserveAspectRatio="xMidYMax meet">
-          <defs>
-            <linearGradient id="word-metal" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#ffffff" stopOpacity="1" />
-              <stop offset="0.6" stopColor="#b9bcc1" stopOpacity="0.75" />
-              <stop offset="1" stopColor="#8b8f96" stopOpacity="0.08" />
-            </linearGradient>
-          </defs>
-          <text x="500" y="232" textAnchor="middle" className="stage__word-t" stroke="url(#word-metal)">
-            Details
-          </text>
-        </svg>
-        <img className="stage__seal" src={seal} alt="" width={44} height={44} />
         <svg className="stage__leader" viewBox="0 0 200 120" preserveAspectRatio="none">
           <polyline
             points="0,120 110,0 200,0"
