@@ -1,141 +1,66 @@
 import { useState, type FormEvent, type ReactNode } from 'react'
-import { LazyMotion, domAnimation, m, useReducedMotion } from 'motion/react'
 import { CONFIG, waLink } from '../config'
 import { IconeWhatsApp } from './icones'
 
-// Hero em painel arredondado (referência enviada pelo cliente), traduzido para a marca:
-// sem foto de banco, a figura é uma ilustração original de traço contínuo na mesma pose,
-// com o ponto e a órbita do símbolo do logo. Ela se desenha uma única vez (≈2,5 s).
+// Hero em painel arredondado, a partir da referência enviada pelo cliente.
+// A imagem é ilustrativa e original (gerada para este rascunho), não é foto da clínica
+// nem de paciente. Para trocar por uma foto real da OrtoFisio, substitua public/img/hero-pilates-*.webp
+// (mesma proporção 3:2, pessoa à direita) e ajuste os pontos de `notas` abaixo.
 
-// Recorte do desenho (viewBox)
-const VB_X = 20
-const VB_Y = 24
-const VB_W = 680
-const VB_H = 540
-
-// Traços da figura (afundo lateral com um braço alto)
-const tracos = [
-  // traço contínuo: pé de trás → quadril → tronco → mão no alto
-  'M 60 540 C 150 515 250 458 332 404 C 362 362 398 326 428 292 C 438 222 416 140 392 62',
-  // perna da frente
-  'M 332 404 C 380 390 436 392 472 408 C 482 452 476 500 468 540 L 514 545',
-]
-
-// Anotações: ponto na figura → fio → rótulo
+// Pontos das anotações, em pixels da imagem original (1536 × 1024)
+const IMG_W = 1536
+const IMG_H = 1024
 const notas = [
-  { x: 392, y: 62, lx: 452, ly: 40, texto: 'Avaliação individual antes de começar' },
-  { x: 332, y: 404, lx: 70, ly: 318, texto: 'Fisioterapia e pilates', esquerda: true },
-  { x: 472, y: 408, lx: 540, ly: 432, texto: `No Centro de ${CONFIG.cidade}` },
+  { x: 1197, y: 104, lx: 1262, ly: 132, texto: 'Avaliação individual antes de começar' },
+  { x: 1088, y: 612, lx: 640, ly: 520, texto: 'Fisioterapia e pilates', esquerda: true },
+  { x: 1296, y: 664, lx: 1338, ly: 742, texto: `No Centro de ${CONFIG.cidade}` },
 ]
+const pct = (v: number, t: number) => `${(v / t) * 100}%`
 
-const ease = [0.45, 0.05, 0.25, 1] as const
-
-function Figura() {
-  const reduzir = useReducedMotion()
-  const inicio = reduzir ? false : { pathLength: 0, opacity: 0 }
+function Anotacoes() {
   return (
-    <LazyMotion features={domAnimation} strict>
-      <div className="relative" style={{ aspectRatio: `${VB_W} / ${VB_H}` }}>
-        <svg viewBox={`${VB_X} ${VB_Y} ${VB_W} ${VB_H}`} className="absolute inset-0 h-full w-full overflow-visible" fill="none" aria-hidden="true" focusable="false">
-          {/* Órbita do símbolo do logo */}
-          <m.ellipse
-            cx="330"
-            cy="330"
-            rx="300"
-            ry="112"
-            transform="rotate(-16 330 330)"
-            stroke="var(--color-teal-claro)"
-            strokeOpacity="0.4"
-            strokeWidth="1.25"
-            vectorEffect="non-scaling-stroke"
-            initial={inicio}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ pathLength: { delay: 0.3, duration: 2.5, ease }, opacity: { delay: 0.3, duration: 0.01 } }}
-          />
-          {tracos.map((d, i) => (
-            <m.path
-              key={d}
-              d={d}
+    <div className="anotacoes absolute inset-0 hidden xl:block" aria-hidden="true">
+      <svg viewBox={`0 0 ${IMG_W} ${IMG_H}`} className="absolute inset-0 h-full w-full" fill="none">
+        {notas.map((n) => (
+          <g key={n.texto}>
+            <path
+              d={`M ${n.x} ${n.y} L ${n.esquerda ? n.lx + 250 : n.lx - 10} ${n.ly + 14}`}
               stroke="#f3f1ea"
-              strokeWidth="3"
-              strokeLinecap="round"
+              strokeOpacity="0.6"
+              strokeWidth="1"
               vectorEffect="non-scaling-stroke"
-              initial={inicio}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={{
-                pathLength: { delay: i ? 1.6 : 0.4, duration: i ? 1.2 : 2.5, ease },
-                opacity: { delay: i ? 1.6 : 0.4, duration: 0.01 },
-              }}
             />
-          ))}
-          {/* Tapete */}
-          <m.path
-            d="M 30 550 L 650 550"
-            stroke="var(--color-teal-claro)"
-            strokeOpacity="0.55"
-            strokeWidth="1.25"
-            vectorEffect="non-scaling-stroke"
-            initial={inicio}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ pathLength: { delay: 0.2, duration: 1.2, ease }, opacity: { delay: 0.2, duration: 0.01 } }}
-          />
-          {/* Cabeça: o ponto do logo */}
-          <m.circle
-            cx="456"
-            cy="262"
-            r="16"
-            fill="var(--color-teal-claro)"
-            initial={reduzir ? false : { scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            style={{ transformOrigin: '456px 262px' }}
-            transition={{ delay: 2.4, duration: 0.5, ease: [0.22, 0.61, 0.24, 1] }}
-          />
-          {/* Fios e pontos das anotações */}
-          <m.g
-            className="hidden md:block"
-            initial={reduzir ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.8, duration: 0.6 }}
-          >
-            {notas.map((n) => (
-              <g key={n.texto}>
-                <path
-                  d={`M ${n.x} ${n.y} L ${n.esquerda ? n.lx + 196 : n.lx - 8} ${n.ly + 10}`}
-                  stroke="#f3f1ea"
-                  strokeOpacity="0.55"
-                  strokeWidth="1"
-                  vectorEffect="non-scaling-stroke"
-                />
-                <circle cx={n.x} cy={n.y} r="11" stroke="#f3f1ea" strokeOpacity="0.6" strokeWidth="1" vectorEffect="non-scaling-stroke" />
-                <circle cx={n.x} cy={n.y} r="4.5" fill="#f3f1ea" />
-              </g>
-            ))}
-          </m.g>
-        </svg>
-
-        {/* Rótulos em HTML para texto nítido */}
-        <m.ul
-          className="hidden md:block"
-          initial={reduzir ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.9, duration: 0.6 }}
+            <circle cx={n.x} cy={n.y} r="15" stroke="#f3f1ea" strokeOpacity="0.7" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+            <circle cx={n.x} cy={n.y} r="6" fill="#f3f1ea" />
+          </g>
+        ))}
+      </svg>
+      {notas.map((n) => (
+        <p
+          key={n.texto}
+          className={`absolute w-[10rem] text-[0.875rem] font-medium leading-snug text-linho ${n.esquerda ? 'text-right' : ''}`}
+          style={n.esquerda ? { right: pct(IMG_W - (n.lx + 250), IMG_W), top: pct(n.ly, IMG_H), marginRight: '0.6rem' } : { left: pct(n.lx, IMG_W), top: pct(n.ly, IMG_H) }}
         >
-          {notas.map((n) => (
-            <li
-              key={n.texto}
-              className={`absolute max-w-[11rem] text-[0.9rem] font-medium leading-snug text-linho ${n.esquerda ? 'text-right' : ''}`}
-              style={{
-                left: `${((n.lx - VB_X) / VB_W) * 100}%`,
-                top: `${((n.ly - VB_Y) / VB_H) * 100}%`,
-                width: n.esquerda ? `${(190 / VB_W) * 100}%` : undefined,
-              }}
-            >
-              {n.texto}
-            </li>
-          ))}
-        </m.ul>
-      </div>
-    </LazyMotion>
+          {n.texto}
+        </p>
+      ))}
+    </div>
+  )
+}
+
+function Imagem({ className = '' }: { className?: string }) {
+  return (
+    <img
+      src="/img/hero-pilates-1536.webp"
+      srcSet="/img/hero-pilates-640.webp 640w, /img/hero-pilates-1024.webp 1024w, /img/hero-pilates-1536.webp 1536w"
+      sizes="(min-width: 1280px) 75vw, 100vw"
+      width={IMG_W}
+      height={IMG_H}
+      alt="Mulher em postura de alongamento lateral sobre um tapete, com um braço estendido para o alto (imagem ilustrativa)"
+      fetchPriority="high"
+      decoding="async"
+      className={className}
+    />
   )
 }
 
@@ -161,8 +86,11 @@ export function HeroPainel() {
   return (
     <section id="topo" aria-labelledby="titulo-hero" className={`px-3 pb-6 md:px-5 ${CONFIG.rascunho ? 'pt-[6.75rem] md:pt-[7.5rem]' : 'pt-[4.75rem] md:pt-[5.5rem]'}`}>
       <div className="painel-hero bg-escuro relative isolate overflow-hidden rounded-[2rem] text-linho md:rounded-[2.75rem]">
-        {/* Piso com textura fina, como um tapete */}
-        <div aria-hidden="true" className="piso-hero absolute inset-x-0 bottom-0 -z-10 hidden h-[22%] md:block" />
+        {/* Imagem no desktop: ancorada à direita, emendada no fundo por máscara */}
+        <div className="foto-hero absolute bottom-0 right-0 hidden h-[92%] xl:block" style={{ aspectRatio: `${IMG_W} / ${IMG_H}` }}>
+          <Imagem className="mascara-foto absolute inset-0 h-full w-full" />
+          <Anotacoes />
+        </div>
 
         <div className="mx-auto grid max-w-[86rem] gap-6 px-6 pb-8 pt-12 md:grid-cols-12 md:gap-x-6 md:px-12 md:pb-12 md:pt-20 lg:gap-x-8">
           <div className="relative z-10 md:col-span-7 lg:col-span-6">
@@ -246,14 +174,13 @@ export function HeroPainel() {
             )}
           </div>
 
-          <div className="relative md:col-span-5 lg:col-span-6 md:self-end">
-            <div className="mx-auto w-full max-w-[30rem] md:-ml-[12%] md:w-[112%] md:max-w-none lg:-ml-[6%] lg:w-[110%]">
-              <Figura />
-            </div>
+          {/* Imagem no celular */}
+          <div className="-mx-6 overflow-hidden md:col-span-12 md:-mx-12 xl:hidden">
+            <Imagem className="mascara-foto-celular aspect-[4/3] w-full object-cover object-[78%_100%] md:aspect-[16/9]" />
           </div>
 
           {/* Base do painel: dados reais no lugar de prova social */}
-          <dl className="relative z-10 grid gap-y-4 border-t border-linho/20 pt-6 text-[0.95rem] sm:grid-cols-2 md:col-span-12 md:grid-cols-3 md:gap-x-8">
+          <dl className="relative z-10 grid gap-y-4 border-t border-linho/20 pt-6 xl:mt-10 xl:max-w-[22rem] xl:grid-cols-1 md:grid-cols-3 text-[0.95rem] sm:grid-cols-2 md:col-span-12 md:gap-x-6">
             <div>
               <dt className="rotulo !text-linho/70">Endereço</dt>
               <dd className="mt-1">
@@ -271,7 +198,7 @@ export function HeroPainel() {
               </div>
             )}
             {CONFIG.telefoneExibicao && (
-              <div>
+              <div className="xl:hidden">
                 <dt className="rotulo !text-linho/70">Telefone</dt>
                 <dd className="tabular mt-1">
                   <a href={`tel:${CONFIG.telefone}`} className="link-fino">

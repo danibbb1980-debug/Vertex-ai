@@ -34,11 +34,14 @@ Coloque os arquivos (de preferência `.webp`) em `public/fotos/` e liste em `fot
 4. Remova as metas `robots`/`googlebot` de `public/privacidade.html` e `public/404.html` e a faixa de rascunho da página de privacidade.
 5. Ajuste `siteUrl` para o domínio definitivo.
 
+### Imagem do hero
+A pessoa do hero é uma **imagem ilustrativa gerada por IA** para este rascunho (não é paciente nem profissional da clínica). Arquivos: `public/img/hero-pilates-640/1024/1536.webp`; original em `referencias/hero-gerada-figma.png`. Para usar uma foto real da OrtoFisio, substitua os três arquivos mantendo a proporção 3:2 com a pessoa à direita e ajuste os pontos das anotações (`notas`) em `src/components/HeroPainel.tsx`.
+
 ## O que falta antes da publicação definitiva
 - **Confirmar o número de WhatsApp com a clínica.** Foi informado sem o dígito 9; o site usa `(35) 98835-3607` (`5535988353607`), conforme o WhatsApp da conversa.
 - **Logo oficial em alta resolução.** O site usa um recorte do avatar do Instagram (500 × 500 px), com o fundo branco removido e sem outras alterações. Substitua `public/logo-ortofisio.webp`/`.png` pelo arquivo original (de preferência SVG).
 - Nomes e registros (CREFITO) dos profissionais, com autorização.
-- Fotos reais da clínica.
+- Fotos reais da clínica, incluindo a do hero (hoje é uma imagem ilustrativa).
 - Serviços detalhados (especialidades, técnicas), se a clínica quiser divulgar.
 - URL definitiva em `siteUrl` e uma imagem real de compartilhamento em `seo.ogImage`.
 
