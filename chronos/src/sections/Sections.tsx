@@ -47,14 +47,14 @@ export const Estetica = () => {
 
 export const OTraco = () => (
   <section className='sec sec--page traco' aria-labelledby='traco-t' data-reveal>
-    <div className='traco-scrub' data-scrub>
-      <svg className='traco-line' viewBox='0 0 1440 520' preserveAspectRatio='none' aria-hidden='true' focusable='false'>
-        <path pathLength={1} d='M-10 430 H420 L500 350 H880 L960 270 H1250 L1330 190 H1460' />
-      </svg>
-    </div>
     <div className='traco-mega' aria-hidden='true'>
       <span>Cada veículo,</span>
       <span>com atenção.</span>
+    </div>
+    <div className='traco-rule' data-scrub aria-hidden='true'>
+      <svg viewBox='0 0 1440 120' preserveAspectRatio='none' focusable='false'>
+        <path pathLength={1} d='M0 100 H360 L420 60 H860 L920 20 H1440' />
+      </svg>
     </div>
     <div className='wrap grid12 traco-foot'>
       <div className='traco-head'>
@@ -96,30 +96,62 @@ const Img = ({ f, sizes, eager = false }: { f: Foto; sizes: string; eager?: bool
 }
 
 export const Trabalhos = () => {
-  const fotos = CONFIG.fotos
-  if (!fotos.length) return null
+  const trabalhos = CONFIG.trabalhos.filter(t => t.pares.length || t.extras.length)
+  if (!trabalhos.length) return null
   return (
     <section className='sec sec--page trab' id='trabalhos' aria-labelledby='trab-t' data-reveal>
       <div className='wrap grid12 trab-head'>
         <div className='trab-num'>
           <SectionNum n='03' label='Trabalhos' />
         </div>
-        <Lines id='trab-t' className='t-2xl trab-title' lines={['Do espaço', 'da Chronos.']} />
-        <p className='trab-intro'>Registros do dia a dia em Poços de Caldas, enviados pela própria Chronos.</p>
+        <Lines id='trab-t' className='t-2xl trab-title' lines={['Antes e depois,', 'no mesmo carro.']} />
+        <p className='trab-intro'>Fotos enviadas pela própria Chronos. Cada par mostra o mesmo veículo antes e depois do atendimento.</p>
       </div>
-      <div className='wrap trab-grid'>
-        {fotos.map((f, i) => (
-          <figure key={f.arquivo} className={`ph${f.largura < 300 ? ' ph--small' : ''}`}>
-            <div className='ph-frame'>
-              <Img f={f} sizes='(min-width: 1024px) 34vw, (min-width: 768px) 46vw, 92vw' />
+
+      <div className='wrap'>
+        {trabalhos.map((t, ti) => (
+          <article key={t.id} className='case row' aria-labelledby={`case-${t.id}`}>
+            <header className='case-head'>
+              <span className='case-n tnum' aria-hidden='true'>
+                {String(ti + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3 className='case-t' id={`case-${t.id}`}>
+                  {t.titulo}
+                </h3>
+                <p className='case-v'>
+                  {t.veiculo} · {t.pares.length * 2 + t.extras.length} fotos do mesmo carro
+                </p>
+              </div>
+            </header>
+
+            <div className='case-body'>
+              {t.pares.map((p, pi) => (
+                <div key={pi} className='pair' role='group' aria-label={`Antes e depois ${pi + 1}`}>
+                  {(['antes', 'depois'] as const).map(k => (
+                    <figure key={k} className={`pair-ph pair-ph--${k}`}>
+                      <div className='ph-frame'>
+                        <Img f={p[k]} sizes='(min-width: 1024px) 26vw, 46vw' />
+                      </div>
+                      <figcaption>
+                        <span className='pair-k'>{k === 'antes' ? 'Antes' : 'Depois'}</span>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              ))}
+
+              {t.extras.length > 0 && (
+                <ul className='extras' aria-label='Outras fotos do mesmo carro'>
+                  {t.extras.map(f => (
+                    <li key={f.arquivo} className='ph-frame'>
+                      <Img f={f} sizes='(min-width: 1024px) 13vw, 30vw' />
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-            {f.legenda && (
-              <figcaption>
-                <span className='ph-n'>{String(i + 1).padStart(2, '0')}</span>
-                {f.legenda}
-              </figcaption>
-            )}
-          </figure>
+          </article>
         ))}
       </div>
     </section>

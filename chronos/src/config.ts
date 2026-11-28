@@ -19,6 +19,14 @@ export interface Foto {
   legenda?: string
 }
 
+export interface Trabalho {
+  id: string
+  titulo: string
+  veiculo: string
+  pares: { antes: Foto; depois: Foto }[]
+  extras: Foto[]
+}
+
 export const CONFIG = {
   rascunho: true,
   intro: true, // splash do hero (só ≥ 1024 px, uma vez por sessão)
@@ -90,28 +98,46 @@ export const CONFIG = {
     { id: 'detalhamento', nome: 'Detalhamento', descricao: '', ativo: false }
   ] as Servico[],
 
-  // Fotos enviadas pela Chronos (recortadas dos prints do Instagram, placas borradas). Lista vazia = seção "Trabalhos" não existe
-  fotos: [
-    { arquivo: 'chronos-01', largura: 480, altura: 648, temGrande: true, alt: 'Hatch vinho de frente, no espaço da Chronos, com as luzes hexagonais do teto refletidas no capô e no para-brisa', legenda: 'Frente, sob a luz do espaço' },
-    { arquivo: 'chronos-02', largura: 480, altura: 643, temGrande: true, alt: 'Farol de um carro vinho, com o reflexo das luzes hexagonais no capô', legenda: 'Farol' },
-    { arquivo: 'chronos-03', largura: 480, altura: 648, temGrande: true, alt: 'Capô de um utilitário cinza refletindo as luzes hexagonais do teto', legenda: 'Capô cinza' },
-    { arquivo: 'chronos-04', largura: 480, altura: 501, temGrande: true, alt: 'Roda de liga leve em preto e prata, de perto', legenda: 'Roda' },
-    { arquivo: 'chronos-05', largura: 480, altura: 516, temGrande: true, alt: 'Caixa de roda aberta, com a suspensão e o disco de freio à vista', legenda: 'Caixa de roda' },
-    { arquivo: 'chronos-06', largura: 480, altura: 644, temGrande: true, alt: 'Interior de um utilitário: volante, painel e tapetes', legenda: 'Interior' },
-    { arquivo: 'chronos-07', largura: 480, altura: 644, temGrande: true, alt: 'Utilitário cinza visto de frente, em diagonal, dentro do espaço', legenda: 'Frente, em diagonal' },
-    { arquivo: 'chronos-08', largura: 480, altura: 648, temGrande: true, alt: 'Farol de um carro vinho, de perto', legenda: 'Farol, de perto' },
-    { arquivo: 'chronos-09', largura: 480, altura: 644, temGrande: true, alt: 'Lanterna traseira de um utilitário cinza', legenda: 'Lanterna traseira' },
-    { arquivo: 'chronos-10', largura: 480, altura: 645, temGrande: true, alt: 'Porta aberta de um utilitário cinza, mostrando o vão e a borracha de vedação', legenda: 'Vão da porta' },
-    { arquivo: 'chronos-11', largura: 480, altura: 503, temGrande: true, alt: 'Roda de liga leve com pneu, iluminada de lado', legenda: 'Roda, em detalhe' },
-    { arquivo: 'chronos-12', largura: 480, altura: 645, temGrande: true, alt: 'Banco do motorista e painel de um utilitário, vistos pela porta aberta', legenda: 'Painel e bancos' },
-    { arquivo: 'chronos-13', largura: 480, altura: 649, temGrande: true, alt: 'Farol de um carro vinho visto de lado', legenda: 'Farol, outro ângulo' },
-    { arquivo: 'chronos-14', largura: 480, altura: 648, temGrande: true, alt: 'Roda dianteira e para-lama de um utilitário cinza', legenda: 'Roda e para-lama' },
-    { arquivo: 'chronos-15', largura: 480, altura: 522, temGrande: true, alt: 'Caixa de roda com amortecedor e freio à vista, carro vermelho ao fundo', legenda: 'Suspensão à vista' },
-    { arquivo: 'chronos-16', largura: 480, altura: 547, temGrande: true, alt: 'Traseira de um utilitário cinza, com a lanterna acesa', legenda: 'Traseira' },
-    { arquivo: 'chronos-17', largura: 480, altura: 649, temGrande: true, alt: 'Farol e capô de um carro vinho refletindo as luzes do teto', legenda: 'Farol e capô' },
-    { arquivo: 'chronos-18', largura: 480, altura: 644, temGrande: true, alt: 'Detalhe da borracha de vedação da porta de um utilitário cinza', legenda: 'Borracha da porta' },
-    { arquivo: 'chronos-19', largura: 480, altura: 650, temGrande: true, alt: 'Roda traseira de um utilitário cinza, de perto', legenda: 'Roda traseira' }
-  ] as Foto[],
+  // Trabalhos enviados pela Chronos: cada um é um carro, com pares de antes e depois do mesmo ângulo.
+  // Fotos recortadas dos prints do Instagram, placas borradas. Lista vazia = seção "Trabalhos" não existe
+  trabalhos: [
+    {
+      id: 'farois',
+      titulo: 'Faróis',
+      veiculo: 'Hatch vinho',
+      pares: [
+        { antes: { arquivo: 'chronos-08', largura: 480, altura: 648, temGrande: true, alt: 'Antes: farol do carro vinho amarelado e opaco' }, depois: { arquivo: 'chronos-13', largura: 480, altura: 649, temGrande: true, alt: 'Depois: o mesmo farol, transparente' } },
+        { antes: { arquivo: 'chronos-02', largura: 480, altura: 643, temGrande: true, alt: 'Antes: farol do carro vinho visto de frente, com a lente embaçada' }, depois: { arquivo: 'chronos-17', largura: 480, altura: 649, temGrande: true, alt: 'Depois: o mesmo farol, do mesmo ângulo, com a lente transparente' } }
+      ],
+      extras: [{ arquivo: 'chronos-01', largura: 480, altura: 648, temGrande: true, alt: 'O carro vinho de frente, no espaço da Chronos, sob as luzes hexagonais do teto' }]
+    },
+    {
+      id: 'caixa-de-roda',
+      titulo: 'Caixa de roda',
+      veiculo: 'Utilitário prata',
+      pares: [
+        { antes: { arquivo: 'chronos-05', largura: 480, altura: 516, temGrande: true, alt: 'Antes: caixa de roda com sujeira e barro na parte interna' }, depois: { arquivo: 'chronos-15', largura: 480, altura: 522, temGrande: true, alt: 'Depois: a mesma caixa de roda, limpa e escura' } }
+      ],
+      extras: [{ arquivo: 'chronos-11', largura: 480, altura: 503, temGrande: true, alt: 'Roda de liga leve em preto e prata do mesmo carro' }, { arquivo: 'chronos-04', largura: 480, altura: 501, temGrande: true, alt: 'A mesma roda, de outro ângulo' }]
+    },
+    {
+      id: 'utilitario-cinza',
+      titulo: 'Interior e rodas',
+      veiculo: 'Utilitário cinza',
+      pares: [
+        { antes: { arquivo: 'chronos-06', largura: 480, altura: 644, temGrande: true, alt: 'Antes: tapetes e assoalho do motorista com sujeira' }, depois: { arquivo: 'chronos-12', largura: 480, altura: 645, temGrande: true, alt: 'Depois: o mesmo interior, com o assoalho limpo' } },
+        { antes: { arquivo: 'chronos-14', largura: 480, altura: 648, temGrande: true, alt: 'Antes: pneu e caixa de roda com poeira e barro' }, depois: { arquivo: 'chronos-19', largura: 480, altura: 650, temGrande: true, alt: 'Depois: o mesmo pneu, escuro e limpo' } }
+      ],
+      extras: [
+        { arquivo: 'chronos-07', largura: 480, altura: 644, temGrande: true, alt: 'O utilitário cinza de frente, em diagonal' },
+        { arquivo: 'chronos-03', largura: 480, altura: 648, temGrande: true, alt: 'Capô do utilitário cinza refletindo as luzes do teto' },
+        { arquivo: 'chronos-09', largura: 480, altura: 644, temGrande: true, alt: 'Lanterna traseira do utilitário cinza' },
+        { arquivo: 'chronos-16', largura: 480, altura: 547, temGrande: true, alt: 'Traseira do utilitário cinza, de perto' },
+        { arquivo: 'chronos-10', largura: 480, altura: 645, temGrande: true, alt: 'Porta aberta, com o vão e a borracha de vedação' },
+        { arquivo: 'chronos-18', largura: 480, altura: 644, temGrande: true, alt: 'Detalhe da borracha de vedação da porta' }
+      ]
+    }
+  ] as Trabalho[],
 
   secoes: {
     estetica: true,

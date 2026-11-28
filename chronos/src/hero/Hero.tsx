@@ -57,7 +57,7 @@ export default function Hero() {
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
     const saveData = !!conn?.saveData
     flags.current = {
-      still: mq('(prefers-reduced-motion: reduce)') || saveData,
+      still: mq('(prefers-reduced-motion: reduce)') || saveData || (navigator.hardwareConcurrency || 4) <= 2,
       fine: mq('(pointer: fine)'),
       lit: flags.current.lit,
       mobile: mq('(max-width: 1023.98px)')

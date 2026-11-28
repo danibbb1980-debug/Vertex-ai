@@ -147,6 +147,9 @@ export function startLight(canvas: HTMLCanvasElement, getFlags: () => LightFlags
     let time = 0
     let openedAt: number | null = null
     let stale = false
+    // Computador fraco: se os quadros ficam lentos, a luz para num quadro fixo (sem loop, sem tranco)
+    let slow = false
+    const samples: number[] = []
 
     const resize = () => {
       const f = getFlags()
@@ -170,7 +173,7 @@ export function startLight(canvas: HTMLCanvasElement, getFlags: () => LightFlags
     }
     const draw = (now: number) => {
       const f = getFlags()
-      const still = f.still || f.mobile
+      const still = f.still || f.mobile || slow
       time += Math.min(now - last, 50) * 0.001 * S.speed
       last = now
       mouse.x += (target.x - mouse.x) * 0.04
@@ -185,7 +188,20 @@ export function startLight(canvas: HTMLCanvasElement, getFlags: () => LightFlags
       gl.drawArrays(gl.TRIANGLES, 0, 3)
     }
     const loop = (now: number) => {
+      const dt = now - last
       draw(now)
+      if (samples.length < 90) {
+        samples.push(dt)
+        if (samples.length === 90) {
+          const sorted = [...samples].sort((x, y) => x - y)
+          if (sorted[45] > 24) {
+            slow = true
+            stop()
+            draw(performance.now())
+            return
+          }
+        }
+      }
       frame = requestAnimationFrame(loop)
     }
     const stop = () => {
@@ -194,7 +210,7 @@ export function startLight(canvas: HTMLCanvasElement, getFlags: () => LightFlags
     }
     sync = () => {
       const f = getFlags()
-      const run = f.lit && !f.still && !f.mobile && visible && !document.hidden
+      const run = f.lit && !f.still && !f.mobile && !slow && visible && !document.hidden
       if (run && !frame) {
         last = performance.now()
         frame = requestAnimationFrame(loop)

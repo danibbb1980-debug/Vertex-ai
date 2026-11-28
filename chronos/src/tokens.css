@@ -17,8 +17,8 @@
   --c-error: #e3b26a; /* âmbar sóbrio, nunca vermelho; com texto e ícone */
 
   /* Tipografia */
-  --f-display: 'Bodoni Moda', 'Bodoni Fallback', 'Didot', 'Bodoni 72', Georgia, serif;
-  --f-text: 'Hanken Grotesk', 'Hanken Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-display: 'Bodoni Moda', 'Bodoni Fallback', serif;
+  --f-text: 'Hanken Grotesk', 'Hanken Fallback', sans-serif;
 
   /* Escala fluida, razão ≈ 1,3 */
   --t-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
@@ -77,16 +77,18 @@
 /* Fallbacks com métrica ajustada para não haver salto quando a fonte chega */
 @font-face {
   font-family: 'Bodoni Fallback';
-  src: local('Georgia'), local('Times New Roman');
-  size-adjust: 96%;
-  ascent-override: 98%;
-  descent-override: 24%;
+  src: local('Times New Roman'), local('TimesNewRomanPSMT'), local('Liberation Serif');
+  size-adjust: 113.5%;
+  ascent-override: 99.1%;
+  descent-override: 35.2%;
+  line-gap-override: 0%;
 }
 
 @font-face {
   font-family: 'Hanken Fallback';
-  src: local('Arial'), local('Helvetica');
-  size-adjust: 97%;
-  ascent-override: 96%;
-  descent-override: 26%;
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans');
+  size-adjust: 99.6%;
+  ascent-override: 100.4%;
+  descent-override: 30.4%;
+  line-gap-override: 0%;
 }
