@@ -9,18 +9,6 @@ export function Hero() {
   const nome = CONFIG.marca;
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero__media" aria-hidden="true">
-        <img
-          src="/media/hero-farois.webp"
-          srcSet="/media/hero-farois-480.webp 480w, /media/hero-farois.webp 720w"
-          sizes="(min-width: 900px) 720px, 100vw"
-          width={720}
-          height={540}
-          alt=""
-          fetchPriority="high"
-          decoding="async"
-        />
-      </div>
       <div className="wrap hero__wrap">
         <p className="hero__eyebrow">
           Detalhamento automotivo <span className="hero__dot" aria-hidden="true">·</span>{' '}

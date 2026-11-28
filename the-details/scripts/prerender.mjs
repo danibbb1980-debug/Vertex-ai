@@ -20,7 +20,6 @@ for (const f of [gloock, hanken].filter(Boolean))
   html = html.replace('</title>', `</title>\n    <link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin />`);
 // remove fontes latin-ext não usadas? mantidas pelo unicode-range (só baixam se necessário)
 
-html = html.replace('</title>', '</title>\n    <link rel="preload" as="image" href="/media/hero-farois.webp" imagesrcset="/media/hero-farois-480.webp 480w, /media/hero-farois.webp 720w" imagesizes="(min-width: 900px) 720px, 100vw" fetchpriority="high" />');
 const e = CONFIG.endereco;
 const dias = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const ld = {
