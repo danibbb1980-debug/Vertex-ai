@@ -20,7 +20,7 @@ Tudo o que o site mostra vem de `CONFIG`. Campo vazio = o bloco não aparece.
 - **Rascunho:** `rascunho: false` tira a faixa. Para liberar a indexação, apague também as metas `robots`/`googlebot` em `index.html`, `public/robots.txt`, a linha do `X-Robots-Tag` em `public/_headers`, `public/vercel.json` e `vercel.json`.
 - **Seções:** `secoes.{nome}: false` desliga a seção.
 - **Serviços:** cada item de `servicos` tem `ativo`. Só os ativos aparecem na página e no formulário. Hoje só "Estética automotiva" está ativo; lavagem, polimento, vitrificação etc. estão desligados até a Chronos confirmar.
-- **Fotos ("Trabalhos"):** lista `fotos`. Para acrescentar: salve `public/fotos/{nome}-480.webp` (e `-960.webp`, se a foto tiver resolução para isso), adicione um item com `alt` descritivo e legenda neutra. Lista vazia = a seção não existe. Os originais tratados ficam em `referencias/fotos/`. **Nunca publique placa legível nem rosto de cliente sem autorização** (as três fotos com placa já foram borradas).
+- **Fotos ("Trabalhos"):** lista `fotos`. Para acrescentar: salve `public/fotos/{nome}-480.webp` (e `-960.webp`, se a foto tiver resolução para isso), adicione um item com `alt` descritivo e legenda neutra. Lista vazia = a seção não existe. Os originais tratados ficam em `referencias/fotos/`. **Nunca publique placa legível nem rosto de cliente sem autorização** (as fotos vieram de prints do Instagram enviados pela Chronos; as quatro com placa visível ou parcial já foram borradas).
 - **Horários:** `horarios` (0 = domingo, `null` = fechado). O formulário gera os horários a partir daqui, sempre deixando a última hora livre.
 - **Hero:** `HERO_CONFIG` ajusta cores, tempos do splash e a luz em WebGL sem mexer nos componentes. `intro: false` desliga o splash.
 

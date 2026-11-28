@@ -79,7 +79,7 @@ export const OTraco = () => (
 
 const Img = ({ f, sizes, eager = false }: { f: Foto; sizes: string; eager?: boolean }) => {
   const src = `/fotos/${f.arquivo}-480.webp`
-  const srcSet = f.tem960 ? `/fotos/${f.arquivo}-480.webp 480w, /fotos/${f.arquivo}-960.webp 960w` : undefined
+  const srcSet = f.temGrande ? `/fotos/${f.arquivo}-480.webp 480w, /fotos/${f.arquivo}-720.webp 720w` : undefined
   return (
     <img
       src={src}
@@ -109,9 +109,9 @@ export const Trabalhos = () => {
       </div>
       <div className='wrap trab-grid'>
         {fotos.map((f, i) => (
-          <figure key={f.arquivo} className={`ph ph--${i + 1}${f.largura < 300 ? ' ph--small' : ''}`}>
+          <figure key={f.arquivo} className={`ph${f.largura < 300 ? ' ph--small' : ''}`}>
             <div className='ph-frame'>
-              <Img f={f} sizes='(min-width: 1024px) 40vw, 92vw' />
+              <Img f={f} sizes='(min-width: 1024px) 34vw, (min-width: 768px) 46vw, 92vw' />
             </div>
             {f.legenda && (
               <figcaption>
