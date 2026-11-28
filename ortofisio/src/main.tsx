@@ -13,10 +13,10 @@ import {
   Equipe,
   Faq,
   Fotos,
-  Hero,
   Rodape,
 } from './components/Secoes'
 import { Agendar } from './components/Agendar'
+import { HeroPainel } from './components/HeroPainel'
 
 function App() {
   const s = CONFIG.secoes
@@ -25,7 +25,7 @@ function App() {
       <FaixaRascunho />
       <Cabecalho />
       <main id="conteudo" tabIndex={-1} className="outline-none">
-        {s.hero && <Hero />}
+        {s.hero && <HeroPainel />}
         {s.cuidado && <Cuidado />}
         {s.atendimentos && <Atendimentos />}
         {s.equipe && <Equipe />}

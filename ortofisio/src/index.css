@@ -176,6 +176,30 @@
   transform: translateX(3px);
 }
 
+/* Hero em painel */
+.painel-hero {
+  background:
+    radial-gradient(120% 90% at 85% 75%, rgba(124, 200, 193, 0.22), transparent 60%),
+    linear-gradient(135deg, var(--color-ardosia-escuro) 0%, var(--color-ardosia) 45%, #0d6964 100%);
+}
+.piso-hero {
+  background:
+    repeating-linear-gradient(90deg, rgba(243, 241, 234, 0.05) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, transparent, rgba(243, 241, 234, 0.07));
+  border-top: 1px solid rgba(243, 241, 234, 0.14);
+}
+.btn-claro {
+  background: var(--color-linho);
+  color: var(--color-ardosia);
+}
+.btn-claro:hover {
+  background: #fff;
+}
+.campo-hero:focus-visible {
+  outline: 2px solid var(--color-teal-claro);
+  outline-offset: 2px;
+}
+
 /* Link de texto com sublinhado fino */
 .link-fino {
   text-decoration: underline;
