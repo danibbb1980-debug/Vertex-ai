@@ -1,0 +1,92 @@
+/* Sistema de design da Chronos. Use só estes tokens. */
+:root {
+  /* Cor */
+  --c-page: #0a0b0d; /* preto do logo */
+  --c-block: #141517; /* grafite */
+  --c-block-2: #1b1c1f;
+  --c-ink: #eceae4; /* branco-osso */
+  --c-ink-dark: #0e0f11; /* tinta nas seções claras */
+  --c-paper: #eceae4;
+  --c-steel: #8b8f96; /* apoio no escuro: 6,3:1 sobre o preto, 5,6:1 sobre o grafite */
+  --c-steel-on-paper: #565a60; /* apoio no claro: 5,9:1 */
+  --c-accent: #5db3c4; /* traço de circuito, amostrado do logo */
+  --c-accent-deep: #1d6876; /* acento para texto pequeno no claro: 5,6:1 */
+  --c-line: rgb(236 234 228 / 0.14);
+  --c-line-strong: rgb(236 234 228 / 0.32);
+  --c-line-paper: rgb(14 15 17 / 0.16);
+  --c-error: #e3b26a; /* âmbar sóbrio, nunca vermelho; com texto e ícone */
+
+  /* Tipografia */
+  --f-display: 'Bodoni Moda', 'Bodoni Fallback', 'Didot', 'Bodoni 72', Georgia, serif;
+  --f-text: 'Hanken Grotesk', 'Hanken Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Escala fluida, razão ≈ 1,3 */
+  --t-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --t-sm: clamp(0.875rem, 0.85rem + 0.1vw, 0.94rem);
+  --t-base: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --t-md: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --t-lg: clamp(1.6rem, 1.4rem + 0.9vw, 2.1rem);
+  --t-xl: clamp(2.05rem, 1.7rem + 1.7vw, 3.1rem);
+  --t-2xl: clamp(2.65rem, 2rem + 3vw, 4.6rem);
+  --t-3xl: clamp(3.4rem, 2.2rem + 5.6vw, 7.6rem);
+  --t-mega: clamp(4.6rem, 1rem + 15vw, 17rem);
+
+  --tr-label: 0.28em;
+  --tr-tight: -0.02em;
+
+  /* Espaço: múltiplos de 8 */
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.5rem;
+  --s-4: 2rem;
+  --s-5: 2.5rem;
+  --s-6: 3rem;
+  --s-8: 4rem;
+  --s-10: 5rem;
+  --s-12: 6rem;
+  --s-section: clamp(5rem, 12vw, 10rem);
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+  --max: 1440px;
+  --measure: 62ch;
+
+  /* Linhas e raios */
+  --rule: 1px;
+  --radius: 0;
+  --touch: 48px;
+
+  /* Movimento */
+  --d-1: 160ms;
+  --d-2: 320ms;
+  --d-3: 640ms;
+  --d-4: 1100ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Altura das barras fixas */
+  --draft-h: 30px;
+  --header-h: 72px;
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --header-h: 60px;
+    --draft-h: 34px;
+  }
+}
+
+/* Fallbacks com métrica ajustada para não haver salto quando a fonte chega */
+@font-face {
+  font-family: 'Bodoni Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 96%;
+  ascent-override: 98%;
+  descent-override: 24%;
+}
+
+@font-face {
+  font-family: 'Hanken Fallback';
+  src: local('Arial'), local('Helvetica');
+  size-adjust: 97%;
+  ascent-override: 96%;
+  descent-override: 26%;
+}

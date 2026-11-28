@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Chronos | Estética Automotiva em Poços de Caldas - MG</title>
+    <meta name="description" content="Chronos | Estética Automotiva em Poços de Caldas - MG. R. Acácia, 518, São João. Veja os horários e peça o seu horário pelo WhatsApp." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
+    <link rel="canonical" href="https://chronos-rascunho.vercel.app/" />
+    <meta name="theme-color" content="#0A0B0D" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Chronos | Estética Automotiva em Poços de Caldas - MG" />
+    <meta property="og:description" content="Estética automotiva em Poços de Caldas - MG. Peça o seu horário pelo WhatsApp." />
+    <meta property="og:url" content="https://chronos-rascunho.vercel.app/" />
+    <meta property="og:image" content="https://chronos-rascunho.vercel.app/og-chronos.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/bodoni-moda-500.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/hanken-grotesk-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/hanken-grotesk-500.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      // Antes da primeira pintura: decide se o splash pode existir (≥1024 px, sem reduced-motion, 1ª visita)
+      ;(function () {
+        var r = document.documentElement
+        try {
+          var seen = false
+          try { seen = sessionStorage.getItem('chronos-splash-visto') === '1' } catch (e) {}
+          if (seen || matchMedia('(max-width: 1023.98px), (prefers-reduced-motion: reduce)').matches) r.setAttribute('data-nosplash', '')
+        } catch (e) { r.setAttribute('data-nosplash', '') }
+        r.classList.add('js')
+      })()
+    </script>
+    <style>
+      /* CSS crítico da primeira dobra */
+      @font-face { font-family: 'Bodoni Moda'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/bodoni-moda-500.woff2) format('woff2'); }
+      @font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/hanken-grotesk-400.woff2) format('woff2'); }
+      @font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 500; font-display: swap; src: url(/fonts/hanken-grotesk-500.woff2) format('woff2'); }
+      html { background: #0a0b0d; color: #eceae4; }
+      body { margin: 0; background: #0a0b0d; }
+      .splash-cover { position: fixed; inset: 0; z-index: 90; background: #0a0b0d; animation: cover-failsafe 0.4s ease 4.5s forwards; }
+      html[data-nosplash] .splash-cover { display: none; }
+      @keyframes cover-failsafe { to { opacity: 0; visibility: hidden; } }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Chronos | Estética Automotiva",
+        "url": "https://chronos-rascunho.vercel.app/",
+        "image": "https://chronos-rascunho.vercel.app/og-chronos.png",
+        "telephone": "+55 35 9126-7375",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Rua Acácia, 518, São João",
+          "addressLocality": "Poços de Caldas",
+          "addressRegion": "MG",
+          "postalCode": "37701-125",
+          "addressCountry": "BR"
+        },
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday", "Saturday"], "opens": "08:00", "closes": "16:00" }
+        ],
+        "sameAs": ["https://www.instagram.com/chronos_estetica_auto/"]
+      }
+    </script>
+  </head>
+  <body>
+    <div class="splash-cover" aria-hidden="true"></div>
+    <div id="root"></div>
+    <noscript>
+      <div style="padding:24px;font-family:system-ui,sans-serif;line-height:1.6">
+        <p><strong>Chronos | Estética Automotiva</strong>, Poços de Caldas - MG.</p>
+        <p>R. Acácia, nº 518, São João, CEP 37701-125.</p>
+        <p>Segunda a quinta, 08h às 17h. Sexta e sábado, 08h às 16h. Domingo, fechado.</p>
+        <p><a style="color:#5db3c4" href="https://wa.me/553591267375">Pedir horário pelo WhatsApp: (35) 9126-7375</a> · <a style="color:#5db3c4" href="https://www.google.com/maps/dir/?api=1&amp;destination=Rua%20Ac%C3%A1cia%2C%20518%2C%20S%C3%A3o%20Jo%C3%A3o%2C%20Po%C3%A7os%20de%20Caldas%20-%20MG%2C%2037701-125">Como chegar</a></p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
