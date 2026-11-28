@@ -1,55 +1,6 @@
 // Comportamentos só do navegador. Todos partem do estado final já renderizado no HTML.
 import { prefersReducedMotion } from './lib';
 
-const EASE_IO = 'cubic-bezier(0.65, 0, 0.35, 1)';
-
-function lens(reduced: boolean) {
-  const root = document.querySelector<HTMLElement>('[data-lens]');
-  const html = document.documentElement;
-  if (!root) return;
-  const done = () => html.classList.remove('lens-pending');
-  if (reduced || !root.animate) return done();
-
-  const run = () => {
-    const trail = root.querySelector<HTMLElement>('[data-lens-trail]')!;
-    const trailIn = root.querySelector<HTMLElement>('[data-lens-trail-in]')!;
-    const glass = root.querySelector<HTMLElement>('[data-lens-glass]')!;
-    const glassIn = root.querySelector<HTMLElement>('[data-lens-glass-in]')!;
-    const outline = root.querySelector<HTMLElement>('.lens__outline')!;
-    const W = outline.getBoundingClientRect().width;
-    const D = glass.getBoundingClientRect().width;
-    const gap = parseFloat(getComputedStyle(glass).marginLeft) || 0;
-    const E = gap + D / 2; // a janela do rastro é W + E de largura
-    trail.style.width = `${W + E}px`;
-    glassIn.style.left = `${-(W + gap)}px`;
-
-    const c0 = -D; // centro da lente no início (fora, à esquerda)
-    const c1 = W + gap + D / 2; // centro em repouso (à direita do nome)
-    const opts: KeyframeAnimationOptions = { duration: 1600, delay: 200, easing: EASE_IO, fill: 'both' };
-    const L = (c: number) => c - D / 2 - (W + gap); // deslocamento da lente em relação ao repouso
-    const T = (c: number) => c - (W + E); // deslocamento da janela do rastro
-
-    html.classList.add('lens-run');
-    done();
-    const a = glass.animate([{ transform: `translateX(${L(c0)}px)` }, { transform: 'translateX(0px)' }], opts);
-    glassIn.animate([{ transform: `translateX(${-L(c0)}px)` }, { transform: 'translateX(0px)' }], opts);
-    trail.animate([{ transform: `translateX(${T(c0)}px)` }, { transform: 'translateX(0px)' }], opts);
-    trailIn.animate([{ transform: `translateX(${-T(c0)}px)` }, { transform: 'translateX(0px)' }], opts);
-    a.onfinish = () => html.classList.remove('lens-run');
-    void c1;
-  };
-
-  const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
-  let started = false;
-  const start = () => {
-    if (started) return;
-    started = true;
-    requestAnimationFrame(run);
-  };
-  if (fonts?.ready) fonts.ready.then(start);
-  setTimeout(start, 1800); // fonte lenta: anima assim mesmo, com o layout já estável
-}
-
 function observeOnce(sel: string, cls: string, reduced: boolean) {
   const els = Array.from(document.querySelectorAll<HTMLElement>(sel));
   if (reduced || !('IntersectionObserver' in window)) return;
@@ -132,7 +83,6 @@ function videos(reduced: boolean) {
 
 export function startEffects() {
   const reduced = prefersReducedMotion();
-  lens(reduced);
   observeOnce('[data-reveal]', 'is-pending', reduced);
   observeOnce('[data-ring]', 'is-pending', reduced);
   scrollFx(reduced);
